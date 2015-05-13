@@ -459,7 +459,7 @@ class NameDirective(Directive):
     #@
     def __init__(self, line, mo):
         super(NameDirective, self).__init__(line, mo)
-        if isinstance(mo, basestring):
+        if isinstance(mo, str):
             self.name = mo
         else:
             self.name = mo.group(1)
@@ -593,14 +593,14 @@ class Start(NameDirective):
         end = self._find_matching_end(document.lines[index:])
         block = document.lines[index+1:index+end]
         
-        reduce_block = filter(bool, block)
+        reduce_block = list(filter(bool, block))
         if not reduce_block:
             document.add_error(self.line, "Empty '%s' block" % self.name)
             return None
 
         #unindent the block, empty lines may not count (filter(bool, block))
         indent_getter = operator.attrgetter("indent")
-        min_indent = min(map(indent_getter, reduce_block))
+        min_indent = min(list(map(indent_getter, reduce_block)))
         block = [ l.clone().change_indent(-min_indent) for l in block ]
         return self.name, block
 
@@ -719,7 +719,7 @@ class End(NameDirective):
         super(NameDirective, self).__init__(line, mo)
         self.start_line = self.line
         
-        if isinstance(mo, basestring):
+        if isinstance(mo, str):
             self.name = mo
         else:
             self.name = mo.group(2)
@@ -799,7 +799,7 @@ class If(NameDirective):
     def process(self, document, block, index):
         line = block[index]
 
-        for j in xrange(index+1, len(block)):
+        for j in range(index+1, len(block)):
             d = block[j].directive
             if isinstance(d, Fi) and d.name == self.name:
                 break
@@ -853,7 +853,7 @@ class Define(NameDirective):
             return
 
         #search for the matching @enifed
-        for j in xrange(index+1, len(block)):
+        for j in range(index+1, len(block)):
             d = block[j].directive
             if isinstance(d, Enifed) and d.name == name:
                 break
@@ -941,7 +941,7 @@ class Subst(NameDirective):
         else:
             subst = document.macros[self.name]
 
-        if isinstance(subst, basestring):
+        if isinstance(subst, str):
             #inline substitution
             l = line.clone()
             l.text = line.text.replace("@subst(%s)" % self.name, subst)
@@ -1119,7 +1119,7 @@ class Code(Directive):
         line = block[index]
 
         #change the indentation the code lines
-        for j in xrange(index+1, len(block)):
+        for j in range(index+1, len(block)):
             l = block[j]
 
             if isinstance(l.directive, Edoc):
@@ -1369,7 +1369,7 @@ class Reader(object):
         cvalue = self._cut_comment(index, token, value)
         offset = value.index(cvalue)
         found = False
-        for k, v in directives.items():
+        for k, v in list(directives.items()):
             for mo in v.expression.finditer(cvalue):
                 li = bisect.bisect(self.starts, index+mo.start()+offset)-1
                 line = self.lines[li]
@@ -1579,7 +1579,7 @@ class PythonReader(Reader):
                 #for further decoration processing in _post_process,
                 start_line = bisect.bisect(self.starts, index)-1
                 end_line = bisect.bisect(self.starts, index+len(text)-3)-1
-                lines = filter(bool, text[3:-3].splitlines()) #filter out empty strings
+                lines = list(filter(bool, text[3:-3].splitlines())) #filter out empty strings
                 if lines:
                     self.doc_lines.append((start_line, end_line))
                 
@@ -2131,7 +2131,7 @@ class Document(object):
                    for i, l in enumerate(self.lines)
                    for d in l.directives ]
        
-        self.blocks = dict(filter(bool, blocks))
+        self.blocks = dict(list(filter(bool, blocks)))
 
         if "__macros__" in self.blocks:
             self.get_compiled_block("__macros__")
@@ -2266,7 +2266,7 @@ def main():
         with open(options.output, "w") as f:
             f.write(generate(fname, options.token, options.warnings))
         
-    except WebError, e:
+    except WebError as e:
         logger.error("Errors:")
         for l, d in e.error_list:
             logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)

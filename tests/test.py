@@ -11,7 +11,7 @@ class TestAntiWeb(unittest.TestCase):
     def check(self, fname, tokens=None):
         try:
             text = antiweb.generate(fname, tokens, True)
-        except antiweb.WebError, e:
+        except antiweb.WebError as e:
             return e.error_list, []
         
         output = os.path.splitext(fname)[0] + ".rst"

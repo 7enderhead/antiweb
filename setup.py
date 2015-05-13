@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-import antiweb
+from . import antiweb
 import os.path
 
 
