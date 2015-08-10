@@ -6,13 +6,17 @@
 .. highlight:: python
    :linenothreshold: 6
 
-@if(source)
 
-.. _antiweb:
 
 #######
 antiweb
 #######
+
+############
+Installation
+############
+
+@include(installation)
 
 
 If you just want to generate the documentation from a source file use 
@@ -29,21 +33,24 @@ Objects
 
    The graph below show the main objects of antiweb:
 
+The graph below show the main objects of antiweb:
+
    .. digraph:: collaboration
 
-      document [shape=box, label="document:Document"]
-      reader   [shape=box, label="reader:Reader"]
-      directives [shape=box, label="directives:Directive" ]
-      blocks [shape=box]
-      lines [shape=box]
+      Dokument [shape=box, label="Dokument"]
+      Reader   [shape=box, label="Reader"]
+      directives [shape=box, label="Directive" ]
+      Bloecke [shape=box]
+      Linien [shape=box]
 
-      document -> reader [label="uses"]
-      reader -> directives [label="creates"]
-      document -> directives [label="uses"]
-      document -> blocks [label="contains"]
-      directives -> blocks[label="process"]
-      blocks -> lines[label="contains"]
-      lines -> directives[label="contains"]
+      Dokument -> Reader [label="benutzt"]
+      Reader -> directives [label="erstellt"]
+      Dokument -> directives [label="benutzt"]
+      Dokument -> Bloecke [label="beinhaltet"]
+      directives -> Bloecke [label="verarbeitet"]
+      Bloecke -> Linien [label="beinhaltet"]
+      Linien -> directives [label="beinhaltet"]
+
 
    The :py:class:`document <Document>` manages the complete transformation: It uses a
    :py:class:`reader <Reader>`  to parse source code. The :py:class:`reader <Reader>`
@@ -52,6 +59,10 @@ Objects
    :py:class:`lines <Line>`. The :py:class:`document <Document>` process all
    :ref:`directives <Directives>`  to generate the output document.
    
+   .. digraph:: foo
+
+    "Nummer 1" -> "Nummer 2" -> "Nummer 3" -> "Nummer 1";
+ 
 
 .. _Directives:
 
@@ -121,8 +132,8 @@ File Layout
 How to add new languages
 ************************
 
-New languages are added by writing a new :py:class:`Reader` class
-and registering it in the readers dictionary (see :ref:`readers`).
+New languages are added by writing a new Reader class
+and registering it in the readers dictionary (see readers).
 A simple Reader example is provides by :py:class:`CReader`
 a more advances reader is :py:class:`PythonReader`.
 
@@ -1363,9 +1374,10 @@ class Reader(object):
            :param integer index: The index within the source code
            :param token: A pygments token.
            :param string value: The token value.
-        """
+		"""
+		
         if not self._accept_token(token): return
-                
+             
         cvalue = self._cut_comment(index, token, value)
         offset = value.index(cvalue)
         found = False
@@ -1374,7 +1386,7 @@ class Reader(object):
                 li = bisect.bisect(self.starts, index+mo.start()+offset)-1
                 line = self.lines[li]
                 line.directives = list(line.directives) + [ v(line.index, mo) ]
-                
+         
 
     #@cstart(Reader._cut_comment)
     def _cut_comment(self, index, token, value):
@@ -1415,6 +1427,30 @@ class CReader(Reader):
             text = text[2:]
 
         return text
+		
+    def filter_output(self, lines):
+        """
+        .. py:method:: filter_output(lines)
+
+           See :py:meth:`Reader.filter_output`.
+        """
+        for l in lines:
+            if l.type == "d":
+                #remove comment chars in document lines
+                stext = l.text.lstrip()
+
+                if stext == '/*' or stext == "*/":
+                    #remove """ and ''' from documentation lines
+                    #see the l.text.lstrip()! if the lines ends with a white space
+                    #the quotes will be kept! This is feature, to force the quotes
+                    #in the output
+                    continue
+                
+                if stext.startswith("//") and not stext.startswith("#####"):
+                    #remove comments but not chapters
+                    l.text = l.indented(stext[2:])
+                            
+            yield l
 
 #@cstart(PythonReader)
 class PythonReader(Reader):
@@ -1469,7 +1505,9 @@ class PythonReader(Reader):
 
        The ``"""`` are automatically removed in the rst output. (see :py:meth:`filter_output`
        for details).
+
     '''
+
     #@indent 3
     #@include(PythonReader)
     #@include(PythonReader._post_process doc)
@@ -1599,7 +1637,7 @@ class PythonReader(Reader):
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
 
-                if stext == '"""' or stext == "'''":
+                if stext == '"""' or stext == "```":
                     #remove """ and ''' from documentation lines
                     #see the l.text.lstrip()! if the lines ends with a white space
                     #the quotes will be kept! This is feature, to force the quotes
@@ -1608,9 +1646,206 @@ class PythonReader(Reader):
                 
                 if stext.startswith("#") and not stext.startswith("#####"):
                     #remove comments but not chapters
-                    l.text = l.indented(stext[1:])
+                    l.text = l.indented(stext[2:])
                             
             yield l
+
+class CSharpReader(Reader):
+    #@start(CSharpReader doc)
+    #CSharpReader
+    #============
+    '''
+    .. py:class:: PythonReader
+
+       A reader for C # code. This class inherits :py:class:`Reader`.
+       To reduce the number of sentinels, the C# reader does some more 
+       sophisticated source parsing:
+       
+       A construction like::
+         
+             @subst(_at_)cstart(foo)
+             def foo(arg1, arg2):
+                """ 
+                Foo's documentation
+                """ 
+                code
+
+
+       is replaced by::
+
+             @subst(_at_)cstart(foo)
+             def foo(arg1, arg2):
+                @subst(_at_)start(foo doc)
+                """ 
+                Foo's documentation
+                """ 
+                @subst(_at_)include(foo)
+                @subst(_at_)(foo doc)
+                code
+
+
+       The replacement will be done only:
+
+         * If the doc string begins with """
+         * If the block was started by a ``@rstart`` or ``@cstart`` directive
+         * If there is no antiweb directive in the doc string.
+         * Only a ``@cstart`` will insert the @include directive.
+
+
+       Additionally the C# reader removes all single line ``"""`` and ``@subst(triple)``
+       from documentation lines. In the following lines::
+         
+             @subst(_at_)start(foo)
+             """ 
+             Documentation
+             """ 
+
+       The ``"""`` are automatically removed in the rst output. (see :py:meth:`filter_output`
+       for details).
+    '''
+    #@indent 3
+    #@include(CSharpReader)
+    #@include(CSharpReader._post_process doc)
+    #@include(CSharpReader._accept_token doc)
+    #@include(CSharpReader.filter_output doc)
+    #@include(CSharpReader._cut_comment doc)
+    #@(PythonReader doc)
+    def __init__(self, lexer):
+        super(CSharpReader, self).__init__(lexer)
+        self.doc_lines = []
+
+    #@cstart(PythonReader._post_process)
+    def _post_process(self, fname, text):
+        """
+        .. py:method:: _post_process(fname, text)
+
+           See :py:meth:`Reader._post_process`.
+
+           This implementation *decorates* doc strings
+           with antiweb directives.
+        """
+        #from behind because we will probably insert some lines
+        self.doc_lines.sort(reverse=True)
+
+        #handle each found doc string
+        for start_line, end_line in self.doc_lines:
+            indents = set()
+
+            #@cstart(no antiweb directives in doc string)
+            #If antiweb directives are within the doc string,
+            #the doc string will not be decorated!
+            directives_between_start_and_end_line = False
+            for l in self.lines[start_line+1:end_line]:
+                if l:
+                    #needed for <<insert additional include>>
+                    indents.add(l.indent)
+                    
+                if l.directives:
+                    directives_between_start_and_end_line = True
+                    break
+
+            if directives_between_start_and_end_line: continue
+            
+            #@cstart(find the last directive before the doc string)
+            last_directive = None
+            for l in reversed(self.lines[:start_line]):
+                if l.directives:
+                    last_directive = l.directives[0]
+                    break
+            #@
+
+            if isinstance(last_directive, RStart):
+                #@cstart(decorate beginning and end)
+                l = self.lines[start_line]
+                start = Start(start_line, last_directive.name + " doc")
+                l.directives = list(l.directives) + [start]
+
+                l = self.lines[end_line]
+                end = End(end_line, last_directive.name + " doc")
+                l.directives = list(l.directives) + [end]
+                #@
+                
+                if isinstance(last_directive, CStart):
+                    #@cstart(insert additional include)
+                    l = l.like("")
+                    include = Include(end_line, last_directive.name)
+                    l.directives = list(l.directives) + [include]
+                    self.lines.insert(end_line, l)
+
+                    #the include directive should have the same 
+                    #indentation as the .. py:function:: directive 
+                    #inside the doc string. (It should be second 
+                    #value of sorted indents)
+                    indents = list(sorted(indents))
+                    if len(indents) > 1:
+                        l.change_indent(indents[1]-l.indent)
+                    #@
+
+        super(CSharpReader, self)._post_process(fname, text)
+
+    #@edoc
+    #@rinclude(no antiweb directives in doc string)
+    #@rinclude(find the last directive before the doc string)
+    #@rinclude(decorate beginning and end)
+    #@rinclude(insert additional include)
+        
+    #@cstart(PythonReader._accept_token)
+    def _accept_token(self, token):
+        """
+        .. py:method:: _accept_token(token)
+
+           See :py:meth:`Reader._accept_token`.
+        """
+        return token in Token.Comment or token in Token.Literal.String.Doc
+
+
+    #@cstart(PythonReader._cut_comment)
+    def _cut_comment(self, index, token, text):
+        """
+        .. py:method:: _cut_comment(index, token, text)
+
+           See :py:meth:`Reader._cut_comment`.
+        """
+        if token in Token.Literal.String.Doc:
+            if text.startswith('/*'):
+                #save the start/end line of doc strings beginning with """
+                #for further decoration processing in _post_process,
+                start_line = bisect.bisect(self.starts, index)-1
+                end_line = bisect.bisect(self.starts, index+len(text)-3)-1
+                lines = list(filter(bool, text[3:-3].splitlines())) #filter out empty strings
+                if lines:
+                    self.doc_lines.append((start_line, end_line))
+                
+            text = text[2:-2]
+
+        return text
+
+    #@cstart(PythonReader.filter_output)
+    def filter_output(self, lines):
+        """
+        .. py:method:: filter_output(lines)
+
+           See :py:meth:`Reader.filter_output`.
+        """
+        for l in lines:
+            if l.type == "d":
+                #remove comment chars in document lines
+                stext = l.text.lstrip()
+
+                if stext == '/*' or stext == "*/":
+                    #remove """ and ''' from documentation lines
+                    #see the l.text.lstrip()! if the lines ends with a white space
+                    #the quotes will be kept! This is feature, to force the quotes
+                    #in the output
+                    continue
+                
+                if stext.startswith("//") and not stext.startswith("#####"):
+                    #remove comments but not chapters
+                    l.text = l.indented(stext[2:])
+                            
+            yield l
+
+
 
 
 #@(PythonReader)
@@ -1618,6 +1853,7 @@ class PythonReader(Reader):
 readers = {
     "C" : CReader,
     "C++" : CReader,
+	"C#" : CReader,
     "Python" : PythonReader,
 }
 
@@ -1906,6 +2142,29 @@ class Document(object):
     #@include(Document.compile_block doc)
     #@(Document doc)
     #Attributes
+	
+	#@indent 3
+    #@include(Document)
+    #@include(Document.errors doc)
+    #@include(Document.blocks doc)
+    #@include(Document.blocks_included doc)
+    #@include(Document.compiled_blocks doc)
+    #@include(Document.sub_documents doc)
+    #@include(Document.tokens doc)
+    #@include(Document.macros doc)
+    #@include(Document.fname doc)
+    #@include(Document.reader doc)
+    #@include(Document.lines doc)
+    #@include(Document.__init__ doc)
+    #@include(Document.process doc)
+    #@include(Document.get_subdoc doc)
+    #@include(Document.add_error doc)
+    #@include(Document.check_errors doc)
+    #@include(Document.collect_blocks doc)
+    #@include(Document.get_compiled_block doc)
+    #@include(Document.compile_block doc)
+    #@(Document doc)
+    #Attributes
     #@cstart(Document.errors)
     errors = []
     """
@@ -2030,7 +2289,7 @@ class Document(object):
             self.blocks_included.add("__macros__") #may not cause a warning
             unincluded = set(self.blocks.keys())-self.blocks_included
             if unincluded:
-                logger.warning("The following block were not included:")
+                logger.warning("The following blocks were not included:")
                 warnings = [ (self.blocks[b][0].index, b) for b in unincluded ]
                 warnings.sort(key=operator.itemgetter(0))
                 for l, w in warnings:
@@ -2299,3 +2558,24 @@ The code begins in file @subst(__file__) at line @subst(__line__-1):
 @define(_at_, @)
 @define(triple, ''')
 """
+
+
+#@start(installation)
+"""
+The most important part of the system is Python 3. Because of incompatibility with Python 2 you can't create 
+documentaries of Python 2 programs.
+
+
+   * Step 1: Install Python 3.4
+   * Step 2: Wenn Python installiert ist, führen Sie folgende Befehle in cmd aus (dabei müssen Sie sich im Ordner Scripts befinden)
+   * "pip install sphinx" (bei Notwendigkeit auch mit Optionen wie z.B. --proxy "proxy")
+   * "pip uninstall babel" (wegen Inkompatibilität deinstallieren)
+   * "pip install babel==1.3" (Kompatible Version installieren)
+
+
+
+"""
+#@(installation)
+
+
+
