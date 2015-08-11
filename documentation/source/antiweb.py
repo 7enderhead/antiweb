@@ -44,8 +44,6 @@ Objects
 
    The graph below show the main objects of antiweb:
 
-The graph below show the main objects of antiweb:
-
    .. digraph:: collaboration
 
       Dokument [shape=box, label="Dokument"]
@@ -2553,7 +2551,7 @@ if __name__ == "__main__":
 @start(__macros__)
 @define(__codeprefix__)
 
-The code begins in file @subst(__file__) at line @subst(__line__-1):
+@ignoreThe code begins in file @subst(__file__) at line @subst(__line__-1):
 @enifed(__codeprefix__)
 @end(__macros__)
 
@@ -2637,11 +2635,10 @@ documentaries of Python 2 programs.
     * Copy the content of its bin folder to Python34\\Scripts
 
 
-************************
 Preparing the .rst files
-************************
+========================
 
-   * Copy the antiweb.py file from my GitHub repository into the Python34 folder
+   * Copy the ``antiweb.py`` file from my GitHub repository into the ``Python34`` folder
    
     * You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:
    
@@ -2649,9 +2646,9 @@ Preparing the .rst files
    python antiweb.py "PATH TO THE FILE"
    @edoc
    
-   * You will then find a new file which is called "Filename".rst -> This file will be used in Sphinx to generate the documentation
+   * You will then find a new file which is called ``Filename.rst`` -> This file will be used in Sphinx to generate the documentation
    
-   * Sphinx also created a index.rst file for you when you executed sphinx-quickstart.exe. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
+   * Sphinx also created a ``index.rst`` file for you when you executed ``sphinx-quickstart.exe``. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
 
    @code
    Welcome to Finale_sphinx's documentation!
@@ -2708,9 +2705,8 @@ Contents:
 
 #@start(get_started)
 """
-   Every @ directive in antiweb has to be a comment in order to be accepted by antiweb. :py:class:`However, antiweb will still recognize but not accept directives which aren't comments, 
-   so for the examples here I will leave 1 free space between the @ and the directive name but you should NOT do so in your file.`
-   There are different directives for you to design and structure your documentation.
+   Every @ directive in antiweb has to be a comment in order to be accepted by antiweb. However, antiweb will still recognize but not accept directives which aren't comments, 
+   so for the examples here :py:class:`I will leave 1 free space between the @ and the directive name` but you should NOT do so in your file.
    
    
 @ start
@@ -2749,7 +2745,7 @@ Contents:
 @ include
 =========
 
-   Once you have created a block  you can include it with the ``@include`` directive:
+   Once you have created a block  you can include it with the ``@include`` directive. The order in which your blocks will appear in the documentation is defined by the order of the ``@include`` directives
    
    @code
    

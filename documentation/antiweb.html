@@ -1,42 +1,167 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>antiweb &mdash; Finale_sphinx 2.1 documentation</title>
-    
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '2.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Finale_sphinx 2.1 documentation" href="index.html" />
-    <link rel="prev" title="Welcome to Finale_sphinx’s documentation!" href="index.html" />
-   
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>antiweb &mdash; Finale_sphinx 2.1 documentation</title>
+  
 
-  </head>
-  <body role="document">  
+  
+  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Finale_sphinx 2.1 documentation" href="index.html"/>
+        <link rel="prev" title="Welcome to Finale_sphinx’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> Finale_sphinx
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">antiweb</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preparing-the-rst-files">Preparing the .rst files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start">&#64; start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rstart">&#64; rstart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cstart">&#64; cstart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#include">&#64; include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code">&#64; code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#indent">&#64; indent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#indentation-matters">Indentation matters!</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#antiweb-documentation">Antiweb documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objects">Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#directives">Directives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#directive">Directive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#namedirective">NameDirective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">RStart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">CStart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#end">End</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rinclude">RInclude</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#edoc">Edoc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#if">If</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fi">Fi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ignore">Ignore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define">Define</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enifed">Enifed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subst">Subst</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Indent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#readers">Readers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reader">Reader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creader">CReader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pythonreader">PythonReader</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#document">Document</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#line">Line</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#file-layout">File Layout</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-line">&lt;&lt;command line&gt;&gt;</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Finale_sphinx</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>antiweb</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/antiweb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
             
   <div class="section" id="antiweb">
 <h1>antiweb<a class="headerlink" href="#antiweb" title="Permalink to this headline">¶</a></h1>
@@ -49,22 +174,18 @@ documentaries of Python 2 programs.</p>
 <li>Install Python 3.4</li>
 <li>After installing Python, run below commands in cmd (you have to navigate to Python34\Scripts first)</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2646:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install sphinx
 </pre></div>
 </div>
 <ul class="simple">
 <li><code class="xref py py-class docutils literal"><span class="pre">IMPORTANT</span></code>: If you get a connection error the reason is most likely your proxy. You then have to use a tool like &#8220;cntlm&#8221; and add a proxy flag when running pip, example:</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2652:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install sphinx --proxy http://localhost:8123 //in case you are using cntlm your proxy will be localhost
 </pre></div>
 </div>
-<p>The code begins in file antiweb.py at line 2656:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip uninstall babel //uninstall babel because of incompatibility
 </pre></div>
 </div>
-<p>The code begins in file antiweb.py at line 2660:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install babel==1.3 //install compatible version
 </pre></div>
 </div>
@@ -73,8 +194,7 @@ documentaries of Python 2 programs.</p>
 </li>
 <li><p class="first">You should find something like this:</p>
 <blockquote>
-<div><p>The code begins in file antiweb.py at line 2668:</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div><div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -102,8 +222,7 @@ documentaries of Python 2 programs.</p>
 <div><ul>
 <li><p class="first">Add &#8216;sphinx.ext.graphviz&#8217; at the end and it will look like this:</p>
 <blockquote>
-<div><p>The code begins in file antiweb.py at line 2683:</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div><div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -139,27 +258,24 @@ documentaries of Python 2 programs.</p>
 </ul>
 </div></blockquote>
 </div></blockquote>
-</div>
 <div class="section" id="preparing-the-rst-files">
-<h2>Preparing the .rst files<a class="headerlink" href="#preparing-the-rst-files" title="Permalink to this headline">¶</a></h2>
+<h3>Preparing the .rst files<a class="headerlink" href="#preparing-the-rst-files" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>Copy the antiweb.py file from my GitHub repository into the Python34 folder</li>
+<li>Copy the <code class="docutils literal"><span class="pre">antiweb.py</span></code> file from my GitHub repository into the <code class="docutils literal"><span class="pre">Python34</span></code> folder</li>
 </ul>
 <blockquote>
 <div><ul class="simple">
 <li>You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:</li>
 </ul>
 </div></blockquote>
-<p>The code begins in file antiweb.py at line 2710:</p>
 <div class="highlight-python"><div class="highlight"><pre>python antiweb.py &quot;PATH TO THE FILE&quot;
 </pre></div>
 </div>
 <ul class="simple">
-<li>You will then find a new file which is called &#8220;Filename&#8221;.rst -&gt; This file will be used in Sphinx to generate the documentation</li>
-<li>Sphinx also created a index.rst file for you when you executed sphinx-quickstart.exe. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:</li>
+<li>You will then find a new file which is called <code class="docutils literal"><span class="pre">Filename.rst</span></code> -&gt; This file will be used in Sphinx to generate the documentation</li>
+<li>Sphinx also created a <code class="docutils literal"><span class="pre">index.rst</span></code> file for you when you executed <code class="docutils literal"><span class="pre">sphinx-quickstart.exe</span></code>. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2718:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -199,7 +315,6 @@ Contents:
 <li>You can add multiple files, they will then be listed in the generated index of your project</li>
 <li>It is also possible to use Graphviz for graph visualizatin. A proper graph should look like this:</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2740:</p>
 <div class="highlight-python"><div class="highlight"><pre>.. digraph:: name
 
  &quot;bubble 1&quot; -&gt; &quot;bubble 2&quot; -&gt; &quot;bubble 3&quot; -&gt; &quot;bubble 1&quot;;
@@ -217,7 +332,6 @@ Contents:
 <li>For more informatin on Graphviz visit <a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a></li>
 <li>When you have included the rst file in the index file, you can run Sphinx to finally create your documentation, here is an example:</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2754:</p>
 <div class="highlight-python"><div class="highlight"><pre>sphinx-build.exe -b html sphinx\source sphinx\source -D graphviz_dot=dot.exe
 </pre></div>
 </div>
@@ -230,12 +344,12 @@ Contents:
 </ul>
 </div></blockquote>
 </div>
+</div>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Every &#64; directive in antiweb has to be a comment in order to be accepted by antiweb. <code class="xref py py-class docutils literal"><span class="pre">However,</span> <span class="pre">antiweb</span> <span class="pre">will</span> <span class="pre">still</span> <span class="pre">recognize</span> <span class="pre">but</span> <span class="pre">not</span> <span class="pre">accept</span> <span class="pre">directives</span> <span class="pre">which</span> <span class="pre">aren't</span> <span class="pre">comments,</span>
-<span class="pre">so</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">examples</span> <span class="pre">here</span> <span class="pre">I</span> <span class="pre">will</span> <span class="pre">leave</span> <span class="pre">1</span> <span class="pre">free</span> <span class="pre">space</span> <span class="pre">between</span> <span class="pre">the</span> <span class="pre">&#64;</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">directive</span> <span class="pre">name</span> <span class="pre">but</span> <span class="pre">you</span> <span class="pre">should</span> <span class="pre">NOT</span> <span class="pre">do</span> <span class="pre">so</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">file.</span></code>
-There are different directives for you to design and structure your documentation.</div></blockquote>
+<div>Every &#64; directive in antiweb has to be a comment in order to be accepted by antiweb. However, antiweb will still recognize but not accept directives which aren&#8217;t comments,
+so for the examples here <code class="xref py py-class docutils literal"><span class="pre">I</span> <span class="pre">will</span> <span class="pre">leave</span> <span class="pre">1</span> <span class="pre">free</span> <span class="pre">space</span> <span class="pre">between</span> <span class="pre">the</span> <span class="pre">&#64;</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">directive</span> <span class="pre">name</span></code> but you should NOT do so in your file.</div></blockquote>
 <div class="section" id="start">
 <h3>&#64; start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h3>
 <blockquote>
@@ -268,7 +382,6 @@ the <code class="docutils literal"><span class="pre">&#64;start</span></code> di
 <blockquote>
 <div><p>The <code class="docutils literal"><span class="pre">&#64;rstart</span></code> directive works like the <code class="docutils literal"><span class="pre">&#64;start</span></code> directive. While <code class="docutils literal"><span class="pre">&#64;start</span></code> removes it’s block completely from the containing block,
 <code class="docutils literal"><span class="pre">&#64;rstart</span></code> replaces the lines with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</span></code> - Sentinel.</p>
-<p>The code begins in file antiweb.py at line 2788:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -288,7 +401,6 @@ the <code class="docutils literal"><span class="pre">&#64;start</span></code> di
 <h3>&#64; cstart<a class="headerlink" href="#cstart" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>The <code class="docutils literal"><span class="pre">&#64;cstart</span></code> directive can be used as a shortcut for:</p>
-<p>The code begins in file antiweb.py at line 2806:</p>
 <div class="highlight-python"><div class="highlight"><pre>@ start(block)
 @ code
 </pre></div>
@@ -298,8 +410,7 @@ the <code class="docutils literal"><span class="pre">&#64;start</span></code> di
 <div class="section" id="include">
 <h3>&#64; include<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><p>Once you have created a block  you can include it with the <code class="docutils literal"><span class="pre">&#64;include</span></code> directive:</p>
-<p>The code begins in file antiweb.py at line 2816:</p>
+<div><p>Once you have created a block  you can include it with the <code class="docutils literal"><span class="pre">&#64;include</span></code> directive. The order in which your blocks will appear in the documentation is defined by the order of the <code class="docutils literal"><span class="pre">&#64;include</span></code> directives</p>
 <div class="highlight-python"><div class="highlight"><pre>@ include(Blockname)
 </pre></div>
 </div>
@@ -309,7 +420,6 @@ the <code class="docutils literal"><span class="pre">&#64;start</span></code> di
 <h3>&#64; code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Of course you want parts of your source code in a Block in order to e.g. describe the function of it. You can do that by following this example, a code block starts and ends with those directives. The code in between will be normally recognized as code but also included in the documentation:</p>
-<p>The code begins in file antiweb.py at line 2826:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -328,7 +438,6 @@ Put your code here
 <p>There are also different types of titles with different indentation in the index. antiweb wants the indication marks, e.g. #### to
 be exactly as long as the title. Creating a headline below a higher level headline makes it a sub-headline of the higher one, also
 shown in the index table</p>
-<p>The code begins in file antiweb.py at line 2841:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -360,7 +469,11 @@ Title #This is the low level headline
 <div class="section" id="indentation-matters">
 <h3>Indentation matters!<a class="headerlink" href="#indentation-matters" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div>In sphinx and antiweb, the indentation matters. To effectively nest blocks, create sub headlines and more you have to keep the indentation in mind. To nest a block or headline you have to indent it farther than its parent. In addition, your documentation looks much cleaner when structured like this.</div></blockquote>
+<div><p>In sphinx and antiweb, the indentation matters. To effectively nest blocks, create sub headlines and more you have to keep the indentation in mind. To nest a block or headline you have to indent it farther than its parent. In addition, your documentation looks much cleaner when structured like this.</p>
+<ul class="simple">
+<li><code class="xref py py-class docutils literal"><span class="pre">This</span> <span class="pre">is</span> <span class="pre">the</span> <span class="pre">end</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">basic</span> <span class="pre">introduction.</span> <span class="pre">For</span> <span class="pre">more</span> <span class="pre">information</span> <span class="pre">on</span> <span class="pre">antiweb</span> <span class="pre">simply</span> <span class="pre">read</span> <span class="pre">on.</span></code></li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="antiweb-documentation">
@@ -385,7 +498,6 @@ via the logging module.</li>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 2471:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -483,7 +595,6 @@ they handle, these Task are generally:</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 326:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -513,7 +624,6 @@ they handle, these Task are generally:</p>
 <dt id="Directive.expression">
 <code class="descname">expression</code><a class="headerlink" href="#Directive.expression" title="Permalink to this definition">¶</a></dt>
 <dd><p>A regular expression defining the directive.</p>
-<p>The code begins in file antiweb.py at line 363:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">expression</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
 </pre></div>
 </div>
@@ -524,7 +634,6 @@ they handle, these Task are generally:</p>
 <code class="descname">priority</code><a class="headerlink" href="#Directive.priority" title="Permalink to this definition">¶</a></dt>
 <dd><p>An integer process priority. Directives with a lower priority
 will be processed earlier.</p>
-<p>The code begins in file antiweb.py at line 370:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">priority</span> <span class="o">=</span> <span class="mi">10</span>
 </pre></div>
 </div>
@@ -534,7 +643,6 @@ will be processed earlier.</p>
 <dt id="Directive.line">
 <code class="descname">line</code><a class="headerlink" href="#Directive.line" title="Permalink to this definition">¶</a></dt>
 <dd><p>A integer defining the original line number of the directive.</p>
-<p>The code begins in file antiweb.py at line 378:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">line</span> <span class="o">=</span> <span class="bp">None</span>
 </pre></div>
 </div>
@@ -544,7 +652,6 @@ will be processed earlier.</p>
 <dt id="Directive.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>line</em><span class="optional">[</span>, <em>mo</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Directive.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>The constructor</p>
-<p>The code begins in file antiweb.py at line 388:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
 </pre></div>
@@ -575,7 +682,6 @@ is a tuple <code class="docutils literal"><span class="pre">(directive</span> <s
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 398:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">collect_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">None</span>
 </pre></div>
@@ -601,7 +707,6 @@ within the block.</li>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 419:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
@@ -622,7 +727,6 @@ directives.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 436:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
@@ -633,7 +737,6 @@ directives.</p>
 <dt id="Directive.__repr__">
 <code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Directive.__repr__" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns a textual representation of the directive.</p>
-<p>The code begins in file antiweb.py at line 450:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s"> at </span><span class="si">%i</span><span class="s">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
 </pre></div>
@@ -669,7 +772,6 @@ a string defining the name.</li>
 <dd><p>A string defining the argument of the directive.</p>
 </dd></dl>
 
-<p>The code begins in file antiweb.py at line 461:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -727,7 +829,6 @@ the <code class="docutils literal"><span class="pre">&#64;start</span></code> di
 </ol>
 </div></blockquote>
 <p>Text blocks defined by <code class="docutils literal"><span class="pre">&#64;start</span></code> can be nested.</p>
-<p>The code begins in file antiweb.py at line 496:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -752,14 +853,12 @@ the <code class="docutils literal"><span class="pre">&#64;start</span></code> di
 <code class="descname">has_named_end</code><a class="headerlink" href="#Start.has_named_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>A boolean value, signalizing if the directive is
 ended by a named end directive.</p>
-<p>The code begins in file antiweb.py at line 545:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">has_named_end</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <p id="start-inherited-attributes"><strong>&lt;&lt;Start.inherited attributes&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 553:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&quot;@start\((.*)\)&quot;</span><span class="p">)</span>
 <span class="n">priority</span> <span class="o">=</span> <span class="mi">5</span>
 </pre></div>
@@ -769,7 +868,6 @@ ended by a named end directive.</p>
 <code class="descname">collect_block</code><span class="sig-paren">(</span><em>document</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Start.collect_block" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#Directive.collect_block" title="Directive.collect_block"><code class="xref py py-meth docutils literal"><span class="pre">Directive.collect_block()</span></code></a>.
 The returned lines are unindented to column 0.</p>
-<p>The code begins in file antiweb.py at line 608:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -807,7 +905,6 @@ The returned lines are unindented to column 0.</p>
 <dd><p>See <a class="reference internal" href="#Directive.process" title="Directive.process"><code class="xref py py-meth docutils literal"><span class="pre">Directive.process()</span></code></a>.
 Removes all lines of the text block from
 the containing block.</p>
-<p>The code begins in file antiweb.py at line 631:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
     <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_matching_end</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:])</span>
     <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="n">end</span><span class="p">]</span>
@@ -829,7 +926,6 @@ the containing block.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 559:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -925,7 +1021,6 @@ the containing block.</p>
 directive. While <code class="docutils literal"><span class="pre">&#64;start</span></code> removes it&#8217;s block completely
 from the containing block. <code class="docutils literal"><span class="pre">&#64;rstart</span></code> replaces the lines
 with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</span></code> - Sentinel.</p>
-<p>The code begins in file antiweb.py at line 644:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -956,7 +1051,6 @@ with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</sp
 @code
 </pre></div>
 </div>
-<p>The code begins in file antiweb.py at line 676:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1001,7 +1095,6 @@ with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</sp
 <dd><p>This class represents an end directive. It inherits
 <a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
 <p>The end (<code class="docutils literal"><span class="pre">&#64;</span></code>) directive ends a text block.</p>
-<p>The code begins in file antiweb.py at line 718:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1074,7 +1167,6 @@ text block with the same name. The lines have the same
 indentation as the <code class="docutils literal"><span class="pre">&#64;include</span></code> directive.</p>
 <p>The directive can have a second <em>file</em> argument. If given
 the directive inserts the text block of the specified file.</p>
-<p>The code begins in file antiweb.py at line 980:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1158,7 +1250,6 @@ the directive inserts the text block of the specified file.</p>
 @include(text block name)
 </pre></div>
 </div>
-<p>The code begins in file antiweb.py at line 1040:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1207,7 +1298,6 @@ lines following <code class="docutils literal"><span class="pre">&#64;code</span
 <p>The content of the special macro <code class="docutils literal"><span class="pre">__codeprefix__</span></code> is inserted
 before each code block. <code class="docutils literal"><span class="pre">__codeprefix__</span></code> is empty by default
 and can be defined by a <code class="docutils literal"><span class="pre">&#64;define</span></code> directive.</p>
-<p>The code begins in file antiweb.py at line 1108:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1270,7 +1360,6 @@ and can be defined by a <code class="docutils literal"><span class="pre">&#64;de
 <dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;edoc</span></code> directive. It inherits
 <a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a>.</p>
 <p>The <code class="docutils literal"><span class="pre">&#64;edoc</span></code> directive ends a previously started <code class="docutils literal"><span class="pre">&#64;code</span></code> directive</p>
-<p>The code begins in file antiweb.py at line 1081:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Edoc</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
     <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&quot;@edoc&quot;</span><span class="p">)</span>
 
@@ -1292,7 +1381,6 @@ and can be defined by a <code class="docutils literal"><span class="pre">&#64;de
 The content of an <code class="docutils literal"><span class="pre">&#64;if</span></code>, <code class="docutils literal"><span class="pre">&#64;fi</span></code> block is waved if the
 named token argument of <code class="docutils literal"><span class="pre">&#64;if</span></code>, is defined in the command line
 by the <code class="docutils literal"><span class="pre">--token</span></code> option.</p>
-<p>The code begins in file antiweb.py at line 795:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1347,7 +1435,6 @@ by the <code class="docutils literal"><span class="pre">--token</span></code> op
 <dd><p>This class represents a <cite>&#64;fi</cite> directive. It inherits
 <a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
 <p>The <code class="docutils literal"><span class="pre">&#64;fi</span></code> ends an <code class="docutils literal"><span class="pre">&#64;if</span></code> directive</p>
-<p>The code begins in file antiweb.py at line 768:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Fi</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
     <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&quot;@fi\((.+)\)&quot;</span><span class="p">)</span>
 
@@ -1367,7 +1454,6 @@ by the <code class="docutils literal"><span class="pre">--token</span></code> op
 <a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a>.</p>
 <p>The <code class="docutils literal"><span class="pre">&#64;ignore</span></code> directive ignores the line in the
 documentation output. It can be used for commentaries.</p>
-<p>The code begins in file antiweb.py at line 1165:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Ignore</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
     <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;@ignore&quot;</span><span class="p">)</span>
 
@@ -1390,7 +1476,6 @@ with a <code class="docutils literal"><span class="pre">&#64;subst</span></code>
 argument is given, the macro defines an inline substitution.
 Otherwise the <code class="docutils literal"><span class="pre">&#64;define</span></code> has to be ended by an <code class="docutils literal"><span class="pre">&#64;enifed</span></code>
 directive.</p>
-<p>The code begins in file antiweb.py at line 840:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1454,7 +1539,6 @@ directive.</p>
 <a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
 <p>The <code class="docutils literal"><span class="pre">&#64;enifed</span></code> directive ends a macro defined by the
 <code class="docutils literal"><span class="pre">&#64;define</span></code> directive.</p>
-<p>The code begins in file antiweb.py at line 890:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -1491,7 +1575,6 @@ like <code class="docutils literal"><span class="pre">__line__</span> <span clas
 <dd>Defines the current source file name.</dd>
 </dl>
 </div></blockquote>
-<p>The code begins in file antiweb.py at line 918:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1566,7 +1649,6 @@ like <code class="docutils literal"><span class="pre">__line__</span> <span clas
 <p>The <code class="docutils literal"><span class="pre">&#64;indent</span></code> directive changes the indentation of the
 following lines. For example a  call <code class="docutils literal"><span class="pre">&#64;indent</span> <span class="pre">-4</span></code>
 dedents the following lines by 4 spaces.</p>
-<p>The code begins in file antiweb.py at line 1193:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1624,7 +1706,6 @@ and <a class="reference internal" href="#filter_output" title="filter_output"><c
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 1259:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1656,7 +1737,6 @@ class Reader(object):
 <dt id="Reader.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>The constructor</p>
-<p>The code begins in file antiweb.py at line 1294:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span> <span class="o">=</span> <span class="n">lexer</span>
 </pre></div>
@@ -1683,7 +1763,6 @@ This method is call by <a class="reference internal" href="#Document" title="Doc
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 1304:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1720,7 +1799,6 @@ This method is call by <a class="reference internal" href="#Document" title="Doc
 <code class="descname">filter_output</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.filter_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is call by <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> and gives
 the reader the chance to influence the final output.</p>
-<p>The code begins in file antiweb.py at line 1331:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">lines</span>
 </pre></div>
@@ -1744,7 +1822,6 @@ the reader the chance to influence the final output.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 1379:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1792,7 +1869,6 @@ the reader the chance to influence the final output.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 1403:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">text</span>
 </pre></div>
@@ -1803,7 +1879,6 @@ the reader the chance to influence the final output.</p>
 <dt id="Reader._post_process">
 <code class="descname">_post_process</code><span class="sig-paren">(</span><em>fname</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader._post_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does some post processing after the directives where found.</p>
-<p>The code begins in file antiweb.py at line 1359:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1846,7 +1921,6 @@ the reader the chance to influence the final output.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 1345:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">True</span>
 </pre></div>
@@ -1862,7 +1936,6 @@ the reader the chance to influence the final output.</p>
 <dt id="CReader">
 <em class="property">class </em><code class="descname">CReader</code><a class="headerlink" href="#CReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reader for C/C++ code. This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.</p>
-<p>The code begins in file antiweb.py at line 1418:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2003,8 +2076,7 @@ for details).</p>
 </div></blockquote>
 <p>&#8216;&#8217;&#8216;</p>
 <blockquote>
-<div><p>The code begins in file antiweb.py at line 1467:</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div><div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2047,7 +2119,6 @@ class CSharpReader(Reader):
 <dd><p>See <a class="reference internal" href="#Reader._post_process" title="Reader._post_process"><code class="xref py py-meth docutils literal"><span class="pre">Reader._post_process()</span></code></a>.</p>
 <p>This implementation <em>decorates</em> doc strings
 with antiweb directives.</p>
-<p>The code begins in file antiweb.py at line 1729:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2086,7 +2157,6 @@ with antiweb directives.</p>
 </pre></div>
 </td></tr></table></div>
 <p id="no-antiweb-directives-in-doc-string"><strong>&lt;&lt;no antiweb directives in doc string&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 1746:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2115,7 +2185,6 @@ with antiweb directives.</p>
 </pre></div>
 </td></tr></table></div>
 <p id="find-the-last-directive-before-the-doc-string"><strong>&lt;&lt;find the last directive before the doc string&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 1761:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">last_directive</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[:</span><span class="n">start_line</span><span class="p">]):</span>
     <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
@@ -2124,7 +2193,6 @@ with antiweb directives.</p>
 </pre></div>
 </div>
 <p id="decorate-beginning-and-end"><strong>&lt;&lt;decorate beginning and end&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 1770:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -2141,7 +2209,6 @@ with antiweb directives.</p>
 </pre></div>
 </td></tr></table></div>
 <p id="insert-additional-include"><strong>&lt;&lt;insert additional include&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 1781:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2173,7 +2240,6 @@ with antiweb directives.</p>
 <dt id="_accept_token">
 <code class="descname">_accept_token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="headerlink" href="#_accept_token" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#Reader._accept_token" title="Reader._accept_token"><code class="xref py py-meth docutils literal"><span class="pre">Reader._accept_token()</span></code></a>.</p>
-<p>The code begins in file antiweb.py at line 1804:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span> <span class="ow">or</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Literal</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">Doc</span>
 </pre></div>
@@ -2184,7 +2250,6 @@ with antiweb directives.</p>
 <dt id="filter_output">
 <code class="descname">filter_output</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#filter_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#Reader.filter_output" title="Reader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">Reader.filter_output()</span></code></a>.</p>
-<p>The code begins in file antiweb.py at line 1835:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2228,7 +2293,6 @@ with antiweb directives.</p>
 <dt id="_cut_comment">
 <code class="descname">_cut_comment</code><span class="sig-paren">(</span><em>index</em>, <em>token</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#_cut_comment" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#Reader._cut_comment" title="Reader._cut_comment"><code class="xref py py-meth docutils literal"><span class="pre">Reader._cut_comment()</span></code></a>.</p>
-<p>The code begins in file antiweb.py at line 1814:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2286,7 +2350,6 @@ to generate rst output.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 2119:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
   2
   3
@@ -3011,58 +3074,10 @@ to generate rst output.</p>
 722
 723
 724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736
-737
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747
-748
-749
-750
-751
-752
-753
-754
-755
-756
-757
-758
-759
-760
-761
-762
-763
-764
-765
-766
-767
-768
-769
-770
-771
-772</pre></div></td><td class="code"><div class="highlight"><pre>class Document(object):
+725</pre></div></td><td class="code"><div class="highlight"><pre>class Document(object):
     #Attributes
 
 
-       The code begins in file antiweb.py at line 2119:
        ::
 
            class Document(object):
@@ -3073,7 +3088,6 @@ to generate rst output.</p>
 
                      A list of errors found during generation.
 
-                     The code begins in file antiweb.py at line 2180:
                      ::
 
                          errors = []
@@ -3082,7 +3096,6 @@ to generate rst output.</p>
 
                      A dictionary of all found blocks: Name -&gt; List of Lines
 
-                     The code begins in file antiweb.py at line 2187:
                      ::
 
                          blocks = {}
@@ -3092,7 +3105,6 @@ to generate rst output.</p>
                      A set containing all block names that have been included by
                      an @include directive.
 
-                     The code begins in file antiweb.py at line 2194:
                      ::
 
                          blocks_included = set()
@@ -3102,7 +3114,6 @@ to generate rst output.</p>
                      A set containing all block names that have been already
                      compiled.
 
-                     The code begins in file antiweb.py at line 2202:
                      ::
 
                          compiled_blocks = set()
@@ -3112,7 +3123,6 @@ to generate rst output.</p>
                      A cache dictionary of sub documents, referenced by
                      ``@include`` directives: Filename -&gt; Document
 
-                     The code begins in file antiweb.py at line 2210:
                      ::
 
                          sub_documents = {}
@@ -3121,7 +3131,6 @@ to generate rst output.</p>
 
                      A set of token names that can be used for the ``@if`` directive.
 
-                     The code begins in file antiweb.py at line 2218:
                      ::
 
                          tokens = set()
@@ -3131,7 +3140,6 @@ to generate rst output.</p>
                      A dictionary containing the macros that can be used
                      by the ``@subst`` directive: Macro name -&gt; substitution.
 
-                     The code begins in file antiweb.py at line 2225:
                      ::
 
                          macros = {}
@@ -3140,7 +3148,6 @@ to generate rst output.</p>
 
                      The file name of the document&#39;s source.
 
-                     The code begins in file antiweb.py at line 2233:
                      ::
 
                          fname = &quot;&quot;
@@ -3149,7 +3156,6 @@ to generate rst output.</p>
 
                      The instance of a :py:class:`Reader` object.
 
-                     The code begins in file antiweb.py at line 2240:
                      ::
 
                          reader = None
@@ -3159,7 +3165,6 @@ to generate rst output.</p>
                      A list of :py:class:`Line` objects representing the whole documents
                      split in lines.
 
-                     The code begins in file antiweb.py at line 2247:
                      ::
 
                          lines = []
@@ -3168,7 +3173,6 @@ to generate rst output.</p>
 
                      The constructor.
 
-                     The code begins in file antiweb.py at line 2258:
                      ::
 
                          def __init__(self, text, reader, fname, tokens):
@@ -3193,7 +3197,6 @@ to generate rst output.</p>
                      :param bool show_warnings: If ``True`` warnings are emitted.
                      :return: A string representing the rst output.
 
-                     The code begins in file antiweb.py at line 2278:
                      ::
 
                          def process(self, show_warnings):
@@ -3218,7 +3221,6 @@ to generate rst output.</p>
                      **&lt;&lt;show warnings&gt;&gt;**
 
 
-                     The code begins in file antiweb.py at line 2299:
                      ::
 
                          self.blocks_included.add(&quot;&quot;)           #may not cause a warning
@@ -3240,7 +3242,6 @@ to generate rst output.</p>
                                           containing document.
                      :return: A :py:class:`Document` reference to the sub document.
 
-                     The code begins in file antiweb.py at line 2316:
                      ::
 
                          def get_subdoc(self, rpath):
@@ -3257,7 +3258,6 @@ to generate rst output.</p>
                      **&lt;&lt;return from cache if possible&gt;&gt;**
 
 
-                     The code begins in file antiweb.py at line 2327:
                      ::
 
                          try:
@@ -3272,7 +3272,6 @@ to generate rst output.</p>
                      **&lt;&lt;insert macros function&gt;&gt;**
 
 
-                     The code begins in file antiweb.py at line 2333:
                      ::
 
                          def insert_macros(subdoc):
@@ -3290,7 +3289,6 @@ to generate rst output.</p>
                      **&lt;&lt;read the source file&gt;&gt;**
 
 
-                     The code begins in file antiweb.py at line 2342:
                      ::
 
                          head, tail = os.path.split(self.fname)
@@ -3320,7 +3318,6 @@ to generate rst output.</p>
                      :param integer line: The line number that causes the error.
                      :param string text: An error text.
 
-                     The code begins in file antiweb.py at line 2371:
                      ::
 
                          def add_error(self, line, text):
@@ -3332,7 +3329,6 @@ to generate rst output.</p>
 
                      Raises a ``WebError`` exception if error were found.
 
-                     The code begins in file antiweb.py at line 2384:
                      ::
 
                          def check_errors(self):
@@ -3344,7 +3340,6 @@ to generate rst output.</p>
 
                      Collects all text blocks.
 
-                     The code begins in file antiweb.py at line 2394:
                      ::
 
                          def collect_blocks(self):
@@ -3369,7 +3364,6 @@ to generate rst output.</p>
                               the text block.
 
 
-                     The code begins in file antiweb.py at line 2411:
                      ::
 
                          def get_compiled_block(self, name):
@@ -3393,7 +3387,6 @@ to generate rst output.</p>
                      :return: A list of :py:class:`Line` objects representing
                               the compiled text block.
 
-                     The code begins in file antiweb.py at line 2433:
                      ::
 
                          def compile_block(self, name, block):
@@ -3413,7 +3406,6 @@ to generate rst output.</p>
                      **&lt;&lt;find_next_directive&gt;&gt;**
 
 
-                     The code begins in file antiweb.py at line 2446:
                      ::
 
                          def find_next_directive(block):
@@ -3455,7 +3447,6 @@ to generate rst output.</p>
 
           A list of errors found during generation.
 
-          The code begins in file antiweb.py at line 2180:
           ::
 
               errors = []
@@ -3464,7 +3455,6 @@ to generate rst output.</p>
 
           A dictionary of all found blocks: Name -&gt; List of Lines
 
-          The code begins in file antiweb.py at line 2187:
           ::
 
               blocks = {}
@@ -3474,7 +3464,6 @@ to generate rst output.</p>
           A set containing all block names that have been included by
           an @include directive.
 
-          The code begins in file antiweb.py at line 2194:
           ::
 
               blocks_included = set()
@@ -3484,7 +3473,6 @@ to generate rst output.</p>
           A set containing all block names that have been already
           compiled.
 
-          The code begins in file antiweb.py at line 2202:
           ::
 
               compiled_blocks = set()
@@ -3494,7 +3482,6 @@ to generate rst output.</p>
           A cache dictionary of sub documents, referenced by
           ``@include`` directives: Filename -&gt; Document
 
-          The code begins in file antiweb.py at line 2210:
           ::
 
               sub_documents = {}
@@ -3503,7 +3490,6 @@ to generate rst output.</p>
 
           A set of token names that can be used for the ``@if`` directive.
 
-          The code begins in file antiweb.py at line 2218:
           ::
 
               tokens = set()
@@ -3513,7 +3499,6 @@ to generate rst output.</p>
           A dictionary containing the macros that can be used
           by the ``@subst`` directive: Macro name -&gt; substitution.
 
-          The code begins in file antiweb.py at line 2225:
           ::
 
               macros = {}
@@ -3522,7 +3507,6 @@ to generate rst output.</p>
 
           The file name of the document&#39;s source.
 
-          The code begins in file antiweb.py at line 2233:
           ::
 
               fname = &quot;&quot;
@@ -3531,7 +3515,6 @@ to generate rst output.</p>
 
           The instance of a :py:class:`Reader` object.
 
-          The code begins in file antiweb.py at line 2240:
           ::
 
               reader = None
@@ -3541,7 +3524,6 @@ to generate rst output.</p>
           A list of :py:class:`Line` objects representing the whole documents
           split in lines.
 
-          The code begins in file antiweb.py at line 2247:
           ::
 
               lines = []
@@ -3550,7 +3532,6 @@ to generate rst output.</p>
 
           The constructor.
 
-          The code begins in file antiweb.py at line 2258:
           ::
 
               def __init__(self, text, reader, fname, tokens):
@@ -3575,7 +3556,6 @@ to generate rst output.</p>
           :param bool show_warnings: If ``True`` warnings are emitted.
           :return: A string representing the rst output.
 
-          The code begins in file antiweb.py at line 2278:
           ::
 
               def process(self, show_warnings):
@@ -3600,7 +3580,6 @@ to generate rst output.</p>
           **&lt;&lt;show warnings&gt;&gt;**
 
 
-          The code begins in file antiweb.py at line 2299:
           ::
 
               self.blocks_included.add(&quot;&quot;)           #may not cause a warning
@@ -3622,7 +3601,6 @@ to generate rst output.</p>
                                containing document.
           :return: A :py:class:`Document` reference to the sub document.
 
-          The code begins in file antiweb.py at line 2316:
           ::
 
               def get_subdoc(self, rpath):
@@ -3639,7 +3617,6 @@ to generate rst output.</p>
           **&lt;&lt;return from cache if possible&gt;&gt;**
 
 
-          The code begins in file antiweb.py at line 2327:
           ::
 
               try:
@@ -3654,7 +3631,6 @@ to generate rst output.</p>
           **&lt;&lt;insert macros function&gt;&gt;**
 
 
-          The code begins in file antiweb.py at line 2333:
           ::
 
               def insert_macros(subdoc):
@@ -3672,7 +3648,6 @@ to generate rst output.</p>
           **&lt;&lt;read the source file&gt;&gt;**
 
 
-          The code begins in file antiweb.py at line 2342:
           ::
 
               head, tail = os.path.split(self.fname)
@@ -3702,7 +3677,6 @@ to generate rst output.</p>
           :param integer line: The line number that causes the error.
           :param string text: An error text.
 
-          The code begins in file antiweb.py at line 2371:
           ::
 
               def add_error(self, line, text):
@@ -3714,7 +3688,6 @@ to generate rst output.</p>
 
           Raises a ``WebError`` exception if error were found.
 
-          The code begins in file antiweb.py at line 2384:
           ::
 
               def check_errors(self):
@@ -3726,7 +3699,6 @@ to generate rst output.</p>
 
           Collects all text blocks.
 
-          The code begins in file antiweb.py at line 2394:
           ::
 
               def collect_blocks(self):
@@ -3751,7 +3723,6 @@ to generate rst output.</p>
                    the text block.
 
 
-          The code begins in file antiweb.py at line 2411:
           ::
 
               def get_compiled_block(self, name):
@@ -3775,7 +3746,6 @@ to generate rst output.</p>
           :return: A list of :py:class:`Line` objects representing
                    the compiled text block.
 
-          The code begins in file antiweb.py at line 2433:
           ::
 
               def compile_block(self, name, block):
@@ -3795,7 +3765,6 @@ to generate rst output.</p>
           **&lt;&lt;find_next_directive&gt;&gt;**
 
 
-          The code begins in file antiweb.py at line 2446:
           ::
 
               def find_next_directive(block):
@@ -3836,7 +3805,6 @@ to generate rst output.</p>
 <dt id="Document.errors">
 <code class="descname">errors</code><a class="headerlink" href="#Document.errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of errors found during generation.</p>
-<p>The code begins in file antiweb.py at line 2180:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
 </div>
@@ -3846,7 +3814,6 @@ to generate rst output.</p>
 <dt id="Document.blocks">
 <code class="descname">blocks</code><a class="headerlink" href="#Document.blocks" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary of all found blocks: Name -&gt; List of Lines</p>
-<p>The code begins in file antiweb.py at line 2187:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
 </pre></div>
 </div>
@@ -3857,7 +3824,6 @@ to generate rst output.</p>
 <code class="descname">blocks_included</code><a class="headerlink" href="#Document.blocks_included" title="Permalink to this definition">¶</a></dt>
 <dd><p>A set containing all block names that have been included by
 an &#64;include directive.</p>
-<p>The code begins in file antiweb.py at line 2194:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">blocks_included</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -3868,7 +3834,6 @@ an &#64;include directive.</p>
 <code class="descname">compiled_blocks</code><a class="headerlink" href="#Document.compiled_blocks" title="Permalink to this definition">¶</a></dt>
 <dd><p>A set containing all block names that have been already
 compiled.</p>
-<p>The code begins in file antiweb.py at line 2202:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">compiled_blocks</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -3879,7 +3844,6 @@ compiled.</p>
 <code class="descname">sub_documents</code><a class="headerlink" href="#Document.sub_documents" title="Permalink to this definition">¶</a></dt>
 <dd><p>A cache dictionary of sub documents, referenced by
 <code class="docutils literal"><span class="pre">&#64;include</span></code> directives: Filename -&gt; Document</p>
-<p>The code begins in file antiweb.py at line 2210:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">sub_documents</span> <span class="o">=</span> <span class="p">{}</span>
 </pre></div>
 </div>
@@ -3889,7 +3853,6 @@ compiled.</p>
 <dt id="Document.tokens">
 <code class="descname">tokens</code><a class="headerlink" href="#Document.tokens" title="Permalink to this definition">¶</a></dt>
 <dd><p>A set of token names that can be used for the <code class="docutils literal"><span class="pre">&#64;if</span></code> directive.</p>
-<p>The code begins in file antiweb.py at line 2218:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -3900,7 +3863,6 @@ compiled.</p>
 <code class="descname">macros</code><a class="headerlink" href="#Document.macros" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary containing the macros that can be used
 by the <code class="docutils literal"><span class="pre">&#64;subst</span></code> directive: Macro name -&gt; substitution.</p>
-<p>The code begins in file antiweb.py at line 2225:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">macros</span> <span class="o">=</span> <span class="p">{}</span>
 </pre></div>
 </div>
@@ -3910,7 +3872,6 @@ by the <code class="docutils literal"><span class="pre">&#64;subst</span></code>
 <dt id="Document.fname">
 <code class="descname">fname</code><a class="headerlink" href="#Document.fname" title="Permalink to this definition">¶</a></dt>
 <dd><p>The file name of the document&#8217;s source.</p>
-<p>The code begins in file antiweb.py at line 2233:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">fname</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
 </pre></div>
 </div>
@@ -3920,7 +3881,6 @@ by the <code class="docutils literal"><span class="pre">&#64;subst</span></code>
 <dt id="Document.reader">
 <code class="descname">reader</code><a class="headerlink" href="#Document.reader" title="Permalink to this definition">¶</a></dt>
 <dd><p>The instance of a <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a> object.</p>
-<p>The code begins in file antiweb.py at line 2240:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">reader</span> <span class="o">=</span> <span class="bp">None</span>
 </pre></div>
 </div>
@@ -3931,7 +3891,6 @@ by the <code class="docutils literal"><span class="pre">&#64;subst</span></code>
 <code class="descname">lines</code><a class="headerlink" href="#Document.lines" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing the whole documents
 split in lines.</p>
-<p>The code begins in file antiweb.py at line 2247:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
 </div>
@@ -3941,7 +3900,6 @@ split in lines.</p>
 <dt id="Document.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>text</em>, <em>reader</em>, <em>fname</em>, <em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>The constructor.</p>
-<p>The code begins in file antiweb.py at line 2258:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -3983,7 +3941,6 @@ split in lines.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 2278:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4018,7 +3975,6 @@ split in lines.</p>
 </pre></div>
 </td></tr></table></div>
 <p id="show-warnings"><strong>&lt;&lt;show warnings&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 2299:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4055,7 +4011,6 @@ containing document.</td>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 2316:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4072,7 +4027,6 @@ containing document.</td>
 </pre></div>
 </td></tr></table></div>
 <p id="return-from-cache-if-possible"><strong>&lt;&lt;return from cache if possible&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 2327:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_documents</span><span class="p">[</span><span class="n">rpath</span><span class="p">]</span>
 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
@@ -4080,7 +4034,6 @@ containing document.</td>
 </pre></div>
 </div>
 <p id="insert-macros-function"><strong>&lt;&lt;insert macros function&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 2333:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4097,7 +4050,6 @@ containing document.</td>
 </pre></div>
 </td></tr></table></div>
 <p id="read-the-source-file"><strong>&lt;&lt;read the source file&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 2342:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4153,7 +4105,6 @@ containing document.</td>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 2371:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line</span><span class="p">],</span> <span class="n">text</span><span class="p">))</span>
 </pre></div>
@@ -4164,7 +4115,6 @@ containing document.</td>
 <dt id="Document.check_errors">
 <code class="descname">check_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Document.check_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises a <code class="docutils literal"><span class="pre">WebError</span></code> exception if error were found.</p>
-<p>The code begins in file antiweb.py at line 2384:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">WebError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
@@ -4176,7 +4126,6 @@ containing document.</td>
 <dt id="Document.collect_blocks">
 <code class="descname">collect_blocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Document.collect_blocks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collects all text blocks.</p>
-<p>The code begins in file antiweb.py at line 2394:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4214,7 +4163,6 @@ the text block.</td>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 2411:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4255,7 +4203,6 @@ the compiled text block.</p>
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 2433:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4280,7 +4227,6 @@ the compiled text block.</p>
 </pre></div>
 </td></tr></table></div>
 <p id="find-next-directive"><strong>&lt;&lt;find_next_directive&gt;&gt;</strong></p>
-<p>The code begins in file antiweb.py at line 2446:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4311,7 +4257,6 @@ the compiled text block.</p>
 <dt id="Line">
 <em class="property">class </em><code class="descname">Line</code><span class="sig-paren">(</span><em>fname</em>, <em>index</em>, <em>text</em><span class="optional">[</span>, <em>directives</em><span class="optional">[</span>, <em>type</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Line" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class represents a text line.</p>
-<p>The code begins in file antiweb.py at line 1880:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4364,7 +4309,6 @@ the compiled text block.</p>
 <code class="descname">_directives</code><a class="headerlink" href="#Line._directives" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of <a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects, sorted
 by their priority.</p>
-<p>The code begins in file antiweb.py at line 1911:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">_directives</span> <span class="o">=</span> <span class="p">()</span>
 </pre></div>
 </div>
@@ -4374,7 +4318,6 @@ by their priority.</p>
 <dt id="Line.fname">
 <code class="descname">fname</code><a class="headerlink" href="#Line.fname" title="Permalink to this definition">¶</a></dt>
 <dd><p>A string of the source&#8217;s file name the line belongs to.</p>
-<p>The code begins in file antiweb.py at line 1919:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">fname</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
 </pre></div>
 </div>
@@ -4384,7 +4327,6 @@ by their priority.</p>
 <dt id="Line.index">
 <code class="descname">index</code><a class="headerlink" href="#Line.index" title="Permalink to this definition">¶</a></dt>
 <dd><p>The integer line index of the directive within the current block.</p>
-<p>The code begins in file antiweb.py at line 1926:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
 </div>
@@ -4394,7 +4336,6 @@ by their priority.</p>
 <dt id="Line.text">
 <code class="descname">text</code><a class="headerlink" href="#Line.text" title="Permalink to this definition">¶</a></dt>
 <dd><p>A string containing the source line.</p>
-<p>The code begins in file antiweb.py at line 1933:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
 </pre></div>
 </div>
@@ -4410,7 +4351,6 @@ by their priority.</p>
 <li><code class="docutils literal"><span class="pre">c</span></code> stands for a code line</li>
 </ul>
 </div></blockquote>
-<p>The code begins in file antiweb.py at line 1940:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nb">type</span> <span class="o">=</span> <span class="s">&quot;d&quot;</span>
 </pre></div>
 </div>
@@ -4422,7 +4362,6 @@ by their priority.</p>
 <dd></dd></dl>
 
 <p>An integer representing the line&#8217;s indentation.</p>
-<p>The code begins in file antiweb.py at line 2068:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">())</span>
@@ -4434,7 +4373,6 @@ by their priority.</p>
 <dd></dd></dl>
 
 <p>A string representation of the line&#8217;s indentation.</p>
-<p>The code begins in file antiweb.py at line 2079:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">sindent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">indent</span>
@@ -4446,7 +4384,6 @@ by their priority.</p>
 <dd></dd></dl>
 
 <p>A sorted sequence of <a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects.</p>
-<p>The code begins in file antiweb.py at line 2090:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4472,7 +4409,6 @@ by their priority.</p>
 <dt id="Line.directive">
 <code class="descname">directive</code><a class="headerlink" href="#Line.directive" title="Permalink to this definition">¶</a></dt>
 <dd><p>The first of the contained <a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects.</p>
-<p>The code begins in file antiweb.py at line 2108:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">directive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -4484,7 +4420,6 @@ by their priority.</p>
 <dt id="Line.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>index</em>, <em>text</em><span class="optional">[</span>, <em>directives</em><span class="optional">[</span>, <em>type</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Line.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>The constructor.</p>
-<p>The code begins in file antiweb.py at line 1953:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4521,7 +4456,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 1967:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4559,7 +4493,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 </tr>
 </tbody>
 </table>
-<p>The code begins in file antiweb.py at line 1992:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4581,7 +4514,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <dt id="Line.like">
 <code class="descname">like</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Line.like" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clones the Line with a different text.</p>
-<p>The code begins in file antiweb.py at line 2012:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">Line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
 </pre></div>
@@ -4592,7 +4524,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <dt id="Line.indented">
 <code class="descname">indented</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Line.indented" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the text, with the same indentation as <code class="docutils literal"><span class="pre">self</span></code>.</p>
-<p>The code begins in file antiweb.py at line 2022:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">indented</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sindent</span> <span class="o">+</span> <span class="n">text</span>
 </pre></div>
@@ -4603,7 +4534,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <dt id="Line.change_indent">
 <code class="descname">change_indent</code><span class="sig-paren">(</span><em>delta</em><span class="sig-paren">)</span><a class="headerlink" href="#Line.change_indent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes the lines indentation.</p>
-<p>The code begins in file antiweb.py at line 2031:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4629,7 +4559,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <dt id="Line.__len__">
 <code class="descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Line.__len__" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the length of the stripped <a class="reference internal" href="#Line.text" title="Line.text"><code class="xref py py-attr docutils literal"><span class="pre">text</span></code></a>.</p>
-<p>The code begins in file antiweb.py at line 2047:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
 </pre></div>
@@ -4640,7 +4569,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <dt id="Line.__repr__">
 <code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Line.__repr__" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns a textual representation of the line.</p>
-<p>The code begins in file antiweb.py at line 2057:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="s">&quot;Line(</span><span class="si">%i</span><span class="s">, </span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">))</span>
 </pre></div>
@@ -4653,7 +4581,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 </div>
 <div class="section" id="file-layout">
 <h2>File Layout<a class="headerlink" href="#file-layout" title="Permalink to this headline">¶</a></h2>
-<p>The code begins in file antiweb.py at line 284:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4671,7 +4598,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 &lt;&lt;imports&gt;&gt;
 ===========
 &#8216;&#8217;&#8216;</p>
-<p>The code begins in file antiweb.py at line 291:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4695,7 +4621,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 &lt;&lt;management&gt;&gt;
 ==============
 &#8216;&#8217;&#8216;</p>
-<p>The code begins in file antiweb.py at line 307:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -4715,7 +4640,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 &lt;&lt;directives&gt;&gt;
 ==============</p>
 <p>&#8216;&#8217;&#8216;</p>
-<p>The code begins in file antiweb.py at line 323:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4791,7 +4715,6 @@ directives = {
 &lt;&lt;readers&gt;&gt;
 ===========
 &#8216;&#8217;&#8216;</p>
-<p>The code begins in file antiweb.py at line 1268:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4817,7 +4740,6 @@ readers = {
 &lt;&lt;document&gt;&gt;
 ============
 &#8216;&#8217;&#8216;</p>
-<p>The code begins in file antiweb.py at line 1904:</p>
 <div class="highlight-python"><div class="highlight"><pre>&lt;&lt;Line&gt;&gt;
 &lt;&lt;Document&gt;&gt;
 &lt;&lt;generate&gt;&gt;
@@ -4825,7 +4747,6 @@ readers = {
 </div>
 <div class="section" id="command-line">
 <h3>&lt;&lt;command line&gt;&gt;<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
-<p>The code begins in file antiweb.py at line 2563:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4930,112 +4851,67 @@ a more advances reader is <code class="xref py py-class docutils literal"><span 
 
 
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">antiweb</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#preparing-the-rst-files">Preparing the .rst files</a></li>
-<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
-<li><a class="reference internal" href="#start">&#64; start</a></li>
-<li><a class="reference internal" href="#rstart">&#64; rstart</a></li>
-<li><a class="reference internal" href="#cstart">&#64; cstart</a></li>
-<li><a class="reference internal" href="#include">&#64; include</a></li>
-<li><a class="reference internal" href="#code">&#64; code</a></li>
-<li><a class="reference internal" href="#indent">&#64; indent</a></li>
-<li><a class="reference internal" href="#indentation-matters">Indentation matters!</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#antiweb-documentation">Antiweb documentation</a></li>
-<li><a class="reference internal" href="#objects">Objects</a></li>
-<li><a class="reference internal" href="#directives">Directives</a><ul>
-<li><a class="reference internal" href="#directive">Directive</a></li>
-<li><a class="reference internal" href="#namedirective">NameDirective</a></li>
-<li><a class="reference internal" href="#id2">Start</a></li>
-<li><a class="reference internal" href="#id3">RStart</a></li>
-<li><a class="reference internal" href="#id4">CStart</a></li>
-<li><a class="reference internal" href="#end">End</a></li>
-<li><a class="reference internal" href="#id5">Include</a></li>
-<li><a class="reference internal" href="#rinclude">RInclude</a></li>
-<li><a class="reference internal" href="#id6">Code</a></li>
-<li><a class="reference internal" href="#edoc">Edoc</a></li>
-<li><a class="reference internal" href="#if">If</a></li>
-<li><a class="reference internal" href="#fi">Fi</a></li>
-<li><a class="reference internal" href="#ignore">Ignore</a></li>
-<li><a class="reference internal" href="#define">Define</a></li>
-<li><a class="reference internal" href="#enifed">Enifed</a></li>
-<li><a class="reference internal" href="#subst">Subst</a></li>
-<li><a class="reference internal" href="#id7">Indent</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#readers">Readers</a><ul>
-<li><a class="reference internal" href="#reader">Reader</a></li>
-<li><a class="reference internal" href="#creader">CReader</a></li>
-<li><a class="reference internal" href="#pythonreader">PythonReader</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#document">Document</a><ul>
-<li><a class="reference internal" href="#id8">Document</a></li>
-<li><a class="reference internal" href="#line">Line</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#file-layout">File Layout</a><ul>
-<li><a class="reference internal" href="#command-line">&lt;&lt;command line&gt;&gt;</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a></li>
-</ul>
-</li>
-</ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Finale_sphinx&#8217;s documentation!</a></li>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/antiweb.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Finale_sphinx’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Phil.
     </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2015, Phil.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
-      
-      |
-      <a href="_sources/antiweb.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
-    
-  </body>
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>

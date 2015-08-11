@@ -8,3 +8,6 @@ Changelog:
 			
 			11.08.2015:
 				Added a Getting Started section for quick use
+			
+			11.08.2015:
+				"Installation" and "Getting Started" improvements
