@@ -46,22 +46,22 @@
 documentaries of Python 2 programs.</p>
 <blockquote>
 <div><ul class="simple">
-<li>Install Python 3.4</li>
-<li>After installing Python, run below commands in cmd (you have to navigate to Python34\Scripts first)</li>
+<li>Step 1: Install Python 3.4</li>
+<li>Step 2: After installing Python, run below commands in cmd (you have to navigate to Python\Scripts first)</li>
 </ul>
 <p>The code begins in file antiweb.py at line 2646:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install sphinx
 </pre></div>
 </div>
 <ul class="simple">
-<li><code class="xref py py-class docutils literal"><span class="pre">IMPORTANT</span></code>: If you get a connection error the reason is most likely your proxy. You then have to use a tool like &#8220;cntlm&#8221; and add a proxy flag when running pip, example:</li>
+<li>IMPORTANT: If you get a connection error the reason is most likely your proxy. You then have to use a tool like &#8220;cntlm&#8221; and add a proxy flag when running pip, example:</li>
 </ul>
 <p>The code begins in file antiweb.py at line 2652:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install sphinx --proxy http://localhost:8123 //in case you are using cntlm your proxy will be localhost
 </pre></div>
 </div>
 <p>The code begins in file antiweb.py at line 2656:</p>
-<div class="highlight-python"><div class="highlight"><pre>pip uninstall babel //uninstall babel because of incompatibility
+<div class="highlight-python"><div class="highlight"><pre>pip uninstall babel //uninstall it because of incompatibility
 </pre></div>
 </div>
 <p>The code begins in file antiweb.py at line 2660:</p>
@@ -69,10 +69,13 @@ documentaries of Python 2 programs.</p>
 </pre></div>
 </div>
 <ul>
-<li><p class="first">Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it (however, say yes to all extensions suggested during the process). The sphinx quickstart created a project folder for you, open the conf.py which is in that folder</p>
+<li><p class="first">Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it. (However, say yes to all extensions suggested during the process)</p>
+</li>
+<li><p class="first">The sphinx quickstart created a project folder for you, open the conf.py which is in that folder</p>
 </li>
 <li><p class="first">You should find something like this:</p>
 <blockquote>
+<div><blockquote>
 <div><p>The code begins in file antiweb.py at line 2668:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -96,11 +99,7 @@ documentaries of Python 2 programs.</p>
 </pre></div>
 </td></tr></table></div>
 </div></blockquote>
-</li>
-</ul>
-<blockquote>
-<div><ul>
-<li><p class="first">Add &#8216;sphinx.ext.graphviz&#8217; at the end and it will look like this:</p>
+<p>Add &#8216;sphinx.ext.graphviz&#8217; at the end and it will look like this:</p>
 <blockquote>
 <div><p>The code begins in file antiweb.py at line 2683:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -127,79 +126,45 @@ documentaries of Python 2 programs.</p>
 </pre></div>
 </td></tr></table></div>
 </div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">Download the Graphviz msi installer from here: <a class="reference external" href="http://www.graphviz.org/Download_windows.php">http://www.graphviz.org/Download_windows.php</a></p>
+</li>
+<li><p class="first">After installing Graphviz you will find a Graphviz folder inside your Program folder, open it</p>
+</li>
+<li><p class="first">Copy the content of its bin folder to Python\Scripts</p>
 </li>
 </ul>
-</div></blockquote>
-<ul class="simple">
-<li>Download the Graphviz msi installer from here: <a class="reference external" href="http://www.graphviz.org/Download_windows.php">http://www.graphviz.org/Download_windows.php</a> After installing Graphviz you will find a Graphviz folder inside your Program folder, open it</li>
-</ul>
-<blockquote>
-<div><ul class="simple">
-<li>Copy the content of its bin folder to Python34\Scripts</li>
-</ul>
-</div></blockquote>
 </div></blockquote>
 </div>
 <div class="section" id="preparing-the-rst-files">
 <h2>Preparing the .rst files<a class="headerlink" href="#preparing-the-rst-files" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>Copy the antiweb.py file from my GitHub repository into the Python34 folder</li>
+<li>Download antiweb from here <a class="reference external" href="https://github.com/Yarmek/antiweb">https://github.com/Yarmek/antiweb</a> and copy the antiweb.py file into the Python folder</li>
+<li>You can now create a .rst file out of a C, C++, C# and py files.</li>
+<li>To do that, simply use following command:</li>
 </ul>
-<blockquote>
-<div><ul class="simple">
-<li>You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:</li>
-</ul>
-</div></blockquote>
-<p>The code begins in file antiweb.py at line 2710:</p>
+<p>The code begins in file antiweb.py at line 2709:</p>
 <div class="highlight-python"><div class="highlight"><pre>python antiweb.py &quot;PATH TO THE FILE&quot;
 </pre></div>
 </div>
 <ul class="simple">
 <li>You will then find a new file which is called &#8220;Filename&#8221;.rst -&gt; This file will be used in Sphinx to generate the documentation</li>
-<li>Sphinx also created a index.rst file for you when you executed sphinx-quickstart.exe. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:</li>
+<li>Sphinx also created a index.rst file for you. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2718:</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17</pre></div></td><td class="code"><div class="highlight"><pre>   Welcome to Finale_sphinx&#39;s documentation!
-=========================================
+<p>The code begins in file antiweb.py at line 2716:</p>
+<div class="highlight-python"><div class="highlight"><pre>.. toctree::
+:maxdepth: 2
 
-Contents:
-
-   .. toctree::
-      :maxdepth: 2
-
-      filename
-
-
-   Indices and tables
-   ==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+FILENAME
 </pre></div>
-</td></tr></table></div>
+</div>
 <ul class="simple">
 <li>You can add multiple files, they will then be listed in the generated index of your project</li>
 <li>It is also possible to use Graphviz for graph visualizatin. A proper graph should look like this:</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2740:</p>
+<p>The code begins in file antiweb.py at line 2725:</p>
 <div class="highlight-python"><div class="highlight"><pre>.. digraph:: name
 
  &quot;bubble 1&quot; -&gt; &quot;bubble 2&quot; -&gt; &quot;bubble 3&quot; -&gt; &quot;bubble 1&quot;;
@@ -217,15 +182,15 @@ Contents:
 <li>For more informatin on Graphviz visit <a class="reference external" href="http://www.graphviz.org/">http://www.graphviz.org/</a></li>
 <li>When you have included the rst file in the index file, you can run Sphinx to finally create your documentation, here is an example:</li>
 </ul>
-<p>The code begins in file antiweb.py at line 2754:</p>
+<p>The code begins in file antiweb.py at line 2739:</p>
 <div class="highlight-python"><div class="highlight"><pre>sphinx-build.exe -b html sphinx\source sphinx\source -D graphviz_dot=dot.exe
 </pre></div>
 </div>
 <ul class="simple">
-<li>The <code class="docutils literal"><span class="pre">-b</span></code> flag indicates the builder to use</li>
-<li><code class="docutils literal"><span class="pre">sphinx\source</span></code> indicates the path to the index.rst</li>
-<li><code class="docutils literal"><span class="pre">sphinx\source</span></code> indicates the output path (you can change your output path to every path where you want the final documentation)</li>
-<li><code class="docutils literal"><span class="pre">-D</span> <span class="pre">graphviz_dot=dot.exe</span></code> indicates the path for the graphviz virtualizer dot.exe (which you already copied to the Scripts folder)</li>
+<li>The &#8216;&#8217;-b&#8217;&#8217; flag indicates the builder to use</li>
+<li>&#8216;&#8217;sphinx\source&#8217;&#8217; indicates the path to the index.rst</li>
+<li>&#8216;&#8217;sphinx\source&#8217;&#8217; this one indicates the output path (you can change your ouput path to every path where you want the final documentation)</li>
+<li>&#8216;&#8217;-D graphviz_dot=dot.exe&#8217;&#8217; indicates the path for the graphviz virtualizer dot.exe</li>
 <li>After sphinx has finished you will find some .html files in the output path. This is your finished documentation.</li>
 </ul>
 </div></blockquote>
@@ -233,102 +198,50 @@ Contents:
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Every &#64; directive in antiweb has to be a comment in order to be accepted by antiweb. <code class="xref py py-class docutils literal"><span class="pre">However,</span> <span class="pre">antiweb</span> <span class="pre">will</span> <span class="pre">still</span> <span class="pre">recognize</span> <span class="pre">but</span> <span class="pre">not</span> <span class="pre">accept</span> <span class="pre">directives</span> <span class="pre">which</span> <span class="pre">aren't</span> <span class="pre">comments,</span>
-<span class="pre">so</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">examples</span> <span class="pre">here</span> <span class="pre">I</span> <span class="pre">will</span> <span class="pre">leave</span> <span class="pre">1</span> <span class="pre">free</span> <span class="pre">space</span> <span class="pre">between</span> <span class="pre">the</span> <span class="pre">&#64;</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">directive</span> <span class="pre">name</span> <span class="pre">but</span> <span class="pre">you</span> <span class="pre">should</span> <span class="pre">NOT</span> <span class="pre">do</span> <span class="pre">so</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">file.</span></code>
-There are different directives for you to design and structure your documentation.</div></blockquote>
-<div class="section" id="start">
-<h3>&#64; start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>The <code class="docutils literal"><span class="pre">&#64;start</span></code> directive defines the beginning of
-a text block. It is called with an argument defining
-the name of the text block. There are two special text
-blocks:</p>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">()</span></code> The empty one defining the main text block</li>
-<li><code class="docutils literal"><span class="pre">(__macro__)</span></code> defining a text block for implementing macros.</li>
-</ul>
-</div></blockquote>
-<p>There are several possibilities to end a text block.</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>The end of the file</li>
-<li>A line with a smaller indentation as the <code class="docutils literal"><span class="pre">&#64;start</span></code> directive.</li>
-<li>Another start directive with same indentation.</li>
-<li>An unnamed end (<code class="docutils literal"><span class="pre">&#64;</span></code>) directive with the same indentation as
-the <code class="docutils literal"><span class="pre">&#64;start</span></code> directive.</li>
-<li>A named end directive closing this block or an outer block.</li>
-</ol>
-</div></blockquote>
-<p>Text blocks defined by <code class="docutils literal"><span class="pre">&#64;start</span></code> can be nested.</p>
-</div></blockquote>
-</div>
-<div class="section" id="rstart">
-<h3>&#64; rstart<a class="headerlink" href="#rstart" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>The <code class="docutils literal"><span class="pre">&#64;rstart</span></code> directive works like the <code class="docutils literal"><span class="pre">&#64;start</span></code> directive. While <code class="docutils literal"><span class="pre">&#64;start</span></code> removes it’s block completely from the containing block,
-<code class="docutils literal"><span class="pre">&#64;rstart</span></code> replaces the lines with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</span></code> - Sentinel.</p>
-<p>The code begins in file antiweb.py at line 2788:</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre>try:
-     with open(fname, &quot;r&quot;) as f:
-         text = f.read()
- except IOError:
-   &lt;&lt;name&gt;&gt;
-     sys.exit(1)
-</pre></div>
-</td></tr></table></div>
-</div></blockquote>
-</div>
-<div class="section" id="cstart">
-<h3>&#64; cstart<a class="headerlink" href="#cstart" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>The <code class="docutils literal"><span class="pre">&#64;cstart</span></code> directive can be used as a shortcut for:</p>
-<p>The code begins in file antiweb.py at line 2806:</p>
-<div class="highlight-python"><div class="highlight"><pre>@ start(block)
-@ code
+<div><p>Every &#64; directive in antiweb has to be a comment in order to be recognized by antiweb.
+There are different directives for you to design and structure your documentation. You must begin every file with:</p>
+<p>The code begins in file antiweb.py at line 2761:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   @start()</span>
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-</div></blockquote>
-</div>
-<div class="section" id="include">
-<h3>&#64; include<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>Once you have created a block  you can include it with the <code class="docutils literal"><span class="pre">&#64;include</span></code> directive:</p>
-<p>The code begins in file antiweb.py at line 2816:</p>
-<div class="highlight-python"><div class="highlight"><pre>@ include(Blockname)
+<p>This directive tells antiweb the starting point. From here on you can create and include Blocks. A Block is limited by:</p>
+<p>The code begins in file antiweb.py at line 2769:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   @start(Blockname)</span>
+
+<span class="sd">   @(Blockname)</span>
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-</div></blockquote>
+<p>Once you have created a block like this you can include it:</p>
+<p>The code begins in file antiweb.py at line 2779:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   @include(Blockname)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
 </div>
-<div class="section" id="code">
-<h3>&#64; code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>Of course you want parts of your source code in a Block in order to e.g. describe the function of it. You can do that by following this example, a code block starts and ends with those directives. The code in between will be normally recognized as code but also included in the documentation:</p>
-<p>The code begins in file antiweb.py at line 2826:</p>
+<p>Of course you want parts of your source code in a Block in order to e.g. describe the function of it. You can do that by following this example:</p>
+<p>The code begins in file antiweb.py at line 2787:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre>@ code
-#End of comment section
-
-Put your code here
-
-#Beginning of next comment section
-@ edoc
+7</pre></div></td><td class="code"><div class="highlight"><pre>&quot;&quot;&quot;
+   @code #This still has to be a comment
+   &quot;&quot;&quot;
+   Put your code here
+   &quot;&quot;&quot;
+   @edoc #This is also a comment again
+&quot;&quot;&quot;
 </pre></div>
 </td></tr></table></div>
-<p>There are also different types of titles with different indentation in the index. antiweb wants the indication marks, e.g. #### to
-be exactly as long as the title. Creating a headline below a higher level headline makes it a sub-headline of the higher one, also
-shown in the index table</p>
-<p>The code begins in file antiweb.py at line 2841:</p>
+<p>A code block starts and ends with above directives. The code in between will be normally recognized as code but also included in the documentation.
+There are also different types of titles with different indentation in the index</p>
+<p>The code begins in file antiweb.py at line 2799:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -338,33 +251,29 @@ shown in the index table</p>
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre>#####
-Title #This is the top level headline
-#####
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 
-*****
-Title #This is the mid level headline
-*****
+<span class="sd">Title #This is the first headline</span>
+<span class="sd">=====</span>
 
-Title #This is the low level headline
-=====
+<span class="sd">*****</span>
+<span class="sd">Title #This is the second headline</span>
+<span class="sd">*****</span>
+
+<span class="sd">#####</span>
+<span class="sd">Title #This is the third and lowest headline</span>
+<span class="sd">#####</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </td></tr></table></div>
 </div></blockquote>
-</div>
-<div class="section" id="indent">
-<h3>&#64; indent<a class="headerlink" href="#indent" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div>You can indicate antiweb to make a manual indentation with the <code class="docutils literal"><span class="pre">&#64;indent</span> <span class="pre">spaces</span></code> directive, replacing <code class="docutils literal"><span class="pre">spaces</span></code> by three would indent the text by three spaces</div></blockquote>
-</div>
-<div class="section" id="indentation-matters">
-<h3>Indentation matters!<a class="headerlink" href="#indentation-matters" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div>In sphinx and antiweb, the indentation matters. To effectively nest blocks, create sub headlines and more you have to keep the indentation in mind. To nest a block or headline you have to indent it farther than its parent. In addition, your documentation looks much cleaner when structured like this.</div></blockquote>
-</div>
-</div>
 <div class="section" id="antiweb-documentation">
-<h2>Antiweb documentation<a class="headerlink" href="#antiweb-documentation" title="Permalink to this headline">¶</a></h2>
+<h3>Antiweb documentation<a class="headerlink" href="#antiweb-documentation" title="Permalink to this headline">¶</a></h3>
 <p>If you just want to generate the documentation from a source file use
 the following function:</p>
 <dl class="function">
@@ -417,7 +326,7 @@ via the logging module.</li>
 
 </div>
 <div class="section" id="objects">
-<h2>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h2>
+<h3>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h3>
 <div class="compound">
 <p>The graph below show the main objects of antiweb:</p>
 </div>
@@ -454,9 +363,12 @@ code. The source code is split in text blocks which consists of several
 </div></blockquote>
 </div>
 <div class="section" id="directives">
-<span id="id1"></span><h2>Directives<a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h3>Directives<a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
 <div class="section" id="directive">
-<h3>Directive<a class="headerlink" href="#directive" title="Permalink to this headline">¶</a></h3>
+<h1>Directive<a class="headerlink" href="#directive" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Directive">
 <em class="property">class </em><code class="descname">Directive</code><span class="sig-paren">(</span><em>line</em><span class="optional">[</span>, <em>mo</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Directive" title="Permalink to this definition">¶</a></dt>
@@ -644,7 +556,7 @@ directives.</p>
 
 </div>
 <div class="section" id="namedirective">
-<h3>NameDirective<a class="headerlink" href="#namedirective" title="Permalink to this headline">¶</a></h3>
+<h1>NameDirective<a class="headerlink" href="#namedirective" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="NameDirective">
 <em class="property">class </em><code class="descname">NameDirective</code><span class="sig-paren">(</span><em>line</em>, <em>mo</em><span class="sig-paren">)</span><a class="headerlink" href="#NameDirective" title="Permalink to this definition">¶</a></dt>
@@ -698,8 +610,8 @@ a string defining the name.</li>
 </dd></dl>
 
 </div>
-<div class="section" id="id2">
-<h3>Start<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="start">
+<h1>Start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Start">
 <em class="property">class </em><code class="descname">Start</code><a class="headerlink" href="#Start" title="Permalink to this definition">¶</a></dt>
@@ -914,8 +826,8 @@ the containing block.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="id3">
-<h3>RStart<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="rstart">
+<h1>RStart<a class="headerlink" href="#rstart" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="RStart">
 <em class="property">class </em><code class="descname">RStart</code><a class="headerlink" href="#RStart" title="Permalink to this definition">¶</a></dt>
@@ -944,8 +856,8 @@ with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</sp
 </dd></dl>
 
 </div>
-<div class="section" id="id4">
-<h3>CStart<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="cstart">
+<h1>CStart<a class="headerlink" href="#cstart" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="CStart">
 <em class="property">class </em><code class="descname">CStart</code><a class="headerlink" href="#CStart" title="Permalink to this definition">¶</a></dt>
@@ -994,7 +906,7 @@ with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</sp
 
 </div>
 <div class="section" id="end">
-<h3>End<a class="headerlink" href="#end" title="Permalink to this headline">¶</a></h3>
+<h1>End<a class="headerlink" href="#end" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="End">
 <em class="property">class </em><code class="descname">End</code><a class="headerlink" href="#End" title="Permalink to this definition">¶</a></dt>
@@ -1062,8 +974,8 @@ with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</sp
 </dd></dl>
 
 </div>
-<div class="section" id="id5">
-<h3>Include<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="include">
+<h1>Include<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Include">
 <em class="property">class </em><code class="descname">Include</code><a class="headerlink" href="#Include" title="Permalink to this definition">¶</a></dt>
@@ -1144,7 +1056,7 @@ the directive inserts the text block of the specified file.</p>
 
 </div>
 <div class="section" id="rinclude">
-<h3>RInclude<a class="headerlink" href="#rinclude" title="Permalink to this headline">¶</a></h3>
+<h1>RInclude<a class="headerlink" href="#rinclude" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="RInclude">
 <em class="property">class </em><code class="descname">RInclude</code><a class="headerlink" href="#RInclude" title="Permalink to this definition">¶</a></dt>
@@ -1187,8 +1099,8 @@ the directive inserts the text block of the specified file.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="id6">
-<h3>Code<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="code">
+<h1>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Code">
 <em class="property">class </em><code class="descname">Code</code><a class="headerlink" href="#Code" title="Permalink to this definition">¶</a></dt>
@@ -1263,7 +1175,7 @@ and can be defined by a <code class="docutils literal"><span class="pre">&#64;de
 
 </div>
 <div class="section" id="edoc">
-<h3>Edoc<a class="headerlink" href="#edoc" title="Permalink to this headline">¶</a></h3>
+<h1>Edoc<a class="headerlink" href="#edoc" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Edoc">
 <em class="property">class </em><code class="descname">Edoc</code><a class="headerlink" href="#Edoc" title="Permalink to this definition">¶</a></dt>
@@ -1282,7 +1194,7 @@ and can be defined by a <code class="docutils literal"><span class="pre">&#64;de
 
 </div>
 <div class="section" id="if">
-<h3>If<a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h3>
+<h1>If<a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="If">
 <em class="property">class </em><code class="descname">If</code><a class="headerlink" href="#If" title="Permalink to this definition">¶</a></dt>
@@ -1340,7 +1252,7 @@ by the <code class="docutils literal"><span class="pre">--token</span></code> op
 
 </div>
 <div class="section" id="fi">
-<h3>Fi<a class="headerlink" href="#fi" title="Permalink to this headline">¶</a></h3>
+<h1>Fi<a class="headerlink" href="#fi" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Fi">
 <em class="property">class </em><code class="descname">Fi</code><a class="headerlink" href="#Fi" title="Permalink to this definition">¶</a></dt>
@@ -1359,7 +1271,7 @@ by the <code class="docutils literal"><span class="pre">--token</span></code> op
 
 </div>
 <div class="section" id="ignore">
-<h3>Ignore<a class="headerlink" href="#ignore" title="Permalink to this headline">¶</a></h3>
+<h1>Ignore<a class="headerlink" href="#ignore" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Ignore">
 <em class="property">class </em><code class="descname">Ignore</code><a class="headerlink" href="#Ignore" title="Permalink to this definition">¶</a></dt>
@@ -1379,7 +1291,7 @@ documentation output. It can be used for commentaries.</p>
 
 </div>
 <div class="section" id="define">
-<h3>Define<a class="headerlink" href="#define" title="Permalink to this headline">¶</a></h3>
+<h1>Define<a class="headerlink" href="#define" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Define">
 <em class="property">class </em><code class="descname">Define</code><a class="headerlink" href="#Define" title="Permalink to this definition">¶</a></dt>
@@ -1446,7 +1358,7 @@ directive.</p>
 
 </div>
 <div class="section" id="enifed">
-<h3>Enifed<a class="headerlink" href="#enifed" title="Permalink to this headline">¶</a></h3>
+<h1>Enifed<a class="headerlink" href="#enifed" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Enifed">
 <em class="property">class </em><code class="descname">Enifed</code><a class="headerlink" href="#Enifed" title="Permalink to this definition">¶</a></dt>
@@ -1472,7 +1384,7 @@ directive.</p>
 
 </div>
 <div class="section" id="subst">
-<h3>Subst<a class="headerlink" href="#subst" title="Permalink to this headline">¶</a></h3>
+<h1>Subst<a class="headerlink" href="#subst" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Subst">
 <em class="property">class </em><code class="descname">Subst</code><a class="headerlink" href="#Subst" title="Permalink to this definition">¶</a></dt>
@@ -1556,8 +1468,8 @@ like <code class="docutils literal"><span class="pre">__line__</span> <span clas
 </dd></dl>
 
 </div>
-<div class="section" id="id7">
-<h3>Indent<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="indent">
+<h1>Indent<a class="headerlink" href="#indent" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Indent">
 <em class="property">class </em><code class="descname">Indent</code><a class="headerlink" href="#Indent" title="Permalink to this definition">¶</a></dt>
@@ -1594,14 +1506,11 @@ dedents the following lines by 4 spaces.</p>
 </td></tr></table></div>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="readers">
-<h2>Readers<a class="headerlink" href="#readers" title="Permalink to this headline">¶</a></h2>
 <p>Readers are responsible for the language dependent
 source parsing.</p>
+</div>
 <div class="section" id="reader">
-<h3>Reader<a class="headerlink" href="#reader" title="Permalink to this headline">¶</a></h3>
+<h1>Reader<a class="headerlink" href="#reader" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Reader">
 <em class="property">class </em><code class="descname">Reader</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader" title="Permalink to this definition">¶</a></dt>
@@ -1857,7 +1766,7 @@ the reader the chance to influence the final output.</p>
 
 </div>
 <div class="section" id="creader">
-<h3>CReader<a class="headerlink" href="#creader" title="Permalink to this headline">¶</a></h3>
+<h1>CReader<a class="headerlink" href="#creader" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="CReader">
 <em class="property">class </em><code class="descname">CReader</code><a class="headerlink" href="#CReader" title="Permalink to this definition">¶</a></dt>
@@ -1940,7 +1849,7 @@ the reader the chance to influence the final output.</p>
 
 </div>
 <div class="section" id="pythonreader">
-<h3>PythonReader<a class="headerlink" href="#pythonreader" title="Permalink to this headline">¶</a></h3>
+<h1>PythonReader<a class="headerlink" href="#pythonreader" title="Permalink to this headline">¶</a></h1>
 <p>&#8216;&#8217;&#8217;
 .. py:class:: PythonReader</p>
 <blockquote>
@@ -2262,11 +2171,8 @@ with antiweb directives.</p>
 
 </div></blockquote>
 </div>
-</div>
 <div class="section" id="document">
-<h2>Document<a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id8">
-<h3>Document<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h1>Document<a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Document">
 <em class="property">class </em><code class="descname">Document</code><span class="sig-paren">(</span><em>text</em>, <em>reader</em>, <em>fname</em>, <em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#Document" title="Permalink to this definition">¶</a></dt>
@@ -4306,7 +4212,7 @@ the compiled text block.</p>
 
 </div>
 <div class="section" id="line">
-<h3>Line<a class="headerlink" href="#line" title="Permalink to this headline">¶</a></h3>
+<h1>Line<a class="headerlink" href="#line" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Line">
 <em class="property">class </em><code class="descname">Line</code><span class="sig-paren">(</span><em>fname</em>, <em>index</em>, <em>text</em><span class="optional">[</span>, <em>directives</em><span class="optional">[</span>, <em>type</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Line" title="Permalink to this definition">¶</a></dt>
@@ -4649,10 +4555,6 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="file-layout">
-<h2>File Layout<a class="headerlink" href="#file-layout" title="Permalink to this headline">¶</a></h2>
 <p>The code begins in file antiweb.py at line 284:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -4823,8 +4725,9 @@ readers = {
 &lt;&lt;generate&gt;&gt;
 </pre></div>
 </div>
+</div>
 <div class="section" id="command-line">
-<h3>&lt;&lt;command line&gt;&gt;<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
+<h1>&lt;&lt;command line&gt;&gt;<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h1>
 <p>The code begins in file antiweb.py at line 2563:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -4917,15 +4820,10 @@ readers = {
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-</div>
-</div>
-<div class="section" id="how-to-add-new-languages">
-<h2>How to add new languages<a class="headerlink" href="#how-to-add-new-languages" title="Permalink to this headline">¶</a></h2>
 <p>New languages are added by writing a new Reader class
 and registering it in the readers dictionary (see readers).
 A simple Reader example is provides by <a class="reference internal" href="#CReader" title="CReader"><code class="xref py py-class docutils literal"><span class="pre">CReader</span></code></a>
 a more advances reader is <code class="xref py py-class docutils literal"><span class="pre">PythonReader</span></code>.</p>
-</div>
 </div>
 
 
@@ -4940,27 +4838,22 @@ a more advances reader is <code class="xref py py-class docutils literal"><span 
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#preparing-the-rst-files">Preparing the .rst files</a></li>
 <li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
-<li><a class="reference internal" href="#start">&#64; start</a></li>
-<li><a class="reference internal" href="#rstart">&#64; rstart</a></li>
-<li><a class="reference internal" href="#cstart">&#64; cstart</a></li>
-<li><a class="reference internal" href="#include">&#64; include</a></li>
-<li><a class="reference internal" href="#code">&#64; code</a></li>
-<li><a class="reference internal" href="#indent">&#64; indent</a></li>
-<li><a class="reference internal" href="#indentation-matters">Indentation matters!</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#antiweb-documentation">Antiweb documentation</a></li>
 <li><a class="reference internal" href="#objects">Objects</a></li>
-<li><a class="reference internal" href="#directives">Directives</a><ul>
+<li><a class="reference internal" href="#directives">Directives</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#directive">Directive</a></li>
 <li><a class="reference internal" href="#namedirective">NameDirective</a></li>
-<li><a class="reference internal" href="#id2">Start</a></li>
-<li><a class="reference internal" href="#id3">RStart</a></li>
-<li><a class="reference internal" href="#id4">CStart</a></li>
+<li><a class="reference internal" href="#start">Start</a></li>
+<li><a class="reference internal" href="#rstart">RStart</a></li>
+<li><a class="reference internal" href="#cstart">CStart</a></li>
 <li><a class="reference internal" href="#end">End</a></li>
-<li><a class="reference internal" href="#id5">Include</a></li>
+<li><a class="reference internal" href="#include">Include</a></li>
 <li><a class="reference internal" href="#rinclude">RInclude</a></li>
-<li><a class="reference internal" href="#id6">Code</a></li>
+<li><a class="reference internal" href="#code">Code</a></li>
 <li><a class="reference internal" href="#edoc">Edoc</a></li>
 <li><a class="reference internal" href="#if">If</a></li>
 <li><a class="reference internal" href="#fi">Fi</a></li>
@@ -4968,27 +4861,13 @@ a more advances reader is <code class="xref py py-class docutils literal"><span 
 <li><a class="reference internal" href="#define">Define</a></li>
 <li><a class="reference internal" href="#enifed">Enifed</a></li>
 <li><a class="reference internal" href="#subst">Subst</a></li>
-<li><a class="reference internal" href="#id7">Indent</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#readers">Readers</a><ul>
+<li><a class="reference internal" href="#indent">Indent</a></li>
 <li><a class="reference internal" href="#reader">Reader</a></li>
 <li><a class="reference internal" href="#creader">CReader</a></li>
 <li><a class="reference internal" href="#pythonreader">PythonReader</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#document">Document</a><ul>
-<li><a class="reference internal" href="#id8">Document</a></li>
+<li><a class="reference internal" href="#document">Document</a></li>
 <li><a class="reference internal" href="#line">Line</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#file-layout">File Layout</a><ul>
 <li><a class="reference internal" href="#command-line">&lt;&lt;command line&gt;&gt;</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a></li>
-</ul>
-</li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>

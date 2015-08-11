@@ -12,12 +12,23 @@
 antiweb
 #######
 
-############
+************
 Installation
-############
+************
 
 @include(installation)
 
+***************
+Getting Started
+***************
+
+@include(get_started)
+
+   * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
+
+*********************
+Antiweb documentation
+*********************
 
 If you just want to generate the documentation from a source file use 
 the following function:
@@ -315,9 +326,10 @@ class WebError(Exception):
 #@cstart(Directive)
 class Directive(object):
     #@start(directive doc)
-    #Directive
-    #=========
-
+    """
+    Directive
+    =========
+    """
     """
     .. py:class:: Directive(line[, mo])
 
@@ -2562,20 +2574,233 @@ The code begins in file @subst(__file__) at line @subst(__line__-1):
 
 #@start(installation)
 """
-The most important part of the system is Python 3. Because of incompatibility with Python 2 you can't create 
+The most important parts of the system are Python 3, Sphinx and antiweb. Because of incompatibility with Python 2 you can't create 
 documentaries of Python 2 programs.
 
 
-   * Step 1: Install Python 3.4
-   * Step 2: Wenn Python installiert ist, führen Sie folgende Befehle in cmd aus (dabei müssen Sie sich im Ordner Scripts befinden)
-   * "pip install sphinx" (bei Notwendigkeit auch mit Optionen wie z.B. --proxy "proxy")
-   * "pip uninstall babel" (wegen Inkompatibilität deinstallieren)
-   * "pip install babel==1.3" (Kompatible Version installieren)
+   * Install Python 3.4
+   * After installing Python, run below commands in cmd (you have to navigate to Python34\\Scripts first)
+   
+   @code
+   pip install sphinx 
+   @edoc
+   
+   * :py:class:`IMPORTANT`: If you get a connection error the reason is most likely your proxy. You then have to use a tool like "cntlm" and add a proxy flag when running pip, example:
+   
+   @code
+   pip install sphinx --proxy http://localhost:8123 //in case you are using cntlm your proxy will be localhost
+   @edoc
+   
+   @code
+    pip uninstall babel //uninstall babel because of incompatibility
+   @edoc
+   
+   @code 
+   pip install babel==1.3 //install compatible version 
+   @edoc
+
+   * Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it (however, say yes to all extensions suggested during the process). The sphinx quickstart created a project folder for you, open the conf.py which is in that folder
+
+   * You should find something like this: 
+
+	   @code
+	   extensions = [
+	   'sphinx.ext.autodoc',
+	   'sphinx.ext.doctest',
+	   'sphinx.ext.intersphinx',
+	   'sphinx.ext.todo',
+	   'sphinx.ext.coverage',
+	   'sphinx.ext.mathjax',
+	   'sphinx.ext.ifconfig',
+	   'sphinx.ext.viewcode',
+	   ]
+	   @edoc
+
+    * Add 'sphinx.ext.graphviz' at the end and it will look like this:
+
+	   @code
+	   extensions = [
+	   'sphinx.ext.autodoc',
+	   'sphinx.ext.doctest',
+	   'sphinx.ext.intersphinx',
+	   'sphinx.ext.todo',
+	   'sphinx.ext.coverage',
+	   'sphinx.ext.mathjax',
+	   'sphinx.ext.ifconfig',
+	   'sphinx.ext.viewcode',
+	   'sphinx.ext.graphviz',
+	   ]
+	   @edoc
+
+   * Download the Graphviz msi installer from here: http://www.graphviz.org/Download_windows.php After installing Graphviz you will find a Graphviz folder inside your Program folder, open it
+
+    * Copy the content of its bin folder to Python34\\Scripts
+
+
+************************
+Preparing the .rst files
+************************
+
+   * Copy the antiweb.py file from my GitHub repository into the Python34 folder
+   
+    * You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:
+   
+   @code
+   python antiweb.py "PATH TO THE FILE"
+   @edoc
+   
+   * You will then find a new file which is called "Filename".rst -> This file will be used in Sphinx to generate the documentation
+   
+   * Sphinx also created a index.rst file for you when you executed sphinx-quickstart.exe. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
+
+   @code
+   Welcome to Finale_sphinx's documentation!
+=========================================
+
+Contents:
+
+   .. toctree::
+      :maxdepth: 2
+
+      filename
+
+   
+   Indices and tables
+   ==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+   @edoc
+
+   * You can add multiple files, they will then be listed in the generated index of your project
+   * It is also possible to use Graphviz for graph visualizatin. A proper graph should look like this:
+   @code
+   .. digraph:: name
+
+    "bubble 1" -> "bubble 2" -> "bubble 3" -> "bubble 1";
+   @edoc
+
+   * The output from above code would look like this:
+
+   .. digraph:: test
+
+    "bubble 1" -> "bubble 2" -> "bubble 3" -> "bubble 1";
+
+   * For more informatin on Graphviz visit http://www.graphviz.org/
+   * When you have included the rst file in the index file, you can run Sphinx to finally create your documentation, here is an example:
+   @code
+   sphinx-build.exe -b html sphinx\source sphinx\source -D graphviz_dot=dot.exe
+   @edoc
+   
+   * The ``-b`` flag indicates the builder to use
+   * ``sphinx\source`` indicates the path to the index.rst
+   * ``sphinx\source`` indicates the output path (you can change your output path to every path where you want the final documentation)
+   * ``-D graphviz_dot=dot.exe`` indicates the path for the graphviz virtualizer dot.exe (which you already copied to the Scripts folder)
+   
+   * After sphinx has finished you will find some .html files in the output path. This is your finished documentation. 
+
 
 
 
 """
 #@(installation)
 
+#@start(get_started)
+"""
+   Every @ directive in antiweb has to be a comment in order to be accepted by antiweb. :py:class:`However, antiweb will still recognize but not accept directives which aren't comments, 
+   so for the examples here I will leave 1 free space between the @ and the directive name but you should NOT do so in your file.`
+   There are different directives for you to design and structure your documentation.
+   
+   
+@ start
+=======
+   
+   @include(Start user)
+   
+@ rstart
+========
+   The ``@rstart`` directive works like the ``@start`` directive. While ``@start`` removes it’s block completely from the containing block, 
+   ``@rstart`` replaces the lines with a ``<<name>>`` - Sentinel.
+   
+   @code
+   
+   try:    
+        with open(fname, "r") as f:
+            text = f.read()
+    except IOError:
+      @rstart(name)
+        logger.error("file not found: %s", fname)
+      @(name)
+        sys.exit(1)
+   
+   @edoc
+   
+@ cstart
+========
+
+   The ``@cstart`` directive can be used as a shortcut for:
+   
+   @code
+   @ start(block)
+   @ code
+   @edoc
+
+@ include
+=========
+
+   Once you have created a block  you can include it with the ``@include`` directive:
+   
+   @code
+   
+   @ include(Blockname)
+   
+   @edoc
+   
+@ code
+======
+   Of course you want parts of your source code in a Block in order to e.g. describe the function of it. You can do that by following this example, a code block starts and ends with those directives. The code in between will be normally recognized as code but also included in the documentation:
+   
+   @code
+   
+   @ code 
+   #End of comment section
+   
+   Put your code here
+   
+   #Beginning of next comment section
+   @ edoc 
+   
+   @edoc
+   
+   There are also different types of titles with different indentation in the index. antiweb wants the indication marks, e.g. #### to 
+   be exactly as long as the title. Creating a headline below a higher level headline makes it a sub-headline of the higher one, also 
+   shown in the index table
+   @code
+   
+   
+   #####
+   Title #This is the top level headline
+   #####
+   
+   *****
+   Title #This is the mid level headline
+   *****
+   
+   Title #This is the low level headline
+   =====
+   
+   @edoc
+   
+@ indent
+========
+   You can indicate antiweb to make a manual indentation with the ``@indent spaces`` directive, replacing ``spaces`` by three would indent the text by three spaces
+   
+Indentation matters!
+====================
+   
+   In sphinx and antiweb, the indentation matters. To effectively nest blocks, create sub headlines and more you have to keep the indentation in mind. To nest a block or headline you have to indent it farther than its parent. In addition, your documentation looks much cleaner when structured like this.
+"""
+#@(get_started)
 
 

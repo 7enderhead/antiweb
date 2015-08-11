@@ -9,49 +9,49 @@
 antiweb
 #######
 
-############
+************
 Installation
-############
+************
 
 The most important parts of the system are Python 3, Sphinx and antiweb. Because of incompatibility with Python 2 you can't create 
 documentaries of Python 2 programs.
 
 
-   * Step 1: Install Python 3.4
-   * Step 2: After installing Python, run below commands in cmd (you have to navigate to Python\\Scripts first)
-   
-   
-   The code begins in file antiweb.py at line 2640:
-   ::
-   
-       pip install sphinx 
-   
-   * IMPORTANT: If you get a connection error the reason is most likely your proxy. You then have to use a tool like "cntlm" and add a proxy flag when running pip, example:
+   * Install Python 3.4
+   * After installing Python, run below commands in cmd (you have to navigate to Python34\\Scripts first)
    
    
    The code begins in file antiweb.py at line 2646:
    ::
    
+       pip install sphinx 
+   
+   * :py:class:`IMPORTANT`: If you get a connection error the reason is most likely your proxy. You then have to use a tool like "cntlm" and add a proxy flag when running pip, example:
+   
+   
+   The code begins in file antiweb.py at line 2652:
+   ::
+   
        pip install sphinx --proxy http://localhost:8123 //in case you are using cntlm your proxy will be localhost
    
    
-   The code begins in file antiweb.py at line 2650:
+   The code begins in file antiweb.py at line 2656:
    ::
    
-        pip uninstall babel //uninstall it because of incompatibility
+        pip uninstall babel //uninstall babel because of incompatibility
    
    
-   The code begins in file antiweb.py at line 2654:
+   The code begins in file antiweb.py at line 2660:
    ::
    
        pip install babel==1.3 //install compatible version 
 
-   * Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it. (However, say yes to all extensions suggested during the process)
-   * The sphinx quickstart created a project folder for you, open the conf.py which is in that folder
+   * Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it (however, say yes to all extensions suggested during the process). The sphinx quickstart created a project folder for you, open the conf.py which is in that folder
+
    * You should find something like this: 
 
            
-           The code begins in file antiweb.py at line 2662:
+           The code begins in file antiweb.py at line 2668:
            ::
            
                extensions = [
@@ -65,10 +65,10 @@ documentaries of Python 2 programs.
                'sphinx.ext.viewcode',
                ]
 
-          Add 'sphinx.ext.graphviz' at the end and it will look like this:
+    * Add 'sphinx.ext.graphviz' at the end and it will look like this:
 
            
-           The code begins in file antiweb.py at line 2677:
+           The code begins in file antiweb.py at line 2683:
            ::
            
                extensions = [
@@ -83,40 +83,55 @@ documentaries of Python 2 programs.
                'sphinx.ext.graphviz',
                ]
 
-   * Download the Graphviz msi installer from here: http://www.graphviz.org/Download_windows.php
-   * After installing Graphviz you will find a Graphviz folder inside your Program folder, open it
-   * Copy the content of its bin folder to Python\\Scripts
+   * Download the Graphviz msi installer from here: http://www.graphviz.org/Download_windows.php After installing Graphviz you will find a Graphviz folder inside your Program folder, open it
+
+    * Copy the content of its bin folder to Python34\\Scripts
 
 
-########################
+************************
 Preparing the .rst files
-########################
+************************
 
-   * Download antiweb from here https://github.com/Yarmek/antiweb and copy the antiweb.py file into the Python folder
-   * You can now create a .rst file out of a C, C++, C# and py files.
-   * To do that, simply use following command:
+   * Copy the antiweb.py file from my GitHub repository into the Python34 folder
    
-   The code begins in file antiweb.py at line 2703:
-   ::
-   
-       python antiweb.py "PATH TO THE FILE"
-   
-   * You will then find a new file which is called "Filename".rst -> This file will be used in Sphinx to generate the documentation
-   * Sphinx also created a index.rst file for you. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
+    * You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:
    
    
    The code begins in file antiweb.py at line 2710:
    ::
    
+       python antiweb.py "PATH TO THE FILE"
+   
+   * You will then find a new file which is called "Filename".rst -> This file will be used in Sphinx to generate the documentation
+   
+   * Sphinx also created a index.rst file for you when you executed sphinx-quickstart.exe. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
+
+   
+   The code begins in file antiweb.py at line 2718:
+   ::
+   
+       Welcome to Finale_sphinx's documentation!
+    =========================================
+    
+    Contents:
+    
        .. toctree::
-       :maxdepth: 2
+          :maxdepth: 2
+    
+          filename
+    
        
-       FILENAME
+       Indices and tables
+       ==================
+    
+    * :ref:`genindex`
+    * :ref:`modindex`
+    * :ref:`search`
 
    * You can add multiple files, they will then be listed in the generated index of your project
    * It is also possible to use Graphviz for graph visualizatin. A proper graph should look like this:
    
-   The code begins in file antiweb.py at line 2719:
+   The code begins in file antiweb.py at line 2740:
    ::
    
        .. digraph:: name
@@ -132,15 +147,15 @@ Preparing the .rst files
    * For more informatin on Graphviz visit http://www.graphviz.org/
    * When you have included the rst file in the index file, you can run Sphinx to finally create your documentation, here is an example:
    
-   The code begins in file antiweb.py at line 2733:
+   The code begins in file antiweb.py at line 2754:
    ::
    
        sphinx-build.exe -b html sphinx\source sphinx\source -D graphviz_dot=dot.exe
    
-   * The ''-b'' flag indicates the builder to use
-   * ''sphinx\\source'' indicates the path to the index.rst
-   * ''sphinx\\source'' this one indicates the output path (you can change your ouput path to every path where you want the final documentation)
-   * ''-D graphviz_dot=dot.exe'' indicates the path for the graphviz virtualizer dot.exe
+   * The ``-b`` flag indicates the builder to use
+   * ``sphinx\source`` indicates the path to the index.rst
+   * ``sphinx\source`` indicates the output path (you can change your output path to every path where you want the final documentation)
+   * ``-D graphviz_dot=dot.exe`` indicates the path for the graphviz virtualizer dot.exe (which you already copied to the Scripts folder)
    
    * After sphinx has finished you will find some .html files in the output path. This is your finished documentation. 
 
@@ -153,6 +168,138 @@ Preparing the .rst files
    
            
            
+   
+   
+   
+   
+
+***************
+Getting Started
+***************
+
+   Every @ directive in antiweb has to be a comment in order to be accepted by antiweb. :py:class:`However, antiweb will still recognize but not accept directives which aren't comments, 
+   so for the examples here I will leave 1 free space between the @ and the directive name but you should NOT do so in your file.`
+   There are different directives for you to design and structure your documentation.
+   
+   
+@ start
+=======
+   
+      The ``@start`` directive defines the beginning of
+      a text block. It is called with an argument defining
+      the name of the text block. There are two special text
+      blocks:
+      
+         * ``()`` The empty one defining the main text block
+         * ``(__macro__)`` defining a text block for implementing macros.
+   
+      There are several possibilities to end a text block.
+   
+         1) The end of the file
+   
+         2) A line with a smaller indentation as the ``@start`` directive.
+   
+         3) Another start directive with same indentation.
+   
+         4) An unnamed end (``@``) directive with the same indentation as
+            the ``@start`` directive.
+   
+         5) A named end directive closing this block or an outer block.
+   
+   
+      Text blocks defined by ``@start`` can be nested.
+   
+@ rstart
+========
+   The ``@rstart`` directive works like the ``@start`` directive. While ``@start`` removes it’s block completely from the containing block, 
+   ``@rstart`` replaces the lines with a ``<<name>>`` - Sentinel.
+   
+   
+   The code begins in file antiweb.py at line 2788:
+   ::
+   
+       
+       try:    
+            with open(fname, "r") as f:
+                text = f.read()
+        except IOError:
+          <<name>>
+            sys.exit(1)
+       
+   
+@ cstart
+========
+
+   The ``@cstart`` directive can be used as a shortcut for:
+   
+   
+   The code begins in file antiweb.py at line 2806:
+   ::
+   
+       @ start(block)
+       @ code
+
+@ include
+=========
+
+   Once you have created a block  you can include it with the ``@include`` directive:
+   
+   
+   The code begins in file antiweb.py at line 2816:
+   ::
+   
+       
+       @ include(Blockname)
+       
+   
+@ code
+======
+   Of course you want parts of your source code in a Block in order to e.g. describe the function of it. You can do that by following this example, a code block starts and ends with those directives. The code in between will be normally recognized as code but also included in the documentation:
+   
+   
+   The code begins in file antiweb.py at line 2826:
+   ::
+   
+       
+       @ code 
+       #End of comment section
+       
+       Put your code here
+       
+       #Beginning of next comment section
+       @ edoc 
+       
+   
+   There are also different types of titles with different indentation in the index. antiweb wants the indication marks, e.g. #### to 
+   be exactly as long as the title. Creating a headline below a higher level headline makes it a sub-headline of the higher one, also 
+   shown in the index table
+   
+   The code begins in file antiweb.py at line 2841:
+   ::
+   
+       
+       
+       #####
+       Title #This is the top level headline
+       #####
+       
+       *****
+       Title #This is the mid level headline
+       *****
+       
+       Title #This is the low level headline
+       =====
+       
+   
+@ indent
+========
+   You can indicate antiweb to make a manual indentation with the ``@indent spaces`` directive, replacing ``spaces`` by three would indent the text by three spaces
+   
+Indentation matters!
+====================
+   
+   In sphinx and antiweb, the indentation matters. To effectively nest blocks, create sub headlines and more you have to keep the indentation in mind. To nest a block or headline you have to indent it farther than its parent. In addition, your documentation looks much cleaner when structured like this.
+   
    
    
    
@@ -175,7 +322,7 @@ the following function:
     :param bool show_warnings: Warnings will be written 
                                via the logging module.
     
-    The code begins in file antiweb.py at line 2465:
+    The code begins in file antiweb.py at line 2471:
     ::
     
         def generate(fname, tokens, show_warnings=False):
@@ -260,7 +407,7 @@ Directive
    :param line: the line number the directive was found
    :param mo: a match object of an regular expression
    
-   The code begins in file antiweb.py at line 320:
+   The code begins in file antiweb.py at line 326:
    ::
    
        class Directive(object):
@@ -281,7 +428,7 @@ Directive
    
       A regular expression defining the directive.
       
-      The code begins in file antiweb.py at line 357:
+      The code begins in file antiweb.py at line 363:
       ::
       
           expression = ""
@@ -291,7 +438,7 @@ Directive
       An integer process priority. Directives with a lower priority
       will be processed earlier.
       
-      The code begins in file antiweb.py at line 364:
+      The code begins in file antiweb.py at line 370:
       ::
       
           priority = 10
@@ -300,7 +447,7 @@ Directive
    
       A integer defining the original line number of the directive.
       
-      The code begins in file antiweb.py at line 372:
+      The code begins in file antiweb.py at line 378:
       ::
       
           line = None
@@ -309,7 +456,7 @@ Directive
    
       The constructor
       
-      The code begins in file antiweb.py at line 382:
+      The code begins in file antiweb.py at line 388:
       ::
       
           def __init__(self, line, mo=None):
@@ -332,7 +479,7 @@ Directive
                is a tuple ``(directive name, block of lines)``, or
                ``None`` otherwise.
       
-      The code begins in file antiweb.py at line 392:
+      The code begins in file antiweb.py at line 398:
       ::
       
           def collect_block(self, document, index):
@@ -351,7 +498,7 @@ Directive
       :param integer index: the line index of the directive
                             within the block.
       
-      The code begins in file antiweb.py at line 413:
+      The code begins in file antiweb.py at line 419:
       ::
       
           def process(self, document, block, index):
@@ -367,7 +514,7 @@ Directive
    
       :param list lines: a list of all document lines.
       
-      The code begins in file antiweb.py at line 430:
+      The code begins in file antiweb.py at line 436:
       ::
       
           def match(self, lines):
@@ -379,7 +526,7 @@ Directive
    
       returns a textual representation of the directive.
       
-      The code begins in file antiweb.py at line 444:
+      The code begins in file antiweb.py at line 450:
       ::
       
           def __repr__(self):
@@ -401,7 +548,7 @@ NameDirective
 
       A string defining the argument of the directive.
    
-   The code begins in file antiweb.py at line 455:
+   The code begins in file antiweb.py at line 461:
    ::
    
        class NameDirective(Directive):
@@ -450,7 +597,7 @@ Start
 
    Text blocks defined by ``@start`` can be nested.
    
-   The code begins in file antiweb.py at line 490:
+   The code begins in file antiweb.py at line 496:
    ::
    
        class Start(NameDirective):
@@ -469,7 +616,7 @@ Start
       A boolean value, signalizing if the directive is
       ended by a named end directive.
       
-      The code begins in file antiweb.py at line 539:
+      The code begins in file antiweb.py at line 545:
       ::
       
           has_named_end = False
@@ -480,7 +627,7 @@ Start
    **<<Start.inherited attributes>>**
    
    
-   The code begins in file antiweb.py at line 547:
+   The code begins in file antiweb.py at line 553:
    ::
    
        expression = re.compile(r"@start\((.*)\)")
@@ -491,7 +638,7 @@ Start
       See :py:meth:`Directive.collect_block`.
       The returned lines are unindented to column 0.
       
-      The code begins in file antiweb.py at line 602:
+      The code begins in file antiweb.py at line 608:
       ::
       
           def collect_block(self, document, index):
@@ -517,7 +664,7 @@ Start
       Removes all lines of the text block from
       the containing block.
       
-      The code begins in file antiweb.py at line 625:
+      The code begins in file antiweb.py at line 631:
       ::
       
           def process(self, document, block, index):
@@ -531,7 +678,7 @@ Start
       :param list block: A list of lines beginning with start
       :return: The line index of the found end.
       
-      The code begins in file antiweb.py at line 553:
+      The code begins in file antiweb.py at line 559:
       ::
       
           def _find_matching_end(self, block):
@@ -587,7 +734,7 @@ RStart
    from the containing block. ``@rstart`` replaces the lines
    with a ``<<name>>`` - Sentinel.
    
-   The code begins in file antiweb.py at line 638:
+   The code begins in file antiweb.py at line 644:
    ::
    
        class RStart(Start):
@@ -614,7 +761,7 @@ CStart
       @rstart(name)
       @code
    
-   The code begins in file antiweb.py at line 670:
+   The code begins in file antiweb.py at line 676:
    ::
    
        class CStart(RStart):
@@ -644,7 +791,7 @@ End
    
    The end (``@``) directive ends a text block.
    
-   The code begins in file antiweb.py at line 712:
+   The code begins in file antiweb.py at line 718:
    ::
    
        class End(NameDirective):
@@ -692,7 +839,7 @@ Include
    The directive can have a second *file* argument. If given
    the directive inserts the text block of the specified file.
    
-   The code begins in file antiweb.py at line 974:
+   The code begins in file antiweb.py at line 980:
    ::
    
        class Include(NameDirective):
@@ -747,7 +894,7 @@ RInclude
       @include(text block name)
 
    
-   The code begins in file antiweb.py at line 1034:
+   The code begins in file antiweb.py at line 1040:
    ::
    
        class RInclude(Include):
@@ -784,7 +931,7 @@ Code
    and can be defined by a ``@define`` directive.
   
    
-   The code begins in file antiweb.py at line 1102:
+   The code begins in file antiweb.py at line 1108:
    ::
    
        class Code(Directive):
@@ -824,7 +971,7 @@ Edoc
    
    The ``@edoc`` directive ends a previously started ``@code`` directive
    
-   The code begins in file antiweb.py at line 1075:
+   The code begins in file antiweb.py at line 1081:
    ::
    
        class Edoc(Directive):
@@ -847,7 +994,7 @@ If
    named token argument of ``@if``, is defined in the command line
    by the ``--token`` option.
    
-   The code begins in file antiweb.py at line 789:
+   The code begins in file antiweb.py at line 795:
    ::
    
        class If(NameDirective):
@@ -882,7 +1029,7 @@ Fi
    
    The ``@fi`` ends an ``@if`` directive
    
-   The code begins in file antiweb.py at line 762:
+   The code begins in file antiweb.py at line 768:
    ::
    
        class Fi(NameDirective):
@@ -904,7 +1051,7 @@ Ignore
    documentation output. It can be used for commentaries.
   
    
-   The code begins in file antiweb.py at line 1159:
+   The code begins in file antiweb.py at line 1165:
    ::
    
        class Ignore(Directive):
@@ -927,7 +1074,7 @@ Define
    Otherwise the ``@define`` has to be ended by an ``@enifed``
    directive.
    
-   The code begins in file antiweb.py at line 834:
+   The code begins in file antiweb.py at line 840:
    ::
    
        class Define(NameDirective):
@@ -967,7 +1114,7 @@ Enifed
    The ``@enifed`` directive ends a macro defined by the
    ``@define`` directive.
    
-   The code begins in file antiweb.py at line 884:
+   The code begins in file antiweb.py at line 890:
    ::
    
        class Enifed(NameDirective):
@@ -997,7 +1144,7 @@ Subst
     ``__file__``
         Defines the current source file name.
    
-   The code begins in file antiweb.py at line 912:
+   The code begins in file antiweb.py at line 918:
    ::
    
        class Subst(NameDirective):
@@ -1044,7 +1191,7 @@ Indent
    following lines. For example a  call ``@indent -4``
    dedents the following lines by 4 spaces.
    
-   The code begins in file antiweb.py at line 1187:
+   The code begins in file antiweb.py at line 1193:
    ::
    
        class Indent(Directive):
@@ -1087,7 +1234,7 @@ Reader
    
    :param lexer: A pygments lexer for the specified language
    
-   The code begins in file antiweb.py at line 1253:
+   The code begins in file antiweb.py at line 1259:
    ::
    
        
@@ -1109,7 +1256,7 @@ Reader
    
       The constructor
       
-      The code begins in file antiweb.py at line 1288:
+      The code begins in file antiweb.py at line 1294:
       ::
       
           def __init__(self, lexer):
@@ -1126,7 +1273,7 @@ Reader
       :param string text: The source code
       :return: A list of :py:class:`Line` objects.
       
-      The code begins in file antiweb.py at line 1298:
+      The code begins in file antiweb.py at line 1304:
       ::
       
           def process(self, fname, text):
@@ -1152,7 +1299,7 @@ Reader
       the reader the chance to influence the final output.
    
       
-      The code begins in file antiweb.py at line 1325:
+      The code begins in file antiweb.py at line 1331:
       ::
       
           def filter_output(self, lines):
@@ -1167,7 +1314,7 @@ Reader
       :param token: A pygments token.
       :param string value: The token value.
       
-      The code begins in file antiweb.py at line 1373:
+      The code begins in file antiweb.py at line 1379:
       ::
       
           def _handle_token(self, index, token, value):
@@ -1194,7 +1341,7 @@ Reader
       :param string value: The token value.
       :return: value without comment identifiers.
       
-      The code begins in file antiweb.py at line 1397:
+      The code begins in file antiweb.py at line 1403:
       ::
       
           def _cut_comment(self, index, token, value):
@@ -1206,7 +1353,7 @@ Reader
    
       Does some post processing after the directives where found.
       
-      The code begins in file antiweb.py at line 1353:
+      The code begins in file antiweb.py at line 1359:
       ::
       
           def _post_process(self, fname, text):
@@ -1232,7 +1379,7 @@ Reader
       :return: ``True`` if the token may contain a directive.
                ``False`` otherwise.
       
-      The code begins in file antiweb.py at line 1339:
+      The code begins in file antiweb.py at line 1345:
       ::
       
           def _accept_token(self, token):
@@ -1246,7 +1393,7 @@ CReader
 
    A reader for C/C++ code. This class inherits :py:class:`Reader`.
    
-   The code begins in file antiweb.py at line 1412:
+   The code begins in file antiweb.py at line 1418:
    ::
    
        class CReader(Reader):
@@ -1341,7 +1488,7 @@ PythonReader
 '''
 
    
-   The code begins in file antiweb.py at line 1461:
+   The code begins in file antiweb.py at line 1467:
    ::
    
        class PythonReader(Reader):
@@ -1370,7 +1517,7 @@ PythonReader
       This implementation *decorates* doc strings
       with antiweb directives.
       
-      The code begins in file antiweb.py at line 1723:
+      The code begins in file antiweb.py at line 1729:
       ::
       
           def _post_process(self, fname, text):
@@ -1398,7 +1545,7 @@ PythonReader
       **<<no antiweb directives in doc string>>**
       
       
-      The code begins in file antiweb.py at line 1740:
+      The code begins in file antiweb.py at line 1746:
       ::
       
           #If antiweb directives are within the doc string,
@@ -1422,7 +1569,7 @@ PythonReader
       **<<find the last directive before the doc string>>**
       
       
-      The code begins in file antiweb.py at line 1755:
+      The code begins in file antiweb.py at line 1761:
       ::
       
           last_directive = None
@@ -1437,7 +1584,7 @@ PythonReader
       **<<decorate beginning and end>>**
       
       
-      The code begins in file antiweb.py at line 1764:
+      The code begins in file antiweb.py at line 1770:
       ::
       
           l = self.lines[start_line]
@@ -1454,7 +1601,7 @@ PythonReader
       **<<insert additional include>>**
       
       
-      The code begins in file antiweb.py at line 1775:
+      The code begins in file antiweb.py at line 1781:
       ::
       
           l = l.like("")
@@ -1476,7 +1623,7 @@ PythonReader
    
       See :py:meth:`Reader._accept_token`.
       
-      The code begins in file antiweb.py at line 1798:
+      The code begins in file antiweb.py at line 1804:
       ::
       
           def _accept_token(self, token):
@@ -1488,7 +1635,7 @@ PythonReader
    
       See :py:meth:`Reader.filter_output`.
       
-      The code begins in file antiweb.py at line 1829:
+      The code begins in file antiweb.py at line 1835:
       ::
       
           def filter_output(self, lines):
@@ -1518,7 +1665,7 @@ PythonReader
    
       See :py:meth:`Reader._cut_comment`.
       
-      The code begins in file antiweb.py at line 1808:
+      The code begins in file antiweb.py at line 1814:
       ::
       
           def _cut_comment(self, index, token, text):
@@ -1555,14 +1702,14 @@ Document
    :param string fname: The file name of the source code.
    :param tokens: A sequence of tokens usable for the ``@if`` directive.
    
-   The code begins in file antiweb.py at line 2113:
+   The code begins in file antiweb.py at line 2119:
    ::
    
        class Document(object):
            #Attributes
                
               
-              The code begins in file antiweb.py at line 2113:
+              The code begins in file antiweb.py at line 2119:
               ::
               
                   class Document(object):
@@ -1573,7 +1720,7 @@ Document
                          
                             A list of errors found during generation.
                             
-                            The code begins in file antiweb.py at line 2174:
+                            The code begins in file antiweb.py at line 2180:
                             ::
                             
                                 errors = []
@@ -1582,7 +1729,7 @@ Document
                          
                             A dictionary of all found blocks: Name -> List of Lines
                             
-                            The code begins in file antiweb.py at line 2181:
+                            The code begins in file antiweb.py at line 2187:
                             ::
                             
                                 blocks = {}
@@ -1592,7 +1739,7 @@ Document
                             A set containing all block names that have been included by
                             an @include directive.
                             
-                            The code begins in file antiweb.py at line 2188:
+                            The code begins in file antiweb.py at line 2194:
                             ::
                             
                                 blocks_included = set()
@@ -1602,7 +1749,7 @@ Document
                             A set containing all block names that have been already
                             compiled.
                             
-                            The code begins in file antiweb.py at line 2196:
+                            The code begins in file antiweb.py at line 2202:
                             ::
                             
                                 compiled_blocks = set()
@@ -1612,7 +1759,7 @@ Document
                             A cache dictionary of sub documents, referenced by
                             ``@include`` directives: Filename -> Document
                             
-                            The code begins in file antiweb.py at line 2204:
+                            The code begins in file antiweb.py at line 2210:
                             ::
                             
                                 sub_documents = {}
@@ -1621,7 +1768,7 @@ Document
                          
                             A set of token names that can be used for the ``@if`` directive.
                             
-                            The code begins in file antiweb.py at line 2212:
+                            The code begins in file antiweb.py at line 2218:
                             ::
                             
                                 tokens = set()
@@ -1631,7 +1778,7 @@ Document
                             A dictionary containing the macros that can be used
                             by the ``@subst`` directive: Macro name -> substitution.
                             
-                            The code begins in file antiweb.py at line 2219:
+                            The code begins in file antiweb.py at line 2225:
                             ::
                             
                                 macros = {}
@@ -1640,7 +1787,7 @@ Document
                          
                             The file name of the document's source.
                             
-                            The code begins in file antiweb.py at line 2227:
+                            The code begins in file antiweb.py at line 2233:
                             ::
                             
                                 fname = ""
@@ -1649,7 +1796,7 @@ Document
                          
                             The instance of a :py:class:`Reader` object.
                             
-                            The code begins in file antiweb.py at line 2234:
+                            The code begins in file antiweb.py at line 2240:
                             ::
                             
                                 reader = None
@@ -1659,7 +1806,7 @@ Document
                             A list of :py:class:`Line` objects representing the whole documents
                             split in lines.
                             
-                            The code begins in file antiweb.py at line 2241:
+                            The code begins in file antiweb.py at line 2247:
                             ::
                             
                                 lines = []
@@ -1668,7 +1815,7 @@ Document
                          
                             The constructor.
                             
-                            The code begins in file antiweb.py at line 2252:
+                            The code begins in file antiweb.py at line 2258:
                             ::
                             
                                 def __init__(self, text, reader, fname, tokens):
@@ -1693,7 +1840,7 @@ Document
                             :param bool show_warnings: If ``True`` warnings are emitted.
                             :return: A string representing the rst output.
                             
-                            The code begins in file antiweb.py at line 2272:
+                            The code begins in file antiweb.py at line 2278:
                             ::
                             
                                 def process(self, show_warnings):
@@ -1718,7 +1865,7 @@ Document
                             **<<show warnings>>**
                             
                             
-                            The code begins in file antiweb.py at line 2293:
+                            The code begins in file antiweb.py at line 2299:
                             ::
                             
                                 self.blocks_included.add("")           #may not cause a warning
@@ -1740,7 +1887,7 @@ Document
                                                  containing document.
                             :return: A :py:class:`Document` reference to the sub document.
                             
-                            The code begins in file antiweb.py at line 2310:
+                            The code begins in file antiweb.py at line 2316:
                             ::
                             
                                 def get_subdoc(self, rpath):
@@ -1757,7 +1904,7 @@ Document
                             **<<return from cache if possible>>**
                             
                             
-                            The code begins in file antiweb.py at line 2321:
+                            The code begins in file antiweb.py at line 2327:
                             ::
                             
                                 try:
@@ -1772,7 +1919,7 @@ Document
                             **<<insert macros function>>**
                             
                             
-                            The code begins in file antiweb.py at line 2327:
+                            The code begins in file antiweb.py at line 2333:
                             ::
                             
                                 def insert_macros(subdoc):
@@ -1790,7 +1937,7 @@ Document
                             **<<read the source file>>**
                             
                             
-                            The code begins in file antiweb.py at line 2336:
+                            The code begins in file antiweb.py at line 2342:
                             ::
                             
                                 head, tail = os.path.split(self.fname)
@@ -1820,7 +1967,7 @@ Document
                             :param integer line: The line number that causes the error.
                             :param string text: An error text.
                             
-                            The code begins in file antiweb.py at line 2365:
+                            The code begins in file antiweb.py at line 2371:
                             ::
                             
                                 def add_error(self, line, text):
@@ -1832,7 +1979,7 @@ Document
                          
                             Raises a ``WebError`` exception if error were found.
                             
-                            The code begins in file antiweb.py at line 2378:
+                            The code begins in file antiweb.py at line 2384:
                             ::
                             
                                 def check_errors(self):
@@ -1844,7 +1991,7 @@ Document
                          
                             Collects all text blocks.
                             
-                            The code begins in file antiweb.py at line 2388:
+                            The code begins in file antiweb.py at line 2394:
                             ::
                             
                                 def collect_blocks(self):
@@ -1869,7 +2016,7 @@ Document
                                      the text block.
                             
                             
-                            The code begins in file antiweb.py at line 2405:
+                            The code begins in file antiweb.py at line 2411:
                             ::
                             
                                 def get_compiled_block(self, name):
@@ -1893,7 +2040,7 @@ Document
                             :return: A list of :py:class:`Line` objects representing
                                      the compiled text block.
                             
-                            The code begins in file antiweb.py at line 2427:
+                            The code begins in file antiweb.py at line 2433:
                             ::
                             
                                 def compile_block(self, name, block):
@@ -1913,7 +2060,7 @@ Document
                             **<<find_next_directive>>**
                             
                             
-                            The code begins in file antiweb.py at line 2440:
+                            The code begins in file antiweb.py at line 2446:
                             ::
                             
                                 def find_next_directive(block):
@@ -1955,7 +2102,7 @@ Document
               
                  A list of errors found during generation.
                  
-                 The code begins in file antiweb.py at line 2174:
+                 The code begins in file antiweb.py at line 2180:
                  ::
                  
                      errors = []
@@ -1964,7 +2111,7 @@ Document
               
                  A dictionary of all found blocks: Name -> List of Lines
                  
-                 The code begins in file antiweb.py at line 2181:
+                 The code begins in file antiweb.py at line 2187:
                  ::
                  
                      blocks = {}
@@ -1974,7 +2121,7 @@ Document
                  A set containing all block names that have been included by
                  an @include directive.
                  
-                 The code begins in file antiweb.py at line 2188:
+                 The code begins in file antiweb.py at line 2194:
                  ::
                  
                      blocks_included = set()
@@ -1984,7 +2131,7 @@ Document
                  A set containing all block names that have been already
                  compiled.
                  
-                 The code begins in file antiweb.py at line 2196:
+                 The code begins in file antiweb.py at line 2202:
                  ::
                  
                      compiled_blocks = set()
@@ -1994,7 +2141,7 @@ Document
                  A cache dictionary of sub documents, referenced by
                  ``@include`` directives: Filename -> Document
                  
-                 The code begins in file antiweb.py at line 2204:
+                 The code begins in file antiweb.py at line 2210:
                  ::
                  
                      sub_documents = {}
@@ -2003,7 +2150,7 @@ Document
               
                  A set of token names that can be used for the ``@if`` directive.
                  
-                 The code begins in file antiweb.py at line 2212:
+                 The code begins in file antiweb.py at line 2218:
                  ::
                  
                      tokens = set()
@@ -2013,7 +2160,7 @@ Document
                  A dictionary containing the macros that can be used
                  by the ``@subst`` directive: Macro name -> substitution.
                  
-                 The code begins in file antiweb.py at line 2219:
+                 The code begins in file antiweb.py at line 2225:
                  ::
                  
                      macros = {}
@@ -2022,7 +2169,7 @@ Document
               
                  The file name of the document's source.
                  
-                 The code begins in file antiweb.py at line 2227:
+                 The code begins in file antiweb.py at line 2233:
                  ::
                  
                      fname = ""
@@ -2031,7 +2178,7 @@ Document
               
                  The instance of a :py:class:`Reader` object.
                  
-                 The code begins in file antiweb.py at line 2234:
+                 The code begins in file antiweb.py at line 2240:
                  ::
                  
                      reader = None
@@ -2041,7 +2188,7 @@ Document
                  A list of :py:class:`Line` objects representing the whole documents
                  split in lines.
                  
-                 The code begins in file antiweb.py at line 2241:
+                 The code begins in file antiweb.py at line 2247:
                  ::
                  
                      lines = []
@@ -2050,7 +2197,7 @@ Document
               
                  The constructor.
                  
-                 The code begins in file antiweb.py at line 2252:
+                 The code begins in file antiweb.py at line 2258:
                  ::
                  
                      def __init__(self, text, reader, fname, tokens):
@@ -2075,7 +2222,7 @@ Document
                  :param bool show_warnings: If ``True`` warnings are emitted.
                  :return: A string representing the rst output.
                  
-                 The code begins in file antiweb.py at line 2272:
+                 The code begins in file antiweb.py at line 2278:
                  ::
                  
                      def process(self, show_warnings):
@@ -2100,7 +2247,7 @@ Document
                  **<<show warnings>>**
                  
                  
-                 The code begins in file antiweb.py at line 2293:
+                 The code begins in file antiweb.py at line 2299:
                  ::
                  
                      self.blocks_included.add("")           #may not cause a warning
@@ -2122,7 +2269,7 @@ Document
                                       containing document.
                  :return: A :py:class:`Document` reference to the sub document.
                  
-                 The code begins in file antiweb.py at line 2310:
+                 The code begins in file antiweb.py at line 2316:
                  ::
                  
                      def get_subdoc(self, rpath):
@@ -2139,7 +2286,7 @@ Document
                  **<<return from cache if possible>>**
                  
                  
-                 The code begins in file antiweb.py at line 2321:
+                 The code begins in file antiweb.py at line 2327:
                  ::
                  
                      try:
@@ -2154,7 +2301,7 @@ Document
                  **<<insert macros function>>**
                  
                  
-                 The code begins in file antiweb.py at line 2327:
+                 The code begins in file antiweb.py at line 2333:
                  ::
                  
                      def insert_macros(subdoc):
@@ -2172,7 +2319,7 @@ Document
                  **<<read the source file>>**
                  
                  
-                 The code begins in file antiweb.py at line 2336:
+                 The code begins in file antiweb.py at line 2342:
                  ::
                  
                      head, tail = os.path.split(self.fname)
@@ -2202,7 +2349,7 @@ Document
                  :param integer line: The line number that causes the error.
                  :param string text: An error text.
                  
-                 The code begins in file antiweb.py at line 2365:
+                 The code begins in file antiweb.py at line 2371:
                  ::
                  
                      def add_error(self, line, text):
@@ -2214,7 +2361,7 @@ Document
               
                  Raises a ``WebError`` exception if error were found.
                  
-                 The code begins in file antiweb.py at line 2378:
+                 The code begins in file antiweb.py at line 2384:
                  ::
                  
                      def check_errors(self):
@@ -2226,7 +2373,7 @@ Document
               
                  Collects all text blocks.
                  
-                 The code begins in file antiweb.py at line 2388:
+                 The code begins in file antiweb.py at line 2394:
                  ::
                  
                      def collect_blocks(self):
@@ -2251,7 +2398,7 @@ Document
                           the text block.
                  
                  
-                 The code begins in file antiweb.py at line 2405:
+                 The code begins in file antiweb.py at line 2411:
                  ::
                  
                      def get_compiled_block(self, name):
@@ -2275,7 +2422,7 @@ Document
                  :return: A list of :py:class:`Line` objects representing
                           the compiled text block.
                  
-                 The code begins in file antiweb.py at line 2427:
+                 The code begins in file antiweb.py at line 2433:
                  ::
                  
                      def compile_block(self, name, block):
@@ -2295,7 +2442,7 @@ Document
                  **<<find_next_directive>>**
                  
                  
-                 The code begins in file antiweb.py at line 2440:
+                 The code begins in file antiweb.py at line 2446:
                  ::
                  
                      def find_next_directive(block):
@@ -2337,7 +2484,7 @@ Document
    
       A list of errors found during generation.
       
-      The code begins in file antiweb.py at line 2174:
+      The code begins in file antiweb.py at line 2180:
       ::
       
           errors = []
@@ -2346,7 +2493,7 @@ Document
    
       A dictionary of all found blocks: Name -> List of Lines
       
-      The code begins in file antiweb.py at line 2181:
+      The code begins in file antiweb.py at line 2187:
       ::
       
           blocks = {}
@@ -2356,7 +2503,7 @@ Document
       A set containing all block names that have been included by
       an @include directive.
       
-      The code begins in file antiweb.py at line 2188:
+      The code begins in file antiweb.py at line 2194:
       ::
       
           blocks_included = set()
@@ -2366,7 +2513,7 @@ Document
       A set containing all block names that have been already
       compiled.
       
-      The code begins in file antiweb.py at line 2196:
+      The code begins in file antiweb.py at line 2202:
       ::
       
           compiled_blocks = set()
@@ -2376,7 +2523,7 @@ Document
       A cache dictionary of sub documents, referenced by
       ``@include`` directives: Filename -> Document
       
-      The code begins in file antiweb.py at line 2204:
+      The code begins in file antiweb.py at line 2210:
       ::
       
           sub_documents = {}
@@ -2385,7 +2532,7 @@ Document
    
       A set of token names that can be used for the ``@if`` directive.
       
-      The code begins in file antiweb.py at line 2212:
+      The code begins in file antiweb.py at line 2218:
       ::
       
           tokens = set()
@@ -2395,7 +2542,7 @@ Document
       A dictionary containing the macros that can be used
       by the ``@subst`` directive: Macro name -> substitution.
       
-      The code begins in file antiweb.py at line 2219:
+      The code begins in file antiweb.py at line 2225:
       ::
       
           macros = {}
@@ -2404,7 +2551,7 @@ Document
    
       The file name of the document's source.
       
-      The code begins in file antiweb.py at line 2227:
+      The code begins in file antiweb.py at line 2233:
       ::
       
           fname = ""
@@ -2413,7 +2560,7 @@ Document
    
       The instance of a :py:class:`Reader` object.
       
-      The code begins in file antiweb.py at line 2234:
+      The code begins in file antiweb.py at line 2240:
       ::
       
           reader = None
@@ -2423,7 +2570,7 @@ Document
       A list of :py:class:`Line` objects representing the whole documents
       split in lines.
       
-      The code begins in file antiweb.py at line 2241:
+      The code begins in file antiweb.py at line 2247:
       ::
       
           lines = []
@@ -2432,7 +2579,7 @@ Document
    
       The constructor.
       
-      The code begins in file antiweb.py at line 2252:
+      The code begins in file antiweb.py at line 2258:
       ::
       
           def __init__(self, text, reader, fname, tokens):
@@ -2457,7 +2604,7 @@ Document
       :param bool show_warnings: If ``True`` warnings are emitted.
       :return: A string representing the rst output.
       
-      The code begins in file antiweb.py at line 2272:
+      The code begins in file antiweb.py at line 2278:
       ::
       
           def process(self, show_warnings):
@@ -2482,7 +2629,7 @@ Document
       **<<show warnings>>**
       
       
-      The code begins in file antiweb.py at line 2293:
+      The code begins in file antiweb.py at line 2299:
       ::
       
           self.blocks_included.add("")           #may not cause a warning
@@ -2504,7 +2651,7 @@ Document
                            containing document.
       :return: A :py:class:`Document` reference to the sub document.
       
-      The code begins in file antiweb.py at line 2310:
+      The code begins in file antiweb.py at line 2316:
       ::
       
           def get_subdoc(self, rpath):
@@ -2521,7 +2668,7 @@ Document
       **<<return from cache if possible>>**
       
       
-      The code begins in file antiweb.py at line 2321:
+      The code begins in file antiweb.py at line 2327:
       ::
       
           try:
@@ -2536,7 +2683,7 @@ Document
       **<<insert macros function>>**
       
       
-      The code begins in file antiweb.py at line 2327:
+      The code begins in file antiweb.py at line 2333:
       ::
       
           def insert_macros(subdoc):
@@ -2554,7 +2701,7 @@ Document
       **<<read the source file>>**
       
       
-      The code begins in file antiweb.py at line 2336:
+      The code begins in file antiweb.py at line 2342:
       ::
       
           head, tail = os.path.split(self.fname)
@@ -2584,7 +2731,7 @@ Document
       :param integer line: The line number that causes the error.
       :param string text: An error text.
       
-      The code begins in file antiweb.py at line 2365:
+      The code begins in file antiweb.py at line 2371:
       ::
       
           def add_error(self, line, text):
@@ -2596,7 +2743,7 @@ Document
    
       Raises a ``WebError`` exception if error were found.
       
-      The code begins in file antiweb.py at line 2378:
+      The code begins in file antiweb.py at line 2384:
       ::
       
           def check_errors(self):
@@ -2608,7 +2755,7 @@ Document
    
       Collects all text blocks.
       
-      The code begins in file antiweb.py at line 2388:
+      The code begins in file antiweb.py at line 2394:
       ::
       
           def collect_blocks(self):
@@ -2633,7 +2780,7 @@ Document
                the text block.
       
       
-      The code begins in file antiweb.py at line 2405:
+      The code begins in file antiweb.py at line 2411:
       ::
       
           def get_compiled_block(self, name):
@@ -2657,7 +2804,7 @@ Document
       :return: A list of :py:class:`Line` objects representing
                the compiled text block.
       
-      The code begins in file antiweb.py at line 2427:
+      The code begins in file antiweb.py at line 2433:
       ::
       
           def compile_block(self, name, block):
@@ -2677,7 +2824,7 @@ Document
       **<<find_next_directive>>**
       
       
-      The code begins in file antiweb.py at line 2440:
+      The code begins in file antiweb.py at line 2446:
       ::
       
           def find_next_directive(block):
@@ -2697,7 +2844,7 @@ Line
 
    This class represents a text line.
    
-   The code begins in file antiweb.py at line 1874:
+   The code begins in file antiweb.py at line 1880:
    ::
    
        class Line(object):
@@ -2729,7 +2876,7 @@ Line
       A list of :py:class:`Directive` objects, sorted
       by their priority.
       
-      The code begins in file antiweb.py at line 1905:
+      The code begins in file antiweb.py at line 1911:
       ::
       
           _directives = ()
@@ -2738,7 +2885,7 @@ Line
    
       A string of the source's file name the line belongs to.
       
-      The code begins in file antiweb.py at line 1913:
+      The code begins in file antiweb.py at line 1919:
       ::
       
           fname = ""
@@ -2747,7 +2894,7 @@ Line
    
       The integer line index of the directive within the current block.
       
-      The code begins in file antiweb.py at line 1920:
+      The code begins in file antiweb.py at line 1926:
       ::
       
           index = 0
@@ -2756,7 +2903,7 @@ Line
    
       A string containing the source line.
       
-      The code begins in file antiweb.py at line 1927:
+      The code begins in file antiweb.py at line 1933:
       ::
       
           text = ""
@@ -2768,7 +2915,7 @@ Line
         * ``d`` stands for a document line
         * ``c`` stands for a code line
       
-      The code begins in file antiweb.py at line 1934:
+      The code begins in file antiweb.py at line 1940:
       ::
       
           type = "d"
@@ -2777,7 +2924,7 @@ Line
    
    An integer representing the line's indentation.
    
-   The code begins in file antiweb.py at line 2062:
+   The code begins in file antiweb.py at line 2068:
    ::
    
        @property
@@ -2790,7 +2937,7 @@ Line
    
    A string representation of the line's indentation.
    
-   The code begins in file antiweb.py at line 2073:
+   The code begins in file antiweb.py at line 2079:
    ::
    
        @property
@@ -2803,7 +2950,7 @@ Line
    
    A sorted sequence of :py:class:`Directive` objects.
    
-   The code begins in file antiweb.py at line 2084:
+   The code begins in file antiweb.py at line 2090:
    ::
    
        @property
@@ -2823,7 +2970,7 @@ Line
    
       The first of the contained :py:class:`Directive` objects.
       
-      The code begins in file antiweb.py at line 2102:
+      The code begins in file antiweb.py at line 2108:
       ::
       
           @property
@@ -2836,7 +2983,7 @@ Line
    
       The constructor.
       
-      The code begins in file antiweb.py at line 1947:
+      The code begins in file antiweb.py at line 1953:
       ::
       
           def __init__(self, fname, index, text, directives=(), type='d'):
@@ -2858,7 +3005,7 @@ Line
       :param list directives: A list of :py:class:`DCirective` objects.
       :return: The :py:class:`Line` object ``self``.
       
-      The code begins in file antiweb.py at line 1961:
+      The code begins in file antiweb.py at line 1967:
       ::
       
           def set(self, index=None, type=None, directives=None):
@@ -2884,7 +3031,7 @@ Line
    
    
       
-      The code begins in file antiweb.py at line 1986:
+      The code begins in file antiweb.py at line 1992:
       ::
       
           def clone(self, dline=None):
@@ -2901,7 +3048,7 @@ Line
    
       Clones the Line with a different text.
       
-      The code begins in file antiweb.py at line 2006:
+      The code begins in file antiweb.py at line 2012:
       ::
       
           def like(self, text):
@@ -2913,7 +3060,7 @@ Line
    
       Returns the text, with the same indentation as ``self``.
       
-      The code begins in file antiweb.py at line 2016:
+      The code begins in file antiweb.py at line 2022:
       ::
       
           def indented(self, text):
@@ -2924,7 +3071,7 @@ Line
    
       Changes the lines indentation.
       
-      The code begins in file antiweb.py at line 2025:
+      The code begins in file antiweb.py at line 2031:
       ::
       
           def change_indent(self, delta):
@@ -2942,7 +3089,7 @@ Line
    
       returns the length of the stripped :py:attr:`text`.
       
-      The code begins in file antiweb.py at line 2041:
+      The code begins in file antiweb.py at line 2047:
       ::
       
           def __len__(self):
@@ -2954,7 +3101,7 @@ Line
    
       returns a textual representation of the line.
       
-      The code begins in file antiweb.py at line 2051:
+      The code begins in file antiweb.py at line 2057:
       ::
       
           def __repr__(self):
@@ -2967,7 +3114,7 @@ File Layout
 ***********
 
 
-The code begins in file antiweb.py at line 278:
+The code begins in file antiweb.py at line 284:
 ::
 
     
@@ -2984,7 +3131,7 @@ The code begins in file antiweb.py at line 278:
 ===========
 '''
 
-The code begins in file antiweb.py at line 285:
+The code begins in file antiweb.py at line 291:
 ::
 
     from optparse import OptionParser
@@ -3004,7 +3151,7 @@ The code begins in file antiweb.py at line 285:
 ==============
 '''
 
-The code begins in file antiweb.py at line 301:
+The code begins in file antiweb.py at line 307:
 ::
 
     
@@ -3024,7 +3171,7 @@ The code begins in file antiweb.py at line 301:
 
 '''
 
-The code begins in file antiweb.py at line 317:
+The code begins in file antiweb.py at line 323:
 ::
 
     
@@ -3073,7 +3220,7 @@ The code begins in file antiweb.py at line 317:
 ===========
 '''
 
-The code begins in file antiweb.py at line 1262:
+The code begins in file antiweb.py at line 1268:
 ::
 
     
@@ -3095,7 +3242,7 @@ The code begins in file antiweb.py at line 1262:
 ============
 '''
 
-The code begins in file antiweb.py at line 1898:
+The code begins in file antiweb.py at line 1904:
 ::
 
     
@@ -3107,7 +3254,7 @@ The code begins in file antiweb.py at line 1898:
 <<command line>>
 ================
 
-The code begins in file antiweb.py at line 2557:
+The code begins in file antiweb.py at line 2563:
 ::
 
     
