@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Finale_sphinx 2.1 documentation" href="index.html"/>
-        <link rel="prev" title="Welcome to Finale_sphinx’s documentation!" href="index.html"/> 
+        <link rel="prev" title="Welcome to Antiweb’s documentation!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -156,7 +156,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/antiweb.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/antitest.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -4819,20 +4819,37 @@ readers = {
 67
 68
 69
-70</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">):</span>
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">out_file</span><span class="p">:</span>
          <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">in_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.rst&quot;</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">generate</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">))</span>
+        <span class="n">text_output</span> <span class="o">=</span> <span class="n">generate</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">text_output</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text_output</span><span class="p">)</span>
 
     <span class="k">except</span> <span class="n">WebError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Errors:&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">error_list</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;  in line </span><span class="si">%i</span><span class="s">(</span><span class="si">%s</span><span class="s">): </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;      </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="s">&quot;usage: %prog [options] SOURCEFILE&quot;</span><span class="p">,</span>
@@ -4849,7 +4866,7 @@ readers = {
                       <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_false&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;suppresses warnings&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&quot;-r&quot;</span><span class="p">,</span> <span class="s">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;recursive&quot;</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Process every file in directory&quot;</span><span class="p">)</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Process every file in given directory&quot;</span><span class="p">)</span>
 
 
     <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -4860,26 +4877,41 @@ readers = {
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">options</span><span class="o">.</span><span class="n">warnings</span> <span class="o">=</span> <span class="bp">True</span>
 
-    <span class="c">#if options.recursive:</span>
-    <span class="c">#    options.recursive = True</span>
-
-    <span class="c">#if not options.recursive:</span>
-    <span class="c">#    options.recursive = False</span>
-
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">:</span>
         <span class="n">previous_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
         <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">index_static</span> <span class="o">=</span> <span class="s">&quot;Welcome to Antiweb&#39;s documentation!</span><span class="se">\n</span><span class="s">===================================</span><span class="se">\n\n\n</span><span class="s">Contents:</span><span class="se">\n\n</span><span class="s">.. toctree::</span><span class="se">\n</span><span class="s">   :maxdepth: 2</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;\index.rst&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index_static</span><span class="p">)</span>
+        <span class="n">index_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
-         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;rst&quot;</span><span class="p">):</span>
-           <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">filename</span><span class="p">)</span>
-           <span class="k">print</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-           <span class="n">process_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="n">fname</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.rst&quot;</span><span class="p">):</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">fname</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span><span class="p">)</span>
+                    <span class="n">process_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">)</span>
+
+                    <span class="n">index_var</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+                    <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;\index.rst&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>
+                    <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">   &quot;</span> <span class="o">+</span> <span class="n">index_var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">index_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+                <span class="c">#elif os.path.isdir(fname):</span>
+                    <span class="c">#previous_dir = os.getcwd()</span>
+                    <span class="c">#os.chdir(fname)</span>
+                    <span class="c">#print(os.getcwd())</span>
+
+
+         <span class="c">#else:</span>
+            <span class="c">#print(&quot;Can&#39;t process file &quot;, fname)</span>
+            <span class="c">#print(&quot; &quot;)</span>
 
     <span class="k">else</span><span class="p">:</span>
 
@@ -4909,7 +4941,7 @@ a more advances reader is <code class="xref py py-class docutils literal"><span 
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to Finale_sphinx’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Antiweb’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

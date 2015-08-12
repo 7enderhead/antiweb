@@ -8,9 +8,9 @@
 
 
 
-#######
-antiweb
-#######
+###############
+The first steps
+###############
 
 ************
 Installation
@@ -26,9 +26,9 @@ Getting Started
 
    * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
 
-*********************
+#####################
 Antiweb documentation
-*********************
+#####################
 
 If you just want to generate the documentation from a source file use 
 the following function:
@@ -297,6 +297,8 @@ import logging
 import sys
 import os.path
 import operator
+import os
+import collections
 
 #@rstart(management)
 '''
@@ -2498,7 +2500,21 @@ def generate(fname, tokens, show_warnings=False):
 #================
 #@code
 
+def process_file(in_file, out_file, token, warnings):
+    if not out_file:
+         out_file = os.path.splitext(in_file)[0] + ".rst"
 
+    try:
+        text_output = generate(in_file, token, warnings)
+        if text_output:
+            with open(out_file, "w") as f:
+                f.write(text_output)
+    
+    except WebError as e:
+        logger.error("Errors:")
+        for l, d in e.error_list:
+            logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
+            logger.error("      %s", l.text)
 
 def main():
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -2513,6 +2529,10 @@ def main():
 
     parser.add_option("-w", "--warnings", dest="warnings",
                       action="store_false", help="suppresses warnings")
+    
+    parser.add_option("-r", "--recursive", dest="recursive",
+                      action="store_true", help="Process every file in given directory")
+
 
     options, args = parser.parse_args()
 
@@ -2521,25 +2541,36 @@ def main():
 
     if options.warnings is None:
         options.warnings = True
-        
+    
     if not args:
         parser.print_help()
         sys.exit(0)
+    
+    if options.recursive:
+        previous_dir = os.getcwd()
+        os.chdir(args[0])
+        index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+        index_out = open(os.getcwd() + "\index.rst", "w")
+        index_out.write(index_static)
+        index_out.close()
 
-    fname = args[0]
+        for root, dirs, files in os.walk(args[0], topdown=False):
+            for filename in files:
+                fname= os.path.join(root, filename)
 
-    if not options.output:
-        options.output = os.path.splitext(fname)[0] + ".rst"
+                if os.path.isfile(fname) and not fname.endswith(".rst"):
+                    print(fname + ": ") 
+                    process_file(fname, None, options.token, options.warnings)
 
-    try:
-        with open(options.output, "w") as f:
-            f.write(generate(fname, options.token, options.warnings))
-        
-    except WebError as e:
-        logger.error("Errors:")
-        for l, d in e.error_list:
-            logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
-            logger.error("      %s", l.text)
+                    index_var = fname.split(args[0] + "\\")[1]
+                    index_var = index_var.split(".")[0]
+                    index_out = open(args[0] + "\index.rst", "a")
+                    index_out.write("\n   " + index_var)
+                    index_out.close()
+
+    else:
+
+        process_file(args[0], options.output, options.token, options.warnings)
 
 
 

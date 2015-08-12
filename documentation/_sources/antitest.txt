@@ -3102,15 +3102,16 @@ File Layout
              out_file = os.path.splitext(in_file)[0] + ".rst"
     
         try:
-            with open(out_file, "w") as f:
-                f.write(generate(in_file, token, warnings))
+            text_output = generate(in_file, token, warnings)
+            if text_output:
+                with open(out_file, "w") as f:
+                    f.write(text_output)
         
         except WebError as e:
             logger.error("Errors:")
             for l, d in e.error_list:
                 logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
                 logger.error("      %s", l.text)
-    
     
     def main():
         parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -3127,7 +3128,7 @@ File Layout
                           action="store_false", help="suppresses warnings")
         
         parser.add_option("-r", "--recursive", dest="recursive",
-                          action="store_true", help="Process every file in directory")
+                          action="store_true", help="Process every file in given directory")
     
     
         options, args = parser.parse_args()
@@ -3138,26 +3139,41 @@ File Layout
         if options.warnings is None:
             options.warnings = True
         
-        #if options.recursive:
-        #    options.recursive = True
-    
-        #if not options.recursive:
-        #    options.recursive = False
-    
         if not args:
             parser.print_help()
             sys.exit(0)
         
-        
         if options.recursive:
             previous_dir = os.getcwd()
             os.chdir(args[0])
+            index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+            index_out = open(os.getcwd() + "\index.rst", "w")
+            index_out.write(index_static)
+            index_out.close()
     
-            for filename in os.listdir('.'):
-             if os.path.isfile(filename) and not filename.endswith("rst"):
-               fname = os.path.join(args[0],filename)
-               print(fname)
-               process_file(fname, None, options.token, options.warnings)
+            for root, dirs, files in os.walk(args[0], topdown=False):
+                for filename in files:
+                    fname= os.path.join(root, filename)
+    
+                    if os.path.isfile(fname) and not fname.endswith(".rst"):
+                        print(fname + ": ") 
+                        process_file(fname, None, options.token, options.warnings)
+    
+                        index_var = fname.split(args[0] + "\\")[1]
+    
+                        index_out = open(args[0] + "\index.rst", "a")
+                        index_out.write("\n   " + index_var.split(".")[0])
+                        index_out.close()
+            
+                    #elif os.path.isdir(fname):
+                        #previous_dir = os.getcwd()
+                        #os.chdir(fname)
+                        #print(os.getcwd())
+    
+    
+             #else:
+                #print("Can't process file ", fname)
+                #print(" ")
     
         else:
     

@@ -8,9 +8,9 @@
 
 
 
-#######
-antiweb
-#######
+###############
+The first steps
+###############
 
 ************
 Installation
@@ -26,9 +26,9 @@ Getting Started
 
    * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
 
-*********************
+#####################
 Antiweb documentation
-*********************
+#####################
 
 If you just want to generate the documentation from a source file use 
 the following function:
@@ -43,8 +43,6 @@ Objects
 .. compound::
 
    The graph below show the main objects of antiweb:
-
-The graph below show the main objects of antiweb:
 
    .. digraph:: collaboration
 
@@ -299,6 +297,8 @@ import logging
 import sys
 import os.path
 import operator
+import os
+import collections
 
 #@rstart(management)
 '''
@@ -2500,7 +2500,21 @@ def generate(fname, tokens, show_warnings=False):
 #================
 #@code
 
+def process_file(in_file, out_file, token, warnings):
+    if not out_file:
+         out_file = os.path.splitext(in_file)[0] + ".rst"
 
+    try:
+        text_output = generate(in_file, token, warnings)
+        if text_output:
+            with open(out_file, "w") as f:
+                f.write(text_output)
+    
+    except WebError as e:
+        logger.error("Errors:")
+        for l, d in e.error_list:
+            logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
+            logger.error("      %s", l.text)
 
 def main():
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -2515,6 +2529,10 @@ def main():
 
     parser.add_option("-w", "--warnings", dest="warnings",
                       action="store_false", help="suppresses warnings")
+    
+    parser.add_option("-r", "--recursive", dest="recursive",
+                      action="store_true", help="Process every file in given directory")
+
 
     options, args = parser.parse_args()
 
@@ -2523,25 +2541,36 @@ def main():
 
     if options.warnings is None:
         options.warnings = True
-        
+    
     if not args:
         parser.print_help()
         sys.exit(0)
+    
+    if options.recursive:
+        previous_dir = os.getcwd()
+        os.chdir(args[0])
+        index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+        index_out = open(os.getcwd() + "\index.rst", "w")
+        index_out.write(index_static)
+        index_out.close()
 
-    fname = args[0]
+        for root, dirs, files in os.walk(args[0], topdown=False):
+            for filename in files:
+                fname= os.path.join(root, filename)
 
-    if not options.output:
-        options.output = os.path.splitext(fname)[0] + ".rst"
+                if os.path.isfile(fname) and not fname.endswith(".rst"):
+                    print(fname + ": ") 
+                    process_file(fname, None, options.token, options.warnings)
 
-    try:
-        with open(options.output, "w") as f:
-            f.write(generate(fname, options.token, options.warnings))
-        
-    except WebError as e:
-        logger.error("Errors:")
-        for l, d in e.error_list:
-            logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
-            logger.error("      %s", l.text)
+                    index_var = fname.split(args[0] + "\\")[1]
+                    index_var = index_var.split(".")[0]
+                    index_out = open(args[0] + "\index.rst", "a")
+                    index_out.write("\n   " + index_var)
+                    index_out.close()
+
+    else:
+
+        process_file(args[0], options.output, options.token, options.warnings)
 
 
 
@@ -2553,7 +2582,7 @@ if __name__ == "__main__":
 @start(__macros__)
 @define(__codeprefix__)
 
-The code begins in file @subst(__file__) at line @subst(__line__-1):
+@ignoreThe code begins in file @subst(__file__) at line @subst(__line__-1):
 @enifed(__codeprefix__)
 @end(__macros__)
 
@@ -2637,11 +2666,10 @@ documentaries of Python 2 programs.
     * Copy the content of its bin folder to Python34\\Scripts
 
 
-************************
 Preparing the .rst files
-************************
+========================
 
-   * Copy the antiweb.py file from my GitHub repository into the Python34 folder
+   * Copy the ``antiweb.py`` file from my GitHub repository into the ``Python34`` folder
    
     * You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:
    
@@ -2649,9 +2677,9 @@ Preparing the .rst files
    python antiweb.py "PATH TO THE FILE"
    @edoc
    
-   * You will then find a new file which is called "Filename".rst -> This file will be used in Sphinx to generate the documentation
+   * You will then find a new file which is called ``Filename.rst`` -> This file will be used in Sphinx to generate the documentation
    
-   * Sphinx also created a index.rst file for you when you executed sphinx-quickstart.exe. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
+   * Sphinx also created a ``index.rst`` file for you when you executed ``sphinx-quickstart.exe``. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
 
    @code
    Welcome to Finale_sphinx's documentation!
@@ -2708,9 +2736,8 @@ Contents:
 
 #@start(get_started)
 """
-   Every @ directive in antiweb has to be a comment in order to be accepted by antiweb. :py:class:`However, antiweb will still recognize but not accept directives which aren't comments, 
-   so for the examples here I will leave 1 free space between the @ and the directive name but you should NOT do so in your file.`
-   There are different directives for you to design and structure your documentation.
+   Every @ directive in antiweb has to be a comment in order to be accepted by antiweb. However, antiweb will still recognize but not accept directives which aren't comments, 
+   so for the examples here :py:class:`I will leave 1 free space between the @ and the directive name` but you should NOT do so in your file.
    
    
 @ start
@@ -2749,7 +2776,7 @@ Contents:
 @ include
 =========
 
-   Once you have created a block  you can include it with the ``@include`` directive:
+   Once you have created a block  you can include it with the ``@include`` directive. The order in which your blocks will appear in the documentation is defined by the order of the ``@include`` directives
    
    @code
    

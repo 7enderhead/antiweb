@@ -5,9 +5,9 @@
 
 
 
-#######
-antiweb
-#######
+###############
+The first steps
+###############
 
 ************
 Installation
@@ -290,9 +290,9 @@ Indentation matters!
 
    * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
 
-*********************
+#####################
 Antiweb documentation
-*********************
+#####################
 
 If you just want to generate the documentation from a source file use 
 the following function:
@@ -333,8 +333,6 @@ Objects
 .. compound::
 
    The graph below show the main objects of antiweb:
-
-The graph below show the main objects of antiweb:
 
    .. digraph:: collaboration
 
@@ -2987,6 +2985,8 @@ File Layout
     import sys
     import os.path
     import operator
+    import os
+    import collections
     
 
 
@@ -3097,6 +3097,19 @@ File Layout
 ::
 
     
+    def process_file(in_file, out_file, token, warnings):
+        if not out_file:
+             out_file = os.path.splitext(in_file)[0] + ".rst"
+    
+        try:
+            with open(out_file, "w") as f:
+                f.write(generate(in_file, token, warnings))
+        
+        except WebError as e:
+            logger.error("Errors:")
+            for l, d in e.error_list:
+                logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
+                logger.error("      %s", l.text)
     
     
     def main():
@@ -3112,6 +3125,10 @@ File Layout
     
         parser.add_option("-w", "--warnings", dest="warnings",
                           action="store_false", help="suppresses warnings")
+        
+        parser.add_option("-r", "--recursive", dest="recursive",
+                          action="store_true", help="Process every file in directory")
+    
     
         options, args = parser.parse_args()
     
@@ -3120,25 +3137,36 @@ File Layout
     
         if options.warnings is None:
             options.warnings = True
-            
+        
+        #if options.recursive:
+        #    options.recursive = True
+    
+        #if not options.recursive:
+        #    options.recursive = False
+    
         if not args:
             parser.print_help()
             sys.exit(0)
+        
+        
+        if options.recursive:
+            previous_dir = os.getcwd()
+            os.chdir(args[0])
     
-        fname = args[0]
-    
-        if not options.output:
-            options.output = os.path.splitext(fname)[0] + ".rst"
-    
-        try:
-            with open(options.output, "w") as f:
-                f.write(generate(fname, options.token, options.warnings))
+            for filename in os.listdir('.'):
+             fname = os.path.join(args[0],filename)
+             if os.path.isfile(filename) and not filename.endswith("rst"):
+               print(fname + ": ") 
+               process_file(fname, None, options.token, options.warnings)
             
-        except WebError as e:
-            logger.error("Errors:")
-            for l, d in e.error_list:
-                logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
-                logger.error("      %s", l.text)
+             if os.path.isdir(filename):
+                previous_dir = os.getcwd()
+                os.chdir(fname)
+            
+    
+        else:
+    
+            process_file(args[0], options.output, options.token, options.warnings)
     
     
     
