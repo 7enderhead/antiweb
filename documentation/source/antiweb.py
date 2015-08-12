@@ -46,19 +46,19 @@ Objects
 
    .. digraph:: collaboration
 
-      Dokument [shape=box, label="Dokument"]
-      Reader   [shape=box, label="Reader"]
-      directives [shape=box, label="Directive" ]
-      Bloecke [shape=box]
-      Linien [shape=box]
+      document [shape=box, label="document"]
+      reader   [shape=box, label="reader"]
+      directives [shape=box, label="directive" ]
+      blocks [shape=box]
+      lines [shape=box]
 
-      Dokument -> Reader [label="benutzt"]
-      Reader -> directives [label="erstellt"]
-      Dokument -> directives [label="benutzt"]
-      Dokument -> Bloecke [label="beinhaltet"]
-      directives -> Bloecke [label="verarbeitet"]
-      Bloecke -> Linien [label="beinhaltet"]
-      Linien -> directives [label="beinhaltet"]
+      document -> Reader [label="uses"]
+      reader -> directives [label="creates"]
+      document -> directives [label="uses"]
+      document -> blocks [label="contains"]
+      directives -> blocks [label="prepare"]
+      blocks -> lines [label="contains"]
+      lines -> directives [label="contains"]
 
 
    The :py:class:`document <Document>` manages the complete transformation: It uses a
@@ -68,10 +68,6 @@ Objects
    :py:class:`lines <Line>`. The :py:class:`document <Document>` process all
    :ref:`directives <Directives>`  to generate the output document.
    
-   .. digraph:: foo
-
-    "Nummer 1" -> "Nummer 2" -> "Nummer 3" -> "Nummer 1";
- 
 
 .. _Directives:
 
@@ -2504,17 +2500,36 @@ def process_file(in_file, out_file, token, warnings):
     if not out_file:
          out_file = os.path.splitext(in_file)[0] + ".rst"
 
+    
+    could_write = False
     try:
         text_output = generate(in_file, token, warnings)
+        
         if text_output:
             with open(out_file, "w") as f:
                 f.write(text_output)
-    
+            could_write = True
     except WebError as e:
-        logger.error("Errors:")
+        logger.error("\nErrors:")
         for l, d in e.error_list:
             logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
             logger.error("      %s", l.text)
+
+    return could_write
+
+def write(path, var, output, token, warnings, index):
+    index_rst = "index.rst"
+    could_process = process_file(var, output, token, warnings)
+    if index:
+        if could_process:
+            index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+            index_out = open(os.path.join(path, index_rst), "w")
+            index_out.write(index_static)
+            index_var = os.path.split(var)[1]
+            index_var = os.path.splitext(index_var)[0]
+            index_out = open(os.path.join(path, index_rst), "a")
+            index_out.write("\n   " + index_var)
+            index_out.close()
 
 def main():
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -2532,9 +2547,13 @@ def main():
     
     parser.add_option("-r", "--recursive", dest="recursive",
                       action="store_true", help="Process every file in given directory")
+    
+    parser.add_option("-i", "--index", dest="index",
+                      action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
 
 
     options, args = parser.parse_args()
+    
 
     logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.INFO)
@@ -2549,30 +2568,16 @@ def main():
     if options.recursive:
         previous_dir = os.getcwd()
         os.chdir(args[0])
-        index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-        index_out = open(os.getcwd() + "\index.rst", "w")
-        index_out.write(index_static)
-        index_out.close()
 
         for root, dirs, files in os.walk(args[0], topdown=False):
             for filename in files:
                 fname= os.path.join(root, filename)
-
                 if os.path.isfile(fname) and not fname.endswith(".rst"):
-                    print(fname + ": ") 
-                    process_file(fname, None, options.token, options.warnings)
-
-                    index_var = fname.split(args[0] + "\\")[1]
-                    index_var = index_var.split(".")[0]
-                    index_out = open(args[0] + "\index.rst", "a")
-                    index_out.write("\n   " + index_var)
-                    index_out.close()
+                    write(os.getcwd(), fname, None, options.token, options.warnings, options.index)
 
     else:
-
-        process_file(args[0], options.output, options.token, options.warnings)
-
-
+        os.chdir(os.path.split(args[0])[0])
+        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index)
 
 if __name__ == "__main__":
     main()
@@ -2582,7 +2587,7 @@ if __name__ == "__main__":
 @start(__macros__)
 @define(__codeprefix__)
 
-@ignoreThe code begins in file @subst(__file__) at line @subst(__line__-1):
+@ignore The code begins in file @subst(__file__) at line @subst(__line__-1):
 @enifed(__codeprefix__)
 @end(__macros__)
 

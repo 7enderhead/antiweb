@@ -336,19 +336,19 @@ Objects
 
    .. digraph:: collaboration
 
-      Dokument [shape=box, label="Dokument"]
-      Reader   [shape=box, label="Reader"]
-      directives [shape=box, label="Directive" ]
-      Bloecke [shape=box]
-      Linien [shape=box]
+      document [shape=box, label="document"]
+      reader   [shape=box, label="reader"]
+      directives [shape=box, label="directive" ]
+      blocks [shape=box]
+      lines [shape=box]
 
-      Dokument -> Reader [label="benutzt"]
-      Reader -> directives [label="erstellt"]
-      Dokument -> directives [label="benutzt"]
-      Dokument -> Bloecke [label="beinhaltet"]
-      directives -> Bloecke [label="verarbeitet"]
-      Bloecke -> Linien [label="beinhaltet"]
-      Linien -> directives [label="beinhaltet"]
+      document -> Reader [label="uses"]
+      reader -> directives [label="creates"]
+      document -> directives [label="uses"]
+      document -> blocks [label="contains"]
+      directives -> blocks [label="prepare"]
+      blocks -> lines [label="contains"]
+      lines -> directives [label="contains"]
 
 
    The :py:class:`document <Document>` manages the complete transformation: It uses a
@@ -358,10 +358,6 @@ Objects
    :py:class:`lines <Line>`. The :py:class:`document <Document>` process all
    :ref:`directives <Directives>`  to generate the output document.
    
-   .. digraph:: foo
-
-    "Nummer 1" -> "Nummer 2" -> "Nummer 3" -> "Nummer 1";
- 
 
 .. _Directives:
 
@@ -3101,20 +3097,36 @@ File Layout
         if not out_file:
              out_file = os.path.splitext(in_file)[0] + ".rst"
     
-        global write 
-        write = False
+        
+        could_write = False
         try:
             text_output = generate(in_file, token, warnings)
             
             if text_output:
-                write = True
                 with open(out_file, "w") as f:
                     f.write(text_output)
+                could_write = True
         except WebError as e:
-            logger.error("Errors:")
+            logger.error("\nErrors:")
             for l, d in e.error_list:
                 logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
                 logger.error("      %s", l.text)
+    
+        return could_write
+    
+    def write(path, var, output, token, warnings, index):
+        index_rst = "index.rst"
+        could_process = process_file(var, output, token, warnings)
+        if index:
+            if could_process:
+                index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+                index_out = open(os.path.join(path, index_rst), "w")
+                index_out.write(index_static)
+                index_var = os.path.split(var)[1]
+                index_var = os.path.splitext(index_var)[0]
+                index_out = open(os.path.join(path, index_rst), "a")
+                index_out.write("\n   " + index_var)
+                index_out.close()
     
     def main():
         parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -3153,44 +3165,16 @@ File Layout
         if options.recursive:
             previous_dir = os.getcwd()
             os.chdir(args[0])
-            if options.index:
-                index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-                index_out = open(os.getcwd() + "\index.rst", "w")
-                index_out.write(index_static)
-                index_out.close()
     
             for root, dirs, files in os.walk(args[0], topdown=False):
                 for filename in files:
                     fname= os.path.join(root, filename)
-    
                     if os.path.isfile(fname) and not fname.endswith(".rst"):
-                        print(fname + ": ") 
-                        process_file(fname, None, options.token, options.warnings)
-    
-                        if options.index:
-                            index_var = (fname.split(args[0] + "\\")[1]).split(".")[0]
-                            index_out = open(args[0] + "\index.rst", "a")
-                            global write
-                            if write is True:
-                                index_out.write("\n   " + index_var)
-                            index_out.close()
+                        write(os.getcwd(), fname, None, options.token, options.warnings, options.index)
     
         else:
-    
-            process_file(args[0], options.output, options.token, options.warnings)
-    
-            index_path = os.path.split(args[0])[0]
-            index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-            index_out = open(index_path + "\index.rst", "w")
-            index_out.write(index_static)
-            index_out.close()
-    
-            index_var = (os.path.split(args[0])[1]).split(".")[0]
-    
-            index_out = open(index_path + "\index.rst", "a")
-            index_out.write("\n   " + index_var)
-            index_out.close()
-    
+            os.chdir(os.path.split(args[0])[0])
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index)
     
     if __name__ == "__main__":
         main()
