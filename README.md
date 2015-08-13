@@ -19,10 +19,8 @@ License: GPL
 				Added installation instruction for use with sphinx
 			
 			11.08.2015:
-				Added a Getting Started section for quick use
-			
-			11.08.2015:
 				"Installation" and "Getting Started" improvements
+				Added a Getting Started section for quick use
 			
 			12.08.2015:
 				Added the -r flag: Process every compatible file in given directory
