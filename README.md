@@ -14,4 +14,7 @@ Changelog:
 			
 			12.08.2015:
 				Added the -r flag: Process every compatible file in given directory
-				All processed files will be included in Sphinx' index.rst
+				Added the -i flag: All processed files will be included in Sphinx' index.rst
+			
+			13.08.2015:
+				Added all changes to the documentation
