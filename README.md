@@ -30,3 +30,5 @@ License: GPL
 			
 			13.08.2015:
 				Added all changes to the documentation
+				Copyright adaption
+				Introducing a new version 0.3
