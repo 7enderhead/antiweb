@@ -26,6 +26,7 @@ File Layout
 
 @include(file layout)
 @include(imports)
+@include(export)
 @include(Lexers)
 @include(Filter Output)
 
@@ -47,6 +48,17 @@ import pygments
 import re
 from pygments.token import Token
 #@(imports)
+#@rstart(export)
+'''
+***********
+<<exports>>
+***********
+Das ist der Export Test Text
+'''
+#@indent 5
+#@code
+priority = 5
+#@(export)
 #@rstart(Lexers)
 '''
 <<Lexers>>
