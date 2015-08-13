@@ -1,4 +1,15 @@
 #!python
+
+"""
+Name: antiweb
+Version: 0.3
+Summary: antiweb literate programming tool
+Home-page: http://packages.python.org/antiweb/
+Author: Michael Reithinger & Philipp Rathmanner
+Author-email: mreithinger@web.de & yarmek@icloud.com
+License: GPL
+"""
+
 #@start()
 """
 .. default-domain:: python
@@ -8,9 +19,9 @@
 
 
 
-###############
-The first steps
-###############
+#######
+antiweb
+#######
 
 ************
 Installation
@@ -26,6 +37,7 @@ Getting Started
 
 
 * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
+
 
 #####################
 Antiweb documentation
@@ -172,7 +184,8 @@ Tangles a source code file to a rst file.
   -t TOKEN, --token=TOKEN
                         defines a token, usable by @if directives
   -w, --warnings        suppresses warnings
-
+  -r, --recursive       Process every file in given directory
+  -i, --index           Automatically write file(s) to Sphinx' index.rst
 
 *******
 Example
@@ -308,7 +321,7 @@ import collections
 
 #@code
 
-__version__ = "0.2.2"
+__version__ = "0.3"
 
 logger = logging.getLogger('antiweb')
 
@@ -1914,8 +1927,10 @@ class Document(object):
     #@start(Document doc)
     #Document
     #========
+
     """
     .. py:class:: Document(text, reader, fname, tokens)
+
        This is the mediator communicating with all other classes
        to generate rst output.
        :param string text: the source code to parse.
@@ -1923,6 +1938,7 @@ class Document(object):
        :param string fname: The file name of the source code.
        :param tokens: A sequence of tokens usable for the ``@if`` directive.
     """
+
     #@indent 3
     #@include(Document)
     #@include(Document.errors doc)
@@ -2027,6 +2043,7 @@ class Document(object):
     def __init__(self, text, reader, fname, tokens):
         """
         .. py:method:: __init__(text, reader, fname, tokens)
+
            The constructor.
         """
         self.errors = []
@@ -2046,6 +2063,7 @@ class Document(object):
     def process(self, show_warnings):
         """
         .. py:method:: process(show_warnings)
+
            Processes the document and generates the output.
            :param bool show_warnings: If ``True`` warnings are emitted.
            :return: A string representing the rst output.
@@ -2082,9 +2100,10 @@ class Document(object):
     def get_subdoc(self, rpath):
         """
         .. py:method:: get_subdoc(rpath)
+
            Tries to compile a document with the relative path rpath.
            :param string rpath: The relative path to the root
-                                containing document.
+           containing document.
            :return: A :py:class:`Document` reference to the sub document.
         """
         #@cstart(return from cache if possible)
@@ -2135,6 +2154,7 @@ class Document(object):
     def add_error(self, line, text):
         """
         .. py:method:: add_error(line, text)
+
            Adds an error to the list.
            :param integer line: The line number that causes the error.
            :param string text: An error text.
@@ -2146,6 +2166,7 @@ class Document(object):
     def check_errors(self):
         """
         .. py:method:: check_errors()
+
            Raises a ``WebError`` exception if error were found.
         """
         if self.errors:
@@ -2155,6 +2176,7 @@ class Document(object):
     def collect_blocks(self):
         """
         .. py:method:: collect_blocks()
+
            Collects all text blocks.
         """
         blocks = [ d.collect_block(self, i)
@@ -2171,11 +2193,12 @@ class Document(object):
     def get_compiled_block(self, name):
         """
         .. py:method:: get_compiled_block(name)
+
            Returns the compiled version of a text block.
            Compiled means: all directives where processed.
            :param string name: The name of the text block:
            :return: A list of :py:class:`Line` objects representing
-                    the text block.
+           the text block.
            
         """
         if name not in self.blocks:
@@ -2191,12 +2214,14 @@ class Document(object):
     def compile_block(self, name, block):
         """
         .. py:method:: compile_block(name, block)
+
            Compiles a text block.
            :param string name: The name of the block
            :param block: A list of :py:class:`Line` objects representing
-                         the text block to compile.
+           the text block to compile.
            :return: A list of :py:class:`Line` objects representing
-                    the compiled text block.
+           the compiled text block.
+
         """
         #@cstart(find_next_directive)
         def find_next_directive(block):
@@ -2263,6 +2288,7 @@ def process_file(in_file, out_file, token, warnings):
     if not out_file:
          out_file = os.path.splitext(in_file)[0] + ".rst"
 #@edoc
+
 #The output text will be written in the output file. If there is an output text, the function returns could_write as True
 
 #@code
@@ -2292,8 +2318,7 @@ def process_file(in_file, out_file, token, warnings):
 
 #@code
 
-def write(path, var, output, token, warnings, index):
-    index_rst = "index.rst"
+def write(path, var, output, token, warnings, index, index_rst):
     could_process = process_file(var, output, token, warnings)
 
 #@edoc
@@ -2305,9 +2330,6 @@ def write(path, var, output, token, warnings, index):
 
     if index:
         if could_process:
-            index_static = "Antiweb's Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-            index_out = open(os.path.join(path, index_rst), "w")
-            index_out.write(index_static)
             index_var = os.path.split(var)[1]
             index_var = os.path.splitext(index_var)[0]
             index_out = open(os.path.join(path, index_rst), "a")
@@ -2316,6 +2338,10 @@ def write(path, var, output, token, warnings, index):
 #@edoc
 
 #@(write)
+def write_static(input_type, index_rst):
+    index_static = "Antiweb's Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+    index_out = open(os.path.join(input_type, index_rst), "w")
+    index_out.write(index_static)
 
 def main():
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -2364,7 +2390,16 @@ I added two new flags to antiweb:
         parser.print_help()
         sys.exit(0)
 
+    index_rst = "index.rst"
+    
+    if options.index:
+        if options.recursive:
+            in_type = args[0]
 
+        else:
+            in_type = os.path.split(args[0])[0]
+
+        write_static(in_type, index_rst)
 #The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 #@code
@@ -2385,12 +2420,12 @@ I added two new flags to antiweb:
 
 #@edoc
 
-#If the found file is no folder or already a rst file, it will be put into the process
+#If the found file is no folder nor a rst file, it will be put into the process
 
 #@code
 
                 if os.path.isfile(fname) and not fname.endswith(".rst"):
-                    write(os.getcwd(), fname, None, options.token, options.warnings, options.index)
+                    write(os.getcwd(), fname, None, options.token, options.warnings, options.index, index_rst)
 #@edoc
 
 #This else will take place when only one file is given without the -r flag
@@ -2399,7 +2434,7 @@ I added two new flags to antiweb:
 
     else:
         os.chdir(os.path.split(args[0])[0])
-        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index)
+        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst)
 #@edoc
 #@include(write)
 #@include(process_file)
@@ -2438,7 +2473,7 @@ documentaries of Python 2 programs.
 
 
    * Install Python 3.4
-   * After installing Python, run below commands in cmd (you have to navigate to Python34\\Scripts first)
+   * After installing Python, run below commands in cmd (you can add the directories to the PATH or navigate to the directories [I would prefer the first option])
    
    @code
    pip install sphinx 
@@ -2447,15 +2482,13 @@ documentaries of Python 2 programs.
    * :py:class:`IMPORTANT`: If you get a connection error the reason is most likely your proxy. You then have to use a tool like "cntlm" and add a proxy flag when running pip, example:
    
    @code
-   pip install sphinx --proxy http://localhost:8123 //in case you are using cntlm your proxy will be localhost
+   pip install sphinx --proxy http://localhost:8123
    @edoc
+   
+   * The pre-installed version of babel doesn't work with Python 3, so we need to install an updated version from GitHub. Start the Git Shell and enter this command:
    
    @code
-    pip uninstall babel //uninstall babel because of incompatibility
-   @edoc
-   
-   @code 
-   pip install babel==1.3 //install compatible version 
+   pip install git+https://github.com/jun66j5/babel.git [options]
    @edoc
 
    * Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it (however, say yes to all extensions suggested during the process). The sphinx quickstart created a project folder for you, open the conf.py which is in that folder
@@ -2491,9 +2524,8 @@ documentaries of Python 2 programs.
 	   ]
 	   @edoc
 
-   * Download the Graphviz msi installer from here: http://www.graphviz.org/Download_windows.php After installing Graphviz you will find a Graphviz folder inside your Program folder, open it
-
-    * Copy the content of its bin folder to Python34\\Scripts
+   * Download the Graphviz msi installer from here: http://www.graphviz.org/Download_windows.php 
+   * Add the bin folder inside the Graphviz directory to the PATH
 
 
 Preparing the .rst files
@@ -2504,12 +2536,14 @@ Preparing the .rst files
     * You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:
    
    @code
-   python antiweb.py "PATH TO THE FILE"
+   python antiweb.py "PATH TO THE FILE/DIRECTORY" [options]
    @edoc
    
    * You will then find a new file which is called ``Filename.rst`` -> This file will be used in Sphinx to generate the documentation
    
-   * Sphinx also created a ``index.rst`` file for you when you executed ``sphinx-quickstart.exe``. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
+   * antiweb can also create/edit a file called "index.rst" if you add the -i option when executing antiweb. In that index all processed files for documentation with sphinx are included
+   
+   * When you don't use the -i option you have to edit the file manually (sphinx-quickstart created it):
 
    @code
 Welcome to Antiweb's documentation!
@@ -2520,18 +2554,11 @@ Contents:
    .. toctree::
       :maxdepth: 2
 
-      filename
+      filename #without file extension!
 
-   
-   Indices and tables
-   ==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
    @edoc
 
-   * You can add multiple files, they will then be listed in the generated index of your project
+   * You can add multiple files, they will then be listed in the generated index of your html project
    * It is also possible to use Graphviz for graph visualizatin. A proper graph should look like this:
    @code
    .. digraph:: name

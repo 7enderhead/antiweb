@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The first steps &mdash; Finale_sphinx 2.1 documentation</title>
+  <title>antiweb &mdash; antiweb 0.3 documentation</title>
   
 
   
@@ -30,7 +30,8 @@
   
 
   
-    <link rel="top" title="Finale_sphinx 2.1 documentation" href="index.html"/>
+    <link rel="top" title="antiweb 0.3 documentation" href="index.html"/>
+        <link rel="next" title="Changelog" href="changelog.html"/>
         <link rel="prev" title="Antiweb’s Documentation" href="index.html"/> 
 
   
@@ -48,7 +49,7 @@
         
 
         
-          <a href="index.html" class="icon icon-home"> Finale_sphinx
+          <a href="index.html" class="icon icon-home"> antiweb
         
 
         
@@ -71,7 +72,7 @@
           
           
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">The first steps</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">antiweb</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preparing-the-rst-files">Preparing the .rst files</a></li>
 </ul>
@@ -137,6 +138,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
           
@@ -150,7 +152,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Finale_sphinx</a>
+        <a href="index.html">antiweb</a>
       </nav>
 
 
@@ -161,7 +163,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>The first steps</li>
+    <li>antiweb</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -174,8 +176,8 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="the-first-steps">
-<h1>The first steps<a class="headerlink" href="#the-first-steps" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="antiweb">
+<h1>antiweb<a class="headerlink" href="#antiweb" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>The most important parts of the system are Python 3, Sphinx and antiweb. Because of incompatibility with Python 2 you can&#8217;t create
@@ -183,7 +185,7 @@ documentaries of Python 2 programs.</p>
 <blockquote>
 <div><ul class="simple">
 <li>Install Python 3.4</li>
-<li>After installing Python, run below commands in cmd (you have to navigate to Python34\Scripts first)</li>
+<li>After installing Python, run below commands in cmd (you can add the directories to the PATH or navigate to the directories [I would prefer the first option])</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre>pip install sphinx
 </pre></div>
@@ -191,13 +193,13 @@ documentaries of Python 2 programs.</p>
 <ul class="simple">
 <li><code class="xref py py-class docutils literal"><span class="pre">IMPORTANT</span></code>: If you get a connection error the reason is most likely your proxy. You then have to use a tool like &#8220;cntlm&#8221; and add a proxy flag when running pip, example:</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre>pip install sphinx --proxy http://localhost:8123 //in case you are using cntlm your proxy will be localhost
+<div class="highlight-python"><div class="highlight"><pre>pip install sphinx --proxy http://localhost:8123
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>pip uninstall babel //uninstall babel because of incompatibility
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>pip install babel==1.3 //install compatible version
+<ul class="simple">
+<li>The pre-installed version of babel doesn&#8217;t work with Python 3, so we need to install an updated version from GitHub. Start the Git Shell and enter this command:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>pip install git+https://github.com/jun66j5/babel.git [options]
 </pre></div>
 </div>
 <ul>
@@ -261,13 +263,9 @@ documentaries of Python 2 programs.</p>
 </ul>
 </div></blockquote>
 <ul class="simple">
-<li>Download the Graphviz msi installer from here: <a class="reference external" href="http://www.graphviz.org/Download_windows.php">http://www.graphviz.org/Download_windows.php</a> After installing Graphviz you will find a Graphviz folder inside your Program folder, open it</li>
+<li>Download the Graphviz msi installer from here: <a class="reference external" href="http://www.graphviz.org/Download_windows.php">http://www.graphviz.org/Download_windows.php</a></li>
+<li>Add the bin folder inside the Graphviz directory to the PATH</li>
 </ul>
-<blockquote>
-<div><ul class="simple">
-<li>Copy the content of its bin folder to Python34\Scripts</li>
-</ul>
-</div></blockquote>
 </div></blockquote>
 <div class="section" id="preparing-the-rst-files">
 <h3>Preparing the .rst files<a class="headerlink" href="#preparing-the-rst-files" title="Permalink to this headline">¶</a></h3>
@@ -280,30 +278,23 @@ documentaries of Python 2 programs.</p>
 <li>You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:</li>
 </ul>
 </div></blockquote>
-<div class="highlight-python"><div class="highlight"><pre>python antiweb.py &quot;PATH TO THE FILE&quot;
+<div class="highlight-python"><div class="highlight"><pre>python antiweb.py &quot;PATH TO THE FILE/DIRECTORY&quot; [options]
 </pre></div>
 </div>
 <ul class="simple">
 <li>You will then find a new file which is called <code class="docutils literal"><span class="pre">Filename.rst</span></code> -&gt; This file will be used in Sphinx to generate the documentation</li>
-<li>Sphinx also created a <code class="docutils literal"><span class="pre">index.rst</span></code> file for you when you executed <code class="docutils literal"><span class="pre">sphinx-quickstart.exe</span></code>. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:</li>
+<li>antiweb can also create/edit a file called &#8220;index.rst&#8221; if you add the -i option when executing antiweb. In that index all processed files for documentation with sphinx are included</li>
+<li>When you don&#8217;t use the -i option you have to edit the file manually (sphinx-quickstart created it):</li>
 </ul>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17</pre></div></td><td class="code"><div class="highlight"><pre>Welcome to Antiweb&#39;s documentation!
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre>Welcome to Antiweb&#39;s documentation!
 ===================================
 
 Contents:
@@ -311,19 +302,11 @@ Contents:
    .. toctree::
       :maxdepth: 2
 
-      filename
-
-
-   Indices and tables
-   ==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+      filename #without file extension!
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
-<li>You can add multiple files, they will then be listed in the generated index of your project</li>
+<li>You can add multiple files, they will then be listed in the generated index of your html project</li>
 <li>It is also possible to use Graphviz for graph visualizatin. A proper graph should look like this:</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre>.. digraph:: name
@@ -563,11 +546,11 @@ blocks -&gt; lines [label=&quot;contains&quot;]
 lines -&gt; directives [label=&quot;contains&quot;]
 }" />
 </p>
-<p class="compound-last">The <code class="xref py py-class docutils literal"><span class="pre">document</span></code> manages the complete transformation: It uses a
+<p class="compound-last">The <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">document</span></code></a> manages the complete transformation: It uses a
 <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">reader</span></code></a>  to parse source code. The <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">reader</span></code></a>
 creates <a class="reference internal" href="#directives"><span>directives</span></a> objects for each found antiweb directive in the source
 code. The source code is split in text blocks which consists of several
-<a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">lines</span></code></a>. The <code class="xref py py-class docutils literal"><span class="pre">document</span></code> process all
+<a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">lines</span></code></a>. The <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">document</span></code></a> process all
 <a class="reference internal" href="#directives"><span>directives</span></a>  to generate the output document.</p>
 </div>
 </div>
@@ -667,7 +650,7 @@ will be processed earlier.</p>
 <dl class="method">
 <dt id="Directive.collect_block">
 <code class="descname">collect_block</code><span class="sig-paren">(</span><em>document</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.collect_block" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called by <code class="xref py py-class docutils literal"><span class="pre">Document</span></code>.
+<dd><p>This method is called by <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
 If the directive is defining a text block. It
 retrieves the text lines of the block from the document
 and return them.</p>
@@ -676,7 +659,7 @@ and return them.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>document</strong> (<code class="xref py py-class docutils literal"><span class="pre">Document</span></code>) &#8211; the document calling the function.</li>
+<li><strong>document</strong> (<a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
 <li><strong>index</strong> (<em>integer</em>) &#8211; the line index of the directive.</li>
 </ul>
 </td>
@@ -697,14 +680,14 @@ is a tuple <code class="docutils literal"><span class="pre">(directive</span> <s
 <dl class="method">
 <dt id="Directive.process">
 <code class="descname">process</code><span class="sig-paren">(</span><em>document</em>, <em>block</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.process" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called by <code class="xref py py-class docutils literal"><span class="pre">Document</span></code>.
+<dd><p>This method is called by <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
 The directive should do whatever it is supposed to do.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>document</strong> (<code class="xref py py-class docutils literal"><span class="pre">Document</span></code>) &#8211; the document calling the function.</li>
+<li><strong>document</strong> (<a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
 <li><strong>block</strong> &#8211; The line block the directive is in.</li>
 <li><strong>index</strong> (<em>integer</em>) &#8211; the line index of the directive
 within the block.</li>
@@ -722,7 +705,7 @@ within the block.</li>
 <dl class="method">
 <dt id="Directive.match">
 <code class="descname">match</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.match" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called by <code class="xref py py-class docutils literal"><span class="pre">Document</span></code>.
+<dd><p>This method is called by <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
 It gives the directive the chance to find and manipulate other
 directives.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1694,7 +1677,7 @@ source parsing.</p>
 <dt id="Reader">
 <em class="property">class </em><code class="descname">Reader</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the base class for all readers. The public functions
-exposed to <code class="xref py py-class docutils literal"><span class="pre">Document</span></code> are <a class="reference internal" href="#Reader.process" title="Reader.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>,
+exposed to <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> are <a class="reference internal" href="#Reader.process" title="Reader.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>,
 and <a class="reference internal" href="#Reader.filter_output" title="Reader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">filter_output()</span></code></a>.</p>
 <p>The main tasks for a reader is:</p>
 <blockquote>
@@ -1753,7 +1736,7 @@ class Reader(object):
 <dt id="Reader.process">
 <code class="descname">process</code><span class="sig-paren">(</span><em>fname</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the source code and identifies the directives.
-This method is call by <code class="xref py py-class docutils literal"><span class="pre">Document</span></code>.</p>
+This method is call by <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1803,7 +1786,7 @@ This method is call by <code class="xref py py-class docutils literal"><span cla
 <dl class="method">
 <dt id="Reader.filter_output">
 <code class="descname">filter_output</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.filter_output" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is call by <code class="xref py py-class docutils literal"><span class="pre">Document</span></code> and gives
+<dd><p>This method is call by <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> and gives
 the reader the chance to influence the final output.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">lines</span>
@@ -2331,6 +2314,463 @@ with antiweb directives.</p>
 <h2>Document<a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id8">
 <h3>Document<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Document">
+<em class="property">class </em><code class="descname">Document</code><span class="sig-paren">(</span><em>text</em>, <em>reader</em>, <em>fname</em>, <em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#Document" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the mediator communicating with all other classes
+to generate rst output.
+:param string text: the source code to parse.
+:param reader: An instance of <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.
+:param string fname: The file name of the source code.
+:param tokens: A sequence of tokens usable for the <code class="docutils literal"><span class="pre">&#64;if</span></code> directive.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre>class Document(object):
+    #Attributes
+    &lt;&lt;Document.errors&gt;&gt;
+    &lt;&lt;Document.blocks&gt;&gt;
+    &lt;&lt;Document.blocks_included&gt;&gt;
+    &lt;&lt;Document.compiled_blocks&gt;&gt;
+    &lt;&lt;Document.sub_documents&gt;&gt;
+    &lt;&lt;Document.tokens&gt;&gt;
+    &lt;&lt;Document.macros&gt;&gt;
+    &lt;&lt;Document.fname&gt;&gt;
+    &lt;&lt;Document.reader&gt;&gt;
+    &lt;&lt;Document.lines&gt;&gt;
+
+    #Methods
+    &lt;&lt;Document.__init__&gt;&gt;
+    &lt;&lt;Document.process&gt;&gt;
+    &lt;&lt;Document.get_subdoc&gt;&gt;
+    &lt;&lt;Document.add_error&gt;&gt;
+    &lt;&lt;Document.check_errors&gt;&gt;
+    &lt;&lt;Document.collect_blocks&gt;&gt;
+    &lt;&lt;Document.get_compiled_block&gt;&gt;
+    &lt;&lt;Document.compile_block&gt;&gt;
+</pre></div>
+</td></tr></table></div>
+<dl class="attribute">
+<dt id="Document.errors">
+<code class="descname">errors</code><a class="headerlink" href="#Document.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of errors found during generation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.blocks">
+<code class="descname">blocks</code><a class="headerlink" href="#Document.blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of all found blocks: Name -&gt; List of Lines</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.blocks_included">
+<code class="descname">blocks_included</code><a class="headerlink" href="#Document.blocks_included" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set containing all block names that have been included by
+an &#64;include directive.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">blocks_included</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.compiled_blocks">
+<code class="descname">compiled_blocks</code><a class="headerlink" href="#Document.compiled_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set containing all block names that have been already
+compiled.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">compiled_blocks</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.sub_documents">
+<code class="descname">sub_documents</code><a class="headerlink" href="#Document.sub_documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cache dictionary of sub documents, referenced by
+<code class="docutils literal"><span class="pre">&#64;include</span></code> directives: Filename -&gt; Document</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sub_documents</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.tokens">
+<code class="descname">tokens</code><a class="headerlink" href="#Document.tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set of token names that can be used for the <code class="docutils literal"><span class="pre">&#64;if</span></code> directive.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.macros">
+<code class="descname">macros</code><a class="headerlink" href="#Document.macros" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary containing the macros that can be used
+by the <code class="docutils literal"><span class="pre">&#64;subst</span></code> directive: Macro name -&gt; substitution.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">macros</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.fname">
+<code class="descname">fname</code><a class="headerlink" href="#Document.fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>The file name of the document&#8217;s source.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fname</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.reader">
+<code class="descname">reader</code><a class="headerlink" href="#Document.reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>The instance of a <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a> object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">reader</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.lines">
+<code class="descname">lines</code><a class="headerlink" href="#Document.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing the whole documents
+split in lines.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>text</em>, <em>reader</em>, <em>fname</em>, <em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">compiled_blocks</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sub_documents</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tokens</span> <span class="ow">or</span> <span class="p">[])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">macros</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;__file__&quot;</span> <span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s">&quot;__codeprefix__&quot;</span> <span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">reader</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>show_warnings</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes the document and generates the output.
+:param bool show_warnings: If <code class="docutils literal"><span class="pre">True</span></code> warnings are emitted.
+:return: A string representing the rst output.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre>def process(self, show_warnings):
+    self.collect_blocks()
+    if &quot;&quot; not in self.blocks:
+        self.add_error(0, &quot;no @start() directive found (I need one)&quot;)
+        self.check_errors()
+
+    try:
+        text = self.get_compiled_block(&quot;&quot;)
+    finally:
+        self.check_errors()
+
+    if show_warnings:
+        &lt;&lt;show warnings&gt;&gt;
+
+    text = self.reader.filter_output(text)
+    return &quot;\n&quot;.join(map(operator.attrgetter(&quot;text&quot;), text))
+</pre></div>
+</td></tr></table></div>
+<p id="show-warnings"><strong>&lt;&lt;show warnings&gt;&gt;</strong></p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>           <span class="c">#may not cause a warning</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;__macros__&quot;</span><span class="p">)</span> <span class="c">#may not cause a warning</span>
+<span class="n">unincluded</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span>
+<span class="k">if</span> <span class="n">unincluded</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;The following block were not included:&quot;</span><span class="p">)</span>
+    <span class="n">warnings</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">unincluded</span> <span class="p">]</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">warnings</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;  </span><span class="si">%s</span><span class="s">(line </span><span class="si">%i</span><span class="s">)&quot;</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.get_subdoc">
+<code class="descname">get_subdoc</code><span class="sig-paren">(</span><em>rpath</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.get_subdoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to compile a document with the relative path rpath.
+:param string rpath: The relative path to the root
+containing document.
+:return: A <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> reference to the sub document.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre>def get_subdoc(self, rpath):
+    &lt;&lt;return from cache if possible&gt;&gt;
+    &lt;&lt;insert macros function&gt;&gt;
+    &lt;&lt;read the source file&gt;&gt;
+
+    self.sub_documents[rpath] = doc
+    return doc
+</pre></div>
+</td></tr></table></div>
+<p id="return-from-cache-if-possible"><strong>&lt;&lt;return from cache if possible&gt;&gt;</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_documents</span><span class="p">[</span><span class="n">rpath</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p id="insert-macros-function"><strong>&lt;&lt;insert macros function&gt;&gt;</strong></p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">insert_macros</span><span class="p">(</span><span class="n">subdoc</span><span class="p">):</span>
+    <span class="c">#if sub doc has no macros insert mine</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s">&quot;__macros__&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subdoc</span><span class="o">.</span><span class="n">blocks</span>
+        <span class="ow">and</span> <span class="s">&quot;__macros__&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">):</span>
+        <span class="n">file_</span> <span class="o">=</span> <span class="n">subdoc</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="s">&quot;__file__&quot;</span><span class="p">]</span> <span class="c"># preserve __file__</span>
+        <span class="n">subdoc</span><span class="o">.</span><span class="n">macros</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">macros</span><span class="p">)</span>
+        <span class="n">subdoc</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="s">&quot;__file__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_</span>
+</pre></div>
+</td></tr></table></div>
+<p id="read-the-source-file"><strong>&lt;&lt;read the source file&gt;&gt;</strong></p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">head</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">rpath</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c">#print &quot;try open&quot;, fpath</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Could not open: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">fpath</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="c">#parse the file</span>
+    <span class="n">lexer</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">get_lexer_for_filename</span><span class="p">(</span><span class="n">rpath</span><span class="p">)</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">readers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lexer</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Reader</span><span class="p">)(</span><span class="n">lexer</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">rpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+    <span class="n">doc</span><span class="o">.</span><span class="n">collect_blocks</span><span class="p">()</span>
+    <span class="n">insert_macros</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.add_error">
+<code class="descname">add_error</code><span class="sig-paren">(</span><em>line</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.add_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an error to the list.
+:param integer line: The line number that causes the error.
+:param string text: An error text.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line</span><span class="p">],</span> <span class="n">text</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.check_errors">
+<code class="descname">check_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Document.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises a <code class="docutils literal"><span class="pre">WebError</span></code> exception if error were found.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WebError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.collect_blocks">
+<code class="descname">collect_blocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Document.collect_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects all text blocks.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">collect_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="p">[</span> <span class="n">d</span><span class="o">.</span><span class="n">collect_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+               <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+               <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span> <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">blocks</span><span class="p">)))</span>
+
+    <span class="k">if</span> <span class="s">&quot;__macros__&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_compiled_block</span><span class="p">(</span><span class="s">&quot;__macros__&quot;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.get_compiled_block">
+<code class="descname">get_compiled_block</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.get_compiled_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the compiled version of a text block.
+Compiled means: all directives where processed.
+:param string name: The name of the text block:
+:return: A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing
+the text block.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_compiled_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">compiled_blocks</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile_block</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+</pre></div>
+</td></tr></table></div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.compile_block">
+<code class="descname">compile_block</code><span class="sig-paren">(</span><em>name</em>, <em>block</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.compile_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compiles a text block.
+:param string name: The name of the block
+:param block: A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing
+the text block to compile.
+:return: A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing
+the compiled text block.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre>def compile_block(self, name, block):
+    &lt;&lt;find_next_directive&gt;&gt;
+
+    while True:
+        directive_index = find_next_directive(block)
+        if not directive_index: break
+        directive, index = directive_index
+        directive.process(self, block, index)
+
+    self.compiled_blocks.add(name)
+    return block
+</pre></div>
+</td></tr></table></div>
+<p id="find-next-directive"><strong>&lt;&lt;find_next_directive&gt;&gt;</strong></p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">find_next_directive</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+    <span class="c"># returns the next available directive</span>
+    <span class="n">min_line</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">priority</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span> <span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">min_line</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="n">prio</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">directives</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">index</span>
+</pre></div>
+</td></tr></table></div>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="line">
 <h3>Line<a class="headerlink" href="#line" title="Permalink to this headline">¶</a></h3>
@@ -2678,7 +3118,11 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 23
 24
 25
-26</pre></div></td><td class="code"><div class="highlight"><pre>&lt;&lt;imports&gt;&gt;
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="highlight"><pre>&lt;&lt;imports&gt;&gt;
 &lt;&lt;management&gt;&gt;
 &lt;&lt;directives&gt;&gt;
 &lt;&lt;readers&gt;&gt;
@@ -2687,6 +3131,10 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 &lt;&lt;Line&gt;&gt;
 &lt;&lt;document&gt;&gt;
 
+def write_static(input_type, index_rst):
+    index_static = &quot;Antiweb&#39;s Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n&quot;
+    index_out = open(os.path.join(input_type, index_rst), &quot;w&quot;)
+    index_out.write(index_static)
 
 def main():
     parser = OptionParser(&quot;usage: %prog [options] SOURCEFILE&quot;,
@@ -2740,7 +3188,7 @@ if __name__ == &quot;__main__&quot;:
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.2.2&quot;</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.3&quot;</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;antiweb&#39;</span><span class="p">)</span>
 
@@ -2855,7 +3303,7 @@ directives = {
 <li><dl class="first docutils">
 <dt>The &#8216;&#8217;-i&#8217;&#8217; flag:</dt>
 <dd><ul class="first last simple">
-<li>In the same directory as given, a index.rst will be created/edited to include all the processed files (important for sphinx)</li>
+<li>Sphinx&#8217; index.rst will be edited to contain all processed files (empty files will be ignored)</li>
 </ul>
 </dd>
 </dl>
@@ -2878,7 +3326,18 @@ directives = {
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre>    parser.add_option(&quot;-r&quot;, &quot;--recursive&quot;, dest=&quot;recursive&quot;,
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre>    parser.add_option(&quot;-r&quot;, &quot;--recursive&quot;, dest=&quot;recursive&quot;,
                       action=&quot;store_true&quot;, help=&quot;Process every file in given directory&quot;)
 
     parser.add_option(&quot;-i&quot;, &quot;--index&quot;, dest=&quot;index&quot;,
@@ -2896,6 +3355,17 @@ if options.warnings is None:
 if not args:
     parser.print_help()
     sys.exit(0)
+
+index_rst = &quot;index.rst&quot;
+
+if options.index:
+    if options.recursive:
+        in_type = args[0]
+
+    else:
+        in_type = os.path.split(args[0])[0]
+
+    write_static(in_type, index_rst)
 </pre></div>
 </td></tr></table></div>
 <p>The program will check if a -r flag was given and if so, save the current directory and change it to the given one</p>
@@ -2910,40 +3380,33 @@ if not args:
         <span class="n">fname</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If the found file is no folder or already a rst file, it will be put into the process</p>
+<p>If the found file is no folder nor a rst file, it will be put into the process</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.rst&quot;</span><span class="p">):</span>
-    <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">fname</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">fname</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This else will take place when only one file is given without the -r flag</p>
 <div class="highlight-python"><div class="highlight"><pre>else:
     os.chdir(os.path.split(args[0])[0])
-    write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index)
+    write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst)
 </pre></div>
 </div>
 <div class="section" id="writing-the-index-rst-file">
 <h3>Writing the index.rst file<a class="headerlink" href="#writing-the-index-rst-file" title="Permalink to this headline">¶</a></h3>
 <p>From the given file a .rst file will be created if it contains an antiweb start directive</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-    <span class="n">index_rst</span> <span class="o">=</span> <span class="s">&quot;index.rst&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">):</span>
     <span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If the user added the -i flag, the file gets added to Sphinx&#8217; index.rst file</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">index</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">could_process</span><span class="p">:</span>
-        <span class="n">index_static</span> <span class="o">=</span> <span class="s">&quot;Antiweb&#39;s Documentation</span><span class="se">\n</span><span class="s">=======================</span><span class="se">\n</span><span class="s">Contents:</span><span class="se">\n\n</span><span class="s">.. toctree::</span><span class="se">\n</span><span class="s">   :maxdepth: 2</span><span class="se">\n</span><span class="s">&quot;</span>
-        <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
-        <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index_static</span><span class="p">)</span>
         <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">var</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">index_var</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>
@@ -3009,6 +3472,8 @@ a more advances reader is <a class="reference internal" href="#PythonReader" tit
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
       
         <a href="index.html" class="btn btn-neutral" title="Antiweb’s Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
@@ -3019,7 +3484,7 @@ a more advances reader is <a class="reference internal" href="#PythonReader" tit
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015, Phil.
+        &copy; Copyright 2010 Michael Reithinger &amp; 2015 Philipp Rathmanner.
     </p>
   </div>
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
@@ -3040,7 +3505,7 @@ a more advances reader is <a class="reference internal" href="#PythonReader" tit
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
