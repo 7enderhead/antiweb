@@ -12,7 +12,7 @@ Author-email: mreithinger@web.de & yarmek@icloud.com
 
 License: GPL
 
-Changelog:
+# Changelog:
 
 			10.08.2015:
 				Added support for C#
