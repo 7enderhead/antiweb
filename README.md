@@ -1,5 +1,12 @@
 # antiweb
 
+Version: 0.3
+Summary: antiweb literate programming tool
+Home-page: http://packages.python.org/antiweb/
+Author: Michael Reithinger & Philipp Rathmanner
+Author-email: mreithinger@web.de & yarmek@icloud.com
+License: GPL
+
 Changelog:
 
 			10.08.2015:
