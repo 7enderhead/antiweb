@@ -1,7 +1,5 @@
-Welcome to Antiweb's documentation!
-===================================
-
-
+Antiweb's Documentation
+=======================
 Contents:
 
 .. toctree::

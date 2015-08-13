@@ -122,7 +122,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="antiweb.html#file-layout">File Layout</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="antiweb.html#command-line">&lt;&lt;command line&gt;&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#imports">&lt;&lt;imports&gt;&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#management">&lt;&lt;management&gt;&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#id9">&lt;&lt;directives&gt;&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#id10">&lt;&lt;readers&gt;&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#id12">&lt;&lt;document&gt;&gt;</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="antiweb.html#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#writing-the-index-rst-file">Writing the index.rst file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#process-file">process_file</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="antiweb.html#how-to-add-new-languages">How to add new languages</a></li>
@@ -168,8 +177,6 @@
 
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
- | <a href="#A"><strong>A</strong></a>
- | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
@@ -195,10 +202,6 @@
 
       <dd><dl>
         
-  <dt><a href="antiweb.html#Document.__init__">(Document method)</a>
-  </dt>
-
-        
   <dt><a href="antiweb.html#Line.__init__">(Line method)</a>
   </dt>
 
@@ -222,7 +225,7 @@
 
       </dl></dd>
       
-  <dt><a href="antiweb.html#_accept_token">_accept_token()</a>
+  <dt><a href="antiweb.html#PythonReader._accept_token">_accept_token() (PythonReader method)</a>
   </dt>
 
       <dd><dl>
@@ -232,7 +235,7 @@
 
       </dl></dd>
       
-  <dt><a href="antiweb.html#_cut_comment">_cut_comment()</a>
+  <dt><a href="antiweb.html#PythonReader._cut_comment">_cut_comment() (PythonReader method)</a>
   </dt>
 
       <dd><dl>
@@ -256,7 +259,7 @@
   </dt>
 
       
-  <dt><a href="antiweb.html#_post_process">_post_process()</a>
+  <dt><a href="antiweb.html#PythonReader._post_process">_post_process() (PythonReader method)</a>
   </dt>
 
       <dd><dl>
@@ -268,45 +271,11 @@
   </dl></td>
 </tr></table>
 
-<h2 id="A">A</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="antiweb.html#Document.add_error">add_error() (Document method)</a>
-  </dt>
-
-  </dl></td>
-</tr></table>
-
-<h2 id="B">B</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="antiweb.html#Document.blocks">blocks (Document attribute)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="antiweb.html#Document.blocks_included">blocks_included (Document attribute)</a>
-  </dt>
-
-  </dl></td>
-</tr></table>
-
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="antiweb.html#Line.change_indent">change_indent() (Line method)</a>
-  </dt>
-
-      
-  <dt><a href="antiweb.html#Document.check_errors">check_errors() (Document method)</a>
-  </dt>
-
-      
-  <dt><a href="antiweb.html#Line.clone">clone() (Line method)</a>
   </dt>
 
       
@@ -325,18 +294,6 @@
       </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="antiweb.html#Document.collect_blocks">collect_blocks() (Document method)</a>
-  </dt>
-
-      
-  <dt><a href="antiweb.html#Document.compile_block">compile_block() (Document method)</a>
-  </dt>
-
-      
-  <dt><a href="antiweb.html#Document.compiled_blocks">compiled_blocks (Document attribute)</a>
-  </dt>
-
       
   <dt><a href="antiweb.html#CReader">CReader (built-in class)</a>
   </dt>
@@ -359,18 +316,14 @@
   <dt><a href="antiweb.html#Directive">Directive (built-in class)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="antiweb.html#Line.directive">directive (Line attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="antiweb.html#Line.directives">directives (Line attribute)</a>
-  </dt>
-
-      
-  <dt><a href="antiweb.html#Document">Document (built-in class)</a>
   </dt>
 
   </dl></td>
@@ -387,14 +340,10 @@
   <dt><a href="antiweb.html#End">End (built-in class)</a>
   </dt>
 
-      
-  <dt><a href="antiweb.html#Enifed">Enifed (built-in class)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="antiweb.html#Document.errors">errors (Document attribute)</a>
+  <dt><a href="antiweb.html#Enifed">Enifed (built-in class)</a>
   </dt>
 
       
@@ -412,7 +361,7 @@
   </dt>
 
       
-  <dt><a href="antiweb.html#filter_output">filter_output()</a>
+  <dt><a href="antiweb.html#PythonReader.filter_output">filter_output() (PythonReader method)</a>
   </dt>
 
       <dd><dl>
@@ -424,15 +373,9 @@
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="antiweb.html#Document.fname">fname (Document attribute)</a>
+  <dt><a href="antiweb.html#Line.fname">fname (Line attribute)</a>
   </dt>
 
-      <dd><dl>
-        
-  <dt><a href="antiweb.html#Line.fname">(Line attribute)</a>
-  </dt>
-
-      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -441,16 +384,6 @@
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="antiweb.html#generate">generate() (built-in function)</a>
-  </dt>
-
-      
-  <dt><a href="antiweb.html#Document.get_compiled_block">get_compiled_block() (Document method)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="antiweb.html#Document.get_subdoc">get_subdoc() (Document method)</a>
   </dt>
 
   </dl></td>
@@ -519,21 +452,11 @@
   <dt><a href="antiweb.html#Directive.line">line (Directive attribute)</a>
   </dt>
 
-      
-  <dt><a href="antiweb.html#Document.lines">lines (Document attribute)</a>
-  </dt>
-
   </dl></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="antiweb.html#Document.macros">macros (Document attribute)</a>
-  </dt>
-
-  </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="antiweb.html#Directive.match">match() (Directive method)</a>
@@ -565,17 +488,11 @@
   <dt><a href="antiweb.html#Directive.priority">priority (Directive attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="antiweb.html#Directive.process">process() (Directive method)</a>
   </dt>
 
       <dd><dl>
-        
-  <dt><a href="antiweb.html#Document.process">(Document method)</a>
-  </dt>
-
         
   <dt><a href="antiweb.html#Reader.process">(Reader method)</a>
   </dt>
@@ -585,6 +502,12 @@
   </dt>
 
       </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="antiweb.html#PythonReader">PythonReader (built-in class)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
@@ -596,15 +519,11 @@
   </dt>
 
       
-  <dt><a href="antiweb.html#Document.reader">reader (Document attribute)</a>
+  <dt><a href="antiweb.html#RInclude">RInclude (built-in class)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="antiweb.html#RInclude">RInclude (built-in class)</a>
-  </dt>
-
       
   <dt><a href="antiweb.html#RStart">RStart (built-in class)</a>
   </dt>
@@ -623,14 +542,10 @@
   <dt><a href="antiweb.html#Line.sindent">sindent (Line attribute)</a>
   </dt>
 
-      
-  <dt><a href="antiweb.html#Start">Start (built-in class)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="antiweb.html#Document.sub_documents">sub_documents (Document attribute)</a>
+  <dt><a href="antiweb.html#Start">Start (built-in class)</a>
   </dt>
 
       
@@ -645,10 +560,6 @@
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="antiweb.html#Line.text">text (Line attribute)</a>
-  </dt>
-
-      
-  <dt><a href="antiweb.html#Document.tokens">tokens (Document attribute)</a>
   </dt>
 
   </dl></td>

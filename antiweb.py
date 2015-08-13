@@ -24,7 +24,8 @@ Getting Started
 
 @include(get_started)
 
-   * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
+
+* :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
 
 #####################
 Antiweb documentation
@@ -46,19 +47,19 @@ Objects
 
    .. digraph:: collaboration
 
-      Dokument [shape=box, label="Dokument"]
-      Reader   [shape=box, label="Reader"]
-      directives [shape=box, label="Directive" ]
-      Bloecke [shape=box]
-      Linien [shape=box]
+      document [shape=box, label="document"]
+      reader   [shape=box, label="reader"]
+      directives [shape=box, label="directive" ]
+      blocks [shape=box]
+      lines [shape=box]
 
-      Dokument -> Reader [label="benutzt"]
-      Reader -> directives [label="erstellt"]
-      Dokument -> directives [label="benutzt"]
-      Dokument -> Bloecke [label="beinhaltet"]
-      directives -> Bloecke [label="verarbeitet"]
-      Bloecke -> Linien [label="beinhaltet"]
-      Linien -> directives [label="beinhaltet"]
+      document -> reader [label="uses"]
+      reader -> directives [label="creates"]
+      document -> directives [label="uses"]
+      document -> blocks [label="contains"]
+      directives -> blocks [label="prepare"]
+      blocks -> lines [label="contains"]
+      lines -> directives [label="contains"]
 
 
    The :py:class:`document <Document>` manages the complete transformation: It uses a
@@ -68,10 +69,6 @@ Objects
    :py:class:`lines <Line>`. The :py:class:`document <Document>` process all
    :ref:`directives <Directives>`  to generate the output document.
    
-   .. digraph:: foo
-
-    "Nummer 1" -> "Nummer 2" -> "Nummer 3" -> "Nummer 1";
- 
 
 .. _Directives:
 
@@ -134,7 +131,12 @@ File Layout
 
 @include(document)
 
-@include(command line)
+
+****************************************
+Multi-File Processing and Sphinx Support
+****************************************
+
+@include(additional_options)
 
 
 ************************
@@ -147,7 +149,7 @@ A simple Reader example is provides by :py:class:`CReader`
 a more advances reader is :py:class:`PythonReader`.
 
 
-@fi(source)
+
 
 @if(usage)
 #####
@@ -283,10 +285,9 @@ Directives
 #@code
 
 #@rstart(imports)
-'''
-<<imports>>
-===========
-'''
+
+#<<imports>>
+#===========
 #@code
 from optparse import OptionParser
 import pygments.lexers as pm
@@ -301,10 +302,10 @@ import os
 import collections
 
 #@rstart(management)
-'''
-<<management>>
-==============
-'''
+
+#<<management>>
+#==============
+
 #@code
 
 __version__ = "0.2.2"
@@ -316,11 +317,10 @@ class WebError(Exception):
         self.error_list = error_list
 
 #@rstart(directives)
-'''
-<<directives>>
-==============
 
-'''
+#<<directives>>
+#==============
+
 #@code
 
 #@cstart(Directive)
@@ -1250,10 +1250,10 @@ directives = {
 #@rstart(readers)
 #.. _readers:
 #
-'''
-<<readers>>
-===========
-'''
+
+#<<readers>>
+#===========
+
 #@code
 
 #@cstart(Reader)
@@ -1649,7 +1649,7 @@ class PythonReader(Reader):
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
 
-                if stext == '"""' or stext == "```":
+                if stext == '"""' or stext == "'''":
                     #remove """ and ''' from documentation lines
                     #see the l.text.lstrip()! if the lines ends with a white space
                     #the quotes will be kept! This is feature, to force the quotes
@@ -1662,220 +1662,16 @@ class PythonReader(Reader):
                             
             yield l
 
-class CSharpReader(Reader):
-    #@start(CSharpReader doc)
-    #CSharpReader
-    #============
-    '''
-    .. py:class:: PythonReader
-
-       A reader for C # code. This class inherits :py:class:`Reader`.
-       To reduce the number of sentinels, the C# reader does some more 
-       sophisticated source parsing:
-       
-       A construction like::
-         
-             @subst(_at_)cstart(foo)
-             def foo(arg1, arg2):
-                """ 
-                Foo's documentation
-                """ 
-                code
-
-
-       is replaced by::
-
-             @subst(_at_)cstart(foo)
-             def foo(arg1, arg2):
-                @subst(_at_)start(foo doc)
-                """ 
-                Foo's documentation
-                """ 
-                @subst(_at_)include(foo)
-                @subst(_at_)(foo doc)
-                code
-
-
-       The replacement will be done only:
-
-         * If the doc string begins with """
-         * If the block was started by a ``@rstart`` or ``@cstart`` directive
-         * If there is no antiweb directive in the doc string.
-         * Only a ``@cstart`` will insert the @include directive.
-
-
-       Additionally the C# reader removes all single line ``"""`` and ``@subst(triple)``
-       from documentation lines. In the following lines::
-         
-             @subst(_at_)start(foo)
-             """ 
-             Documentation
-             """ 
-
-       The ``"""`` are automatically removed in the rst output. (see :py:meth:`filter_output`
-       for details).
-    '''
-    #@indent 3
-    #@include(CSharpReader)
-    #@include(CSharpReader._post_process doc)
-    #@include(CSharpReader._accept_token doc)
-    #@include(CSharpReader.filter_output doc)
-    #@include(CSharpReader._cut_comment doc)
-    #@(PythonReader doc)
-    def __init__(self, lexer):
-        super(CSharpReader, self).__init__(lexer)
-        self.doc_lines = []
-
-    #@cstart(PythonReader._post_process)
-    def _post_process(self, fname, text):
-        """
-        .. py:method:: _post_process(fname, text)
-
-           See :py:meth:`Reader._post_process`.
-
-           This implementation *decorates* doc strings
-           with antiweb directives.
-        """
-        #from behind because we will probably insert some lines
-        self.doc_lines.sort(reverse=True)
-
-        #handle each found doc string
-        for start_line, end_line in self.doc_lines:
-            indents = set()
-
-            #@cstart(no antiweb directives in doc string)
-            #If antiweb directives are within the doc string,
-            #the doc string will not be decorated!
-            directives_between_start_and_end_line = False
-            for l in self.lines[start_line+1:end_line]:
-                if l:
-                    #needed for <<insert additional include>>
-                    indents.add(l.indent)
-                    
-                if l.directives:
-                    directives_between_start_and_end_line = True
-                    break
-
-            if directives_between_start_and_end_line: continue
-            
-            #@cstart(find the last directive before the doc string)
-            last_directive = None
-            for l in reversed(self.lines[:start_line]):
-                if l.directives:
-                    last_directive = l.directives[0]
-                    break
-            #@
-
-            if isinstance(last_directive, RStart):
-                #@cstart(decorate beginning and end)
-                l = self.lines[start_line]
-                start = Start(start_line, last_directive.name + " doc")
-                l.directives = list(l.directives) + [start]
-
-                l = self.lines[end_line]
-                end = End(end_line, last_directive.name + " doc")
-                l.directives = list(l.directives) + [end]
-                #@
-                
-                if isinstance(last_directive, CStart):
-                    #@cstart(insert additional include)
-                    l = l.like("")
-                    include = Include(end_line, last_directive.name)
-                    l.directives = list(l.directives) + [include]
-                    self.lines.insert(end_line, l)
-
-                    #the include directive should have the same 
-                    #indentation as the .. py:function:: directive 
-                    #inside the doc string. (It should be second 
-                    #value of sorted indents)
-                    indents = list(sorted(indents))
-                    if len(indents) > 1:
-                        l.change_indent(indents[1]-l.indent)
-                    #@
-
-        super(CSharpReader, self)._post_process(fname, text)
-
-    #@edoc
-    #@rinclude(no antiweb directives in doc string)
-    #@rinclude(find the last directive before the doc string)
-    #@rinclude(decorate beginning and end)
-    #@rinclude(insert additional include)
-        
-    #@cstart(PythonReader._accept_token)
-    def _accept_token(self, token):
-        """
-        .. py:method:: _accept_token(token)
-
-           See :py:meth:`Reader._accept_token`.
-        """
-        return token in Token.Comment or token in Token.Literal.String.Doc
-
-
-    #@cstart(PythonReader._cut_comment)
-    def _cut_comment(self, index, token, text):
-        """
-        .. py:method:: _cut_comment(index, token, text)
-
-           See :py:meth:`Reader._cut_comment`.
-        """
-        if token in Token.Literal.String.Doc:
-            if text.startswith('/*'):
-                #save the start/end line of doc strings beginning with """
-                #for further decoration processing in _post_process,
-                start_line = bisect.bisect(self.starts, index)-1
-                end_line = bisect.bisect(self.starts, index+len(text)-3)-1
-                lines = list(filter(bool, text[3:-3].splitlines())) #filter out empty strings
-                if lines:
-                    self.doc_lines.append((start_line, end_line))
-                
-            text = text[2:-2]
-
-        return text
-
-    #@cstart(PythonReader.filter_output)
-    def filter_output(self, lines):
-        """
-        .. py:method:: filter_output(lines)
-
-           See :py:meth:`Reader.filter_output`.
-        """
-        for l in lines:
-            if l.type == "d":
-                #remove comment chars in document lines
-                stext = l.text.lstrip()
-
-                if stext == '/*' or stext == "*/":
-                    #remove """ and ''' from documentation lines
-                    #see the l.text.lstrip()! if the lines ends with a white space
-                    #the quotes will be kept! This is feature, to force the quotes
-                    #in the output
-                    continue
-                
-                if stext.startswith("//") and not stext.startswith("#####"):
-                    #remove comments but not chapters
-                    l.text = l.indented(stext[2:])
-                            
-            yield l
-
-
-
-
-#@(PythonReader)
 # The keys are the lexer names of pygments
 readers = {
     "C" : CReader,
     "C++" : CReader,
-	"C#" : CReader,
+    "C#" : CReader,
     "Python" : PythonReader,
 }
 
 #@(readers)
-#@rstart(document)
-'''
-<<document>>
-============
-'''
-#@code
+
 
 #@cstart(Line)
 class Line(object):
@@ -1900,7 +1696,6 @@ class Line(object):
     #@include(Line.directive doc)
     #@include(Line.__init__ doc)
     #@include(Line.set doc)
-    #@include(Line.clone doc)
     #@include(Line.like doc)
     #@include(Line.indented doc)
     #@include(Line.change_indent doc)
@@ -1989,18 +1784,9 @@ class Line(object):
         return self
 
 
-    #@cstart(Line.clone)
+    
     def clone(self, dline=None):
-        """
-        .. py:method:: clone([dline])
 
-           Clones the Line.
-
-           :param dline: If given replaces the line numbers of all directives\
-                         with the given line number.
-
-
-        """
         if dline is not None:
             for d in self.directives:
                 d.line = dline
@@ -2116,6 +1902,13 @@ class Line(object):
         return self.directives and self.directives[0]
 
 
+#@rstart(document)
+
+#<<document>>
+#============
+
+#@code
+
 #@cstart(Document)
 class Document(object):
     #@start(Document doc)
@@ -2123,39 +1916,14 @@ class Document(object):
     #========
     """
     .. py:class:: Document(text, reader, fname, tokens)
-
        This is the mediator communicating with all other classes
        to generate rst output.
-
        :param string text: the source code to parse.
        :param reader: An instance of :py:class:`Reader`.
        :param string fname: The file name of the source code.
        :param tokens: A sequence of tokens usable for the ``@if`` directive.
     """
     #@indent 3
-    #@include(Document)
-    #@include(Document.errors doc)
-    #@include(Document.blocks doc)
-    #@include(Document.blocks_included doc)
-    #@include(Document.compiled_blocks doc)
-    #@include(Document.sub_documents doc)
-    #@include(Document.tokens doc)
-    #@include(Document.macros doc)
-    #@include(Document.fname doc)
-    #@include(Document.reader doc)
-    #@include(Document.lines doc)
-    #@include(Document.__init__ doc)
-    #@include(Document.process doc)
-    #@include(Document.get_subdoc doc)
-    #@include(Document.add_error doc)
-    #@include(Document.check_errors doc)
-    #@include(Document.collect_blocks doc)
-    #@include(Document.get_compiled_block doc)
-    #@include(Document.compile_block doc)
-    #@(Document doc)
-    #Attributes
-	
-	#@indent 3
     #@include(Document)
     #@include(Document.errors doc)
     #@include(Document.blocks doc)
@@ -2259,7 +2027,6 @@ class Document(object):
     def __init__(self, text, reader, fname, tokens):
         """
         .. py:method:: __init__(text, reader, fname, tokens)
-
            The constructor.
         """
         self.errors = []
@@ -2279,9 +2046,7 @@ class Document(object):
     def process(self, show_warnings):
         """
         .. py:method:: process(show_warnings)
-
            Processes the document and generates the output.
-
            :param bool show_warnings: If ``True`` warnings are emitted.
            :return: A string representing the rst output.
         """
@@ -2301,7 +2066,7 @@ class Document(object):
             self.blocks_included.add("__macros__") #may not cause a warning
             unincluded = set(self.blocks.keys())-self.blocks_included
             if unincluded:
-                logger.warning("The following blocks were not included:")
+                logger.warning("The following block were not included:")
                 warnings = [ (self.blocks[b][0].index, b) for b in unincluded ]
                 warnings.sort(key=operator.itemgetter(0))
                 for l, w in warnings:
@@ -2317,9 +2082,7 @@ class Document(object):
     def get_subdoc(self, rpath):
         """
         .. py:method:: get_subdoc(rpath)
-
            Tries to compile a document with the relative path rpath.
-
            :param string rpath: The relative path to the root
                                 containing document.
            :return: A :py:class:`Document` reference to the sub document.
@@ -2372,9 +2135,7 @@ class Document(object):
     def add_error(self, line, text):
         """
         .. py:method:: add_error(line, text)
-
            Adds an error to the list.
-
            :param integer line: The line number that causes the error.
            :param string text: An error text.
         """
@@ -2385,7 +2146,6 @@ class Document(object):
     def check_errors(self):
         """
         .. py:method:: check_errors()
-
            Raises a ``WebError`` exception if error were found.
         """
         if self.errors:
@@ -2395,7 +2155,6 @@ class Document(object):
     def collect_blocks(self):
         """
         .. py:method:: collect_blocks()
-
            Collects all text blocks.
         """
         blocks = [ d.collect_block(self, i)
@@ -2412,10 +2171,8 @@ class Document(object):
     def get_compiled_block(self, name):
         """
         .. py:method:: get_compiled_block(name)
-
            Returns the compiled version of a text block.
            Compiled means: all directives where processed.
-
            :param string name: The name of the text block:
            :return: A list of :py:class:`Line` objects representing
                     the text block.
@@ -2434,9 +2191,7 @@ class Document(object):
     def compile_block(self, name, block):
         """
         .. py:method:: compile_block(name, block)
-
            Compiles a text block.
-
            :param string name: The name of the block
            :param block: A list of :py:class:`Line` objects representing
                          the text block to compile.
@@ -2495,26 +2250,72 @@ def generate(fname, tokens, show_warnings=False):
 
 
 #@(document)
-#@rstart(command line)
-#<<command line>>
-#================
+
+#@start(process_file)
+#process_file
+#============
+
+#If no output name was declared, the input name will be given
+
 #@code
 
 def process_file(in_file, out_file, token, warnings):
     if not out_file:
          out_file = os.path.splitext(in_file)[0] + ".rst"
+#@edoc
+#The output text will be written in the output file. If there is an output text, the function returns could_write as True
 
+#@code
+    could_write = False
     try:
         text_output = generate(in_file, token, warnings)
+        
         if text_output:
             with open(out_file, "w") as f:
                 f.write(text_output)
-    
+            could_write = True
     except WebError as e:
-        logger.error("Errors:")
+        logger.error("\nErrors:")
         for l, d in e.error_list:
             logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
             logger.error("      %s", l.text)
+
+    return could_write
+#@edoc
+
+#@start(write)
+#
+#Writing the index.rst file
+#==========================
+
+#From the given file a .rst file will be created if it contains an antiweb start directive
+
+#@code
+
+def write(path, var, output, token, warnings, index):
+    index_rst = "index.rst"
+    could_process = process_file(var, output, token, warnings)
+
+#@edoc
+
+
+#If the user added the -i flag, the file gets added to Sphinx' index.rst file
+
+#@code
+
+    if index:
+        if could_process:
+            index_static = "Antiweb's Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+            index_out = open(os.path.join(path, index_rst), "w")
+            index_out.write(index_static)
+            index_var = os.path.split(var)[1]
+            index_var = os.path.splitext(index_var)[0]
+            index_out = open(os.path.join(path, index_rst), "a")
+            index_out.write("\n   " + index_var)
+            index_out.close()
+#@edoc
+
+#@(write)
 
 def main():
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -2530,9 +2331,26 @@ def main():
     parser.add_option("-w", "--warnings", dest="warnings",
                       action="store_false", help="suppresses warnings")
     
+#@start(additional_options)
+    """
+I added two new flags to antiweb:
+
+* The ''-r'' flag:
+    * antiweb will search for all compatible files to process them
+
+* The ''-i'' flag:
+    * Sphinx' index.rst will be edited to contain all processed files (empty files will be ignored)
+"""
+
+#@code
+
     parser.add_option("-r", "--recursive", dest="recursive",
                       action="store_true", help="Process every file in given directory")
+    
+    parser.add_option("-i", "--index", dest="index",
+                      action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
 
+#@edoc
 
     options, args = parser.parse_args()
 
@@ -2545,35 +2363,47 @@ def main():
     if not args:
         parser.print_help()
         sys.exit(0)
-    
+
+
+#The program will check if a -r flag was given and if so, save the current directory and change it to the given one
+
+#@code
+
     if options.recursive:
         previous_dir = os.getcwd()
         os.chdir(args[0])
-        index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-        index_out = open(os.getcwd() + "\index.rst", "w")
-        index_out.write(index_static)
-        index_out.close()
+
+#@edoc
+
+#The program lists all files in the directory and sub-directories to prepare them for the process
+
+#@code
 
         for root, dirs, files in os.walk(args[0], topdown=False):
             for filename in files:
                 fname= os.path.join(root, filename)
 
-                if os.path.isfile(fname) and not fname.endswith(".rst"):
-                    print(fname + ": ") 
-                    process_file(fname, None, options.token, options.warnings)
+#@edoc
 
-                    index_var = fname.split(args[0] + "\\")[1]
-                    index_var = index_var.split(".")[0]
-                    index_out = open(args[0] + "\index.rst", "a")
-                    index_out.write("\n   " + index_var)
-                    index_out.close()
+#If the found file is no folder or already a rst file, it will be put into the process
+
+#@code
+
+                if os.path.isfile(fname) and not fname.endswith(".rst"):
+                    write(os.getcwd(), fname, None, options.token, options.warnings, options.index)
+#@edoc
+
+#This else will take place when only one file is given without the -r flag
+
+#@code
 
     else:
-
-        process_file(args[0], options.output, options.token, options.warnings)
-
-
-
+        os.chdir(os.path.split(args[0])[0])
+        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index)
+#@edoc
+#@include(write)
+#@include(process_file)
+#@(additional_options)
 if __name__ == "__main__":
     main()
 
@@ -2582,7 +2412,7 @@ if __name__ == "__main__":
 @start(__macros__)
 @define(__codeprefix__)
 
-@ignoreThe code begins in file @subst(__file__) at line @subst(__line__-1):
+@ignore The code begins in file @subst(__file__) at line @subst(__line__-1):
 @enifed(__codeprefix__)
 @end(__macros__)
 
@@ -2682,8 +2512,8 @@ Preparing the .rst files
    * Sphinx also created a ``index.rst`` file for you when you executed ``sphinx-quickstart.exe``. Open it and add the filename of the rst file (without the file extension) to the toctree so it looks like this:
 
    @code
-   Welcome to Finale_sphinx's documentation!
-=========================================
+Welcome to Antiweb's documentation!
+===================================
 
 Contents:
 
@@ -2761,6 +2591,10 @@ Contents:
       @(name)
         sys.exit(1)
    
+   @edoc
+   <<Name>>
+   @code
+   @include(name)
    @edoc
    
 @ cstart

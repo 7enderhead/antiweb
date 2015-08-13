@@ -101,8 +101,8 @@ Preparing the .rst files
    
    ::
    
-       Welcome to Finale_sphinx's documentation!
-    =========================================
+    Welcome to Antiweb's documentation!
+    ===================================
     
     Contents:
     
@@ -213,6 +213,11 @@ Getting Started
           <<name>>
             sys.exit(1)
        
+   <<Name>>
+   
+   ::
+   
+       logger.error("file not found: %s", fname)
    
 @ cstart
 ========
@@ -287,8 +292,10 @@ Indentation matters!
    
    
    
+   
 
-   * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
+
+* :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
 
 #####################
 Antiweb documentation
@@ -336,19 +343,19 @@ Objects
 
    .. digraph:: collaboration
 
-      Dokument [shape=box, label="Dokument"]
-      Reader   [shape=box, label="Reader"]
-      directives [shape=box, label="Directive" ]
-      Bloecke [shape=box]
-      Linien [shape=box]
+      document [shape=box, label="document"]
+      reader   [shape=box, label="reader"]
+      directives [shape=box, label="directive" ]
+      blocks [shape=box]
+      lines [shape=box]
 
-      Dokument -> Reader [label="benutzt"]
-      Reader -> directives [label="erstellt"]
-      Dokument -> directives [label="benutzt"]
-      Dokument -> Bloecke [label="beinhaltet"]
-      directives -> Bloecke [label="verarbeitet"]
-      Bloecke -> Linien [label="beinhaltet"]
-      Linien -> directives [label="beinhaltet"]
+      document -> reader [label="uses"]
+      reader -> directives [label="creates"]
+      document -> directives [label="uses"]
+      document -> blocks [label="contains"]
+      directives -> blocks [label="prepare"]
+      blocks -> lines [label="contains"]
+      lines -> directives [label="contains"]
 
 
    The :py:class:`document <Document>` manages the complete transformation: It uses a
@@ -358,10 +365,6 @@ Objects
    :py:class:`lines <Line>`. The :py:class:`document <Document>` process all
    :ref:`directives <Directives>`  to generate the output document.
    
-   .. digraph:: foo
-
-    "Nummer 1" -> "Nummer 2" -> "Nummer 3" -> "Nummer 1";
- 
 
 .. _Directives:
 
@@ -1378,7 +1381,6 @@ CReader
    
 PythonReader
 ============
-'''
 .. py:class:: PythonReader
 
    A reader for python code. This class inherits :py:class:`Reader`.
@@ -1427,7 +1429,6 @@ PythonReader
    The ``"""`` are automatically removed in the rst output. (see :py:meth:`filter_output`
    for details).
 
-'''
 
    
    ::
@@ -1441,15 +1442,14 @@ PythonReader
            <<PythonReader._accept_token>>
            <<PythonReader._cut_comment>>
            <<PythonReader.filter_output>>
-       class CSharpReader(Reader):
-           def __init__(self, lexer):
-               super(CSharpReader, self).__init__(lexer)
-               self.doc_lines = []
+       # The keys are the lexer names of pygments
+       readers = {
+           "C" : CReader,
+           "C++" : CReader,
+           "C#" : CReader,
+           "Python" : PythonReader,
+       }
        
-           <<PythonReader._post_process>>
-           <<PythonReader._accept_token>>
-           <<PythonReader._cut_comment>>
-           <<PythonReader.filter_output>>
    
    .. py:method:: _post_process(fname, text)
    
@@ -1477,7 +1477,7 @@ PythonReader
                       if isinstance(last_directive, CStart):
                           <<insert additional include>>
           
-              super(CSharpReader, self)._post_process(fname, text)
+              super(PythonReader, self)._post_process(fname, text)
           
       
       .. _no antiweb directives in doc string:
@@ -1578,21 +1578,18 @@ PythonReader
                       #remove comment chars in document lines
                       stext = l.text.lstrip()
           
-                      if stext == '/*' or stext == "*/":
+                      if stext == '"""' or stext == "'''":
                           #remove """ and ''' from documentation lines
                           #see the l.text.lstrip()! if the lines ends with a white space
                           #the quotes will be kept! This is feature, to force the quotes
                           #in the output
                           continue
                       
-                      if stext.startswith("//") and not stext.startswith("#####"):
+                      if stext.startswith("#") and not stext.startswith("#####"):
                           #remove comments but not chapters
-                          l.text = l.indented(stext[2:])
+                          l.text = l.indented(stext[1:])
                                   
                   yield l
-          
-          
-          
           
       
    .. py:method:: _cut_comment(index, token, text)
@@ -1603,7 +1600,7 @@ PythonReader
       
           def _cut_comment(self, index, token, text):
               if token in Token.Literal.String.Doc:
-                  if text.startswith('/*'):
+                  if text.startswith('"""'):
                       #save the start/end line of doc strings beginning with """
                       #for further decoration processing in _post_process,
                       start_line = bisect.bisect(self.starts, index)-1
@@ -1612,7 +1609,7 @@ PythonReader
                       if lines:
                           self.doc_lines.append((start_line, end_line))
                       
-                  text = text[2:-2]
+                  text = text[3:-3]
           
               return text
           
@@ -1626,10 +1623,8 @@ Document
 Document
 ========
 .. py:class:: Document(text, reader, fname, tokens)
-
    This is the mediator communicating with all other classes
    to generate rst output.
-
    :param string text: the source code to parse.
    :param reader: An instance of :py:class:`Reader`.
    :param string fname: The file name of the source code.
@@ -1639,732 +1634,29 @@ Document
    
        class Document(object):
            #Attributes
-               
-              
-              ::
-              
-                  class Document(object):
-                      #Attributes
-                          
-                         #@include(Document)
-                         .. py:attribute:: errors
-                         
-                            A list of errors found during generation.
-                            
-                            ::
-                            
-                                errors = []
-                            
-                         .. py:attribute:: blocks
-                         
-                            A dictionary of all found blocks: Name -> List of Lines
-                            
-                            ::
-                            
-                                blocks = {}
-                            
-                         .. py:attribute:: blocks_included
-                         
-                            A set containing all block names that have been included by
-                            an @include directive.
-                            
-                            ::
-                            
-                                blocks_included = set()
-                            
-                         .. py:attribute:: compiled_blocks
-                         
-                            A set containing all block names that have been already
-                            compiled.
-                            
-                            ::
-                            
-                                compiled_blocks = set()
-                            
-                         .. py:attribute:: sub_documents
-                         
-                            A cache dictionary of sub documents, referenced by
-                            ``@include`` directives: Filename -> Document
-                            
-                            ::
-                            
-                                sub_documents = {}
-                            
-                         .. py:attribute:: tokens
-                         
-                            A set of token names that can be used for the ``@if`` directive.
-                            
-                            ::
-                            
-                                tokens = set()
-                            
-                         .. py:attribute:: macros
-                         
-                            A dictionary containing the macros that can be used
-                            by the ``@subst`` directive: Macro name -> substitution.
-                            
-                            ::
-                            
-                                macros = {}
-                            
-                         .. py:attribute:: fname
-                         
-                            The file name of the document's source.
-                            
-                            ::
-                            
-                                fname = ""
-                            
-                         .. py:attribute:: reader
-                         
-                            The instance of a :py:class:`Reader` object.
-                            
-                            ::
-                            
-                                reader = None
-                            
-                         .. py:attribute:: lines
-                         
-                            A list of :py:class:`Line` objects representing the whole documents
-                            split in lines.
-                            
-                            ::
-                            
-                                lines = []
-                            
-                         .. py:method:: __init__(text, reader, fname, tokens)
-                         
-                            The constructor.
-                            
-                            ::
-                            
-                                def __init__(self, text, reader, fname, tokens):
-                                    self.errors = []
-                                    self.blocks = {}
-                                    self.blocks_included = set()
-                                    self.compiled_blocks = set()
-                                    self.sub_documents = {}
-                                    self.tokens = set(tokens or [])
-                                    self.macros = { "__file__" : os.path.split(fname)[-1],
-                                                    "__codeprefix__" : "" }
-                                    self.fname = fname
-                                    self.reader = reader
-                                    self.lines = self.reader.process(fname, text)
-                                    
-                                
-                            
-                         .. py:method:: process(show_warnings)
-                         
-                            Processes the document and generates the output.
-                         
-                            :param bool show_warnings: If ``True`` warnings are emitted.
-                            :return: A string representing the rst output.
-                            
-                            ::
-                            
-                                def process(self, show_warnings):
-                                    self.collect_blocks()
-                                    if "" not in self.blocks:
-                                        self.add_error(0, "no @start() directive found (I need one)")
-                                        self.check_errors()
-                                
-                                    try:
-                                        text = self.get_compiled_block("")
-                                    finally:
-                                        self.check_errors()
-                                
-                                    if show_warnings:
-                                        <<show warnings>>
-                                
-                                    text = self.reader.filter_output(text)
-                                    return "\n".join(map(operator.attrgetter("text"), text))
-                            
-                            .. _show warnings:
-                            
-                            **<<show warnings>>**
-                            
-                            
-                            ::
-                            
-                                self.blocks_included.add("")           #may not cause a warning
-                                self.blocks_included.add("__macros__") #may not cause a warning
-                                unincluded = set(self.blocks.keys())-self.blocks_included
-                                if unincluded:
-                                    logger.warning("The following blocks were not included:")
-                                    warnings = [ (self.blocks[b][0].index, b) for b in unincluded ]
-                                    warnings.sort(key=operator.itemgetter(0))
-                                    for l, w in warnings:
-                                        logger.warning("  %s(line %i)", w, l)
-                            
-                            
-                         .. py:method:: get_subdoc(rpath)
-                         
-                            Tries to compile a document with the relative path rpath.
-                         
-                            :param string rpath: The relative path to the root
-                                                 containing document.
-                            :return: A :py:class:`Document` reference to the sub document.
-                            
-                            ::
-                            
-                                def get_subdoc(self, rpath):
-                                    <<return from cache if possible>>
-                                    <<insert macros function>>
-                                    <<read the source file>>
-                                        
-                                    self.sub_documents[rpath] = doc
-                                    return doc
-                                
-                            
-                            .. _return from cache if possible:
-                            
-                            **<<return from cache if possible>>**
-                            
-                            
-                            ::
-                            
-                                try:
-                                    return self.sub_documents[rpath]
-                                except KeyError:
-                                    pass
-                                
-                            
-                            
-                            .. _insert macros function:
-                            
-                            **<<insert macros function>>**
-                            
-                            
-                            ::
-                            
-                                def insert_macros(subdoc):
-                                    #if sub doc has no macros insert mine
-                                    if ("__macros__" not in subdoc.blocks
-                                        and "__macros__" in self.blocks):
-                                        file_ = subdoc.macros["__file__"] # preserve __file__
-                                        subdoc.macros.update(self.macros)
-                                        subdoc.macros["__file__"] = file_
-                                
-                            
-                            
-                            .. _read the source file:
-                            
-                            **<<read the source file>>**
-                            
-                            
-                            ::
-                            
-                                head, tail = os.path.split(self.fname)
-                                fpath = os.path.join(head, rpath)
-                                
-                                try:
-                                    #print "try open", fpath
-                                    with open(fpath, "r") as f:
-                                        text = f.read()
-                                except IOError:
-                                    doc = None
-                                    logger.error("Could not open: %s", fpath)
-                                
-                                else:
-                                    #parse the file
-                                    lexer = pm.get_lexer_for_filename(rpath)
-                                    reader = readers.get(lexer.name, Reader)(lexer)
-                                    doc = Document(text, reader, rpath, self.tokens)
-                                    doc.collect_blocks()
-                                    insert_macros(doc)
-                            
-                            
-                         .. py:method:: add_error(line, text)
-                         
-                            Adds an error to the list.
-                         
-                            :param integer line: The line number that causes the error.
-                            :param string text: An error text.
-                            
-                            ::
-                            
-                                def add_error(self, line, text):
-                                    self.errors.append((self.lines[line], text))
-                                
-                                
-                            
-                         .. py:method:: check_errors()
-                         
-                            Raises a ``WebError`` exception if error were found.
-                            
-                            ::
-                            
-                                def check_errors(self):
-                                    if self.errors:
-                                        raise WebError(self.errors)
-                                
-                            
-                         .. py:method:: collect_blocks()
-                         
-                            Collects all text blocks.
-                            
-                            ::
-                            
-                                def collect_blocks(self):
-                                    blocks = [ d.collect_block(self, i)
-                                               for i, l in enumerate(self.lines)
-                                               for d in l.directives ]
-                                   
-                                    self.blocks = dict(list(filter(bool, blocks)))
-                                
-                                    if "__macros__" in self.blocks:
-                                        self.get_compiled_block("__macros__")
-                                
-                                
-                            
-                         .. py:method:: get_compiled_block(name)
-                         
-                            Returns the compiled version of a text block.
-                            Compiled means: all directives where processed.
-                         
-                            :param string name: The name of the text block:
-                            :return: A list of :py:class:`Line` objects representing
-                                     the text block.
-                            
-                            
-                            ::
-                            
-                                def get_compiled_block(self, name):
-                                    if name not in self.blocks:
-                                        return None
-                                    
-                                    if name in self.compiled_blocks:
-                                        return self.blocks[name]
-                                        
-                                    return self.compile_block(name, self.blocks[name])
-                                
-                                
-                            
-                         .. py:method:: compile_block(name, block)
-                         
-                            Compiles a text block.
-                         
-                            :param string name: The name of the block
-                            :param block: A list of :py:class:`Line` objects representing
-                                          the text block to compile.
-                            :return: A list of :py:class:`Line` objects representing
-                                     the compiled text block.
-                            
-                            ::
-                            
-                                def compile_block(self, name, block):
-                                    <<find_next_directive>>
-                                
-                                    while True:
-                                        directive_index = find_next_directive(block)
-                                        if not directive_index: break
-                                        directive, index = directive_index
-                                        directive.process(self, block, index)
-                                
-                                    self.compiled_blocks.add(name)
-                                    return block
-                            
-                            .. _find_next_directive:
-                            
-                            **<<find_next_directive>>**
-                            
-                            
-                            ::
-                            
-                                def find_next_directive(block):
-                                    # returns the next available directive
-                                    min_line = [ (l.directives[0].priority, i)
-                                                 for i, l in enumerate(block) if l.directives ]
-                                    if not min_line:
-                                        return None
-                                
-                                    prio, index = min(min_line)
-                                    return block[index].directives.pop(0), index
-                            
-                            
-                         #Attributes
-                         <<Document.errors>>
-                         <<Document.blocks>>
-                         <<Document.blocks_included>>
-                         <<Document.compiled_blocks>>
-                         <<Document.sub_documents>>
-                         <<Document.tokens>>
-                         <<Document.macros>>
-                         <<Document.fname>>
-                         <<Document.reader>>
-                         <<Document.lines>>
-                         
-                         #Methods
-                         <<Document.__init__>>
-                         <<Document.process>>
-                         <<Document.get_subdoc>>
-                         <<Document.add_error>>
-                         <<Document.check_errors>>
-                         <<Document.collect_blocks>>
-                         <<Document.get_compiled_block>>
-                         <<Document.compile_block>>
-                     
-                     
-                 
-              .. py:attribute:: errors
-              
-                 A list of errors found during generation.
-                 
-                 ::
-                 
-                     errors = []
-                 
-              .. py:attribute:: blocks
-              
-                 A dictionary of all found blocks: Name -> List of Lines
-                 
-                 ::
-                 
-                     blocks = {}
-                 
-              .. py:attribute:: blocks_included
-              
-                 A set containing all block names that have been included by
-                 an @include directive.
-                 
-                 ::
-                 
-                     blocks_included = set()
-                 
-              .. py:attribute:: compiled_blocks
-              
-                 A set containing all block names that have been already
-                 compiled.
-                 
-                 ::
-                 
-                     compiled_blocks = set()
-                 
-              .. py:attribute:: sub_documents
-              
-                 A cache dictionary of sub documents, referenced by
-                 ``@include`` directives: Filename -> Document
-                 
-                 ::
-                 
-                     sub_documents = {}
-                 
-              .. py:attribute:: tokens
-              
-                 A set of token names that can be used for the ``@if`` directive.
-                 
-                 ::
-                 
-                     tokens = set()
-                 
-              .. py:attribute:: macros
-              
-                 A dictionary containing the macros that can be used
-                 by the ``@subst`` directive: Macro name -> substitution.
-                 
-                 ::
-                 
-                     macros = {}
-                 
-              .. py:attribute:: fname
-              
-                 The file name of the document's source.
-                 
-                 ::
-                 
-                     fname = ""
-                 
-              .. py:attribute:: reader
-              
-                 The instance of a :py:class:`Reader` object.
-                 
-                 ::
-                 
-                     reader = None
-                 
-              .. py:attribute:: lines
-              
-                 A list of :py:class:`Line` objects representing the whole documents
-                 split in lines.
-                 
-                 ::
-                 
-                     lines = []
-                 
-              .. py:method:: __init__(text, reader, fname, tokens)
-              
-                 The constructor.
-                 
-                 ::
-                 
-                     def __init__(self, text, reader, fname, tokens):
-                         self.errors = []
-                         self.blocks = {}
-                         self.blocks_included = set()
-                         self.compiled_blocks = set()
-                         self.sub_documents = {}
-                         self.tokens = set(tokens or [])
-                         self.macros = { "__file__" : os.path.split(fname)[-1],
-                                         "__codeprefix__" : "" }
-                         self.fname = fname
-                         self.reader = reader
-                         self.lines = self.reader.process(fname, text)
-                         
-                     
-                 
-              .. py:method:: process(show_warnings)
-              
-                 Processes the document and generates the output.
-              
-                 :param bool show_warnings: If ``True`` warnings are emitted.
-                 :return: A string representing the rst output.
-                 
-                 ::
-                 
-                     def process(self, show_warnings):
-                         self.collect_blocks()
-                         if "" not in self.blocks:
-                             self.add_error(0, "no @start() directive found (I need one)")
-                             self.check_errors()
-                     
-                         try:
-                             text = self.get_compiled_block("")
-                         finally:
-                             self.check_errors()
-                     
-                         if show_warnings:
-                             <<show warnings>>
-                     
-                         text = self.reader.filter_output(text)
-                         return "\n".join(map(operator.attrgetter("text"), text))
-                 
-                 .. _show warnings:
-                 
-                 **<<show warnings>>**
-                 
-                 
-                 ::
-                 
-                     self.blocks_included.add("")           #may not cause a warning
-                     self.blocks_included.add("__macros__") #may not cause a warning
-                     unincluded = set(self.blocks.keys())-self.blocks_included
-                     if unincluded:
-                         logger.warning("The following blocks were not included:")
-                         warnings = [ (self.blocks[b][0].index, b) for b in unincluded ]
-                         warnings.sort(key=operator.itemgetter(0))
-                         for l, w in warnings:
-                             logger.warning("  %s(line %i)", w, l)
-                 
-                 
-              .. py:method:: get_subdoc(rpath)
-              
-                 Tries to compile a document with the relative path rpath.
-              
-                 :param string rpath: The relative path to the root
-                                      containing document.
-                 :return: A :py:class:`Document` reference to the sub document.
-                 
-                 ::
-                 
-                     def get_subdoc(self, rpath):
-                         <<return from cache if possible>>
-                         <<insert macros function>>
-                         <<read the source file>>
-                             
-                         self.sub_documents[rpath] = doc
-                         return doc
-                     
-                 
-                 .. _return from cache if possible:
-                 
-                 **<<return from cache if possible>>**
-                 
-                 
-                 ::
-                 
-                     try:
-                         return self.sub_documents[rpath]
-                     except KeyError:
-                         pass
-                     
-                 
-                 
-                 .. _insert macros function:
-                 
-                 **<<insert macros function>>**
-                 
-                 
-                 ::
-                 
-                     def insert_macros(subdoc):
-                         #if sub doc has no macros insert mine
-                         if ("__macros__" not in subdoc.blocks
-                             and "__macros__" in self.blocks):
-                             file_ = subdoc.macros["__file__"] # preserve __file__
-                             subdoc.macros.update(self.macros)
-                             subdoc.macros["__file__"] = file_
-                     
-                 
-                 
-                 .. _read the source file:
-                 
-                 **<<read the source file>>**
-                 
-                 
-                 ::
-                 
-                     head, tail = os.path.split(self.fname)
-                     fpath = os.path.join(head, rpath)
-                     
-                     try:
-                         #print "try open", fpath
-                         with open(fpath, "r") as f:
-                             text = f.read()
-                     except IOError:
-                         doc = None
-                         logger.error("Could not open: %s", fpath)
-                     
-                     else:
-                         #parse the file
-                         lexer = pm.get_lexer_for_filename(rpath)
-                         reader = readers.get(lexer.name, Reader)(lexer)
-                         doc = Document(text, reader, rpath, self.tokens)
-                         doc.collect_blocks()
-                         insert_macros(doc)
-                 
-                 
-              .. py:method:: add_error(line, text)
-              
-                 Adds an error to the list.
-              
-                 :param integer line: The line number that causes the error.
-                 :param string text: An error text.
-                 
-                 ::
-                 
-                     def add_error(self, line, text):
-                         self.errors.append((self.lines[line], text))
-                     
-                     
-                 
-              .. py:method:: check_errors()
-              
-                 Raises a ``WebError`` exception if error were found.
-                 
-                 ::
-                 
-                     def check_errors(self):
-                         if self.errors:
-                             raise WebError(self.errors)
-                     
-                 
-              .. py:method:: collect_blocks()
-              
-                 Collects all text blocks.
-                 
-                 ::
-                 
-                     def collect_blocks(self):
-                         blocks = [ d.collect_block(self, i)
-                                    for i, l in enumerate(self.lines)
-                                    for d in l.directives ]
-                        
-                         self.blocks = dict(list(filter(bool, blocks)))
-                     
-                         if "__macros__" in self.blocks:
-                             self.get_compiled_block("__macros__")
-                     
-                     
-                 
-              .. py:method:: get_compiled_block(name)
-              
-                 Returns the compiled version of a text block.
-                 Compiled means: all directives where processed.
-              
-                 :param string name: The name of the text block:
-                 :return: A list of :py:class:`Line` objects representing
-                          the text block.
-                 
-                 
-                 ::
-                 
-                     def get_compiled_block(self, name):
-                         if name not in self.blocks:
-                             return None
-                         
-                         if name in self.compiled_blocks:
-                             return self.blocks[name]
-                             
-                         return self.compile_block(name, self.blocks[name])
-                     
-                     
-                 
-              .. py:method:: compile_block(name, block)
-              
-                 Compiles a text block.
-              
-                 :param string name: The name of the block
-                 :param block: A list of :py:class:`Line` objects representing
-                               the text block to compile.
-                 :return: A list of :py:class:`Line` objects representing
-                          the compiled text block.
-                 
-                 ::
-                 
-                     def compile_block(self, name, block):
-                         <<find_next_directive>>
-                     
-                         while True:
-                             directive_index = find_next_directive(block)
-                             if not directive_index: break
-                             directive, index = directive_index
-                             directive.process(self, block, index)
-                     
-                         self.compiled_blocks.add(name)
-                         return block
-                 
-                 .. _find_next_directive:
-                 
-                 **<<find_next_directive>>**
-                 
-                 
-                 ::
-                 
-                     def find_next_directive(block):
-                         # returns the next available directive
-                         min_line = [ (l.directives[0].priority, i)
-                                      for i, l in enumerate(block) if l.directives ]
-                         if not min_line:
-                             return None
-                     
-                         prio, index = min(min_line)
-                         return block[index].directives.pop(0), index
-                 
-                 
-              #Attributes
-              <<Document.errors>>
-              <<Document.blocks>>
-              <<Document.blocks_included>>
-              <<Document.compiled_blocks>>
-              <<Document.sub_documents>>
-              <<Document.tokens>>
-              <<Document.macros>>
-              <<Document.fname>>
-              <<Document.reader>>
-              <<Document.lines>>
-              
-              #Methods
-              <<Document.__init__>>
-              <<Document.process>>
-              <<Document.get_subdoc>>
-              <<Document.add_error>>
-              <<Document.check_errors>>
-              <<Document.collect_blocks>>
-              <<Document.get_compiled_block>>
-              <<Document.compile_block>>
-          
-          
-      
+           <<Document.errors>>
+           <<Document.blocks>>
+           <<Document.blocks_included>>
+           <<Document.compiled_blocks>>
+           <<Document.sub_documents>>
+           <<Document.tokens>>
+           <<Document.macros>>
+           <<Document.fname>>
+           <<Document.reader>>
+           <<Document.lines>>
+           
+           #Methods
+           <<Document.__init__>>
+           <<Document.process>>
+           <<Document.get_subdoc>>
+           <<Document.add_error>>
+           <<Document.check_errors>>
+           <<Document.collect_blocks>>
+           <<Document.get_compiled_block>>
+           <<Document.compile_block>>
+       
+       
+   
    .. py:attribute:: errors
    
       A list of errors found during generation.
@@ -2451,7 +1743,6 @@ Document
           lines = []
       
    .. py:method:: __init__(text, reader, fname, tokens)
-   
       The constructor.
       
       ::
@@ -2472,9 +1763,7 @@ Document
           
       
    .. py:method:: process(show_warnings)
-   
       Processes the document and generates the output.
-   
       :param bool show_warnings: If ``True`` warnings are emitted.
       :return: A string representing the rst output.
       
@@ -2508,7 +1797,7 @@ Document
           self.blocks_included.add("__macros__") #may not cause a warning
           unincluded = set(self.blocks.keys())-self.blocks_included
           if unincluded:
-              logger.warning("The following blocks were not included:")
+              logger.warning("The following block were not included:")
               warnings = [ (self.blocks[b][0].index, b) for b in unincluded ]
               warnings.sort(key=operator.itemgetter(0))
               for l, w in warnings:
@@ -2516,9 +1805,7 @@ Document
       
       
    .. py:method:: get_subdoc(rpath)
-   
       Tries to compile a document with the relative path rpath.
-   
       :param string rpath: The relative path to the root
                            containing document.
       :return: A :py:class:`Document` reference to the sub document.
@@ -2593,9 +1880,7 @@ Document
       
       
    .. py:method:: add_error(line, text)
-   
       Adds an error to the list.
-   
       :param integer line: The line number that causes the error.
       :param string text: An error text.
       
@@ -2607,7 +1892,6 @@ Document
           
       
    .. py:method:: check_errors()
-   
       Raises a ``WebError`` exception if error were found.
       
       ::
@@ -2618,7 +1902,6 @@ Document
           
       
    .. py:method:: collect_blocks()
-   
       Collects all text blocks.
       
       ::
@@ -2636,10 +1919,8 @@ Document
           
       
    .. py:method:: get_compiled_block(name)
-   
       Returns the compiled version of a text block.
       Compiled means: all directives where processed.
-   
       :param string name: The name of the text block:
       :return: A list of :py:class:`Line` objects representing
                the text block.
@@ -2659,9 +1940,7 @@ Document
           
       
    .. py:method:: compile_block(name, block)
-   
       Compiles a text block.
-   
       :param string name: The name of the block
       :param block: A list of :py:class:`Line` objects representing
                     the text block to compile.
@@ -2719,7 +1998,6 @@ Line
            #Methods
            <<Line.__init__>>
            <<Line.set>>
-           <<Line.clone>>
            <<Line.like>>
            <<Line.indented>>
            <<Line.change_indent>>
@@ -2871,19 +2149,9 @@ Line
               return self
           
           
-      
-   .. py:method:: clone([dline])
-   
-      Clones the Line.
-   
-      :param dline: If given replaces the line numbers of all directives\
-                    with the given line number.
-   
-   
-      
-      ::
-      
+          
           def clone(self, dline=None):
+          
               if dline is not None:
                   for d in self.directives:
                       d.line = dline
@@ -2965,14 +2233,34 @@ File Layout
     <<management>>
     <<directives>>
     <<readers>>
+    
+    
+    <<Line>>
     <<document>>
-    <<command line>>
+    
+    
+    def main():
+        parser = OptionParser("usage: %prog [options] SOURCEFILE",
+                              description="Tangles a source code file to a rst file.",
+                              version="%prog " + __version__)
+    
+        parser.add_option("-o", "--output", dest="output", default="",
+                          type="string", help="The output filename")
+    
+        parser.add_option("-t", "--token", dest="token", action="append",
+                          type="string", help="defines a token, usable by @if directives")
+    
+        parser.add_option("-w", "--warnings", dest="warnings",
+                          action="store_false", help="suppresses warnings")
+        
+    if __name__ == "__main__":
+        main()
+    
 
 
-'''
+
 <<imports>>
 ===========
-'''
 
 ::
 
@@ -2990,10 +2278,10 @@ File Layout
     
 
 
-'''
+
 <<management>>
 ==============
-'''
+
 
 ::
 
@@ -3008,11 +2296,10 @@ File Layout
     
 
 
-'''
+
 <<directives>>
 ==============
 
-'''
 
 ::
 
@@ -3057,10 +2344,10 @@ File Layout
 
 .. _readers:
 
-'''
+
 <<readers>>
 ===========
-'''
+
 
 ::
 
@@ -3068,31 +2355,137 @@ File Layout
     <<Reader>>
     <<CReader>>
     <<PythonReader>>
-    # The keys are the lexer names of pygments
-    readers = {
-        "C" : CReader,
-        "C++" : CReader,
-            "C#" : CReader,
-        "Python" : PythonReader,
-    }
-    
 
 
-'''
+
 <<document>>
 ============
-'''
+
 
 ::
 
     
-    <<Line>>
     <<Document>>
     <<generate>>
 
 
-<<command line>>
-================
+
+****************************************
+Multi-File Processing and Sphinx Support
+****************************************
+
+I added two new flags to antiweb:
+
+* The ''-r'' flag:
+    * antiweb will search for all compatible files to process them
+
+* The ''-i'' flag:
+    * In the same directory as given, a index.rst will be created/edited to include all the processed files (important for sphinx)
+
+
+::
+
+    
+        parser.add_option("-r", "--recursive", dest="recursive",
+                          action="store_true", help="Process every file in given directory")
+        
+        parser.add_option("-i", "--index", dest="index",
+                          action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
+    
+
+    options, args = parser.parse_args()
+
+    logger.addHandler(logging.StreamHandler())
+    logger.setLevel(logging.INFO)
+
+    if options.warnings is None:
+        options.warnings = True
+    
+    if not args:
+        parser.print_help()
+        sys.exit(0)
+
+
+The program will check if a -r flag was given and if so, save the current directory and change it to the given one
+
+
+::
+
+    
+        if options.recursive:
+            previous_dir = os.getcwd()
+            os.chdir(args[0])
+    
+
+The program lists all files in the directory and sub-directories to prepare them for the process
+
+
+::
+
+    
+            for root, dirs, files in os.walk(args[0], topdown=False):
+                for filename in files:
+                    fname= os.path.join(root, filename)
+    
+
+If the found file is no folder or already a rst file, it will be put into the process
+
+
+::
+
+    
+                    if os.path.isfile(fname) and not fname.endswith(".rst"):
+                        write(os.getcwd(), fname, None, options.token, options.warnings, options.index)
+
+This else will take place when only one file is given without the -r flag
+
+
+::
+
+    
+        else:
+            os.chdir(os.path.split(args[0])[0])
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index)
+
+Writing the index.rst file
+==========================
+
+From the given file a .rst file will be created if it contains an antiweb start directive
+
+
+::
+
+    
+    def write(path, var, output, token, warnings, index):
+        index_rst = "index.rst"
+        could_process = process_file(var, output, token, warnings)
+    
+
+
+If the user added the -i flag, the file gets added to Sphinx' index.rst file
+
+
+::
+
+    
+        if index:
+            if could_process:
+                index_static = "Antiweb's Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
+                index_out = open(os.path.join(path, index_rst), "w")
+                index_out.write(index_static)
+                index_var = os.path.split(var)[1]
+                index_var = os.path.splitext(index_var)[0]
+                index_out = open(os.path.join(path, index_rst), "a")
+                index_out.write("\n   " + index_var)
+                index_out.close()
+
+
+
+process_file
+============
+
+If no output name was declared, the input name will be given
+
 
 ::
 
@@ -3100,101 +2493,33 @@ File Layout
     def process_file(in_file, out_file, token, warnings):
         if not out_file:
              out_file = os.path.splitext(in_file)[0] + ".rst"
-    
-        global write 
-        write = False
+The output text will be written in the output file. If there is an output text, the function returns could_write as True
+
+
+::
+
+        could_write = False
         try:
             text_output = generate(in_file, token, warnings)
             
             if text_output:
-                write = True
                 with open(out_file, "w") as f:
                     f.write(text_output)
+                could_write = True
         except WebError as e:
-            logger.error("Errors:")
+            logger.error("\nErrors:")
             for l, d in e.error_list:
                 logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
                 logger.error("      %s", l.text)
     
-    def main():
-        parser = OptionParser("usage: %prog [options] SOURCEFILE",
-                              description="Tangles a source code file to a rst file.",
-                              version="%prog " + __version__)
-    
-        parser.add_option("-o", "--output", dest="output", default="",
-                          type="string", help="The output filename")
-    
-        parser.add_option("-t", "--token", dest="token", action="append",
-                          type="string", help="defines a token, usable by @if directives")
-    
-        parser.add_option("-w", "--warnings", dest="warnings",
-                          action="store_false", help="suppresses warnings")
-        
-        parser.add_option("-r", "--recursive", dest="recursive",
-                          action="store_true", help="Process every file in given directory")
-        
-        parser.add_option("-i", "--index", dest="index",
-                          action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
-    
-    
-        options, args = parser.parse_args()
-        
-    
-        logger.addHandler(logging.StreamHandler())
-        logger.setLevel(logging.INFO)
-    
-        if options.warnings is None:
-            options.warnings = True
-        
-        if not args:
-            parser.print_help()
-            sys.exit(0)
-        
-        if options.recursive:
-            previous_dir = os.getcwd()
-            os.chdir(args[0])
-            if options.index:
-                index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-                index_out = open(os.getcwd() + "\index.rst", "w")
-                index_out.write(index_static)
-                index_out.close()
-    
-            for root, dirs, files in os.walk(args[0], topdown=False):
-                for filename in files:
-                    fname= os.path.join(root, filename)
-    
-                    if os.path.isfile(fname) and not fname.endswith(".rst"):
-                        print(fname + ": ") 
-                        process_file(fname, None, options.token, options.warnings)
-    
-                        if options.index:
-                            index_var = (fname.split(args[0] + "\\")[1]).split(".")[0]
-                            index_out = open(args[0] + "\index.rst", "a")
-                            global write
-                            if write is True:
-                                index_out.write("\n   " + index_var)
-                            index_out.close()
-    
-        else:
-    
-            process_file(args[0], options.output, options.token, options.warnings)
-    
-            index_path = os.path.split(args[0])[0]
-            index_static = "Welcome to Antiweb's documentation!\n===================================\n\n\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-            index_out = open(index_path + "\index.rst", "w")
-            index_out.write(index_static)
-            index_out.close()
-    
-            index_var = (os.path.split(args[0])[1]).split(".")[0]
-    
-            index_out = open(index_path + "\index.rst", "a")
-            index_out.write("\n   " + index_var)
-            index_out.close()
-    
-    
-    if __name__ == "__main__":
-        main()
-    
+        return could_write
+
+
+
+
+
+
+
 
 
 
@@ -3206,6 +2531,7 @@ New languages are added by writing a new Reader class
 and registering it in the readers dictionary (see readers).
 A simple Reader example is provides by :py:class:`CReader`
 a more advances reader is :py:class:`PythonReader`.
+
 
 
 
