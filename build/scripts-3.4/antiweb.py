@@ -321,7 +321,7 @@ import collections
 
 #@code
 
-__version__ = "0.3"
+__version__ = "0.3.1"
 
 logger = logging.getLogger('antiweb')
 
@@ -2285,8 +2285,7 @@ def generate(fname, tokens, show_warnings=False):
 #@code
 
 def process_file(in_file, out_file, token, warnings):
-    if not out_file:
-         out_file = os.path.splitext(in_file)[0] + ".rst"
+
 #@edoc
 
 #The output text will be written in the output file. If there is an output text, the function returns could_write as True
@@ -2318,8 +2317,28 @@ def process_file(in_file, out_file, token, warnings):
 
 #@code
 
-def write(path, var, output, token, warnings, index, index_rst):
-    could_process = process_file(var, output, token, warnings)
+def write(path, fname, output, token, warnings, index, index_rst, basename, recursive):
+    
+
+        if not output:
+            if recursive: #funktioniert
+                out_file = os.path.splitext(fname)[0] + ".rst"
+                out_zwischenspeicher = os.path.split(out_file)[0]
+                out_file = basename + "_" + os.path.split(out_file)[1]
+                out_file = os.path.join(path, out_file)
+            else: #funktioniert
+                out_file = os.path.splitext(fname)[0] + ".rst"
+        else:
+            if recursive: #funktioniert
+                out_file_filename = os.path.split(os.path.splitext(fname)[0] + ".rst")[1]
+                out_file = os.path.join(path, output, out_file_filename)
+            else: #funktioniert
+                out_file = output + ".rst"
+                out_file = os.path.join(path, out_file)
+
+
+        could_process = process_file(fname, out_file, token, warnings)
+
 
 #@edoc
 
@@ -2328,13 +2347,22 @@ def write(path, var, output, token, warnings, index, index_rst):
 
 #@code
 
-    if index:
-        if could_process:
-            index_var = os.path.split(var)[1]
-            index_var = os.path.splitext(index_var)[0]
-            index_out = open(os.path.join(path, index_rst), "a")
-            index_out.write("\n   " + index_var)
-            index_out.close()
+        if index:
+            if could_process:
+                if output and recursive:
+                    index_var = os.path.split(fname)[1]
+                    index_var = os.path.splitext(index_var)[0]
+                    #dateiname ohne extension
+                    index_out = open(os.path.join(path, output, index_rst), "a")
+                    index_out.write("\n   " + index_var)
+                    index_out.close()
+                else:
+                    index_var = os.path.split(fname)[1]
+                    index_var = os.path.splitext(index_var)[0]
+                    #dateiname ohne extension
+                    index_out = open(os.path.join(path, index_rst), "a")
+                    index_out.write("\n   " + index_var)
+                    index_out.close()
 #@edoc
 
 #@(write)
@@ -2391,15 +2419,6 @@ I added two new flags to antiweb:
         sys.exit(0)
 
     index_rst = "index.rst"
-    
-    if options.index:
-        if options.recursive:
-            in_type = args[0]
-
-        else:
-            in_type = os.path.split(args[0])[0]
-
-        write_static(in_type, index_rst)
 #The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 #@code
@@ -2407,7 +2426,14 @@ I added two new flags to antiweb:
     if options.recursive:
         previous_dir = os.getcwd()
         os.chdir(args[0])
-
+        if options.index:
+            if options.output:
+                os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
+                in_type = os.path.join(args[0], options.output)
+                write_static(in_type, index_rst)
+            else:
+                in_type = args[0]
+                write_static(in_type, index_rst)
 #@edoc
 
 #The program lists all files in the directory and sub-directories to prepare them for the process
@@ -2416,25 +2442,27 @@ I added two new flags to antiweb:
 
         for root, dirs, files in os.walk(args[0], topdown=False):
             for filename in files:
-                fname= os.path.join(root, filename)
+                fname = os.path.join(root, filename)
 
 #@edoc
 
 #If the found file is no folder nor a rst file, it will be put into the process
 
 #@code
-
-                if os.path.isfile(fname) and not fname.endswith(".rst"):
-                    write(os.getcwd(), fname, None, options.token, options.warnings, options.index, index_rst)
+                ext_tuple = (".cs",".cpp",".py",".cc")
+                if os.path.isfile(fname) and fname.endswith(ext_tuple):
+                    basename = os.path.basename(root)
+                    write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, basename, options.recursive)
 #@edoc
 
-#This else will take place when only one file is given without the -r flag
+#This else will take place when the -r flag is not given.
 
 #@code
 
     else:
         os.chdir(os.path.split(args[0])[0])
-        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst)
+        write_static(os.getcwd(), index_rst)
+        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, None, options.recursive)
 #@edoc
 #@include(write)
 #@include(process_file)
