@@ -2310,37 +2310,34 @@ def process_file(in_file, out_file, token, warnings):
 #@edoc
 
 
-def search_for_generate(path, output, index_rst, startblock, endblock):
-    if output:
-        search = open(os.path.join(os.getcwd(), output, index_rst), "r")
-    else:
-        search = open(os.path.join(os.getcwd(), index_rst), "r")
-    for num, line in enumerate(search, 1):
-        if startblock in line:
-            startline = num
-        if endblock in line:
-            endline = num
-    search.close()
-    if startline and endline:
-        if output:
-            replace = open(os.path.join(os.getcwd(), output, index_rst), "r")
-        else:
-            replace = open(os.path.join(os.getcwd(), index_rst), "r")
-        content = replace.readlines()
-        replace.close()
-        del content[startline:endline-1]
-    return content
+def search_for_generate(output, index_rst, startblock, endblock):
+    content = ""
 
-def replace_in_generate(startblock, endblock, out_file_name, path, output, index_rst, content):
+    if not output:
+        output = ""
 
-    for num, line in enumerate(content, 1):
-        if startblock in line:
-            startline = num
-        if endblock in line:
-            endline = num
+    path = os.path.join(os.getcwd(), output, index_rst)
+    with open(path, "r") as index_file:
+        for num, line in enumerate(index_file):
+            if startblock in line:
+                startline = num
+            if endblock in line:
+                endline = num
+
+        if startline and endline:
+            index_file.seek(0, 0)
+            content = index_file.readlines()
+            del content[startline+1:endline-1]
+        
+    return (content, startline)
+
+def replace_in_generate(startblock, endblock, out_file_name, path, output, index_rst, content, startline):
+    
+    endline = startline+1
+    
     index_var = os.path.splitext(out_file_name)[0]
     if startline and endline:
-        content.insert(endline-1, "   " + index_var + "\n")
+        content.insert(endline, "   " + index_var + "\n")
     if output:
         index_out = open(os.path.join(path, output, index_rst), "w")
     else:
@@ -2358,7 +2355,7 @@ def replace_in_generate(startblock, endblock, out_file_name, path, output, index
 
 #@code
 
-def write(path, fname, output, token, warnings, index, index_rst, recursive, content, startblock, endblock):
+def write(path, fname, output, token, warnings, index, index_rst, recursive, content, startblock, endblock, startline):
     
 
         if not output:
@@ -2398,14 +2395,14 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
             if could_process:
                 
                 if output and recursive:
-                    replace_in_generate(startblock, endblock, out_file_name, path, output, index_rst, content)
+                    replace_in_generate(startblock, endblock, out_file_name, path, output, index_rst, content, startline)
                 else:
-                    replace_in_generate(startblock, endblock, out_file_name, path, None, index_rst, content)
+                    replace_in_generate(startblock, endblock, out_file_name, path, None, index_rst, content, startline)
 #@edoc
 
 #@(write)
-def write_static(input_type, index_rst):
-    index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   .. @start(generate)\n\n   .. @(generate)"
+def write_static(input_type, index_rst, startblock, endblock):
+    index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + startblock +"\n   " + endblock
     index_out = open(os.path.join(input_type, index_rst), "w")
     index_out.write(index_static)
 
@@ -2458,8 +2455,8 @@ I added two new flags to antiweb:
 
     index_rst = "index.rst"
     replace_text = ""
-    startblock = ".. @start(generate)"
-    endblock = ".. @(generate)"
+    startblock = ".. @start(generated)"
+    endblock = ".. @(generated)"
 #The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 #@code
@@ -2467,21 +2464,22 @@ I added two new flags to antiweb:
     if options.recursive:
         previous_dir = os.getcwd()
         os.chdir(args[0])
+        if options.output:
+            os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
         if options.index:
             if options.output:
-                os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
                 in_type = os.path.join(args[0], options.output)
                 if not os.path.isfile(os.path.join(in_type, index_rst)):
-                    write_static(in_type, index_rst)
+                    write_static(in_type, index_rst, startblock, endblock)
 
-                content = search_for_generate(os.getcwd(), options.output, index_rst, startblock, endblock)
+                content, startline = search_for_generate(options.output, index_rst, startblock, endblock)
 
             else:
                 in_type = args[0]
                 if not os.path.isfile(os.path.join(in_type, index_rst)):
-                    write_static(in_type, index_rst)
+                    write_static(in_type, index_rst, startblock, endblock)
 
-                content = search_for_generate(os.getcwd(), None, index_rst, startblock, endblock)
+                content, startline = search_for_generate(os.getcwd(), index_rst, startblock, endblock)
 #@edoc
 
 #The program lists all files in the directory and sub-directories to prepare them for the process
@@ -2500,9 +2498,9 @@ I added two new flags to antiweb:
                 ext_tuple = (".cs",".cpp",".py",".cc")
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
                     if options.index:
-                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock)
+                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
                     else:
-                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock)
+                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock, None)
 #@edoc
 
 #This else will take place when the -r flag is not given.
@@ -2512,11 +2510,11 @@ I added two new flags to antiweb:
     else:
         os.chdir(os.path.split(args[0])[0])
         if options.index:
-            write_static(os.getcwd(), index_rst)
-            content = search_for_generate(os.getcwd(), None, index_rst, startblock, endblock)
-            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock)
+            write_static(os.getcwd(), index_rst, startblock, endblock)
+            content, startline = search_for_generate(None, index_rst, startblock, endblock)
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
         else:
-            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock)
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock, None)
 #@edoc
 #@include(write)
 #@include(process_file)
