@@ -18,7 +18,7 @@ documentaries of Python 2 programs.
 
 
    * Install Python 3.4
-   * After installing Python, run below commands in cmd (you can add the directories to the PATH or navigate to the directories [I would prefer the first option])
+   * After installing Python, run below commands in cmd (you can add the Python and Python\Scripts directories to the PATH or navigate to the directories [I would prefer the first option])
    
    
    ::
@@ -81,7 +81,7 @@ documentaries of Python 2 programs.
 Preparing the .rst files
 ========================
 
-   * Copy the ``antiweb.py`` file from my GitHub repository into the ``Python34`` folder
+   * Install antiweb via the ''pip install antiweb'' command
    
     * You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:
    
@@ -2413,15 +2413,6 @@ I added two new flags to antiweb:
         sys.exit(0)
 
     index_rst = "index.rst"
-    
-    if options.index:
-        if options.recursive:
-            in_type = args[0]
-
-        else:
-            in_type = os.path.split(args[0])[0]
-
-        write_static(in_type, index_rst)
 The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 
@@ -2431,7 +2422,14 @@ The program will check if a -r flag was given and if so, save the current direct
         if options.recursive:
             previous_dir = os.getcwd()
             os.chdir(args[0])
-    
+            if options.index:
+                if options.output:
+                    os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
+                    in_type = os.path.join(args[0], options.output)
+                    write_static(in_type, index_rst)
+                else:
+                    in_type = args[0]
+                    write_static(in_type, index_rst)
 
 The program lists all files in the directory and sub-directories to prepare them for the process
 
@@ -2441,7 +2439,7 @@ The program lists all files in the directory and sub-directories to prepare them
     
             for root, dirs, files in os.walk(args[0], topdown=False):
                 for filename in files:
-                    fname= os.path.join(root, filename)
+                    fname = os.path.join(root, filename)
     
 
 If the found file is no folder nor a rst file, it will be put into the process
@@ -2449,11 +2447,12 @@ If the found file is no folder nor a rst file, it will be put into the process
 
 ::
 
-    
-                    if os.path.isfile(fname) and not fname.endswith(".rst"):
-                        write(os.getcwd(), fname, None, options.token, options.warnings, options.index, index_rst)
+                    ext_tuple = (".cs",".cpp",".py",".cc")
+                    if os.path.isfile(fname) and fname.endswith(ext_tuple):
+                        basename = os.path.basename(root)
+                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, basename, options.recursive)
 
-This else will take place when only one file is given without the -r flag
+This else will take place when the -r flag is not given.
 
 
 ::
@@ -2461,7 +2460,8 @@ This else will take place when only one file is given without the -r flag
     
         else:
             os.chdir(os.path.split(args[0])[0])
-            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst)
+            write_static(os.getcwd(), index_rst)
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, None, options.recursive)
 
 Writing the index.rst file
 ==========================
@@ -2472,8 +2472,28 @@ From the given file a .rst file will be created if it contains an antiweb start 
 ::
 
     
-    def write(path, var, output, token, warnings, index, index_rst):
-        could_process = process_file(var, output, token, warnings)
+    def write(path, fname, output, token, warnings, index, index_rst, basename, recursive):
+        
+    
+            if not output:
+                if recursive: #funktioniert
+                    out_file = os.path.splitext(fname)[0] + ".rst"
+                    out_zwischenspeicher = os.path.split(out_file)[0]
+                    out_file = basename + "_" + os.path.split(out_file)[1]
+                    out_file = os.path.join(path, out_file)
+                else: #funktioniert
+                    out_file = os.path.splitext(fname)[0] + ".rst"
+            else:
+                if recursive: #funktioniert
+                    out_file_filename = os.path.split(os.path.splitext(fname)[0] + ".rst")[1]
+                    out_file = os.path.join(path, output, out_file_filename)
+                else: #funktioniert
+                    out_file = output + ".rst"
+                    out_file = os.path.join(path, out_file)
+    
+    
+            could_process = process_file(fname, out_file, token, warnings)
+    
     
 
 
@@ -2483,13 +2503,22 @@ If the user added the -i flag, the file gets added to Sphinx' index.rst file
 ::
 
     
-        if index:
-            if could_process:
-                index_var = os.path.split(var)[1]
-                index_var = os.path.splitext(index_var)[0]
-                index_out = open(os.path.join(path, index_rst), "a")
-                index_out.write("\n   " + index_var)
-                index_out.close()
+            if index:
+                if could_process:
+                    if output and recursive:
+                        index_var = os.path.split(fname)[1]
+                        index_var = os.path.splitext(index_var)[0]
+                        #dateiname ohne extension
+                        index_out = open(os.path.join(path, output, index_rst), "a")
+                        index_out.write("\n   " + index_var)
+                        index_out.close()
+                    else:
+                        index_var = os.path.split(fname)[1]
+                        index_var = os.path.splitext(index_var)[0]
+                        #dateiname ohne extension
+                        index_out = open(os.path.join(path, index_rst), "a")
+                        index_out.write("\n   " + index_var)
+                        index_out.close()
 
 
 
@@ -2503,8 +2532,7 @@ If no output name was declared, the input name will be given
 
     
     def process_file(in_file, out_file, token, warnings):
-        if not out_file:
-             out_file = os.path.splitext(in_file)[0] + ".rst"
+    
 
 The output text will be written in the output file. If there is an output text, the function returns could_write as True
 
