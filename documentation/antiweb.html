@@ -49,7 +49,7 @@
         
 
         
-          <a href="index.html" class="icon icon-home"> antiweb 0.3
+          <a href="index.html" class="icon icon-home"> antiweb
         
 
         
@@ -84,7 +84,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">First Steps</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">antiweb</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preparing-the-rst-files">Preparing the .rst files</a></li>
 </ul>
@@ -145,6 +145,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#writing-the-index-rst-file">Writing the index.rst file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#process-file">process_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#search-for-generated">search_for_generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#replace-in-generated">replace_in_generated</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a></li>
@@ -194,7 +196,7 @@
           <div role="main" class="document">
             
   <div class="section" id="antiweb">
-<h1>First Steps<a class="headerlink" href="#antiweb" title="Permalink to this headline">¶</a></h1>
+<h1>antiweb<a class="headerlink" href="#antiweb" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>The most important parts of the system are Python 3, Sphinx and antiweb. Because of incompatibility with Python 2 you can&#8217;t create
@@ -202,15 +204,15 @@ documentaries of Python 2 programs.</p>
 <blockquote>
 <div><ul class="simple">
 <li>Install Python 3.4</li>
-<li>After installing Python, run below commands in cmd (you can add the Python and Python\Scripts directories to the environmental variable PATH or navigate to the directories [I would prefer the first option])</li>
+<li>After installing Python, run below commands in cmd (you can add the directories to the PATH or navigate to the directories [I would prefer the first option])</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre>pip install antiweb
+<div class="highlight-python"><div class="highlight"><pre>pip install sphinx
 </pre></div>
 </div>
 <ul class="simple">
 <li><code class="xref py py-class docutils literal"><span class="pre">IMPORTANT</span></code>: If you get a connection error the reason is most likely your proxy. You then have to use a tool like &#8220;cntlm&#8221; and add a proxy flag when running pip, example:</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre>pip install antiweb --proxy http://localhost:8123
+<div class="highlight-python"><div class="highlight"><pre>pip install sphinx --proxy http://localhost:8123
 </pre></div>
 </div>
 <ul class="simple">
@@ -285,14 +287,17 @@ documentaries of Python 2 programs.</p>
 </ul>
 </div></blockquote>
 <div class="section" id="preparing-the-rst-files">
-<blockquote>
-<div>
+<h3>Preparing the .rst files<a class="headerlink" href="#preparing-the-rst-files" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>You can now begin creating a .rst file out of a C, C++, C# and py file. There are several options for you to use. The -p option defines the output name of a file or (in combination with --recursive) the destination path. The -i option automatically adds the files to the index.rst for use with sphinx</li>
+<li>Copy the <code class="docutils literal"><span class="pre">antiweb.py</span></code> file from my GitHub repository into the <code class="docutils literal"><span class="pre">Python34</span></code> folder</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>You can now begin creating a .rst file out of a C, C++, C# and py file. To do that, simply use following command:</li>
 </ul>
 </div></blockquote>
-<div class="highlight-python"><div class="highlight"><pre>antiweb.py &quot;ABSOLUTE PATH TO THE FILE/DIRECTORY&quot; [options]
+<div class="highlight-python"><div class="highlight"><pre>python antiweb.py &quot;PATH TO THE FILE/DIRECTORY&quot; [options]
 </pre></div>
 </div>
 <ul class="simple">
@@ -308,7 +313,7 @@ documentaries of Python 2 programs.</p>
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre>Welcome to antiweb&#39;s documentation!
+9</pre></div></td><td class="code"><div class="highlight"><pre>Welcome to Antiweb&#39;s documentation!
 ===================================
 
 Contents:
@@ -3145,8 +3150,8 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 &lt;&lt;Line&gt;&gt;
 &lt;&lt;document&gt;&gt;
 
-def write_static(input_type, index_rst):
-    index_static = &quot;Antiweb&#39;s Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n&quot;
+def write_static(input_type, index_rst, startblock, endblock):
+    index_static = &quot;Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   &quot; + startblock +&quot;\n   &quot; + endblock
     index_out = open(os.path.join(input_type, index_rst), &quot;w&quot;)
     index_out.write(index_static)
 
@@ -3180,7 +3185,8 @@ if __name__ == &quot;__main__&quot;:
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">optparse</span> <span class="kn">import</span> <span class="n">OptionParser</span>
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">optparse</span> <span class="kn">import</span> <span class="n">OptionParser</span>
 <span class="kn">import</span> <span class="nn">pygments.lexers</span> <span class="kn">as</span> <span class="nn">pm</span>
 <span class="kn">from</span> <span class="nn">pygments.token</span> <span class="kn">import</span> <span class="n">Token</span>
 <span class="kn">import</span> <span class="nn">bisect</span>
@@ -3191,6 +3197,7 @@ if __name__ == &quot;__main__&quot;:
 <span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">platform</span> <span class="k">as</span> <span class="n">_platform</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -3202,7 +3209,7 @@ if __name__ == &quot;__main__&quot;:
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.3&quot;</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.3.1&quot;</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;antiweb&#39;</span><span class="p">)</span>
 
@@ -3342,7 +3349,10 @@ directives = {
 17
 18
 19
-20</pre></div></td><td class="code"><div class="highlight"><pre>    parser.add_option(&quot;-r&quot;, &quot;--recursive&quot;, dest=&quot;recursive&quot;,
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre>    parser.add_option(&quot;-r&quot;, &quot;--recursive&quot;, dest=&quot;recursive&quot;,
                       action=&quot;store_true&quot;, help=&quot;Process every file in given directory&quot;)
 
     parser.add_option(&quot;-i&quot;, &quot;--index&quot;, dest=&quot;index&quot;,
@@ -3362,55 +3372,12 @@ if not args:
     sys.exit(0)
 
 index_rst = &quot;index.rst&quot;
+replace_text = &quot;&quot;
+startblock = &quot;.. @start(generated)&quot;
+endblock = &quot;.. @(generated)&quot;
 </pre></div>
 </td></tr></table></div>
 <p>The program will check if a -r flag was given and if so, save the current directory and change it to the given one</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">:</span>
-    <span class="n">previous_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-            <span class="n">in_type</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
-            <span class="n">write_static</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">in_type</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">write_static</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-<p>The program lists all files in the directory and sub-directories to prepare them for the process</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If the found file is no folder nor a rst file, it will be put into the process</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ext_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;.cs&quot;</span><span class="p">,</span><span class="s">&quot;.cpp&quot;</span><span class="p">,</span><span class="s">&quot;.py&quot;</span><span class="p">,</span><span class="s">&quot;.cc&quot;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext_tuple</span><span class="p">):</span>
-    <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-    <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This else will take place when the -r flag is not given.</p>
-<div class="highlight-python"><div class="highlight"><pre>else:
-    os.chdir(os.path.split(args[0])[0])
-    write_static(os.getcwd(), index_rst)
-    write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, None, options.recursive)
-</pre></div>
-</div>
-<div class="section" id="writing-the-index-rst-file">
-<h3>Writing the index.rst file<a class="headerlink" href="#writing-the-index-rst-file" title="Permalink to this headline">¶</a></h3>
-<p>From the given file a .rst file will be created if it contains an antiweb start directive</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -3429,32 +3396,90 @@ index_rst = &quot;index.rst&quot;
 16
 17
 18
-19
-20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">recursive</span><span class="p">):</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">:</span>
+    <span class="n">previous_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+            <span class="n">in_type</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)):</span>
+                <span class="n">write_static</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">)</span>
 
+            <span class="n">content</span><span class="p">,</span> <span class="n">startline</span> <span class="o">=</span> <span class="n">search_for_generate</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span> <span class="c">#funktioniert</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.rst&quot;</span>
-                <span class="n">out_zwischenspeicher</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">basename</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span> <span class="c">#funktioniert</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.rst&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span> <span class="c">#funktioniert</span>
-                <span class="n">out_file_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.rst&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">out_file_filename</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span> <span class="c">#funktioniert</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="s">&quot;.rst&quot;</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span>
+            <span class="n">in_type</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)):</span>
+                <span class="n">write_static</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">)</span>
 
-
-        <span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">)</span>
+            <span class="n">content</span><span class="p">,</span> <span class="n">startline</span> <span class="o">=</span> <span class="n">search_for_generate</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>If the user added the -i flag, the file gets added to Sphinx&#8217; index.rst file</p>
+<p>The program lists all files in the directory and sub-directories to prepare them for the process</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the found file is no folder nor a rst file, it will be put into the process</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">ext_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;.cs&quot;</span><span class="p">,</span><span class="s">&quot;.cpp&quot;</span><span class="p">,</span><span class="s">&quot;.py&quot;</span><span class="p">,</span><span class="s">&quot;.cc&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext_tuple</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>This else will take place when the -r flag is not given.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre>else:
+    os.chdir(os.path.split(args[0])[0])
+    if options.index:
+        write_static(os.getcwd(), index_rst, startblock, endblock)
+        content, startline = search_for_generate(None, index_rst, startblock, endblock)
+        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
+    else:
+        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock, None)
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="writing-the-index-rst-file">
+<h3>Writing the index.rst file<a class="headerlink" href="#writing-the-index-rst-file" title="Permalink to this headline">¶</a></h3>
+<p>From the given file a .rst file will be created if it contains an antiweb start directive</p>
+<div class="highlight-python"><div class="highlight"><pre>def write(path, fname, output, token, warnings, index, index_rst, recursive, content, startblock, endblock, startline):
+</pre></div>
+</div>
+<p>When there is no output given there are two possibilities: recursive or not recursive. The file path gets split up and put together so it can be processed by &#8216;&#8217;process_file&#8217;&#8216;</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="n">out_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.rst&quot;</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">out_file_name</span>
+        <span class="n">out_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">out_file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.rst&quot;</span>
+        <span class="n">out_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</td></tr></table></div>
+<p>There is an output given, so it can also be either recursive or not recursive. With the additional output parameter the file path gets split up and put together so it can be processed by &#8216;&#8217;process_file&#8217;&#8216;. There is also a differentiation between Linux, Windows and OS X (because of the different paths in each operating system)</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -3466,26 +3491,38 @@ index_rst = &quot;index.rst&quot;
  9
 10
 11
-12
-13
-14
-15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre>else:
+    if recursive:
+        rel_path = os.path.relpath(fname, path)
+        out_file_name = os.path.splitext(rel_path)[0] + &quot;.rst&quot;
+        if _platform == &quot;linux&quot; or _platform == &quot;linux2&quot;:
+            out_file_name = out_file_name.replace(&quot;/&quot;,&quot;_&quot;)
+        if _platform == &quot;win32&quot;:
+            out_file_name = out_file_name.replace(&quot;\\&quot;,&quot;_&quot;)
+        out_file = os.path.join(path, output, out_file_name)
+    else:
+        out_file_name = output + &quot;.rst&quot;
+        out_file = os.path.join(path, out_file_name)
+</pre></div>
+</td></tr></table></div>
+<p>The prepared file path gets pushed to &#8216;&#8217;process file&#8217;&#8216;. If the process is successful, &#8216;&#8217;could_process&#8217;&#8217; is set to &#8216;&#8217;True&#8217;&#8216;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the user added the -i flag, the file gets added to Sphinx&#8217; index.rst file. Between the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">(generated)</span></code> directives is the space for automatic added files, you can manually add files below the &#64;(generated) directive.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">index</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">could_process</span><span class="p">:</span>
+
         <span class="k">if</span> <span class="n">output</span> <span class="ow">and</span> <span class="n">recursive</span><span class="p">:</span>
-            <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">index_var</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c">#dateiname ohne extension</span>
-            <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>
-            <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">   &quot;</span> <span class="o">+</span> <span class="n">index_var</span><span class="p">)</span>
-            <span class="n">index_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">replace_in_generated</span><span class="p">(</span><span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">,</span> <span class="n">out_file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">index_var</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c">#dateiname ohne extension</span>
-            <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>
-            <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">   &quot;</span> <span class="o">+</span> <span class="n">index_var</span><span class="p">)</span>
-            <span class="n">index_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">replace_in_generated</span><span class="p">(</span><span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">,</span> <span class="n">out_file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -3525,6 +3562,84 @@ index_rst = &quot;index.rst&quot;
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;      </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 <span class="k">return</span> <span class="n">could_write</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="search-for-generated">
+<h3>search_for_generated<a class="headerlink" href="#search-for-generated" title="Permalink to this headline">¶</a></h3>
+<p>The line number of the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">(generated)</span></code> directive are looked up and depleted</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">search_for_generate</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">index_file</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">startblock</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">startline</span> <span class="o">=</span> <span class="n">num</span>
+            <span class="k">if</span> <span class="n">endblock</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">endline</span> <span class="o">=</span> <span class="n">num</span>
+
+        <span class="k">if</span> <span class="n">startline</span> <span class="ow">and</span> <span class="n">endline</span><span class="p">:</span>
+            <span class="n">index_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">index_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">content</span><span class="p">[</span><span class="n">startline</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">endline</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="replace-in-generated">
+<h3>replace_in_generated<a class="headerlink" href="#replace-in-generated" title="Permalink to this headline">¶</a></h3>
+<p>The name of the generated files get added between the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">(generated)</span></code> directives. Code before and after is left as is.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">replace_in_generated</span><span class="p">(</span><span class="n">startblock</span><span class="p">,</span> <span class="n">endblock</span><span class="p">,</span> <span class="n">out_file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">):</span>
+
+    <span class="n">endline</span> <span class="o">=</span> <span class="n">startline</span><span class="o">+</span><span class="mi">1</span>
+
+    <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_file_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">startline</span> <span class="ow">and</span> <span class="n">endline</span><span class="p">:</span>
+        <span class="n">content</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">endline</span><span class="p">,</span> <span class="s">&quot;   &quot;</span> <span class="o">+</span> <span class="n">index_var</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">index_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+        <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">index_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 </div>

@@ -2310,10 +2310,10 @@ def process_file(in_file, out_file, token, warnings):
 #@edoc
 
 #@start(search_for_generated)
-#search_for_generated
-#====================
+#process_file
+#============
 
-#The line number of the :py:class:`start(generated)` and :py:class:`(generated)` directive are looked up and depleted
+#The line number of the @start(generated) and @(generated) directive are looked up and depleted
 
 #@code
 
@@ -2340,10 +2340,10 @@ def search_for_generate(output, index_rst, startblock, endblock):
 #@edoc
 
 #@start(replace_in_generated)
-#replace_in_generated
-#====================
+#process_file
+#============
 
-#The name of the generated files get added between the :py:class:`start(generated)` and :py:class:`(generated)` directives. Code before and after is left as is.
+#The name of the generated files get added between the ''@start(generated)'' and ''@(generated)'' directives. Code before and after is left as is.
 
 #@code
 
@@ -2414,7 +2414,7 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
 #@edoc
 
 
-#If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the :py:class:`start(generated)` and :py:class:`(generated)` directives is the space for automatic added files, you can manually add files below the @(generated) directive.
+#If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the @start(generated) and @(generated) directives is the space for automatic added files, you can manually add files below the @(generated) directive.
 
 #@code
 
@@ -2545,7 +2545,7 @@ I added two new flags to antiweb:
 #@edoc
 #@include(write)
 #@include(process_file)
-#@include(search_for_generated)
+#@include(search_for_generate)
 #@include(replace_in_generated)
 #@(additional_options)
 if __name__ == "__main__":
