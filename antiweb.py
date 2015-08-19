@@ -2318,24 +2318,28 @@ def process_file(in_file, out_file, token, warnings):
 #@code
 
 def search_for_generate(output, index_rst, startblock, endblock):
-    content = ""
 
+    startline = None
+    endline = None
+    content = ""
     if not output:
         output = ""
 
-    path = os.path.join(os.getcwd(), output, index_rst)
-    with open(path, "r") as index_file:
-        for num, line in enumerate(index_file):
-            if startblock in line:
-                startline = num
-            if endblock in line:
-                endline = num
+    while startline == None or endline == None:
+        path = os.path.join(os.getcwd(), output, index_rst)
+        with open(path, "r") as index_file:
+            for num, line in enumerate(index_file):
+                if startblock in line:
+                    startline = num
+                if endblock in line:
+                    endline = num
 
-        if startline and endline:
-            index_file.seek(0, 0)
-            content = index_file.readlines()
-            del content[startline+1:endline-1]
-        
+            if startline== None or endline== None:
+                write_static(os.path.join(os.getcwd(), output), index_rst, startblock, endblock)
+            else:
+                index_file.seek(0, 0)
+                content = index_file.readlines()
+                del content[startline+1:endline]
     return (content, startline)
 #@edoc
 
@@ -2348,8 +2352,9 @@ def search_for_generate(output, index_rst, startblock, endblock):
 #@code
 
 def replace_in_generated(startblock, endblock, out_file_name, path, output, index_rst, content, startline):
-    
-    endline = startline+1
+
+    if startline:
+        endline = startline+1
     
     index_var = os.path.splitext(out_file_name)[0]
     if startline and endline:
@@ -2537,7 +2542,8 @@ I added two new flags to antiweb:
     else:
         os.chdir(os.path.split(args[0])[0])
         if options.index:
-            write_static(os.getcwd(), index_rst, startblock, endblock)
+            if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
+                write_static(os.getcwd(), index_rst, startblock, endblock)
             content, startline = search_for_generate(None, index_rst, startblock, endblock)
             write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
         else:
