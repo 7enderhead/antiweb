@@ -1,11 +1,12 @@
-antiweb - Inversive literate programming tool
-=============================================
+Documentation
+=======================
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   antisphinx
-   antiweb
+   .. start(generated)
    changelog
-   motivation
+   antiweb
+   antisphinx
+   .. (generated)

@@ -2384,7 +2384,7 @@ File Layout
 Multi-File Processing and Sphinx Support
 ****************************************
 
-I added two new flags to antiweb:
+There are two new flags in antiweb:
 
 * The ''-r'' flag:
     * antiweb will search for all compatible files to process them
@@ -2477,7 +2477,8 @@ This else will take place when the -r flag is not given.
         else:
             os.chdir(os.path.split(args[0])[0])
             if options.index:
-                write_static(os.getcwd(), index_rst, startblock, endblock)
+                if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
+                    write_static(os.getcwd(), index_rst, startblock, endblock)
                 content, startline = search_for_generate(None, index_rst, startblock, endblock)
                 write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
             else:
@@ -2486,7 +2487,7 @@ This else will take place when the -r flag is not given.
 Writing the index.rst file
 ==========================
 
-From the given file a .rst file will be created if it contains an antiweb start directive
+From the given file a .rst file will be created if it contains an antiweb :py:class:`start() directive`
 
 
 ::
@@ -2592,31 +2593,35 @@ The output text will be written in the output file. If there is an output text, 
 search_for_generated
 ====================
 
-The line number of the :py:class:`start(generated)` and :py:class:`(generated)` directive are looked up and depleted
+The line numbers of the :py:class:`start(generated)` and :py:class:`(generated)` directive are looked up and their content getting depleted
 
 
 ::
 
     
     def search_for_generate(output, index_rst, startblock, endblock):
-        content = ""
     
+        startline = None
+        endline = None
+        content = ""
         if not output:
             output = ""
     
-        path = os.path.join(os.getcwd(), output, index_rst)
-        with open(path, "r") as index_file:
-            for num, line in enumerate(index_file):
-                if startblock in line:
-                    startline = num
-                if endblock in line:
-                    endline = num
+        while startline == None or endline == None:
+            path = os.path.join(os.getcwd(), output, index_rst)
+            with open(path, "r") as index_file:
+                for num, line in enumerate(index_file):
+                    if startblock in line:
+                        startline = num
+                    if endblock in line:
+                        endline = num
     
-            if startline and endline:
-                index_file.seek(0, 0)
-                content = index_file.readlines()
-                del content[startline+1:endline-1]
-            
+                if startline== None or endline== None:
+                    write_static(os.path.join(os.getcwd(), output), index_rst, startblock, endblock)
+                else:
+                    index_file.seek(0, 0)
+                    content = index_file.readlines()
+                    del content[startline+1:endline]
         return (content, startline)
 
 
@@ -2630,8 +2635,9 @@ The name of the generated files get added between the :py:class:`start(generated
 
     
     def replace_in_generated(startblock, endblock, out_file_name, path, output, index_rst, content, startline):
-        
-        endline = startline+1
+    
+        if startline:
+            endline = startline+1
         
         index_var = os.path.splitext(out_file_name)[0]
         if startline and endline:

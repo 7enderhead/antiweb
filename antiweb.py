@@ -2313,11 +2313,11 @@ def process_file(in_file, out_file, token, warnings):
 #search_for_generated
 #====================
 
-#The line number of the :py:class:`start(generated)` and :py:class:`(generated)` directive are looked up and depleted
+#The line numbers of the :py:class:`start(generated)` and :py:class:`end(generated)` directive are looked up and their content getting depleted
 
 #@code
 
-def search_for_generate(output, index_rst, startblock, endblock):
+def search_for_generate(output, index_rst, start_of_block, end_of_block):
 
     startline = None
     endline = None
@@ -2325,18 +2325,15 @@ def search_for_generate(output, index_rst, startblock, endblock):
     if not output:
         output = ""
 
-    while startline == None or endline == None:
-        path = os.path.join(os.getcwd(), output, index_rst)
-        with open(path, "r") as index_file:
-            for num, line in enumerate(index_file):
-                if startblock in line:
-                    startline = num
-                if endblock in line:
-                    endline = num
+    path = os.path.join(os.getcwd(), output, index_rst)
+    with open(path, "r") as index_file:
+        for num, line in enumerate(index_file):
+            if start_of_block in line:
+                startline = num
+            if end_of_block in line:
+                endline = num
 
-            if startline== None or endline== None:
-                write_static(os.path.join(os.getcwd(), output), index_rst, startblock, endblock)
-            else:
+            if startline and endline:
                 index_file.seek(0, 0)
                 content = index_file.readlines()
                 del content[startline+1:endline]
@@ -2347,11 +2344,11 @@ def search_for_generate(output, index_rst, startblock, endblock):
 #replace_in_generated
 #====================
 
-#The name of the generated files get added between the :py:class:`start(generated)` and :py:class:`(generated)` directives. Code before and after is left as is.
+#The name of the generated files get added between the :py:class:`start(generated)` and :py:class:`end(generated)` directives. Code before and after is left as is.
 
 #@code
 
-def replace_in_generated(startblock, endblock, out_file_name, path, output, index_rst, content, startline):
+def replace_in_generated(start_of_block, end_of_block, out_file_name, path, output, index_rst, content, startline):
 
     if startline:
         endline = startline+1
@@ -2374,11 +2371,11 @@ def replace_in_generated(startblock, endblock, out_file_name, path, output, inde
 #Writing the index.rst file
 #==========================
 
-#From the given file a .rst file will be created if it contains an antiweb start directive
+#From the given file a .rst file will be created if it contains an antiweb :py:class:`start() directive`
 
 #@code
 
-def write(path, fname, output, token, warnings, index, index_rst, recursive, content, startblock, endblock, startline):
+def write(path, fname, output, token, warnings, index, index_rst, recursive, content, start_of_block, end_of_block, startline):
 
 #@edoc
 
@@ -2419,7 +2416,7 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
 #@edoc
 
 
-#If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the :py:class:`start(generated)` and :py:class:`(generated)` directives is the space for automatic added files, you can manually add files below the @(generated) directive.
+#If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives is the space for automatic added files, you can manually add files below the :py:class:`end(generated)` directive.
 
 #@code
 
@@ -2427,14 +2424,14 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
             if could_process:
                 
                 if output and recursive:
-                    replace_in_generated(startblock, endblock, out_file_name, path, output, index_rst, content, startline)
+                    replace_in_generated(start_of_block, end_of_block, out_file_name, path, output, index_rst, content, startline)
                 else:
-                    replace_in_generated(startblock, endblock, out_file_name, path, None, index_rst, content, startline)
+                    replace_in_generated(start_of_block, end_of_block, out_file_name, path, None, index_rst, content, startline)
 #@edoc
 
 #@(write)
-def write_static(input_type, index_rst, startblock, endblock):
-    index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + startblock +"\n   " + endblock
+def write_static(input_type, index_rst, start_of_block, end_of_block):
+    index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + start_of_block +"\n   " + end_of_block
     index_out = open(os.path.join(input_type, index_rst), "w")
     index_out.write(index_static)
 
@@ -2454,7 +2451,7 @@ def main():
     
 #@start(additional_options)
     """
-I added two new flags to antiweb:
+There are two new flags in antiweb:
 
 * The ''-r'' flag:
     * antiweb will search for all compatible files to process them
@@ -2487,8 +2484,8 @@ I added two new flags to antiweb:
 
     index_rst = "index.rst"
     replace_text = ""
-    startblock = ".. @start(generated)"
-    endblock = ".. @(generated)"
+    start_of_block = ".. start(generated)"
+    end_of_block = ".. end(generated)"
 #The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 #@code
@@ -2502,16 +2499,16 @@ I added two new flags to antiweb:
             if options.output:
                 in_type = os.path.join(args[0], options.output)
                 if not os.path.isfile(os.path.join(in_type, index_rst)):
-                    write_static(in_type, index_rst, startblock, endblock)
+                    write_static(in_type, index_rst, start_of_block, end_of_block)
 
-                content, startline = search_for_generate(options.output, index_rst, startblock, endblock)
+                content, startline = search_for_generate(options.output, index_rst, start_of_block, end_of_block)
 
             else:
                 in_type = args[0]
                 if not os.path.isfile(os.path.join(in_type, index_rst)):
-                    write_static(in_type, index_rst, startblock, endblock)
+                    write_static(in_type, index_rst, start_of_block, end_of_block)
 
-                content, startline = search_for_generate(os.getcwd(), index_rst, startblock, endblock)
+                content, startline = search_for_generate(os.getcwd(), index_rst, start_of_block, end_of_block)
 #@edoc
 
 #The program lists all files in the directory and sub-directories to prepare them for the process
@@ -2530,9 +2527,9 @@ I added two new flags to antiweb:
                 ext_tuple = (".cs",".cpp",".py",".cc")
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
                     if options.index:
-                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
+                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
                     else:
-                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock, None)
+                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
 #@edoc
 
 #This else will take place when the -r flag is not given.
@@ -2543,11 +2540,11 @@ I added two new flags to antiweb:
         os.chdir(os.path.split(args[0])[0])
         if options.index:
             if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
-                write_static(os.getcwd(), index_rst, startblock, endblock)
-            content, startline = search_for_generate(None, index_rst, startblock, endblock)
-            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
+                write_static(os.getcwd(), index_rst, start_of_block, end_of_block)
+            content, startline = search_for_generate(None, index_rst, start_of_block, end_of_block)
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
         else:
-            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock, None)
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
 #@edoc
 #@include(write)
 #@include(process_file)
