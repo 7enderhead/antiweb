@@ -30,3 +30,8 @@ License: GPL
 				Added all changes to the documentation
 				Copyright adaption
 				Introducing a new version 0.3
+			
+			18.08.2015:
+				Using the -o flag with -r now indicates the path where to save the documentation
+				Fixed some bugs
+				Improved behaviour
