@@ -2352,17 +2352,16 @@ def replace_in_generated(start_of_block, end_of_block, out_file_name, path, outp
 
     if startline:
         endline = startline+1
+    if output is None:
+        output = ""
     
     index_var = os.path.splitext(out_file_name)[0]
     if startline and endline:
         content.insert(endline, "   " + index_var + "\n")
-    if output:
-        index_out = open(os.path.join(path, output, index_rst), "w")
-    else:
-        index_out = open(os.path.join(path, index_rst), "w")
-    for item in content:
-        index_out.write(item)
-    index_out.close()
+
+    with open(os.path.join(path, output, index_rst), "w") as index_out:
+        for item in content:
+            index_out.write(item)
 
 #@edoc
 
@@ -2432,8 +2431,9 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
 #@(write)
 def write_static(input_type, index_rst, start_of_block, end_of_block):
     index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + start_of_block +"\n   " + end_of_block
-    index_out = open(os.path.join(input_type, index_rst), "w")
-    index_out.write(index_static)
+    
+    with open(os.path.join(input_type, index_rst), "w") as index_out:
+        index_out.write(index_static)
 
 def main():
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
@@ -2545,6 +2545,8 @@ There are two new flags in antiweb:
             write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
         else:
             write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
+    
+    return True
 #@edoc
 #@include(write)
 #@include(process_file)
