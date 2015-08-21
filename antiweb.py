@@ -2434,8 +2434,8 @@ def write_static(input_type, index_rst, start_of_block, end_of_block):
     
     with open(os.path.join(input_type, index_rst), "w") as index_out:
         index_out.write(index_static)
-
-def main():
+        
+def parsing():
 
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
                           description="Tangles a source code file to a rst file.",
@@ -2472,6 +2472,12 @@ There are two new flags in antiweb:
 #@edoc
 
     options, args = parser.parse_args()
+    
+    return (options, args)
+
+def main():
+
+    options, args = parsing()
 
     logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.INFO)
@@ -2494,21 +2500,22 @@ There are two new flags in antiweb:
     previous_dir = os.getcwd()
 
     if options.recursive:
-        os.chdir(args[0])
+        directory = args[0]
+    
+        os.chdir(directory)
         if options.output:
-            os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
+            os.makedirs(os.path.join(directory, options.output), exist_ok=True)
         if options.index:
             if options.output:
-                in_type = os.path.join(args[0], options.output)
-                if not os.path.isfile(os.path.join(in_type, index_rst)):
-                    write_static(in_type, index_rst, start_of_block, end_of_block)
+                directory = os.path.join(directory, options.output)
+                if not os.path.isfile(os.path.join(directory, index_rst)):
+                    write_static(directory, index_rst, start_of_block, end_of_block)
 
                 content, startline = search_for_generate(options.output, index_rst, start_of_block, end_of_block)
 
             else:
-                in_type = args[0]
-                if not os.path.isfile(os.path.join(in_type, index_rst)):
-                    write_static(in_type, index_rst, start_of_block, end_of_block)
+                if not os.path.isfile(os.path.join(directory, index_rst)):
+                    write_static(directory, index_rst, start_of_block, end_of_block)
 
                 content, startline = search_for_generate(os.getcwd(), index_rst, start_of_block, end_of_block)
 #@edoc
