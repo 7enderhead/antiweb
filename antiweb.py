@@ -2436,6 +2436,7 @@ def write_static(input_type, index_rst, start_of_block, end_of_block):
         index_out.write(index_static)
 
 def main():
+
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
                           description="Tangles a source code file to a rst file.",
                           version="%prog " + __version__)
