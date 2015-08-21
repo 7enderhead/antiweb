@@ -2490,8 +2490,9 @@ There are two new flags in antiweb:
 
 #@code
 
+    previous_dir = os.getcwd()
+
     if options.recursive:
-        previous_dir = os.getcwd()
         os.chdir(args[0])
         if options.output:
             os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
@@ -2545,6 +2546,8 @@ There are two new flags in antiweb:
             write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
         else:
             write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
+    
+    os.chdir(previous_dir)
     
     return True
 #@edoc
