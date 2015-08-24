@@ -117,6 +117,7 @@ source parsing.
 @include(Reader doc)
 @include(CReader doc)
 @include(PythonReader doc)
+@include(ClojureReader doc)
 
 
 ********
@@ -1465,7 +1466,7 @@ class CReader(Reader):
                 stext = l.text.lstrip()
 
                 if stext == '/*' or stext == "*/":
-                    #remove """ and ''' from documentation lines
+                    #remove /* and */ from documentation lines
                     #see the l.text.lstrip()! if the lines ends with a white space
                     #the quotes will be kept! This is feature, to force the quotes
                     #in the output
@@ -1474,6 +1475,45 @@ class CReader(Reader):
                 if stext.startswith("//") and not stext.startswith("#####"):
                     #remove comments but not chapters
                     l.text = l.indented(stext[2:])
+                            
+            yield l
+
+#@cstart(ClojureReader)
+class ClojureReader(Reader):
+    #@start(ClojureReader doc)
+    #ClojureReader
+    #=============
+    """
+    .. py:class:: ClojureReader
+
+       A reader for Clojure code. This class inherits :py:class:`Reader`.
+    """
+    #@indent 3
+    #@include(ClojureReader)
+    #@(ClojureReader doc)
+    def _accept_token(self, token):
+        return token in Token.Comment
+    
+    def _cut_comment(self, index, token, text):
+        if text.startswith(";"):
+            text = text[1:]
+
+        return text
+		
+    def filter_output(self, lines):
+        """
+        .. py:method:: filter_output(lines)
+
+           See :py:meth:`Reader.filter_output`.
+        """
+        for l in lines:
+            if l.type == "d":
+                #remove comment chars in document lines
+                stext = l.text.lstrip()
+
+                if stext.startswith(";") and not stext.startswith("#####"):
+                    #remove comments but not chapters
+                    l.text = l.indented(stext[1:])
                             
             yield l
 
@@ -1681,6 +1721,7 @@ readers = {
     "C++" : CReader,
     "C#" : CReader,
     "Python" : PythonReader,
+	"Clojure" : ClojureReader,
 }
 
 #@(readers)
