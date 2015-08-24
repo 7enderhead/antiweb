@@ -31,8 +31,7 @@
 
   
     <link rel="top" title="antiweb 0.3: Inverse literate programming" href="index.html"/>
-        <link rel="next" title="antiweb" href="antiweb.html"/>
-        <link rel="prev" title="Antiweb’s Documentation" href="index.html"/> 
+        <link rel="prev" title="antiweb" href="antiweb.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -49,7 +48,7 @@
         
 
         
-          <a href="index.html" class="icon icon-home"> antiweb 0.3
+          <a href="index.html" class="icon icon-home"> antiweb
         
 
         
@@ -72,19 +71,8 @@
           
           
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">antisphinx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#file-layout">File Layout</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#imports">&lt;&lt;imports&gt;&gt;</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#exports">&lt;&lt;exports&gt;&gt;</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#lexers">&lt;&lt;Lexers&gt;&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#filter-output">&lt;&lt;Filter Output&gt;&gt;</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="antiweb.html">First Steps</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">First steps</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="antiweb.html#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="antiweb.html#preparing-the-rst-files">Preparing the .rst files</a></li>
 </ul>
@@ -145,15 +133,23 @@
 <li class="toctree-l2"><a class="reference internal" href="antiweb.html#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="antiweb.html#writing-the-index-rst-file">Writing the index.rst file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="antiweb.html#process-file">process_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#search-for-generated">search_for_generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="antiweb.html#replace-in-generated">replace_in_generated</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="antiweb.html#how-to-add-new-languages">How to add new languages</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="motivation.html#why-are-document-extractors-like-doxygen-not-sufficient">Why are document extractors like doxygen not sufficient?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motivation.html#features-of-antiweb">Features of antiweb</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">antisphinx</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#file-layout">File Layout</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imports">&lt;&lt;imports&gt;&gt;</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exports">&lt;&lt;exports&gt;&gt;</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lexers">&lt;&lt;Lexers&gt;&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-output">&lt;&lt;Filter Output&gt;&gt;</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -371,10 +367,8 @@ def setup(app):
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="antiweb.html" class="btn btn-neutral float-right" title="antiweb" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="index.html" class="btn btn-neutral" title="Antiweb’s Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="antiweb.html" class="btn btn-neutral" title="antiweb" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

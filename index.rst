@@ -6,7 +6,4 @@ Contents:
    :maxdepth: 2
 
    .. start(generated)
-   changelog
-   antiweb
-   antisphinx
-   .. (generated)
+   .. end(generated)

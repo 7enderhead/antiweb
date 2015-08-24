@@ -6,7 +6,5 @@ Contents:
    :maxdepth: 2
 
    .. start(generated)
-   changelog
-   antiweb
-   antisphinx
-   .. (generated)
+   small_testfile
+   .. end(generated)
