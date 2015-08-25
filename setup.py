@@ -12,7 +12,7 @@ requires = ['Sphinx>=0.6']
 
 setup(
     name='antiweb',
-    version=0.3.2,
+    version=0.3.1,
     url='http://packages.python.org/antiweb/',
     download_url='http://pypi.python.org/pypi/antiweb',
     license='GPL',
