@@ -2,7 +2,7 @@
 
 """
 Name: antiweb
-Version: 0.3
+Version: 0.3.2
 Summary: antiweb literate programming tool
 Home-page: http://packages.python.org/antiweb/
 Author: Michael Reithinger & Philipp Rathmanner
@@ -322,7 +322,7 @@ from sys import platform as _platform
 
 #@code
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 logger = logging.getLogger('antiweb')
 
@@ -1337,7 +1337,6 @@ class Reader(object):
         tokens = self.lexer.get_tokens_unprocessed(text)
         for index, token, value in tokens:
             self._handle_token(index, token, value)
-
         self._post_process(fname, text)
         return self.lines
 
@@ -1403,7 +1402,6 @@ class Reader(object):
 		"""
 		
         if not self._accept_token(token): return
-             
         cvalue = self._cut_comment(index, token, value)
         offset = value.index(cvalue)
         found = False
@@ -1415,7 +1413,7 @@ class Reader(object):
          
 
     #@cstart(Reader._cut_comment)
-    def _cut_comment(self, index, token, value):
+    def _cut_comment(self, index, token, text):
         """
         .. py:method:: _cut_comment(index, token, value)
 
@@ -1475,6 +1473,52 @@ class CReader(Reader):
                 if stext.startswith("//") and not stext.startswith("#####"):
                     #remove comments but not chapters
                     l.text = l.indented(stext[2:])
+                            
+            yield l
+
+#@cstart(rstReader)
+class rstReader(Reader):
+    #@start(rstReader doc)
+    #rstReader
+    #=======
+    """
+    .. py:class:: rstReader
+
+       A reader for rst code. This class inherits :py:class:`Reader`.
+    """
+    #@indent 3
+    #@include(CReader)
+    #@(CReader doc)
+    def _accept_token(self, token):
+        return token in Token.Comment
+    
+    def _cut_comment(self, index, token, text):
+        if text.startswith(".. "):
+            text = text[3:]
+
+        return text
+		
+    def filter_output(self, lines):
+        """
+        .. py:method:: filter_output(lines)
+
+           See :py:meth:`Reader.filter_output`.
+        """
+        for l in lines:
+            if l.type == "d":
+                #remove comment chars in document lines
+                stext = l.text.lstrip()
+
+                if stext == '.. ':
+                    #remove """ and ''' from documentation lines
+                    #see the l.text.lstrip()! if the lines ends with a white space
+                    #the quotes will be kept! This is feature, to force the quotes
+                    #in the output
+                    continue
+                
+                if stext.startswith(".. "):
+                    #remove comments but not chapters
+                    l.text = l.indented(stext[3:])
                             
             yield l
 
@@ -1682,6 +1726,7 @@ readers = {
     "C++" : CReader,
     "C#" : CReader,
     "Python" : PythonReader,
+    "rst" : CReader,
 }
 
 #@(readers)
@@ -2061,7 +2106,7 @@ class Document(object):
         
 
     #@cstart(Document.process)
-    def process(self, show_warnings):
+    def process(self, show_warnings, fname):
         """
         .. py:method:: process(show_warnings)
 
@@ -2070,9 +2115,11 @@ class Document(object):
            :return: A string representing the rst output.
         """
         self.collect_blocks()
-        if "" not in self.blocks:
+        #print("Blocks", fname,  self.blocks)
+        if "" not in self.blocks and not fname.endswith(".rst"):
             self.add_error(0, "no @start() directive found (I need one)")
             self.check_errors()
+        
 
         try:
             text = self.get_compiled_block("")
@@ -2091,9 +2138,11 @@ class Document(object):
                 for l, w in warnings:
                     logger.warning("  %s(line %i)", w, l)
             #@
-
         text = self.reader.filter_output(text)
-        return "\n".join(map(operator.attrgetter("text"), text))
+        return_text = None
+        if text:
+            return_text = "\n".join(map(operator.attrgetter("text"), text))
+        return return_text
     #@edoc
     #@rinclude(show warnings)
     #@(Document.process)
@@ -2272,7 +2321,7 @@ def generate(fname, tokens, show_warnings=False):
     reader = readers.get(lexer.name, Reader)(lexer)
    
     document = Document(text, reader, fname, tokens)
-    return document.process(show_warnings)
+    return document.process(show_warnings, fname)
 
 
 #@(document)
@@ -2381,13 +2430,21 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
 #When there is no output given there are two possibilities: recursive or not recursive. The file path gets split up and put together so it can be processed by ''process_file''
 #@code
 
+        docs = "_docs"
+
         if not output:
             if recursive:
-                out_file_name = os.path.splitext(fname)[0] + ".rst"
+                if fname.endswith(".rst"):
+                    out_file_name = os.path.splitext(fname)[0] + docs + ".rst"
+                else:
+                    out_file_name = os.path.splitext(fname)[0] + ".rst"
                 out_file = out_file_name
                 out_file_name = os.path.relpath(out_file_name, path)
             else:
-                out_file = os.path.splitext(fname)[0] + ".rst"
+                if fname.endswith(".rst"):
+                    out_file = os.path.splitext(fname)[0] + docs + ".rst"
+                else:
+                    out_file = os.path.splitext(fname)[0] + ".rst"
                 out_file_name = os.path.split(out_file)[1]
 
 #@edoc
@@ -2472,18 +2529,19 @@ There are two new flags in antiweb:
 #@edoc
 
     options, args = parser.parse_args()
-    
-    return (options, args)
+
+    return (options, args, parser)
 
 def main():
 
-    options, args = parsing()
+    options, args, parser = parsing()
 
     logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.INFO)
 
     if options.warnings is None:
         options.warnings = True
+
     
     if not args:
         parser.print_help()
@@ -2533,7 +2591,7 @@ def main():
 #If the found file is no folder nor a rst file, it will be put into the process
 
 #@code
-                ext_tuple = (".cs",".cpp",".py",".cc")
+                ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
                     if options.index:
                         write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)

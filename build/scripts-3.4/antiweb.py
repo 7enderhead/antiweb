@@ -313,6 +313,7 @@ import os.path
 import operator
 import os
 import collections
+from sys import platform as _platform
 
 #@rstart(management)
 
@@ -2308,70 +2309,134 @@ def process_file(in_file, out_file, token, warnings):
     return could_write
 #@edoc
 
+#@start(search_for_generated)
+#search_for_generated
+#====================
+
+#The line numbers of the :py:class:`start(generated)` and :py:class:`end(generated)` directive are looked up and their content getting depleted
+
+#@code
+
+def search_for_generate(output, index_rst, start_of_block, end_of_block):
+
+    startline = None
+    endline = None
+    content = ""
+    if not output:
+        output = ""
+
+    path = os.path.join(os.getcwd(), output, index_rst)
+    with open(path, "r") as index_file:
+        for num, line in enumerate(index_file):
+            if start_of_block in line:
+                startline = num
+            if end_of_block in line:
+                endline = num
+
+            if startline and endline:
+                index_file.seek(0, 0)
+                content = index_file.readlines()
+                del content[startline+1:endline]
+    return (content, startline)
+#@edoc
+
+#@start(replace_in_generated)
+#replace_in_generated
+#====================
+
+#The name of the generated files get added between the :py:class:`start(generated)` and :py:class:`end(generated)` directives. Code before and after is left as is.
+
+#@code
+
+def replace_in_generated(start_of_block, end_of_block, out_file_name, path, output, index_rst, content, startline):
+
+    if startline:
+        endline = startline+1
+    if output is None:
+        output = ""
+    
+    index_var = os.path.splitext(out_file_name)[0]
+    if startline and endline:
+        content.insert(endline, "   " + index_var + "\n")
+
+    with open(os.path.join(path, output, index_rst), "w") as index_out:
+        for item in content:
+            index_out.write(item)
+
+#@edoc
+
 #@start(write)
 #
 #Writing the index.rst file
 #==========================
 
-#From the given file a .rst file will be created if it contains an antiweb start directive
+#From the given file a .rst file will be created if it contains an antiweb :py:class:`start() directive`
 
 #@code
 
-def write(path, fname, output, token, warnings, index, index_rst, basename, recursive):
-    
+def write(path, fname, output, token, warnings, index, index_rst, recursive, content, start_of_block, end_of_block, startline):
+
+#@edoc
+
+#When there is no output given there are two possibilities: recursive or not recursive. The file path gets split up and put together so it can be processed by ''process_file''
+#@code
 
         if not output:
-            if recursive: #funktioniert
+            if recursive:
+                out_file_name = os.path.splitext(fname)[0] + ".rst"
+                out_file = out_file_name
+                out_file_name = os.path.relpath(out_file_name, path)
+            else:
                 out_file = os.path.splitext(fname)[0] + ".rst"
-                out_zwischenspeicher = os.path.split(out_file)[0]
-                out_file = basename + "_" + os.path.split(out_file)[1]
-                out_file = os.path.join(path, out_file)
-            else: #funktioniert
-                out_file = os.path.splitext(fname)[0] + ".rst"
-        else:
-            if recursive: #funktioniert
-                out_file_filename = os.path.split(os.path.splitext(fname)[0] + ".rst")[1]
-                out_file = os.path.join(path, output, out_file_filename)
-            else: #funktioniert
-                out_file = output + ".rst"
-                out_file = os.path.join(path, out_file)
+                out_file_name = os.path.split(out_file)[1]
 
+#@edoc
+#There is an output given, so it can also be either recursive or not recursive. With the additional output parameter the file path gets split up and put together so it can be processed by ''process_file''. There is also a differentiation between Linux, Windows and OS X (because of the different paths in each operating system)
+#@code
+
+        else:
+            if recursive:
+                rel_path = os.path.relpath(fname, path)
+                out_file_name = os.path.splitext(rel_path)[0] + ".rst"
+                if _platform == "linux" or _platform == "linux2":
+                    out_file_name = out_file_name.replace("/","_")
+                if _platform == "win32":
+                    out_file_name = out_file_name.replace("\\","_")
+                out_file = os.path.join(path, output, out_file_name)
+            else:
+                out_file_name = output + ".rst"
+                out_file = os.path.join(path, out_file_name)
+#@edoc
+#The prepared file path gets pushed to ''process file''. If the process is successful, ''could_process'' is set to ''True''.
+#@code
 
         could_process = process_file(fname, out_file, token, warnings)
-
 
 #@edoc
 
 
-#If the user added the -i flag, the file gets added to Sphinx' index.rst file
+#If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives is the space for automatic added files, you can manually add files below the :py:class:`end(generated)` directive.
 
 #@code
 
         if index:
             if could_process:
+                
                 if output and recursive:
-                    index_var = os.path.split(fname)[1]
-                    index_var = os.path.splitext(index_var)[0]
-                    #dateiname ohne extension
-                    index_out = open(os.path.join(path, output, index_rst), "a")
-                    index_out.write("\n   " + index_var)
-                    index_out.close()
+                    replace_in_generated(start_of_block, end_of_block, out_file_name, path, output, index_rst, content, startline)
                 else:
-                    index_var = os.path.split(fname)[1]
-                    index_var = os.path.splitext(index_var)[0]
-                    #dateiname ohne extension
-                    index_out = open(os.path.join(path, index_rst), "a")
-                    index_out.write("\n   " + index_var)
-                    index_out.close()
+                    replace_in_generated(start_of_block, end_of_block, out_file_name, path, None, index_rst, content, startline)
 #@edoc
 
 #@(write)
-def write_static(input_type, index_rst):
-    index_static = "Antiweb's Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n"
-    index_out = open(os.path.join(input_type, index_rst), "w")
-    index_out.write(index_static)
+def write_static(input_type, index_rst, start_of_block, end_of_block):
+    index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + start_of_block +"\n   " + end_of_block
+    
+    with open(os.path.join(input_type, index_rst), "w") as index_out:
+        index_out.write(index_static)
+        
+def parsing():
 
-def main():
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
                           description="Tangles a source code file to a rst file.",
                           version="%prog " + __version__)
@@ -2387,7 +2452,7 @@ def main():
     
 #@start(additional_options)
     """
-I added two new flags to antiweb:
+There are two new flags in antiweb:
 
 * The ''-r'' flag:
     * antiweb will search for all compatible files to process them
@@ -2408,32 +2473,52 @@ I added two new flags to antiweb:
 
     options, args = parser.parse_args()
 
+    return (options, args, parser)
+
+def main():
+
+    options, args, parser = parsing()
+
     logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.INFO)
 
     if options.warnings is None:
         options.warnings = True
+
     
     if not args:
         parser.print_help()
         sys.exit(0)
 
     index_rst = "index.rst"
+    replace_text = ""
+    start_of_block = ".. start(generated)"
+    end_of_block = ".. end(generated)"
 #The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 #@code
 
+    previous_dir = os.getcwd()
+
     if options.recursive:
-        previous_dir = os.getcwd()
-        os.chdir(args[0])
+        directory = args[0]
+    
+        os.chdir(directory)
+        if options.output:
+            os.makedirs(os.path.join(directory, options.output), exist_ok=True)
         if options.index:
             if options.output:
-                os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
-                in_type = os.path.join(args[0], options.output)
-                write_static(in_type, index_rst)
+                directory = os.path.join(directory, options.output)
+                if not os.path.isfile(os.path.join(directory, index_rst)):
+                    write_static(directory, index_rst, start_of_block, end_of_block)
+
+                content, startline = search_for_generate(options.output, index_rst, start_of_block, end_of_block)
+
             else:
-                in_type = args[0]
-                write_static(in_type, index_rst)
+                if not os.path.isfile(os.path.join(directory, index_rst)):
+                    write_static(directory, index_rst, start_of_block, end_of_block)
+
+                content, startline = search_for_generate(os.getcwd(), index_rst, start_of_block, end_of_block)
 #@edoc
 
 #The program lists all files in the directory and sub-directories to prepare them for the process
@@ -2451,8 +2536,10 @@ I added two new flags to antiweb:
 #@code
                 ext_tuple = (".cs",".cpp",".py",".cc")
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                    basename = os.path.basename(root)
-                    write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, basename, options.recursive)
+                    if options.index:
+                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
+                    else:
+                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
 #@edoc
 
 #This else will take place when the -r flag is not given.
@@ -2461,14 +2548,27 @@ I added two new flags to antiweb:
 
     else:
         os.chdir(os.path.split(args[0])[0])
-        write_static(os.getcwd(), index_rst)
-        write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, None, options.recursive)
+        if options.index:
+            if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
+                write_static(os.getcwd(), index_rst, start_of_block, end_of_block)
+            content, startline = search_for_generate(None, index_rst, start_of_block, end_of_block)
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
+        else:
+            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
+    
+    os.chdir(previous_dir)
+    
+    return True
 #@edoc
 #@include(write)
 #@include(process_file)
+#@include(search_for_generated)
+#@include(replace_in_generated)
 #@(additional_options)
 if __name__ == "__main__":
     main()
+
+
 
 #@(file layout)
 """
