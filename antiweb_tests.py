@@ -3,7 +3,7 @@
 
 import unittest
 from unittest.mock import patch
-from antiweb import main
+from antiweb import main, GenericReader
 import sys
 import os
 import tempfile
@@ -271,6 +271,17 @@ class Test_Antiweb_rst(unittest.TestCase):
     def tearDown(self):
 
         shutil.rmtree(self.test_dir)
+        
+class Test_GenericReader(unittest.TestCase):
 
+    def setUp(self):
+        self.reader = GenericReader(["//",";"],[("/*", "*/"),("#","@")])
+    
+    def test_GenericReader_Creation(self):
+        self.assertEqual(self.reader.single_comment_markers, ["//",";"])
+        self.assertEqual(self.reader.block_comment_markers, [("/*", "*/"),("#","@")])
+    
+    
+    
 if __name__ == '__main__':
     unittest.main()

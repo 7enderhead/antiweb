@@ -1476,6 +1476,49 @@ class CReader(Reader):
                             
             yield l
 
+            
+
+class GenericReader(Reader):
+
+    def __init__(self, single_comment_markers, block_comment_markers):
+        self.single_comment_markers = single_comment_markers
+        self.block_comment_markers = block_comment_markers
+        
+        
+
+    def _accept_token(self, token):
+        return token in Token.Comment
+    
+    def _cut_comment(self, index, token, text):
+        if text.startswith("/*"):
+            text = text[2:-2]
+    
+        elif text.startswith("//"):
+            text = text[2:]
+
+        return text
+
+    def filter_output(self, lines):
+
+        for l in lines:
+            if l.type == "d":
+                #remove comment chars in document lines
+                stext = l.text.lstrip()
+
+                if stext == '/*' or stext == "*/":
+                    #remove """ and ''' from documentation lines
+                    #see the l.text.lstrip()! if the lines ends with a white space
+                    #the quotes will be kept! This is feature, to force the quotes
+                    #in the output
+                    continue
+                
+                if stext.startswith("//") and not stext.startswith("#####"):
+                    #remove comments but not chapters
+                    l.text = l.indented(stext[2:])
+                            
+            yield l
+
+
 #@cstart(rstReader)
 class rstReader(Reader):
     #@start(rstReader doc)
@@ -2875,5 +2918,4 @@ Indentation matters!
    In sphinx and antiweb, the indentation matters. To effectively nest blocks, create sub headlines and more you have to keep the indentation in mind. To nest a block or headline you have to indent it farther than its parent. In addition, your documentation looks much cleaner when structured like this.
 """
 #@(get_started)
-
 
