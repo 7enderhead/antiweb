@@ -1458,6 +1458,7 @@ class CReader(Reader):
 
            See :py:meth:`Reader.filter_output`.
         """
+        print(lines)
         for l in lines:
             if l.type == "d":
                 #remove comment chars in document lines
@@ -1504,17 +1505,17 @@ class GenericReader(Reader):
             if l.type == "d":
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
-
-                if stext == '/*' or stext == "*/":
-                    #remove """ and ''' from documentation lines
-                    #see the l.text.lstrip()! if the lines ends with a white space
-                    #the quotes will be kept! This is feature, to force the quotes
-                    #in the output
-                    continue
-                
-                if stext.startswith("//") and not stext.startswith("#####"):
-                    #remove comments but not chapters
-                    l.text = l.indented(stext[2:])
+                for block_start, block_end in self.block_comment_markers: #comment layout: [("/*", "*/"),("#","@")]
+                    if stext == block_start or stext == block_end:
+                        #remove """ and ''' from documentation lines
+                        #see the l.text.lstrip()! if the lines ends with a white space
+                        #the quotes will be kept! This is feature, to force the quotes
+                        #in the output
+                        continue
+                    for comment_start in self.single_comment_markers: #comment layout: ["//",";"]
+                        if stext.startswith(comment_start) and not stext.startswith("#####"):
+                            #remove comments but not chapters
+                            l.text = l.indented(stext[2:])
                             
             yield l
 

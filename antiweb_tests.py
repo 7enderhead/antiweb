@@ -278,8 +278,11 @@ class Test_GenericReader(unittest.TestCase):
         self.reader = GenericReader(["//",";"],[("/*", "*/"),("#","@")])
     
     def test_GenericReader_Creation(self):
-        self.assertEqual(self.reader.single_comment_markers, ["//",";"])
-        self.assertEqual(self.reader.block_comment_markers, [("/*", "*/"),("#","@")])
+        self.test_args = ['antiweb.py', "C:\\Users\\z003jkbt\\Documents\\waas\\testfile.py"]
+        
+        with patch.object(sys, 'argv', self.test_args):
+            self.assertEqual(self.reader.single_comment_markers, ["//",";"])
+            self.assertEqual(self.reader.block_comment_markers, [("/*", "*/"),("#","@")])
     
     
     
