@@ -32,4 +32,9 @@ Changelog
         Fixed some bugs
 
         Improved behaviour
+
+    * 25.08.2015
+        antiweb now also reads comments from rst files
+
+        Introduced version 0.3.2
 """

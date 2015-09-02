@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-#from . import antiweb
 import os.path
 
 
@@ -13,7 +12,7 @@ requires = ['Sphinx>=0.6']
 
 setup(
     name='antiweb',
-    version=0.3,
+    version='0.3.2',
     url='http://packages.python.org/antiweb/',
     download_url='http://pypi.python.org/pypi/antiweb',
     license='GPL',
@@ -21,7 +20,7 @@ setup(
     author_email='mreithinger@web.de & yarmek@icloud.com',
     description='antiweb literate programming tool',
     #long_description=read(os.path.join("doc_old", "source", "motivation.rst")),
-    install_requires=['sphinx'],
+    install_requires=['sphinx', 'babel==1.3'],
     zip_safe=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',

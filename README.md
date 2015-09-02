@@ -1,6 +1,6 @@
 # antiweb
 
-Version: 0.3
+Version: 0.3.2
 
 Summary: antiweb literate programming tool
 
@@ -35,3 +35,7 @@ License: GPL
 				Using the -o flag with -r now indicates the path where to save the documentation
 				Fixed some bugs
 				Improved behaviour
+
+			25.08.2015:
+				antiweb now also reads comments from rst files
+				Introduced version 0.3.2
