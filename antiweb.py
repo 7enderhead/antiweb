@@ -2685,7 +2685,11 @@ def main():
 #@code
 
     else:
-        os.chdir(os.path.split(args[0])[0])
+        path = os.path.split(args[0])
+
+        if path[0]:
+            os.chdir(path[0])
+
         if options.index:
             if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
                 write_static(os.getcwd(), index_rst, start_of_block, end_of_block)
