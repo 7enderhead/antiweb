@@ -1,6 +1,7 @@
 import sys
 import unittest
 import os.path
+from tests.testutil import DataDir
 
 sys.path.append("..")
 
@@ -9,6 +10,9 @@ import antiweb
 
 class TestAntiWeb(unittest.TestCase):
     def check(self, fname, tokens=None):
+        data_dir = DataDir("test")
+        fname = data_dir.get_path(fname)
+
         try:
             text = antiweb.generate(fname, tokens, True)
         except antiweb.WebError as e:
