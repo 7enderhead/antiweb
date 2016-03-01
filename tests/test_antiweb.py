@@ -223,7 +223,6 @@ class Test_Antiweb_rst(unittest.TestCase):
         self.test_args = ['antiweb.py', '-i', self.temp_dir.get_path("ein_rst.rst")]
 
         with patch.object(sys, 'argv', self.test_args):
-
             self.functional("", "ein_rst_docs.rst", compare_path_small_testfile, main())
             self.functional("", "index.rst", compare_path_index, os.path.isfile(self.temp_dir.get_path("index.rst")))
 
@@ -271,7 +270,60 @@ class Test_Antiweb_rst(unittest.TestCase):
 
     def tearDown(self):
         self.temp_dir.remove_tempdir()
+
+class Test_CSharp(unittest.TestCase):
+    #@start(csharp_preparation)
+    #This function will be called before each Test. It copies the files to process into the temp directory of the test.
+    #@code
+    def setUp(self):
+        self.doc_dir = "docs"
+        self.temp_dir = TempDir()
+        self.data_dir = DataDir("unittest_csharp")
         
+        shutil.copyfile(self.data_dir.get_path( "test_simple.cs"), self.temp_dir.get_path("test_simple.cs"))
+        shutil.copyfile(self.data_dir.get_path( "test_xml.cs"), self.temp_dir.get_path("test_xml.cs"))
+    #@edoc
+        
+    #The :py:class:`functional(self, directory, filename, compare_path, assert_input)` class tests if antiweb was fully executed and if the files were created correctly.
+    #@code
+    def functional(self, directory, filename, compare_path, assert_input):
+        self.assertTrue(assert_input)
+        self.compare(directory, filename, compare_path)
+    #@edoc
+    
+    #In some cases the index.rst file should not be created, the :py:class:`file_not_exist(self, path)` class will verify that expectation
+    #@code
+    def file_not_exist(self, path):
+        self.assertFalse(os.path.isfile(path))
+
+    def compare(self, directory, filename, compare_path):
+        with open(self.temp_dir.get_path(directory, filename)) as output:
+            antiweb_output = output.readlines()
+        with open(compare_path) as compare:
+            antiweb_compare = compare.readlines()
+        self.assertEqual(antiweb_output, antiweb_compare)
+    #@edoc
+    #@(csharp_preparation)
+
+    def test_simple(self):
+        compare_path_small_testfile = self.data_dir.get_path("test_simple.rst")
+        self.test_args = ['antiweb.py',  self.temp_dir.get_path("test_simple.cs")]
+
+        with patch.object(sys, 'argv', self.test_args):
+            self.functional("", "test_simple.rst", compare_path_small_testfile, main())
+            self.file_not_exist(self.temp_dir.get_path("index.rst"))
+            
+    def test_xml_tags(self):
+        compare_path_small_testfile = self.data_dir.get_path("test_xml.rst")
+        self.test_args = ['antiweb.py',  self.temp_dir.get_path("test_xml.cs")]
+
+        with patch.object(sys, 'argv', self.test_args):
+            self.functional("", "test_xml.rst", compare_path_small_testfile, main())
+            self.file_not_exist(self.temp_dir.get_path("index.rst"))   
+    
+    def tearDown(self):
+        self.temp_dir.remove_tempdir()
+
 class Test_GenericReader(unittest.TestCase):
 
     def setUp(self):
