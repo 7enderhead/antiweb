@@ -19,9 +19,9 @@ License: GPL
 
 
 
-#######
+########
 antiweb
-#######
+########
 
 ************
 Installation
@@ -39,9 +39,9 @@ Getting Started
 * :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
 
 
-#####################
+######################
 Antiweb documentation
-#####################
+######################
 
 If you just want to generate the documentation from a source file use 
 the following function:
@@ -116,8 +116,10 @@ source parsing.
 
 @include(Reader doc)
 @include(CReader doc)
+@include(CSharpReader doc)
 @include(PythonReader doc)
 @include(ClojureReader doc)
+@include(rstReader doc)
 
 
 ********
@@ -313,8 +315,8 @@ import sys
 import os.path
 import operator
 import os
-import collections
 from sys import platform as _platform
+from bs4 import BeautifulSoup,  Tag,  NavigableString
 
 #@rstart(management)
 
@@ -835,8 +837,6 @@ class If(NameDirective):
     priority = 4
 
     def process(self, document, block, index):
-        line = block[index]
-
         for j in range(index+1, len(block)):
             d = block[j].directive
             if isinstance(d, Fi) and d.name == self.name:
@@ -1278,7 +1278,7 @@ re_line_start = re.compile("^", re.M) #to find the line start indices
 class Reader(object):
     #@start(Reader doc)
     #Reader
-    #======
+    #=============
     """
     .. py:class:: Reader(lexer)
 
@@ -1405,7 +1405,6 @@ class Reader(object):
         if not self._accept_token(token): return
         cvalue = self._cut_comment(index, token, value)
         offset = value.index(cvalue)
-        found = False
         for k, v in list(directives.items()):
             for mo in v.expression.finditer(cvalue):
                 li = bisect.bisect(self.starts, index+mo.start()+offset)-1
@@ -1432,7 +1431,7 @@ class Reader(object):
 class CReader(Reader):
     #@start(CReader doc)
     #CReader
-    #=======
+    #=============
     """
     .. py:class:: CReader
 
@@ -1441,6 +1440,7 @@ class CReader(Reader):
     #@indent 3
     #@include(CReader)
     #@(CReader doc)
+    
     def _accept_token(self, token):
         return token in Token.Comment
     
@@ -1465,18 +1465,156 @@ class CReader(Reader):
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
 
-                if stext == '/*' or stext == "*/":
+                if stext == "/*" or stext == "*/":
                     #remove /* and */ from documentation lines
                     #see the l.text.lstrip()! if the lines ends with a white space
                     #the quotes will be kept! This is feature, to force the quotes
                     #in the output
                     continue
                 
-                if stext.startswith("//") and not stext.startswith("#####"):
-                    #remove comments but not chapters
+                if stext.startswith("//"):
                     l.text = l.indented(stext[2:])
                             
             yield l
+#edoc
+
+#@cstart(CSharpReader)
+class CSharpReader(CReader):
+    #@start(CSharpReader doc)
+    #CSharpReader
+    #=============
+    """
+    .. py:class:: CSharpReader
+
+       A reader for C# code. This class inherits :py:class:`CReader`.
+    """
+    
+    #@indent 3
+    #@include(CSharpReader)
+    #@include(CSharpReader.strip_tags doc)
+    #@include(CSharpReader.get_attribute_text doc)
+    #@include(CSharpReader.filter_output doc)
+    #@(CSharpReader doc)
+    
+    def _accept_token(self, token):
+        return super(CSharpReader, self)._accept_token(token)
+    
+    def _cut_comment(self, index, token, text):
+        return super(CSharpReader, self)._cut_comment(index, token, text)
+        
+    #@cstart(CSharpReader.strip_tags)
+    def strip_tags(self,  soup):
+        """
+        .. py:method:: strip_tags(soup)
+
+           Removes all C# XML tags. The tags are replaced by their attributes and contents.
+
+           :param soup: The parsed xml tags.
+           :return: the XML tags replaced by their attributes and contents.
+        """
+        if isinstance(soup,  Tag) and not soup.contents:            
+            return self.get_attribute_text(soup)
+    
+        for tag in soup.find_all(True):
+            text = self.get_attribute_text(tag)
+            
+            #if the content is a Navigablestring the content is simply concatenated 
+            #otherwise the contents of the content are recursively checked for xml tags
+            for content in tag.contents:
+                if not isinstance(content, NavigableString):
+                    content = self.strip_tags(content)
+                text += content
+    
+            tag.replaceWith(text)
+    
+        return soup
+    #@edoc
+    
+    #@cstart(CSharpReader.get_attribute_text)
+    def get_attribute_text(self,  tag):
+        """
+        .. py:method:: get_attribute_text(tag)
+
+           Gets the values of all attributes of a XML tag.
+
+           :param tag: A BeautifulSoup Tag.
+           :return: the values of all attributes concatenated
+        """
+        #collect all values of xml tag attributes
+        attributes = tag.attrs
+        attribute_text = ""
+        for attribute, value in attributes.items():
+            attribute_text = value + " "
+        return attribute_text
+    #@edoc
+    
+    #@cstart(CSharpReader.filter_output)
+    def filter_output(self, lines):
+        """
+        .. py:method:: filter_output(lines)
+        
+           Applies C# specific filtering for the final output.
+           XML comment tags are replaced by their attributes and contents.
+
+           See :py:meth:`Reader.filter_output`
+           
+           :param lines: All lines of a file. The directives have already been replaced.
+           :return: A generator containing all lines for the final output.
+        """
+        #first the CReader filters the output
+        #afterwards the CSharpReader does some C# specific filtering
+        lines = super(CSharpReader, self).filter_output(lines)
+                
+        xml_lines_block = []
+        xml_start_index = -1
+        
+        for l in lines:
+            if l.type == "d":
+                #remove comment chars in document lines
+                stext = l.text.lstrip()
+
+                if stext == "/*" or stext == "*/":
+                    #remove /* and */ from documentation lines
+                    #see the l.text.lstrip()! if the lines ends with a white space
+                    #the quotes will be kept! This is feature, to force the quotes
+                    #in the output
+                    continue
+
+                if stext.startswith("/") and not stext.startswith("/*"):
+                    #this is needed if a comment line was defined with ///
+                    l.text = l.indented(stext[1:])
+                    
+                    #if a new xml tag block starts, save the current line index and
+                    #add the line to the xml_lines_block
+                    if(xml_start_index == -1):
+                        xml_start_index = l.index
+                        
+                    xml_lines_block.append(l)
+                    continue 
+                elif not xml_start_index == -1:
+                    #all xml lines have been collected for this block and can be processed
+                    xml_text = "\n".join(map(operator.attrgetter("text"), xml_lines_block))
+                    
+                    #the xml lines will be parsed and then all xml tags will be removed       
+                    soup = BeautifulSoup(xml_text, "html.parser")
+                    self.strip_tags(soup)
+                    stripped_xml_lines = soup.text.splitlines()
+                    
+                    #the indent if the first xml line will be used for all lines in that block
+                    #for each stripped xml line a Line object is created and added the final line generator
+                    initialLine = xml_lines_block[0]                    
+                    index = xml_start_index
+                    for line in stripped_xml_lines:
+                        new_line = Line(initialLine.fname,  index,  initialLine.indented(line.lstrip()))
+                        index += 1
+                        yield new_line
+                    
+                    #reset the xml variables for the next block
+                    xml_start_index = -1
+                    xml_lines_block = []
+
+            yield l
+    #@edoc
 
 #@cstart(ClojureReader)
 class ClojureReader(Reader):
@@ -1510,7 +1648,7 @@ class ClojureReader(Reader):
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
 		
-        if stext.startswith(";") and not stext.startswith("#####"):
+        if stext.startswith(";"):
                     #remove comments but not chapters
                     l.text = l.indented(stext[1:])
 
@@ -1521,8 +1659,6 @@ class GenericReader(Reader):
     def __init__(self, single_comment_markers, block_comment_markers):
         self.single_comment_markers = single_comment_markers
         self.block_comment_markers = block_comment_markers
-        
-        
 
     def _accept_token(self, token):
         return token in Token.Comment
@@ -1550,7 +1686,7 @@ class GenericReader(Reader):
                         #in the output
                         continue
                     for comment_start in self.single_comment_markers: #comment layout: ["//",";"]
-                        if stext.startswith(comment_start) and not stext.startswith("#####"):
+                        if stext.startswith(comment_start):
                             #remove comments but not chapters
                             l.text = l.indented(stext[2:])
                             
@@ -1561,15 +1697,15 @@ class GenericReader(Reader):
 class rstReader(Reader):
     #@start(rstReader doc)
     #rstReader
-    #=======
+    #=============
     """
     .. py:class:: rstReader
 
        A reader for rst code. This class inherits :py:class:`Reader`.
     """
     #@indent 3
-    #@include(CReader)
-    #@(CReader doc)
+    #@include(rstReader)
+    #@(rstReader doc)
     def _accept_token(self, token):
         return token in Token.Comment
     
@@ -1578,7 +1714,7 @@ class rstReader(Reader):
             text = text[3:]
 
         return text
-		
+
     def filter_output(self, lines):
         """
         .. py:method:: filter_output(lines)
@@ -1794,7 +1930,7 @@ class PythonReader(Reader):
                     #in the output
                     continue
                 
-                if stext.startswith("#") and not stext.startswith("#####"):
+                if stext.startswith("#"):
                     #remove comments but not chapters
                     l.text = l.indented(stext[1:])
                             
@@ -1804,9 +1940,9 @@ class PythonReader(Reader):
 readers = {
     "C" : CReader,
     "C++" : CReader,
-    "C#" : CReader,
+    "C#" : CSharpReader,
     "Python" : PythonReader,
-	"Clojure" : ClojureReader,
+    "Clojure" : ClojureReader,
     "rst" : CReader,
 }
 
@@ -2040,8 +2176,7 @@ class Line(object):
            The first of the contained :py:class:`Directive` objects.
         """
         return self.directives and self.directives[0]
-
-
+     
 #@rstart(document)
 
 #<<document>>
@@ -2222,7 +2357,7 @@ class Document(object):
         text = self.reader.filter_output(text)
         return_text = None
         if text:
-            return_text = "\n".join(map(operator.attrgetter("text"), text))
+             return_text = "\n".join(map(operator.attrgetter("text"), text))
         return return_text
     #@edoc
     #@rinclude(show warnings)
@@ -2544,6 +2679,7 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
             else:
                 out_file_name = output + ".rst"
                 out_file = os.path.join(path, out_file_name)
+                
 #@edoc
 #The prepared file path gets pushed to ''process file''. If the process is successful, ''could_process'' is set to ''True''.
 #@code
@@ -2574,7 +2710,7 @@ def write_static(input_type, index_rst, start_of_block, end_of_block):
         index_out.write(index_static)
         
 def parsing():
-
+    
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
                           description="Tangles a source code file to a rst file.",
                           version="%prog " + __version__)
@@ -2607,8 +2743,6 @@ There are two new flags in antiweb:
     parser.add_option("-i", "--index", dest="index",
                       action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
 
-#@edoc
-
     options, args = parser.parse_args()
 
     return (options, args, parser)
@@ -2629,9 +2763,10 @@ def main():
         sys.exit(0)
 
     index_rst = "index.rst"
-    replace_text = ""
     start_of_block = ".. start(generated)"
     end_of_block = ".. end(generated)"
+#@edoc
+
 #The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 #@code
@@ -2759,6 +2894,11 @@ documentaries of Python 2 programs.
    
    @code
    pip install git+https://github.com/jun66j5/babel.git [options]
+   @edoc
+   
+   * Install Beautiful Soup. Beautiful Soup is a Python library for pulling data out of HTML and XML files. It is used for stripping the C# XML documentation tags. For more informatin on Beautiful Soup visit http://www.crummy.com/software/BeautifulSoup/bs4/doc/ .
+   @code
+   pip install beautifulsoup4
    @edoc
 
    * Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it (however, say yes to all extensions suggested during the process). The sphinx quickstart created a project folder for you, open the conf.py which is in that folder
