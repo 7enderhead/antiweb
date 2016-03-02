@@ -38,6 +38,12 @@ documentaries of Python 2 programs.
    ::
    
        pip install git+https://github.com/jun66j5/babel.git [options]
+   
+   * Install Beautiful Soup. Beautiful Soup is a Python library for pulling data out of HTML and XML files. It is used for stripping the C# XML documentation tags. For more informatin on Beautiful Soup visit http://www.crummy.com/software/BeautifulSoup/bs4/doc/ .
+   
+   ::
+   
+       pip install beautifulsoup4
 
    * Run sphinx-quickstart.exe and follow the steps to configure sphinx as you like it (however, say yes to all extensions suggested during the process). The sphinx quickstart created a project folder for you, open the conf.py which is in that folder
 
@@ -142,6 +148,7 @@ Preparing the .rst files
 
 
 
+   
    
    
    
@@ -318,7 +325,7 @@ the following function:
             reader = readers.get(lexer.name, Reader)(lexer)
            
             document = Document(text, reader, fname, tokens)
-            return document.process(show_warnings)
+            return document.process(show_warnings, fname)
         
         
     
@@ -953,8 +960,6 @@ If
            priority = 4
        
            def process(self, document, block, index):
-               line = block[index]
-       
                for j in range(index+1, len(block)):
                    d = block[j].directive
                    if isinstance(d, Fi) and d.name == self.name:
@@ -1164,7 +1169,7 @@ Readers are responsible for the language dependent
 source parsing.
 
 Reader
-======
+=============
 .. py:class:: Reader(lexer)
 
    This is the base class for all readers. The public functions
@@ -1229,7 +1234,6 @@ Reader
               tokens = self.lexer.get_tokens_unprocessed(text)
               for index, token, value in tokens:
                   self._handle_token(index, token, value)
-          
               self._post_process(fname, text)
               return self.lines
           
@@ -1260,10 +1264,8 @@ Reader
           def _handle_token(self, index, token, value):
                       
               if not self._accept_token(token): return
-                   
               cvalue = self._cut_comment(index, token, value)
               offset = value.index(cvalue)
-              found = False
               for k, v in list(directives.items()):
                   for mo in v.expression.finditer(cvalue):
                       li = bisect.bisect(self.starts, index+mo.start()+offset)-1
@@ -1283,7 +1285,7 @@ Reader
       
       ::
       
-          def _cut_comment(self, index, token, value):
+          def _cut_comment(self, index, token, text):
               return text
           
           
@@ -1325,7 +1327,7 @@ Reader
           
       
 CReader
-=======
+=============
 .. py:class:: CReader
 
    A reader for C/C++ code. This class inherits :py:class:`Reader`.
@@ -1333,6 +1335,7 @@ CReader
    ::
    
        class CReader(Reader):
+           
            def _accept_token(self, token):
                return token in Token.Comment
            
@@ -1351,25 +1354,161 @@ CReader
        
                   See :py:meth:`Reader.filter_output`.
                """
+               print(lines)
                for l in lines:
                    if l.type == "d":
                        #remove comment chars in document lines
                        stext = l.text.lstrip()
        
-                       if stext == '/*' or stext == "*/":
-                           #remove """ and ''' from documentation lines
+                       if stext == "/*" or stext == "*/":
+                           #remove /* and */ from documentation lines
                            #see the l.text.lstrip()! if the lines ends with a white space
                            #the quotes will be kept! This is feature, to force the quotes
                            #in the output
                            continue
                        
-                       if stext.startswith("//") and not stext.startswith("#####"):
-                           #remove comments but not chapters
+                       if stext.startswith("//"):
                            l.text = l.indented(stext[2:])
                                    
                    yield l
+       #edoc
        
    
+CSharpReader
+=============
+.. py:class:: CSharpReader
+
+   A reader for C# code. This class inherits :py:class:`CReader`.
+
+   
+   ::
+   
+       class CSharpReader(CReader):
+           
+           def _accept_token(self, token):
+               return super(CSharpReader, self)._accept_token(token)
+           
+           def _cut_comment(self, index, token, text):
+               return super(CSharpReader, self)._cut_comment(index, token, text)
+               
+           <<CSharpReader.strip_tags>>
+           <<CSharpReader.get_attribute_text>>
+           <<CSharpReader.filter_output>>
+   
+   .. py:method:: strip_tags(soup)
+   
+      Removes all C# XML tags. The tags are replaced by their attributes and contents.
+   
+      :param soup: The parsed xml tags.
+      :return: the XML tags replaced by their attributes and contents.
+      
+      ::
+      
+          def strip_tags(self,  soup):
+              if isinstance(soup,  Tag) and not soup.contents:            
+                  return self.get_attribute_text(soup)
+          
+              for tag in soup.find_all(True):
+                  text = self.get_attribute_text(tag)
+                  
+                  #if the content is a Navigablestring the content is simply concatenated 
+                  #otherwise the contents of the content are recursively checked for xml tags
+                  for content in tag.contents:
+                      if not isinstance(content, NavigableString):
+                          content = self.strip_tags(content)
+                      text += content
+          
+                  tag.replaceWith(text)
+          
+              return soup
+      
+      
+   .. py:method:: get_attribute_text(tag)
+   
+      Gets the values of all attributes of a XML tag.
+   
+      :param tag: A BeautifulSoup Tag.
+      :return: the values of all attributes concatenated
+      
+      ::
+      
+          def get_attribute_text(self,  tag):
+              #collect all values of xml tag attributes
+              attributes = tag.attrs
+              attribute_text = ""
+              for attribute, value in attributes.items():
+                  attribute_text = value + " "
+              return attribute_text
+      
+      
+   .. py:method:: filter_output(lines)
+   
+      Applies C# specific filtering for the final output.
+      XML comment tags are replaced by their attributes and contents.
+   
+      See :py:meth:`Reader.filter_output`
+      
+      :param lines: All lines of a file. The directives have already been replaced.
+      :return: A generator containing all lines for the final output.
+      
+      ::
+      
+          def filter_output(self, lines):
+              #first the CReader filters the output
+              #afterwards the CSharpReader does some C# specific filtering
+              lines = super(CSharpReader, self).filter_output(lines)
+                      
+              xml_lines_block = []
+              xml_start_index = -1
+              
+              for l in lines:
+                  if l.type == "d":
+                      #remove comment chars in document lines
+                      stext = l.text.lstrip()
+          
+                      if stext == "/*" or stext == "*/":
+                          #remove /* and */ from documentation lines
+                          #see the l.text.lstrip()! if the lines ends with a white space
+                          #the quotes will be kept! This is feature, to force the quotes
+                          #in the output
+                          continue
+          
+                      if stext.startswith("/") and not stext.startswith("/*"):
+                          #this is needed if a comment line was defined with ///
+                          l.text = l.indented(stext[1:])
+                          
+                          #if a new xml tag block starts, save the current line index and
+                          #add the line to the xml_lines_block
+                          if(xml_start_index == -1):
+                              xml_start_index = l.index
+                              
+                          xml_lines_block.append(l)
+                          continue 
+                      elif not xml_start_index == -1:
+                          #all xml lines have been collected for this block and can be processed
+                          xml_text = "\n".join(map(operator.attrgetter("text"), xml_lines_block))
+                          
+                          #the xml lines will be parsed and then all xml tags will be removed       
+                          soup = BeautifulSoup(xml_text, "html.parser")
+                          self.strip_tags(soup)
+                          stripped_xml_lines = soup.text.splitlines()
+                          
+                          #the indent if the first xml line will be used for all lines in that block
+                          #for each stripped xml line a Line object is created and added the final line generator
+                          initialLine = xml_lines_block[0]                    
+                          index = xml_start_index
+                          for line in stripped_xml_lines:
+                              new_line = Line(initialLine.fname,  index,  initialLine.indented(line.lstrip()))
+                              index += 1
+                              yield new_line
+                          
+                          #reset the xml variables for the next block
+                          xml_start_index = -1
+                          xml_lines_block = []
+          
+                  yield l
+      
+      
 PythonReader
 ============
 .. py:class:: PythonReader
@@ -1437,8 +1576,10 @@ PythonReader
        readers = {
            "C" : CReader,
            "C++" : CReader,
-           "C#" : CReader,
+           "C#" : CSharpReader,
            "Python" : PythonReader,
+           "Clojure" : ClojureReader,
+           "rst" : CReader,
        }
        
    
@@ -1576,7 +1717,7 @@ PythonReader
                           #in the output
                           continue
                       
-                      if stext.startswith("#") and not stext.startswith("#####"):
+                      if stext.startswith("#"):
                           #remove comments but not chapters
                           l.text = l.indented(stext[1:])
                                   
@@ -1605,6 +1746,122 @@ PythonReader
               return text
           
       
+ClojureReader
+=============
+.. py:class:: ClojureReader
+
+   A reader for Clojure code. This class inherits :py:class:`Reader`.
+   
+   ::
+   
+       class ClojureReader(Reader):
+           def _accept_token(self, token):
+               return token in Token.Comment
+           
+           def _cut_comment(self, index, token, text):
+               if text.startswith(";"):
+                   text = text[1:]
+               return text
+                       
+           def filter_output(self, lines):
+               """
+               .. py:method:: filter_output(lines)
+       
+                  See :py:meth:`Reader.filter_output`.
+               """
+               for l in lines:
+                   if l.type == "d":
+                       #remove comment chars in document lines
+                       stext = l.text.lstrip()
+                       
+               if stext.startswith(";"):
+                           #remove comments but not chapters
+                           l.text = l.indented(stext[1:])
+       
+               yield l
+       
+       class GenericReader(Reader):
+       
+           def __init__(self, single_comment_markers, block_comment_markers):
+               self.single_comment_markers = single_comment_markers
+               self.block_comment_markers = block_comment_markers
+       
+           def _accept_token(self, token):
+               return token in Token.Comment
+           
+           def _cut_comment(self, index, token, text):
+               if text.startswith("/*"):
+                   text = text[2:-2]
+           
+               elif text.startswith("//"):
+                   text = text[2:]
+       
+               return text
+       
+           def filter_output(self, lines):
+       
+               for l in lines:
+                   if l.type == "d":
+                       #remove comment chars in document lines
+                       stext = l.text.lstrip()
+                       for block_start, block_end in self.block_comment_markers: #comment layout: [("/*", "*/"),("#","@")]
+                           if stext == block_start or stext == block_end:
+                               #remove """ and ''' from documentation lines
+                               #see the l.text.lstrip()! if the lines ends with a white space
+                               #the quotes will be kept! This is feature, to force the quotes
+                               #in the output
+                               continue
+                           for comment_start in self.single_comment_markers: #comment layout: ["//",";"]
+                               if stext.startswith(comment_start):
+                                   #remove comments but not chapters
+                                   l.text = l.indented(stext[2:])
+                                   
+                   yield l
+       
+       
+   
+rstReader
+=============
+.. py:class:: rstReader
+
+   A reader for rst code. This class inherits :py:class:`Reader`.
+   
+   ::
+   
+       class rstReader(Reader):
+           def _accept_token(self, token):
+               return token in Token.Comment
+           
+           def _cut_comment(self, index, token, text):
+               if text.startswith(".. "):
+                   text = text[3:]
+       
+               return text
+       
+           def filter_output(self, lines):
+               """
+               .. py:method:: filter_output(lines)
+       
+                  See :py:meth:`Reader.filter_output`.
+               """
+               for l in lines:
+                   if l.type == "d":
+                       #remove comment chars in document lines
+                       stext = l.text.lstrip()
+                       if stext == '.. ':
+                           #remove """ and ''' from documentation lines
+                           #see the l.text.lstrip()! if the lines ends with a white space
+                           #the quotes will be kept! This is feature, to force the quotes
+                           #in the output
+                           continue
+                       
+                       if stext.startswith(".. "):
+                           #remove comments but not chapters
+                           l.text = l.indented(stext[3:])
+                                   
+                   yield l
+       
+   
 
 
 ********
@@ -1765,11 +2022,13 @@ Document
       
       ::
       
-          def process(self, show_warnings):
+          def process(self, show_warnings, fname):
               self.collect_blocks()
-              if "" not in self.blocks:
+              #print("Blocks", fname,  self.blocks)
+              if "" not in self.blocks and not fname.endswith(".rst"):
                   self.add_error(0, "no @start() directive found (I need one)")
                   self.check_errors()
+              
           
               try:
                   text = self.get_compiled_block("")
@@ -1778,9 +2037,11 @@ Document
           
               if show_warnings:
                   <<show warnings>>
-          
               text = self.reader.filter_output(text)
-              return "\n".join(map(operator.attrgetter("text"), text))
+              return_text = None
+              if text:
+                   return_text = "\n".join(map(operator.attrgetter("text"), text))
+              return return_text
       
       .. _show warnings:
       
@@ -2109,8 +2370,7 @@ Line
           @property
           def directive(self):
               return self.directives and self.directives[0]
-          
-          
+           
       
    .. py:method:: __init__(name, index, text[, directives[, type]])
    
@@ -2241,12 +2501,14 @@ File Layout
     <<Line>>
     <<document>>
     
-    def write_static(input_type, index_rst, startblock, endblock):
-        index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + startblock +"\n   " + endblock
-        index_out = open(os.path.join(input_type, index_rst), "w")
-        index_out.write(index_static)
-    
-    def main():
+    def write_static(input_type, index_rst, start_of_block, end_of_block):
+        index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + start_of_block +"\n   " + end_of_block
+        
+        with open(os.path.join(input_type, index_rst), "w") as index_out:
+            index_out.write(index_static)
+            
+    def parsing():
+        
         parser = OptionParser("usage: %prog [options] SOURCEFILE",
                               description="Tangles a source code file to a rst file.",
                               version="%prog " + __version__)
@@ -2283,8 +2545,8 @@ File Layout
     import os.path
     import operator
     import os
-    import collections
     from sys import platform as _platform
+    from bs4 import BeautifulSoup,  Tag,  NavigableString
     
 
 
@@ -2296,7 +2558,7 @@ File Layout
 ::
 
     
-    __version__ = "0.3.1"
+    __version__ = "0.3.2"
     
     logger = logging.getLogger('antiweb')
     
@@ -2364,6 +2626,9 @@ File Layout
     
     <<Reader>>
     <<CReader>>
+    <<CSharpReader>>
+    <<ClojureReader>>
+    <<rstReader>>
     <<PythonReader>>
 
 
@@ -2402,48 +2667,56 @@ There are two new flags in antiweb:
         parser.add_option("-i", "--index", dest="index",
                           action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
     
-
-    options, args = parser.parse_args()
-
-    logger.addHandler(logging.StreamHandler())
-    logger.setLevel(logging.INFO)
-
-    if options.warnings is None:
-        options.warnings = True
+        options, args = parser.parse_args()
     
-    if not args:
-        parser.print_help()
-        sys.exit(0)
+        return (options, args, parser)
+    
+    def main():
+    
+        options, args, parser = parsing()
+    
+        logger.addHandler(logging.StreamHandler())
+        logger.setLevel(logging.INFO)
+    
+        if options.warnings is None:
+            options.warnings = True
+    
+        
+        if not args:
+            parser.print_help()
+            sys.exit(0)
+    
+        index_rst = "index.rst"
+        start_of_block = ".. start(generated)"
+        end_of_block = ".. end(generated)"
 
-    index_rst = "index.rst"
-    replace_text = ""
-    startblock = ".. @start(generated)"
-    endblock = ".. @(generated)"
 The program will check if a -r flag was given and if so, save the current directory and change it to the given one
 
 
 ::
 
     
+        previous_dir = os.getcwd()
+    
         if options.recursive:
-            previous_dir = os.getcwd()
-            os.chdir(args[0])
+            directory = args[0]
+        
+            os.chdir(directory)
             if options.output:
-                os.makedirs(os.path.join(args[0], options.output), exist_ok=True)
+                os.makedirs(os.path.join(directory, options.output), exist_ok=True)
             if options.index:
                 if options.output:
-                    in_type = os.path.join(args[0], options.output)
-                    if not os.path.isfile(os.path.join(in_type, index_rst)):
-                        write_static(in_type, index_rst, startblock, endblock)
+                    directory = os.path.join(directory, options.output)
+                    if not os.path.isfile(os.path.join(directory, index_rst)):
+                        write_static(directory, index_rst, start_of_block, end_of_block)
     
-                    content, startline = search_for_generate(options.output, index_rst, startblock, endblock)
+                    content, startline = search_for_generate(options.output, index_rst, start_of_block, end_of_block)
     
                 else:
-                    in_type = args[0]
-                    if not os.path.isfile(os.path.join(in_type, index_rst)):
-                        write_static(in_type, index_rst, startblock, endblock)
+                    if not os.path.isfile(os.path.join(directory, index_rst)):
+                        write_static(directory, index_rst, start_of_block, end_of_block)
     
-                    content, startline = search_for_generate(os.getcwd(), index_rst, startblock, endblock)
+                    content, startline = search_for_generate(os.getcwd(), index_rst, start_of_block, end_of_block)
 
 The program lists all files in the directory and sub-directories to prepare them for the process
 
@@ -2461,12 +2734,12 @@ If the found file is no folder nor a rst file, it will be put into the process
 
 ::
 
-                    ext_tuple = (".cs",".cpp",".py",".cc")
+                    ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
                     if os.path.isfile(fname) and fname.endswith(ext_tuple):
                         if options.index:
-                            write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
+                            write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
                         else:
-                            write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock, None)
+                            write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
 
 This else will take place when the -r flag is not given.
 
@@ -2475,14 +2748,22 @@ This else will take place when the -r flag is not given.
 
     
         else:
-            os.chdir(os.path.split(args[0])[0])
+            path = os.path.split(args[0])
+    
+            if path[0]:
+                os.chdir(path[0])
+    
             if options.index:
                 if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
-                    write_static(os.getcwd(), index_rst, startblock, endblock)
-                content, startline = search_for_generate(None, index_rst, startblock, endblock)
-                write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, startblock, endblock, startline)
+                    write_static(os.getcwd(), index_rst, start_of_block, end_of_block)
+                content, startline = search_for_generate(None, index_rst, start_of_block, end_of_block)
+                write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
             else:
-                write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, startblock, endblock, None)
+                write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
+        
+        os.chdir(previous_dir)
+        
+        return True
 
 Writing the index.rst file
 ==========================
@@ -2493,7 +2774,7 @@ From the given file a .rst file will be created if it contains an antiweb :py:cl
 ::
 
     
-    def write(path, fname, output, token, warnings, index, index_rst, recursive, content, startblock, endblock, startline):
+    def write(path, fname, output, token, warnings, index, index_rst, recursive, content, start_of_block, end_of_block, startline):
     
 
 When there is no output given there are two possibilities: recursive or not recursive. The file path gets split up and put together so it can be processed by ''process_file''
@@ -2501,13 +2782,21 @@ When there is no output given there are two possibilities: recursive or not recu
 ::
 
     
+            docs = "_docs"
+    
             if not output:
                 if recursive:
-                    out_file_name = os.path.splitext(fname)[0] + ".rst"
+                    if fname.endswith(".rst"):
+                        out_file_name = os.path.splitext(fname)[0] + docs + ".rst"
+                    else:
+                        out_file_name = os.path.splitext(fname)[0] + ".rst"
                     out_file = out_file_name
                     out_file_name = os.path.relpath(out_file_name, path)
                 else:
-                    out_file = os.path.splitext(fname)[0] + ".rst"
+                    if fname.endswith(".rst"):
+                        out_file = os.path.splitext(fname)[0] + docs + ".rst"
+                    else:
+                        out_file = os.path.splitext(fname)[0] + ".rst"
                     out_file_name = os.path.split(out_file)[1]
     
 There is an output given, so it can also be either recursive or not recursive. With the additional output parameter the file path gets split up and put together so it can be processed by ''process_file''. There is also a differentiation between Linux, Windows and OS X (because of the different paths in each operating system)
@@ -2527,6 +2816,7 @@ There is an output given, so it can also be either recursive or not recursive. W
                 else:
                     out_file_name = output + ".rst"
                     out_file = os.path.join(path, out_file_name)
+                    
 The prepared file path gets pushed to ''process file''. If the process is successful, ''could_process'' is set to ''True''.
 
 ::
@@ -2536,7 +2826,7 @@ The prepared file path gets pushed to ''process file''. If the process is succes
     
 
 
-If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the :py:class:`start(generated)` and :py:class:`(generated)` directives is the space for automatic added files, you can manually add files below the @(generated) directive.
+If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives is the space for automatic added files, you can manually add files below the :py:class:`end(generated)` directive.
 
 
 ::
@@ -2546,9 +2836,9 @@ If the user added the -i flag, the file gets added to Sphinx' index.rst file. Be
                 if could_process:
                     
                     if output and recursive:
-                        replace_in_generated(startblock, endblock, out_file_name, path, output, index_rst, content, startline)
+                        replace_in_generated(start_of_block, end_of_block, out_file_name, path, output, index_rst, content, startline)
                     else:
-                        replace_in_generated(startblock, endblock, out_file_name, path, None, index_rst, content, startline)
+                        replace_in_generated(start_of_block, end_of_block, out_file_name, path, None, index_rst, content, startline)
 
 
 
@@ -2593,13 +2883,13 @@ The output text will be written in the output file. If there is an output text, 
 search_for_generated
 ====================
 
-The line numbers of the :py:class:`start(generated)` and :py:class:`(generated)` directive are looked up and their content getting depleted
+The line numbers of the :py:class:`start(generated)` and :py:class:`end(generated)` directive are looked up and their content getting depleted
 
 
 ::
 
     
-    def search_for_generate(output, index_rst, startblock, endblock):
+    def search_for_generate(output, index_rst, start_of_block, end_of_block):
     
         startline = None
         endline = None
@@ -2607,18 +2897,15 @@ The line numbers of the :py:class:`start(generated)` and :py:class:`(generated)`
         if not output:
             output = ""
     
-        while startline == None or endline == None:
-            path = os.path.join(os.getcwd(), output, index_rst)
-            with open(path, "r") as index_file:
-                for num, line in enumerate(index_file):
-                    if startblock in line:
-                        startline = num
-                    if endblock in line:
-                        endline = num
+        path = os.path.join(os.getcwd(), output, index_rst)
+        with open(path, "r") as index_file:
+            for num, line in enumerate(index_file):
+                if start_of_block in line:
+                    startline = num
+                if end_of_block in line:
+                    endline = num
     
-                if startline== None or endline== None:
-                    write_static(os.path.join(os.getcwd(), output), index_rst, startblock, endblock)
-                else:
+                if startline and endline:
                     index_file.seek(0, 0)
                     content = index_file.readlines()
                     del content[startline+1:endline]
@@ -2628,27 +2915,26 @@ The line numbers of the :py:class:`start(generated)` and :py:class:`(generated)`
 replace_in_generated
 ====================
 
-The name of the generated files get added between the :py:class:`start(generated)` and :py:class:`(generated)` directives. Code before and after is left as is.
+The name of the generated files get added between the :py:class:`start(generated)` and :py:class:`end(generated)` directives. Code before and after is left as is.
 
 
 ::
 
     
-    def replace_in_generated(startblock, endblock, out_file_name, path, output, index_rst, content, startline):
+    def replace_in_generated(start_of_block, end_of_block, out_file_name, path, output, index_rst, content, startline):
     
         if startline:
             endline = startline+1
+        if output is None:
+            output = ""
         
         index_var = os.path.splitext(out_file_name)[0]
         if startline and endline:
             content.insert(endline, "   " + index_var + "\n")
-        if output:
-            index_out = open(os.path.join(path, output, index_rst), "w")
-        else:
-            index_out = open(os.path.join(path, index_rst), "w")
-        for item in content:
-            index_out.write(item)
-        index_out.close()
+    
+        with open(os.path.join(path, output, index_rst), "w") as index_out:
+            for item in content:
+                index_out.write(item)
     
 
 
