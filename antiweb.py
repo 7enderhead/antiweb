@@ -163,7 +163,8 @@ and registering it in the readers dictionary (see readers).
 A simple Reader example is provides by :py:class:`CReader`
 a more advances reader is :py:class:`PythonReader`.
 
-
+#@include(comments doc)
+#@include(get_comment_markers doc)
 
 
 @if(usage)
@@ -1275,6 +1276,7 @@ directives = {
 
 re_line_start = re.compile("^", re.M) #to find the line start indices
 
+
 class Reader(object):
     #@start(Reader doc)
     #Reader
@@ -1307,14 +1309,19 @@ class Reader(object):
     #@(Reader doc)
     #Public Methods
     #@cstart(Reader.__init__)
-    def __init__(self, lexer):
+    def __init__(self, lexer, single_comment_markers, block_comment_markers):
         """
-        .. py:method:: __init__(lexer)
-
-           The constructor
+        .. py:method:: __init__(lexer, single_comment_markers, block_comment_markers)
+            
+           The constructor initialises the language specific pygments lexer and comment markers. 
+           
+           :param Lexer lexer: The language specific pygments lexer.
+           :param string[] single_comment_markers: The language specific single comment markers.
+           :param string[] block_comment_markers: The language specific block comment markers.
         """
         self.lexer = lexer
-
+        self.single_comment_markers = single_comment_markers
+        self.block_comment_markers = block_comment_markers
 
     #@cstart(Reader.process)
     def process(self, fname, text):
@@ -1426,10 +1433,11 @@ class Reader(object):
         """
         return text
 
-
 #@cstart(CReader)
+
 class CReader(Reader):
     #@start(CReader doc)
+    
     #CReader
     #=============
     """
@@ -1440,15 +1448,23 @@ class CReader(Reader):
     #@indent 3
     #@include(CReader)
     #@(CReader doc)
-    
+
+    def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
+        super(CReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
+        #For C/C++ exists only one type of single and block comment markers.
+        #The markers are retrieved here in order to avoid iterating over the markers every time they are used.
+        self.single_comment_marker = single_comment_markers[0]
+        self.block_comment_marker_start = block_comment_markers[0]   
+        self.block_comment_marker_end = block_comment_markers[1]
+
     def _accept_token(self, token):
         return token in Token.Comment
     
     def _cut_comment(self, index, token, text):
-        if text.startswith("/*"):
+        if text.startswith(self.block_comment_marker_start):
             text = text[2:-2]
     
-        elif text.startswith("//"):
+        elif text.startswith(self.single_comment_marker):
             text = text[2:]
 
         return text
@@ -1465,20 +1481,22 @@ class CReader(Reader):
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
 
-                if stext == "/*" or stext == "*/":
+                if stext == self.block_comment_marker_start or stext == self.block_comment_marker_end:
                     #remove /* and */ from documentation lines
                     #see the l.text.lstrip()! if the lines ends with a white space
                     #the quotes will be kept! This is feature, to force the quotes
                     #in the output
                     continue
                 
-                if stext.startswith("//"):
+                if stext.startswith(self.single_comment_marker):
                     l.text = l.indented(stext[2:])
                             
             yield l
-#edoc
+#@edoc
 
 #@cstart(CSharpReader)
+
+
 class CSharpReader(CReader):
     #@start(CSharpReader doc)
     #CSharpReader
@@ -1487,35 +1505,51 @@ class CSharpReader(CReader):
     .. py:class:: CSharpReader
 
        A reader for C# code. This class inherits :py:class:`CReader`.
+       The CSharpReader is needed because C# specific output filtering is applied.
+       Compared to C, C# uses XML comments starting with *///* which are reused
+       for the final documentation. Here you can see an overview of the CSharpReader class
+       and its methods.
+       
     """
     
     #@indent 3
     #@include(CSharpReader)
     #@include(CSharpReader.strip_tags doc)
     #@include(CSharpReader.get_attribute_text doc)
+    #@include(CSharpReader.get_stripped_xml_lines doc)
+    #@include(CSharpReader.create_new_lines doc)
+    #@include(CSharpReader.init_xml_block doc)
     #@include(CSharpReader.filter_output doc)
     #@(CSharpReader doc)
     
-    def _accept_token(self, token):
-        return super(CSharpReader, self)._accept_token(token)
+    default_xml_block_index = -1
     
-    def _cut_comment(self, index, token, text):
-        return super(CSharpReader, self)._cut_comment(index, token, text)
-        
+    def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
+        #the call to the base class CReader is needed for initialising the comment markers
+        super(CSharpReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
+            
     #@cstart(CSharpReader.strip_tags)
-    def strip_tags(self,  soup):
+    def strip_tags(self,  tags):
         """
-        .. py:method:: strip_tags(soup)
+        .. py:method:: strip_tags(tags)
 
            Removes all C# XML tags. The tags are replaced by their attributes and contents.
+           This method is called recursively. This is needed if the content of a tag also contains
+           tags.
+           
+           Examples:
+           
+            * ``<param name="arg1">value</param>`` will be stripped to : *"arg1 value"*
+            * ``<para>Start <see cref="(String)"/> end</para>`` will be stripped to : *"Start (String) end"*
 
-           :param soup: The parsed xml tags.
+           :param Tag tags: The parsed xml tags.
            :return: the XML tags replaced by their attributes and contents.
         """
-        if isinstance(soup,  Tag) and not soup.contents:            
-            return self.get_attribute_text(soup)
+        
+        if isinstance(tags,  Tag) and not tags.contents:            
+            return self.get_attribute_text(tags)
     
-        for tag in soup.find_all(True):
+        for tag in tags.find_all(True):
             text = self.get_attribute_text(tag)
             
             #if the content is a Navigablestring the content is simply concatenated 
@@ -1527,7 +1561,7 @@ class CSharpReader(CReader):
     
             tag.replaceWith(text)
     
-        return soup
+        return tags
     #@edoc
     
     #@cstart(CSharpReader.get_attribute_text)
@@ -1535,9 +1569,14 @@ class CSharpReader(CReader):
         """
         .. py:method:: get_attribute_text(tag)
 
-           Gets the values of all attributes of a XML tag.
+           Returns the values of all XML tag attributes seperated by whitespace.
 
-           :param tag: A BeautifulSoup Tag.
+           Examples:
+            
+            * ``<param name="arg1">parameterValue</param>`` returns : *"arg1 "*
+            * ``<include file='file1' path='[@name="test"]/*' />`` returns: *"file1 [@name="test"]/* "*
+
+           :param Tag tag: A BeautifulSoup Tag.
            :return: the values of all attributes concatenated
         """
         #collect all values of xml tag attributes
@@ -1546,6 +1585,58 @@ class CSharpReader(CReader):
         for attribute, value in attributes.items():
             attribute_text = value + " "
         return attribute_text
+    #@edoc
+    
+    #@cstart(CSharpReader.get_stripped_xml_lines)
+    def get_stripped_xml_lines(self,  xml_lines_block):
+        """
+        .. py:method:: get_stripped_xml_lines(xml_lines_block)
+        
+           Removes all XML comment tags from the lines in the xml_lines_block.
+           
+           :param Line[] xml_lines_block: A list containing all Line object which belong to an XML comment block.
+           :return: A list of all stripped XML lines.
+        """
+        #the xml_lines_block contains Line objects. As the xml parser expects a string 
+        #the Line obects have to be converted to a string.
+        xml_text = "\n".join(map(operator.attrgetter("text"), xml_lines_block))
+        
+        #the xml lines will be parsed and then all xml tags will be removed       
+        xml_tags = BeautifulSoup(xml_text, "html.parser")
+        self.strip_tags(xml_tags)
+        stripped_xml_lines = xml_tags.text.splitlines()
+        return stripped_xml_lines
+    #@edoc
+    
+    #@cstart(CSharpReader.create_new_lines)
+    def create_new_lines(self, stripped_xml_lines, index, initial_line):
+        """
+        .. py:method:: create_new_lines(stripped_xml_lines, index, initial_line)
+        
+           This method is called after all XML comment tags are stripped. For each new 
+           line in the stripped_xml_lines a new Line object is created.
+           
+           :param string[] stripped_xml_lines: The comment lines were the XML tags have been stripped.
+           :param int index: The starting index for the new line object.
+           :param Line initial_line: The first line of the xml comment block. Its indentation will be used for all new created lines.
+           :return: A generator containing the lines which have been created out of the stripped_xml_lines.
+        """
+        for line in stripped_xml_lines:
+            new_line = Line(initial_line.fname,  index,  initial_line.indented(line.lstrip()))
+            index += 1
+            yield new_line
+    #@edoc
+   
+    #@cstart(CSharpReader.init_xml_block)
+    def init_xml_block(self):
+        """
+        .. py:method:: init_xml_block()
+        
+           Inits the variables which are needed for collecting an XML comment block.
+        """
+        xml_lines_block = []
+        xml_start_index = self.default_xml_block_index
+        return xml_lines_block,  xml_start_index
     #@edoc
     
     #@cstart(CSharpReader.filter_output)
@@ -1558,60 +1649,56 @@ class CSharpReader(CReader):
 
            See :py:meth:`Reader.filter_output`
            
-           :param lines: All lines of a file. The directives have already been replaced.
+           We have to handle four cases:
+            1. The current line is a code line: The line is added to result.
+            2. The current line is a block comment: The line can be skipped.
+            3. The current line is an XML comment: The line is added to the xml_lines_block.
+            4. The current line is a single comment line: Add the line to result. If the current line is the first
+               line after an xml comment block, the comment block is processed and its lines are added to result.
+           
+           :param Line[] lines: All lines of a file. The directives have already been replaced.
            :return: A generator containing all lines for the final output.
         """
         #first the CReader filters the output
         #afterwards the CSharpReader does some C# specific filtering
         lines = super(CSharpReader, self).filter_output(lines)
-                
-        xml_lines_block = []
-        xml_start_index = -1
+         
+        #the xml_lines_block collects xml comment lines
+        #if the end of an xml comment block is identified, the collected xml lines are processed
+        xml_lines_block, xml_start_index  = self.init_xml_block()
         
         for l in lines:
             if l.type == "d":
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
-
-                if stext == "/*" or stext == "*/":
-                    #remove /* and */ from documentation lines
-                    #see the l.text.lstrip()! if the lines ends with a white space
-                    #the quotes will be kept! This is feature, to force the quotes
-                    #in the output
+                   
+                if stext == self.block_comment_marker_start or stext == self.block_comment_marker_end:
+                    #remove /* and */ from documentation lines. see the l.text.lstrip()!
+                    #if the lines ends with a white space the quotes will be kept! 
+                    #This is feature, to force the quotes in the output
                     continue
 
-                if stext.startswith("/") and not stext.startswith("/*"):
-                    #this is needed if a comment line was defined with ///
+                if stext.startswith("/") and not stext.startswith(self.block_comment_marker_start):
                     l.text = l.indented(stext[1:])
                     
-                    #if a new xml tag block starts, save the current line index and
-                    #add the line to the xml_lines_block
-                    if(xml_start_index == -1):
+                    if(xml_start_index == self.default_xml_block_index):
+                        #indicates that a new xml_block has started
                         xml_start_index = l.index
                         
                     xml_lines_block.append(l)
                     continue 
-                elif not xml_start_index == -1:
-                    #all xml lines have been collected for this block and can be processed
-                    xml_text = "\n".join(map(operator.attrgetter("text"), xml_lines_block))
+                elif not xml_start_index == self.default_xml_block_index:
+                    #an xml comment block has ended, now the block is processed
+                    #at first the xml tags are stripped, afterwards a new line object is created for each 
+                    #stripped line and added to the final result generator
+                    stripped_xml_lines = self.get_stripped_xml_lines(xml_lines_block)
                     
-                    #the xml lines will be parsed and then all xml tags will be removed       
-                    soup = BeautifulSoup(xml_text, "html.parser")
-                    self.strip_tags(soup)
-                    stripped_xml_lines = soup.text.splitlines()
-                    
-                    #the indent if the first xml line will be used for all lines in that block
-                    #for each stripped xml line a Line object is created and added the final line generator
-                    initialLine = xml_lines_block[0]                    
-                    index = xml_start_index
-                    for line in stripped_xml_lines:
-                        new_line = Line(initialLine.fname,  index,  initialLine.indented(line.lstrip()))
-                        index += 1
-                        yield new_line
+                    new_lines = self.create_new_lines(stripped_xml_lines, xml_start_index, xml_lines_block[0])
+                    for line in new_lines:
+                        yield line
                     
                     #reset the xml variables for the next block
-                    xml_start_index = -1
-                    xml_lines_block = []
+                    xml_lines_block, xml_start_index  = self.init_xml_block()
 
             yield l
     #@edoc
@@ -1653,6 +1740,7 @@ class ClojureReader(Reader):
                     l.text = l.indented(stext[1:])
 
         yield l
+
 
 class GenericReader(Reader):
 
@@ -1801,8 +1889,8 @@ class PythonReader(Reader):
     #@include(PythonReader.filter_output doc)
     #@include(PythonReader._cut_comment doc)
     #@(PythonReader doc)
-    def __init__(self, lexer):
-        super(PythonReader, self).__init__(lexer)
+    def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
+        super(PythonReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
         self.doc_lines = []
             
     #@cstart(PythonReader._post_process)
@@ -1948,6 +2036,27 @@ readers = {
 
 #@(readers)
 
+#@start(comments doc)
+#Language specific comment markers
+#====================================
+'''
+If a new language is added, its comment markers also have to be registered in the following map.
+The map contains the definition of all language specific comment markers.
+
+The comment markers of a language are defined in the format:
+``"language" : ([single_comment_tokens],[start_block_token, end_block_token])``
+
+Multiple single and block comment markers can be defined.
+'''
+
+#@code
+comments = {
+"C" : (["//"],(["/*","*/"])),
+"C++" : (["//"],(["/*","*/"])),
+"C#" : (["//"],(["/*","*/"])),
+"Python" : (["#"],(["'''","'''"],["\"\"\"","\"\"\""])),
+}
+#@
 
 #@cstart(Line)
 class Line(object):
@@ -2402,7 +2511,9 @@ class Document(object):
         else:
             #parse the file
             lexer = pm.get_lexer_for_filename(rpath)
-            reader = readers.get(lexer.name, Reader)(lexer)
+            single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)    
+            reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
+    
             doc = Document(text, reader, rpath, self.tokens)
             doc.collect_blocks()
             insert_macros(doc)
@@ -2534,11 +2645,37 @@ def generate(fname, tokens, show_warnings=False):
         sys.exit(1)
     
     lexer = pm.get_lexer_for_filename(fname)
-    reader = readers.get(lexer.name, Reader)(lexer)
-   
+    #get the language specific comment markers based on the pygments lexer name
+    single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)
+    #initialise a new Reader based on the pygments lexer name 
+    reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
+       
     document = Document(text, reader, fname, tokens)
     return document.process(show_warnings, fname)
+#@(generate)
 
+#@cstart(get_comment_markers)
+
+def get_comment_markers(lexer_name):
+    #@start(get_comment_markers doc)
+    #From the map above the comment markers are retrieved via the following method:
+    
+    """
+    ..  py:function:: get_comment_markers(lexer_name)
+
+        Retrieves the language specific comment markers from the comments map.
+        The comment markers of C serves as the default comment markers if the lexer name cannot be found.
+
+        :param string lexer_name: The name of the pygments lexer.
+        :return: The single and comment block markers defined by the language                           
+    """
+    #@indent 4
+    #@include(get_comment_markers)
+    #@(get_comment_markers doc)
+    comment_markers = comments.get(lexer_name, comments["C"])
+    single_comment_markers = comment_markers[0]
+    block_comment_markers = comment_markers[1]
+    return single_comment_markers,  block_comment_markers  
 
 #@(document)
 
@@ -2772,9 +2909,19 @@ def main():
 #@code
 
     previous_dir = os.getcwd()
-
+    
+    #convert to absolut path, this is needed if a relative path was given
+    absolut_path = os.path.abspath(args[0])
+    
     if options.recursive:
-        directory = args[0]
+        directory = absolut_path
+        
+        #check if the given path refers to an existing directory
+        #the program aborts if the directory does not exist or if the path refers to a file
+        #a file is not allowed here because the -r option requires a directory
+        if not os.path.isdir(directory):
+            logger.error("directory not found: %s", directory)
+            sys.exit(1)
     
         os.chdir(directory)
         if options.output:
@@ -2820,7 +2967,17 @@ def main():
 #@code
 
     else:
-        path = os.path.split(args[0])
+        #convert to absolut path, this is needed if a relative path was given
+        absolut_file_path = absolut_path
+        
+        #check if the given path refers to an existing file
+        #the program aborts if the file does not exist or if the path refers to an directory
+        #a directory is not allowed here because a directory can only be used with the -r option
+        if not os.path.isfile(absolut_file_path):
+            logger.error("file not found: %s", absolut_file_path)
+            sys.exit(1)
+        
+        path = os.path.split(absolut_file_path)
 
         if path[0]:
             os.chdir(path[0])
@@ -2829,9 +2986,9 @@ def main():
             if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
                 write_static(os.getcwd(), index_rst, start_of_block, end_of_block)
             content, startline = search_for_generate(None, index_rst, start_of_block, end_of_block)
-            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
+            write(os.getcwd(), absolut_file_path, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
         else:
-            write(os.getcwd(), args[0], options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
+            write(os.getcwd(), absolut_file_path, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
     
     os.chdir(previous_dir)
     
@@ -2896,7 +3053,7 @@ documentaries of Python 2 programs.
    pip install git+https://github.com/jun66j5/babel.git [options]
    @edoc
    
-   * Install Beautiful Soup. Beautiful Soup is a Python library for pulling data out of HTML and XML files. It is used for stripping the C# XML documentation tags. For more informatin on Beautiful Soup visit http://www.crummy.com/software/BeautifulSoup/bs4/doc/ .
+   * Install Beautiful Soup. Beautiful Soup is a Python library for pulling data out of HTML and XML files. It is used for stripping the C# XML documentation tags. For more information on Beautiful Soup visit http://www.crummy.com/software/BeautifulSoup/bs4/doc/ .
    @code
    pip install beautifulsoup4
    @edoc

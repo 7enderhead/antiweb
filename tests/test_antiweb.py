@@ -111,6 +111,14 @@ class Test_Antiweb(unittest.TestCase):
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
             self.file_not_exist(self.temp_dir.get_path("index.rst"))
+            
+    def test_antiweb_relative_path(self):
+        compare_path_small_testfile = self.data_dir.get_path("small_testfile.rst")
+        self.test_args = ['antiweb.py', self.temp_dir.get_relative_path("small_testfile.py")]
+
+        with patch.object(sys, 'argv', self.test_args):
+            self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
+            self.file_not_exist(self.temp_dir.get_path("index.rst"))    
 
     def test_antiweb_r_i_o(self):
         compare_path_small_testfile = self.data_dir.get_path("docs","small_testfile.rst")
@@ -145,7 +153,15 @@ class Test_Antiweb(unittest.TestCase):
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
             self.file_not_exist(self.temp_dir.get_path("index.rst"))
+    
+    def test_antiweb_r_relative_path(self):
+        compare_path_small_testfile = self.data_dir.get_path( "docs", "small_testfile.rst")
+        self.test_args = ['antiweb.py', "-r", self.temp_dir.get_relative_path()]
 
+        with patch.object(sys, 'argv', self.test_args):
+            self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
+            self.file_not_exist(self.temp_dir.get_path("index.rst"))    
+                    
     def tearDown(self):
         self.temp_dir.remove_tempdir()
         

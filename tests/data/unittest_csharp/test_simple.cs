@@ -4,6 +4,10 @@
 testcomment
 */
 
+/* 
+forced comment with block comments
+*/ 
+
 //@include(test_area)
 
 //@start(test_area)

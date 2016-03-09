@@ -1,6 +1,10 @@
 
 testcomment
 
+/* 
+forced comment with block comments
+*/ 
+
 a new start block
 
 ::
