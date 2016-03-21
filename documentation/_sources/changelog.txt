@@ -30,3 +30,6 @@ Changelog
         Fixed some bugs
 
         Improved behaviour
+		
+    * 02.03.2015
+        Enhanced C# support. Now xml comment tags are stripped.
