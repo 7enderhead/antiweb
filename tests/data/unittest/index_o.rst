@@ -6,5 +6,5 @@ Contents:
    :maxdepth: 2
 
    .. start(generated)
-   docs
+   small_testfile
    .. end(generated)
