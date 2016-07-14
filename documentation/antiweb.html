@@ -83,7 +83,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">antiweb</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">First Steps</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preparing-the-rst-files">Preparing the .rst files</a></li>
 </ul>
@@ -146,10 +146,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#writing-the-index-rst-file">Writing the index.rst file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-the-documentation-files">Writing the documentation files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#process-file">process_file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#search-for-generated">search_for_generated</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#replace-in-generated">replace_in_generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#search-for-generated-block">search_for_generated_block</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a><ul>
@@ -351,7 +350,7 @@ documentaries of Python 2 programs.</p>
 <li>The output from above code would look like this:</li>
 </ul>
 <p class="graphviz">
-<img src="_images/graphviz-104e7f4f6710eec83de7c6132a4e6dfe40a6f93e.png" alt="digraph test {
+<img src="_images/graphviz-a707c93076548aa3cf24ab91b7a642b649d36853.png" alt="digraph test {
 &quot;bubble 1&quot; -&gt; &quot;bubble 2&quot; -&gt; &quot;bubble 3&quot; -&gt; &quot;bubble 1&quot;;
 }" />
 </p>
@@ -569,7 +568,7 @@ via the logging module.</li>
 <div class="compound">
 <p class="compound-first">The graph below show the main objects of antiweb:</p>
 <p class="compound-middle graphviz">
-<img src="_images/graphviz-cedcc4e6f21206a40712a8bbf93db182f1967169.png" alt="digraph collaboration {
+<img src="_images/graphviz-3b1b3fd124c8b696325665edd8ac5c08f558c48d.png" alt="digraph collaboration {
 document [shape=box, label=&quot;document&quot;]
 reader   [shape=box, label=&quot;reader&quot;]
 directives [shape=box, label=&quot;directive&quot; ]
@@ -3766,7 +3765,30 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 37
 38
 39
-40</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">imports</span><span class="o">&gt;&gt;</span>
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">imports</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">management</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">directives</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">readers</span><span class="o">&gt;&gt;</span>
@@ -3776,18 +3798,40 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <span class="o">&lt;&lt;</span><span class="n">document</span><span class="o">&gt;&gt;</span>
 
 
-<span class="o">&lt;&lt;</span><span class="n">get_output_file_name</span><span class="o">&gt;&gt;</span>
 
-<span class="o">&lt;&lt;</span><span class="n">create_output_file_name</span><span class="o">&gt;&gt;</span>
+
+<span class="o">&lt;&lt;</span><span class="n">create_out_file_name</span><span class="o">&gt;&gt;</span>
+
+<span class="o">&lt;&lt;</span><span class="n">create_out_file_name_index</span><span class="o">&gt;&gt;</span>
+
+
+<span class="o">&lt;&lt;</span><span class="n">insert_filename_in_index_file</span><span class="o">&gt;&gt;</span>
 
 <span class="o">&lt;&lt;</span><span class="n">create_doc_directory</span><span class="o">&gt;&gt;</span>
 
 
-<span class="k">def</span> <span class="nf">write_static</span><span class="p">(</span><span class="n">input_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">):</span>
-    <span class="n">index_static</span> <span class="o">=</span> <span class="s2">&quot;Documentation</span><span class="se">\n</span><span class="s2">=======================</span><span class="se">\n</span><span class="s2">Contents:</span><span class="se">\n\n</span><span class="s2">.. toctree::</span><span class="se">\n</span><span class="s2">   :maxdepth: 2</span><span class="se">\n\n</span><span class="s2">   &quot;</span> <span class="o">+</span> <span class="n">start_of_block</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   &quot;</span> <span class="o">+</span> <span class="n">end_of_block</span>
+<span class="o">&lt;&lt;</span><span class="n">replace_path_seperator</span><span class="o">&gt;&gt;</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_type</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_out</span><span class="p">:</span>
-        <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index_static</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">write_static</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">append_only_block</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">index_generated</span> <span class="o">=</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">start_of_block</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   &quot;</span> <span class="o">+</span> <span class="n">end_of_block</span>
+    <span class="n">write_option</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
+
+    <span class="n">index_content</span> <span class="o">=</span> <span class="n">index_generated</span>
+
+    <span class="k">if</span> <span class="n">append_only_block</span><span class="p">:</span>
+        <span class="n">write_option</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">index_content</span> <span class="o">=</span> <span class="s2">&quot;Documentation</span><span class="se">\n</span><span class="s2">=======================</span><span class="se">\n</span><span class="s2">Contents:</span><span class="se">\n\n</span><span class="s2">.. toctree::</span><span class="se">\n</span><span class="s2">   :maxdepth: 2</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">index_content</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">index_file</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">write_option</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_out</span><span class="p">:</span>
+            <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index_content</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Error: Index File: </span><span class="si">%s</span><span class="s2"> could not be created.&quot;</span><span class="p">,</span>  <span class="n">index_file</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">parsing</span><span class="p">():</span>
 
@@ -3803,6 +3847,7 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--warnings&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;warnings&quot;</span><span class="p">,</span>
                       <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;suppresses warnings&quot;</span><span class="p">)</span>
+
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
@@ -4005,8 +4050,7 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 24
 25
 26
-27
-28</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
                       <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Process every file in given directory&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--index&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
@@ -4026,17 +4070,16 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">options</span><span class="o">.</span><span class="n">warnings</span> <span class="o">=</span> <span class="kc">True</span>
 
-
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="n">index_rst</span> <span class="o">=</span> <span class="s2">&quot;index.rst&quot;</span>
-    <span class="n">start_of_block</span> <span class="o">=</span> <span class="s2">&quot;.. start(generated)&quot;</span>
-    <span class="n">end_of_block</span> <span class="o">=</span> <span class="s2">&quot;.. end(generated)&quot;</span>
+    <span class="n">start_block</span> <span class="o">=</span> <span class="s2">&quot;.. start(generated)&quot;</span>
+    <span class="n">end_block</span> <span class="o">=</span> <span class="s2">&quot;.. end(generated)&quot;</span>
 </pre></div>
 </td></tr></table></div>
-<p>The program will check if a -r flag was given and if so, save the current directory and change it to the given one</p>
+<p>The program will check if a -r flag was given and if so, save the current directory and change it to the given one.</p>
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4063,61 +4106,54 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 24
 25
 26
-27
-28
-29
-30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">previous_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">previous_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
-<span class="c1">#convert to absolute path, this is needed if a relative path was given</span>
+<span class="c1">#Convert to absolute path. This is needed if a relative path was given.</span>
 <span class="n">absolute_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">:</span>
     <span class="n">directory</span> <span class="o">=</span> <span class="n">absolute_path</span>
 
-    <span class="c1">#check if the given path refers to an existing directory</span>
-    <span class="c1">#the program aborts if the directory does not exist or if the path refers to a file</span>
-    <span class="c1">#a file is not allowed here because the -r option requires a directory</span>
+    <span class="c1">#Check if the given path refers to an existing directory.</span>
+    <span class="c1">#The program aborts if the directory does not exist or if the path refers to a file.</span>
+    <span class="c1">#A file is not allowed here because the -r option requires a directory.</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;directory not found: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="c1">#Create the absolute path of the index file.</span>
         <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
-            <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)):</span>
-                <span class="n">write_static</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">)</span>
-
-            <span class="n">content</span><span class="p">,</span> <span class="n">startline</span> <span class="o">=</span> <span class="n">search_for_generate</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">)</span>
-
+            <span class="n">index_rst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)):</span>
-                <span class="n">write_static</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">)</span>
+            <span class="n">index_rst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)</span>
 
-            <span class="n">content</span><span class="p">,</span> <span class="n">startline</span> <span class="o">=</span> <span class="n">search_for_generate</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">)</span>
+        <span class="c1">#Create index file if it does not already exist.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">index_rst</span><span class="p">):</span>
+            <span class="n">write_static</span><span class="p">(</span><span class="n">index_rst</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>The program walks through the given directory and all subdirectories and retrieves all files.</p>
-<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Only files with the following extensions will be processed</p>
+<p>The program walks through the given directory and all subdirectories. The absolute file names
+are retrieved. Only files with the allowed extensions are processed.</p>
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">ext_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;.cs&quot;</span><span class="p">,</span><span class="s2">&quot;.cpp&quot;</span><span class="p">,</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span><span class="s2">&quot;.cc&quot;</span><span class="p">,</span> <span class="s2">&quot;.rst&quot;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext_tuple</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-        <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#Only files with the following extensions will be processed</span>
+<span class="n">ext_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;.cs&quot;</span><span class="p">,</span><span class="s2">&quot;.cpp&quot;</span><span class="p">,</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span><span class="s2">&quot;.cc&quot;</span><span class="p">,</span> <span class="s2">&quot;.rst&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext_tuple</span><span class="p">):</span>
+            <span class="n">write</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <p>This else will take place when the -r flag is not given.</p>
@@ -4146,43 +4182,65 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 23
 24
 25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">else</span><span class="p">:</span>
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">else</span><span class="p">:</span>
     <span class="n">absolute_file_path</span> <span class="o">=</span> <span class="n">absolute_path</span>
 
-    <span class="c1">#check if the given path refers to an existing file</span>
-    <span class="c1">#the program aborts if the file does not exist or if the path refers to an directory</span>
-    <span class="c1">#a directory is not allowed here because a directory can only be used with the -r option</span>
+    <span class="c1">#Check if the given path refers to an existing file.</span>
+    <span class="c1">#The program aborts if the file does not exist or if the path refers to a directory.</span>
+    <span class="c1">#A directory is not allowed here because a directory can only be used with the -r option.</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">absolute_file_path</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;file not found: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">absolute_file_path</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">absolute_file_path</span><span class="p">)</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">absolute_file_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">directory</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">index_rst</span><span class="p">)):</span>
-            <span class="n">write_static</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">)</span>
-        <span class="n">content</span><span class="p">,</span> <span class="n">startline</span> <span class="o">=</span> <span class="n">search_for_generate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">)</span>
-        <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">absolute_file_path</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">absolute_file_path</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="c1">#Create the absolute path of the index file.</span>
+        <span class="n">index_rst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">index_rst</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">index_rst</span><span class="p">):</span>
+            <span class="n">write_static</span><span class="p">(</span><span class="n">index_rst</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
+
+    <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">absolute_file_path</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">previous_dir</span><span class="p">)</span>
 
 <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 </td></tr></table></div>
-<div class="section" id="writing-the-index-rst-file">
-<h3>Writing the index.rst file<a class="headerlink" href="#writing-the-index-rst-file" title="Permalink to this headline">¶</a></h3>
-<p>From the given file a .rst file will be created if it contains an antiweb <code class="xref py py-class docutils literal"><span class="pre">start()</span> <span class="pre">directive</span></code></p>
-<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">startline</span><span class="p">):</span>
-</pre></div>
-</div>
-<p>Before the input file is processed the name of the output file and the name for the index file
-have to be computed. How the file names are created depends on the different commandline options.</p>
-<p>When there is no output option given the output file name is created in the following way:</p>
+<div class="section" id="writing-the-documentation-files">
+<h3>Writing the documentation files<a class="headerlink" href="#writing-the-documentation-files" title="Permalink to this headline">¶</a></h3>
+<p>From the given file a .rst file will be created if it contains an antiweb <code class="xref py py-class docutils literal"><span class="pre">start()</span> <span class="pre">directive</span></code>.
+The following function is called for the creation of the documentation files.</p>
+<dl class="method">
+<dt id="write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>working_dir</em>, <em>input_file</em>, <em>options</em>, <em>index_file</em>, <em>start_block</em>, <em>end_block</em><span class="sig-paren">)</span><a class="headerlink" href="#write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the corresponding documention file and optionally adds the processed file to the index file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>working_dir</strong> &#8211; Current working directory.</li>
+<li><strong>input_file</strong> &#8211; Contains the absolute path of the currently processed file.</li>
+<li><strong>options</strong> &#8211; Commandline options.</li>
+<li><strong>index_file</strong> &#8211; Name of the index file.</li>
+<li><strong>start_block</strong> &#8211; String which contains the generated index block start definition.</li>
+<li><strong>end_block</strong> &#8211; String which contains the generated index block end definition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Before the input file is processed the name of the output file has to be computed.
+How the output file name is created depends on the different commandline options.
+When there is no output option given the output file name is created in the following way:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="50%" />
@@ -4202,63 +4260,23 @@ have to be computed. How the file names are created depends on the different com
 </tr>
 </tbody>
 </table>
-<p>The output file name for the index file is only the file name itself: <em>&#8220;testing.rst&#8221;</em>.
-The recursive option indicates that the a relative path to the file should be used in the index file: <em>&#8220;reportdir\testing.rst&#8221;</em></p>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">docs</span> <span class="o">=</span> <span class="s2">&quot;_docs&quot;</span>
-<span class="n">rst_suffix</span> <span class="o">=</span> <span class="s2">&quot;.rst&quot;</span>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">rst_suffix</span><span class="p">):</span>
-        <span class="n">out_file</span> <span class="o">=</span>  <span class="n">out_file</span> <span class="o">+</span> <span class="n">docs</span>
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">out_file</span> <span class="o">+</span> <span class="n">rst_suffix</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span>
+    <span class="n">recursive</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span>
 
-    <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
-        <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">out_file_name_index</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">input_file</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>If there is an output given, we have to distinguishe between the non-recursive and recursive option:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Input File</th>
-<th class="head">Output File</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report.rst</span></code></td>
-<td><em>working_dir\report.rst</em></td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report</span></code></td>
-<td><em>working_dir\report\testing.rst</em></td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report\report.rst</span></code></td>
-<td><em>C:\antiweb\report\report.rst</em></td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report\report.rst\</span></code></td>
-<td><em>C:\antiweb\report\report.rst\testing.rst</em></td>
-</tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">C:\antiweb\report.rst</span></code></td>
-<td><em>C:\antiweb\report.rst</em></td>
-</tr>
-</tbody>
-</table>
-<p>When the recursive option is used in combination with the output option, the output parameter is treated as the documentation directory:</p>
+<p>If there is an output given, we have to distinguish between the recursive and non-recursive option.
+When the recursive option is used in combination with the output option, the output parameter is treated as the documentation directory:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="50%" />
@@ -4271,116 +4289,64 @@ The recursive option indicates that the a relative path to the file should be us
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">report.rst</span></code></td>
-<td><em>working_dir\report.rst\file.rst</em></td>
+<td><em>C:\antiweb\report.rst\file.rst</em></td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">report</span></code></td>
-<td><em>working_dir\report\file.rst</em></td>
+<td><em>C:\antiweb\report\file.rst</em></td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">C:\antiweb\report.rst</span></code></td>
 <td><em>C:\antiweb\report.rst\file.rst</em></td>
 </tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">\..\report.rst</span></code></td>
+<td><em>C:\report.rst\file.rst</em></td>
+</tr>
 </tbody>
 </table>
-<p>The output file name for the index file is the file name itself: <em>testing.rst</em>.
-The recursive option indicates that a relative path to the file should be used in the index file: <em>reportdir\testing.rst</em>.
-Path seperator characters are replaced by &#8220;_&#8221; which leads to the file name: <em>reportdir_testing.rst</em>.</p>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">else</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
-        <span class="c1">#the output parameter is treated as a directory</span>
-        <span class="c1">#if it is not an absolute path it is combined with the current working dir</span>
-        <span class="n">out_file</span> <span class="o">=</span> <span class="n">get_output_file_name</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-
-        <span class="c1">#the output file name for the index file should contain a relative path</span>
-        <span class="n">rel_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-        <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">rel_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
-        <span class="c1">#Path seperator characters are replaced by &quot;_&quot; in the index file</span>
-        <span class="k">if</span> <span class="n">_platform</span> <span class="o">==</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">or</span> <span class="n">_platform</span> <span class="o">==</span> <span class="s2">&quot;linux2&quot;</span><span class="p">:</span>
-            <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">out_file_name_index</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">_platform</span> <span class="o">==</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
-            <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">out_file_name_index</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1">#retrieve the potential directory and file from the output parameter</span>
-        <span class="n">path_tokens</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-        <span class="n">directory</span> <span class="o">=</span> <span class="n">path_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="n">path_tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-        <span class="n">out_file</span> <span class="o">=</span> <span class="n">get_output_file_name</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
-        <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="c1">#create the documentation directory. if it can&#39;t be created the program exits</span>
-<span class="n">create_doc_directory</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-<p>The prepared file path gets pushed to &#8216;&#8217;process file&#8217;&#8216;. If the process is successful, &#8216;&#8217;could_process&#8217;&#8217; is set to &#8216;&#8217;True&#8217;&#8216;.</p>
-<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If the user added the -i flag, the file gets added to Sphinx&#8217; index.rst file. Between the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directives is the space for automatic added files, you can manually add files below the <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directive.</p>
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">index</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">could_process</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">output</span> <span class="ow">and</span> <span class="n">recursive</span><span class="p">:</span>
-            <span class="n">replace_in_generated</span><span class="p">(</span><span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">out_file_name_index</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">replace_in_generated</span><span class="p">(</span><span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">out_file_name_index</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="c1">#The output parameter is treated as a directory.</span>
+        <span class="c1">#If it is a relative path it is combined with the current working directory.</span>
+        <span class="n">directory</span> <span class="o">=</span> <span class="n">output</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span><span class="n">directory</span><span class="p">,</span><span class="n">input_file</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<dl class="method">
-<dt id="get_output_file_name">
-<code class="descname">get_output_file_name</code><span class="sig-paren">(</span><em>working_dir</em>, <em>input_file_name</em>, <em>output</em>, <em>directory</em>, <em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#get_output_file_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the absolute path to the output file based on the output commandline option.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>working_dir</strong> &#8211; Current working directory.</li>
-<li><strong>input_file_name</strong> &#8211; The name of the file which should be processed.</li>
-<li><strong>output</strong> &#8211; The given -output parameter.</li>
-<li><strong>directory</strong> &#8211; The dedicated report directory.</li>
-<li><strong>file</strong> &#8211; The file part from the -output parameter.</li>
-</ul>
-</td>
+<p>When the output option is used without the recursive option the output file name is computed in the following way:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Input File</th>
+<th class="head">Output File</th>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The absolute path of the output file.</p>
-</td>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report.rst</span></code></td>
+<td><em>C:\antiweb\report.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report</span></code></td>
+<td><em>C:\antiweb\report\testing.rst</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">\..\report</span></code></td>
+<td><em>C:\report\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report\report.rst</span></code></td>
+<td><em>C:\antiweb\report\report.rst</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report\report.rst\</span></code></td>
+<td><em>C:\antiweb\report\report.rst\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">C:\report\report.rst</span></code></td>
+<td><em>C:\report\report.rst</em></td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4401,52 +4367,58 @@ Path seperator characters are replaced by &#8220;_&#8221; which leads to the fil
 18
 19
 20
-21
-22
-23
-24
-25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_output_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file_name</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
-    <span class="n">out_file</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="k">else</span><span class="p">:</span>
+        <span class="c1">#Get the file extension from output parameter</span>
+        <span class="n">file_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">directory</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">file</span><span class="p">:</span>
-            <span class="c1">#check if the file has an extension.</span>
-            <span class="c1">#true: the output parameter is treated as the outputfile name</span>
-            <span class="c1">#otherwise it is treated as the documentation directory</span>
-            <span class="n">file_name</span><span class="p">,</span> <span class="n">file_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">file_extension</span><span class="p">:</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s2">&quot;.rst&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1">#the output parameter refers to a directory. the directory is combined with</span>
-                <span class="c1">#the input file name and optionally with the working_dir.</span>
-                <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_output_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file_name</span><span class="p">,</span>  <span class="n">file_name</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1">#we got a directory from the -output parameter. if the output parameter only contains a directory</span>
-        <span class="c1">#the input file name is combined with the directory. otherwise the output parameter contains an entire</span>
-        <span class="c1">#path,  then the output file name equals the output parameter.</span>
-        <span class="n">out_file</span> <span class="o">=</span> <span class="n">output</span>
+        <span class="k">if</span> <span class="n">file_extension</span><span class="p">:</span>
+            <span class="c1">#If there is a file extension the last part of the output parameter is treated as the output file name.</span>
+            <span class="n">path_tokens</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="n">directory</span> <span class="o">=</span> <span class="n">path_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">path_tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="p">:</span>
-            <span class="c1">#we only have a directory, the directory should be combined with the input file name</span>
-            <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_output_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span>  <span class="n">input_file_name</span><span class="p">,</span>  <span class="n">directory</span><span class="p">)</span>
+            <span class="c1">#If directory contains an absolute path the working directory will be ignored,</span>
+            <span class="c1">#otherwise all three parameters will be joined</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">#If there is no file extension the whole output parameter is treated as the report directory.</span>
+            <span class="n">directory</span> <span class="o">=</span> <span class="n">output</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">input_file</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+<span class="c1">#Create the documentation directory. If it can&#39;t be created the program exits.</span>
+<span class="n">create_doc_directory</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
+<p>Now the input file is processed and the corresponding documentation file is created.
+If processing is successful, &#8216;&#8217;could_process&#8217;&#8217; is set to &#8216;&#8217;True&#8217;&#8216;.</p>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the file was processed successfully and the index option is used, the file name which should be inserted
+in the generated index file block has to be computed first. Afterwards the file name is inserted in the
+index file (see <a class="reference internal" href="#insert_filename_in_index_file" title="insert_filename_in_index_file"><code class="xref py py-meth docutils literal"><span class="pre">insert_filename_in_index_file()</span></code></a>).</p>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span> <span class="ow">and</span> <span class="n">could_process</span><span class="p">:</span>
+    <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">create_out_file_name_index</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="p">)</span>
+    <span class="n">insert_filename_in_index_file</span><span class="p">(</span><span class="n">out_file_name_index</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="method">
-<dt id="create_output_file_name">
-<code class="descname">create_output_file_name</code><span class="sig-paren">(</span><em>working_dir</em>, <em>input_file_name</em>, <em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#create_output_file_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the path to the output file name. The &#8221;.rst&#8221; suffix is added to the input file name.
-Then the paths of the working_dir and the directory are combined with the input file name.</p>
+<dt id="create_out_file_name">
+<code class="descname">create_out_file_name</code><span class="sig-paren">(</span><em>working_dir</em>, <em>directory</em>, <em>input_file</em><span class="sig-paren">)</span><a class="headerlink" href="#create_out_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the absolute path for the output file name. The input file name suffix is replaced by
+&#8221;.rst&#8221;. If the input file name ends with &#8221;.rst&#8221; the string &#8220;_docs&#8221; is added before the suffix.
+If directory contains a relative path then paths of the working_dir and the directory
+are combined with the input file name. Otherwise, the directory is combined with the
+input file name.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>working_dir</strong> &#8211; Current working directory.</li>
-<li><strong>input_file_name</strong> &#8211; The name of the file which should be processed.</li>
-<li><strong>directory</strong> &#8211; The dedicated report directory.</li>
+<li><strong>working_dir</strong> &#8211; Absolute path of the current working directory.</li>
+<li><strong>directory</strong> &#8211; The documentation directory (absolute or relative)</li>
+<li><strong>input_file</strong> &#8211; The absolute path to the file which should be processed.</li>
 </ul>
 </td>
 </tr>
@@ -4457,17 +4429,214 @@ Then the paths of the working_dir and the directory are combined with the input 
 </table>
 </dd></dl>
 
-<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_output_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file_name</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
-    <span class="n">input_rst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">input_file_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.rst&quot;</span>
-    <span class="n">input_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">input_rst</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span>  <span class="n">input_name</span><span class="p">)</span>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Working_Dir</th>
+<th class="head">Directory</th>
+<th class="head">Input_File_Name</th>
+<th class="head">Output_File_Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>C:\antiweb\</em></td>
+<td>doc</td>
+<td><em>C:\antiweb\testing.py</em></td>
+<td><em>C:\antiweb\doc\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><em>C:\antiweb\</em></td>
+<td>&nbsp;</td>
+<td><em>C:\antiweb\testing.py</em></td>
+<td><em>C:\antiweb\testing.rst</em></td>
+</tr>
+<tr class="row-even"><td><em>C:\antiweb\</em></td>
+<td><em>C:\doc\</em></td>
+<td><em>testing.py</em></td>
+<td><em>C:\doc\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><em>C:\antiweb\</em></td>
+<td>doc</td>
+<td><em>C:\antiweb\testing.rst</em></td>
+<td><em>C:\antiweb\doc\testing_docs.rst</em></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">input_file</span><span class="p">):</span>
+
+    <span class="n">docs</span> <span class="o">=</span> <span class="s2">&quot;_docs&quot;</span>
+    <span class="n">rst_suffix</span> <span class="o">=</span> <span class="s2">&quot;.rst&quot;</span>
+    <span class="n">out_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">input_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">input_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">rst_suffix</span><span class="p">):</span>
+        <span class="n">out_file_path</span> <span class="o">=</span>  <span class="n">out_file_path</span> <span class="o">+</span> <span class="n">docs</span>
+
+    <span class="n">out_file_path</span> <span class="o">=</span>  <span class="n">out_file_path</span> <span class="o">+</span> <span class="n">rst_suffix</span>
+
+    <span class="n">out_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1">#If directory contains an absolute path, the working directory is ignored.</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">out_file_name</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_file</span>
 </pre></div>
+</td></tr></table></div>
+<dl class="method">
+<dt id="create_out_file_name_index">
+<code class="descname">create_out_file_name_index</code><span class="sig-paren">(</span><em>out_file</em>, <em>working_dir</em>, <em>recursive</em><span class="sig-paren">)</span><a class="headerlink" href="#create_out_file_name_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the file name which should be inserted in the generated index file block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>out_file</strong> &#8211; Absolute path of the output file.</li>
+<li><strong>index_file</strong> &#8211; Absolute path of the index file.</li>
+<li><strong>recursive</strong> &#8211; Boolean which indicates whether the recursive commandline options is used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The file name which should be inserted in the generated index file block.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>If the user added the -i flag, an index file (documentation base file) is created which contains all processed files.
+Between the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directives the names of the processed files are added.
+The file names which are inserted into the index file are computed in the following way:</p>
+<p>When the recursive option is used the file name in the index file is a relative path without extension.
+Otherwise the index file will only contain the filename without extension.
+Path seperator characters are replaced by &#8220;_&#8221;.</p>
+<div class="line-block">
+<div class="line">Non-recursive example with current processed file: <em>C:\antiweb\report.rst\file.rst</em>:</div>
+<div class="line"><code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code></div>
+<div class="line"><code class="xref py py-class docutils literal"><span class="pre">file</span></code></div>
+<div class="line"><code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code></div>
+<div class="line"><br /></div>
+<div class="line">Recursive example with current processed file: <em>C:\antiweb\report.rst\file.rst</em>:</div>
+<div class="line"><code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code></div>
+<div class="line"><code class="xref py py-class docutils literal"><span class="pre">report.rst_file</span></code></div>
+<div class="line"><code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code></div>
+<div class="line"><br /></div>
 </div>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_out_file_name_index</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="p">):</span>
+
+    <span class="c1">#1) Obtain only the file name</span>
+    <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1">#2) Remove the extension</span>
+    <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_file_name_index</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">out_file_name_index</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">)</span>
+        <span class="n">out_file_name_index</span> <span class="o">=</span> <span class="n">replace_path_seperator</span><span class="p">(</span><span class="n">out_file_name_index</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out_file_name_index</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="method">
+<dt id="insert_filename_in_index_file">
+<code class="descname">insert_filename_in_index_file</code><span class="sig-paren">(</span><em>file_name</em>, <em>index_file</em>, <em>start_block</em>, <em>end_block</em><span class="sig-paren">)</span><a class="headerlink" href="#insert_filename_in_index_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts the given file name into the generated block in the index file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_name</strong> &#8211; The file name which should be inserted in the index file.</li>
+<li><strong>index_file</strong> &#8211; Absolute path of the index file.</li>
+<li><strong>start_block</strong> &#8211; String which contains the generated index block start definition.</li>
+<li><strong>end_block</strong> &#8211; String which contains the generated index block end definition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>If the user added the -i flag, an index file (documentation base file) is created which contains all processed files.
+Between the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directives the names of the processed files are added.
+Read  <a class="reference internal" href="#create_out_file_name_index" title="create_out_file_name_index"><code class="xref py py-meth docutils literal"><span class="pre">create_out_file_name_index()</span></code></a> for more information about how the to be inserted file name is computed.
+Files can be manually added after the <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directive.</p>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_filename_in_index_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+
+    <span class="c1">#At first the position has to be found where the new file should be inserted.</span>
+    <span class="n">content</span><span class="p">,</span> <span class="n">endline</span> <span class="o">=</span> <span class="n">search_for_generated_block</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
+
+    <span class="c1">#If the index file does not contain the generated block, it is appended.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">content</span><span class="p">:</span>
+        <span class="n">write_static</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">content</span><span class="p">,</span> <span class="n">endline</span> <span class="o">=</span> <span class="n">search_for_generated_block</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">endline</span><span class="p">:</span>
+        <span class="c1">#The new file name is inserted into the index file contents.</span>
+        <span class="n">content</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">endline</span><span class="p">,</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1">#The adapted index file contents are written out to the index file.</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_out</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+                <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Error: Could not write to index file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="n">index_file</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
 <dl class="method">
 <dt id="create_doc_directory">
 <code class="descname">create_doc_directory</code><span class="sig-paren">(</span><em>out_file</em><span class="sig-paren">)</span><a class="headerlink" href="#create_doc_directory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the documentation directory if it not yet exists.
+<dd><p>Creates the documentation directory if it does not yet exist.
 If an error occurs the program exits.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -4491,9 +4660,38 @@ If an error occurs the program exits.</p>
         <span class="n">out_file_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_file_directory</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">out_file_directory</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">WebError</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Error: Documentation Directory: </span><span class="si">%s</span><span class="s2"> could not be created&quot;</span><span class="p">,</span>  <span class="n">out_file_directory</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="method">
+<dt id="replace_path_seperator">
+<code class="descname">replace_path_seperator</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#replace_path_seperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces OS specific path seperator characters by &#8216;_&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> &#8211; The path to a file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">replace_path_seperator</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+<span class="c1">#Path seperator characters are replaced by &quot;_&quot; in the index file</span>
+    <span class="k">if</span> <span class="n">_platform</span> <span class="o">==</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">or</span> <span class="n">_platform</span> <span class="o">==</span> <span class="s2">&quot;linux2&quot;</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_platform</span> <span class="o">==</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">file</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -4536,9 +4734,10 @@ If an error occurs the program exits.</p>
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="search-for-generated">
-<h3>search_for_generated<a class="headerlink" href="#search-for-generated" title="Permalink to this headline">¶</a></h3>
-<p>The line numbers of the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directive are looked up and their content getting depleted</p>
+<div class="section" id="search-for-generated-block">
+<h3>search_for_generated_block<a class="headerlink" href="#search-for-generated-block" title="Permalink to this headline">¶</a></h3>
+<p>The index file is searched for the generated block. The contents in the generated block are deleted.
+The whole content and the endline of the generated block are returned.</p>
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -4559,16 +4758,13 @@ If an error occurs the program exits.</p>
 18
 19
 20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search_for_generate</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">):</span>
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search_for_generated_block</span><span class="p">(</span><span class="n">index_rst</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">):</span>
 
     <span class="n">startline</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">endline</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">index_rst</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_file</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">index_file</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">start_of_block</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
                 <span class="n">startline</span> <span class="o">=</span> <span class="n">num</span>
@@ -4578,41 +4774,11 @@ If an error occurs the program exits.</p>
             <span class="k">if</span> <span class="n">startline</span> <span class="ow">and</span> <span class="n">endline</span><span class="p">:</span>
                 <span class="n">index_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                 <span class="n">content</span> <span class="o">=</span> <span class="n">index_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+                <span class="c1">#delete content of generated block</span>
                 <span class="k">del</span> <span class="n">content</span><span class="p">[</span><span class="n">startline</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">endline</span><span class="p">]</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="replace-in-generated">
-<h3>replace_in_generated<a class="headerlink" href="#replace-in-generated" title="Permalink to this headline">¶</a></h3>
-<p>The name of the generated files get added between the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directives. Code before and after is left as is.</p>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">replace_in_generated</span><span class="p">(</span><span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">out_file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">startline</span><span class="p">):</span>
-
-    <span class="k">if</span> <span class="n">startline</span><span class="p">:</span>
-        <span class="n">endline</span> <span class="o">=</span> <span class="n">startline</span><span class="o">+</span><span class="mi">1</span>
-    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-    <span class="n">index_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_file_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">startline</span> <span class="ow">and</span> <span class="n">endline</span><span class="p">:</span>
-        <span class="n">content</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">endline</span><span class="p">,</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">index_var</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_out</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
-            <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="c1">#set endline = old_endline - deleted lines</span>
+                <span class="n">endline</span> <span class="o">=</span> <span class="n">endline</span> <span class="o">-</span> <span class="p">(</span><span class="n">endline</span><span class="o">-</span><span class="p">(</span><span class="n">startline</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">endline</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 </div>
