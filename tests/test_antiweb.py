@@ -224,11 +224,11 @@ class Test_Antiweb_rst(unittest.TestCase):
     
     def test_antiweb_rst_i_o(self):
         compare_path_small_testfile = self.data_dir.get_path("ein_rst_docs.rst")
-        compare_path_index = self.data_dir.get_path("index_o.rst")
+        compare_path_index = self.data_dir.get_path("index.rst")
         self.test_args = ['antiweb.py', '-i', "-o", self.doc_dir, self.temp_dir.get_path("ein_rst.rst")]
 
         with patch.object(sys, 'argv', self.test_args):
-            self.functional("", self.doc_dir + "\\ein_rst.rst", compare_path_small_testfile, main())
+            self.functional("", self.doc_dir + "\\ein_rst_docs.rst", compare_path_small_testfile, main())
             self.functional("", "index.rst", compare_path_index, os.path.isfile(self.temp_dir.get_path("index.rst")))
 
     #@edoc
@@ -239,7 +239,7 @@ class Test_Antiweb_rst(unittest.TestCase):
         self.test_args = ['antiweb.py', "-o", self.doc_dir, self.temp_dir.get_path("ein_rst.rst")]
 
         with patch.object(sys, 'argv', self.test_args):
-            self.functional("", self.doc_dir + "\\ein_rst.rst", compare_path_small_testfile, main())
+            self.functional("", self.doc_dir + "\\ein_rst_docs.rst", compare_path_small_testfile, main())
             self.file_not_exist(self.temp_dir.get_path("index.rst"))
 
     def test_antiweb_rst_i(self):
@@ -265,7 +265,7 @@ class Test_Antiweb_rst(unittest.TestCase):
         self.test_args = ['antiweb.py', '-i', "-o" , self.doc_dir, "-r", self.temp_dir.get_path()]
 
         with patch.object(sys, 'argv', self.test_args):
-            self.functional(self.doc_dir, "ein_rst.rst", compare_path_small_testfile, main())
+            self.functional(self.doc_dir, "ein_rst_docs.rst", compare_path_small_testfile, main())
             self.functional(self.doc_dir, "index.rst", compare_path_index, os.path.isfile(self.temp_dir.get_path(self.doc_dir, "index.rst")))
 
     def test_antiweb_rst_r_i(self):
@@ -282,7 +282,7 @@ class Test_Antiweb_rst(unittest.TestCase):
         self.test_args = ['antiweb.py',"-o", self.doc_dir, "-r", self.temp_dir.get_path()]
 
         with patch.object(sys, 'argv', self.test_args):
-            self.functional(self.doc_dir, "ein_rst.rst", compare_path_small_testfile, main())
+            self.functional(self.doc_dir, "ein_rst_docs.rst", compare_path_small_testfile, main())
             self.file_not_exist(self.temp_dir.get_path(self.doc_dir, "index.rst"))
 
     def test_antiweb_rst_r(self):

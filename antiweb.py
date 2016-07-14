@@ -2725,24 +2725,22 @@ def process_file(in_file, out_file, token, warnings):
     return could_write
 #@edoc
 
-#@start(search_for_generated)
-#search_for_generated
-#====================
+#@start(search_for_generated_block)
+#search_for_generated_block
+#============================
 
-#The line numbers of the :py:class:`start(generated)` and :py:class:`end(generated)` directive are looked up and their content getting depleted
+#The index file is searched for the generated block. The contents in the generated block are deleted.
+#The whole content and the endline of the generated block are returned.
 
 #@code
 
-def search_for_generate(output, index_rst, start_of_block, end_of_block):
-
+def search_for_generated_block(index_rst, start_of_block, end_of_block):
+    
     startline = None
     endline = None
     content = ""
-    if not output:
-        output = ""
 
-    path = os.path.join(os.getcwd(), output, index_rst)
-    with open(path, "r") as index_file:
+    with open(index_rst, "r") as index_file:
         for num, line in enumerate(index_file):
             if start_of_block in line:
                 startline = num
@@ -2752,51 +2750,46 @@ def search_for_generate(output, index_rst, start_of_block, end_of_block):
             if startline and endline:
                 index_file.seek(0, 0)
                 content = index_file.readlines()
+                #delete content of generated block
                 del content[startline+1:endline]
-    return (content, startline)
+                #set endline = old_endline - deleted lines
+                endline = endline - (endline-(startline+1))
+    return (content, endline)
 #@edoc
 
-#@start(replace_in_generated)
-#replace_in_generated
-#====================
+#@start(write_documentation)
 
-#The name of the generated files get added between the :py:class:`start(generated)` and :py:class:`end(generated)` directives. Code before and after is left as is.
+#Writing the documentation files
+#===============================
 
-#@code
+#From the given file a .rst file will be created if it contains an antiweb :py:class:`start() directive`.
+#The following function is called for the creation of the documentation files.
 
-def replace_in_generated(start_of_block, end_of_block, out_file_name, path, output, index_rst, content, startline):
-
-    if startline:
-        endline = startline+1
-    if output is None:
-        output = ""
-    
-    index_var = os.path.splitext(out_file_name)[0]
-    if startline and endline:
-        content.insert(endline, "   " + index_var + "\n")
-
-    with open(os.path.join(path, output, index_rst), "w") as index_out:
-        for item in content:
-            index_out.write(item)
-
-#@edoc
+#@include(write doc)
+#@include(write_body)
+#@(write_documentation) 
 
 #@start(write)
-#
-#Writing the index.rst file
-#==========================
+def write(working_dir, input_file, options, index_file, start_block, end_block):
+#@start(write doc)
+    """
+.. py:method:: write(working_dir, input_file, options, index_file, start_block, end_block)
+    
+   Creates the corresponding documention file and optionally adds the processed file to the index file.
+           
+   :param working_dir: Current working directory.
+   :param input_file: Contains the absolute path of the currently processed file.
+   :param options: Commandline options.
+   :param index_file: Name of the index file.
+   :param start_block: String which contains the generated index block start definition.
+   :param end_block: String which contains the generated index block end definition.
+    """
+#@(write doc) 
 
-#From the given file a .rst file will be created if it contains an antiweb :py:class:`start() directive`
+#@start(write_body)
 
-#@code
-
-def write(path, fname, output, token, warnings, index, index_rst, recursive, content, start_of_block, end_of_block, startline):
-
-#@edoc
-
-#Before the input file is processed the name of the output file and the name for the index file 
-#have to be computed. How the file names are created depends on the different commandline options.
-
+#Before the input file is processed the name of the output file has to be computed. 
+#How the output file name is created depends on the different commandline options.
 #When there is no output option given the output file name is created in the following way:
 
 #.. csv-table::
@@ -2804,172 +2797,236 @@ def write(path, fname, output, token, warnings, index, index_rst, recursive, con
 
 #   ``C:\antiweb\testing.cs``, *C:\\antiweb\\testing.rst*
 #   ``C:\antiweb\testing.rst``, *C:\\antiweb\\testing_docs.rst*
-           
-           
-#The output file name for the index file is only the file name itself: *"testing.rst"*.  
-#The recursive option indicates that the a relative path to the file should be used in the index file: *"reportdir\\testing.rst"*
 
 #@code
+#@include(write)
 
-        docs = "_docs"
-        rst_suffix = ".rst"
-        
-        if not output:
-            out_file = os.path.splitext(fname)[0]
-            if fname.endswith(rst_suffix):
-                out_file =  out_file + docs
-            out_file = out_file + rst_suffix
-                
-            out_file_name_index = os.path.split(out_file)[1]
-            if recursive:
-                out_file_name_index = os.path.relpath(out_file_name_index, path)
-
+    output = options.output
+    recursive = options.recursive
+    
+    if not output:
+        out_file = create_out_file_name(working_dir, "", input_file)
 #@edoc
 
-#If there is an output given, we have to distinguishe between the non-recursive and recursive option:
-
-#.. csv-table::
-#   :header: "Input File", "Output File"
-
-#   ``C:\antiweb\testing.cs -o report.rst``,*working_dir\\report.rst*
-#   ``C:\antiweb\testing.cs -o report``,*working_dir\\report\\testing.rst*
-#   ``C:\antiweb\testing.cs -o report\report.rst``,*C:\\antiweb\\report\\report.rst*
-#   ``C:\antiweb\testing.cs -o report\report.rst\``,*C:\\antiweb\\report\\report.rst\\testing.rst*
-#   ``C:\antiweb\testing.cs -o C:\antiweb\report.rst``,*C:\\antiweb\\report.rst*
-
+#If there is an output given, we have to distinguish between the recursive and non-recursive option.
 #When the recursive option is used in combination with the output option, the output parameter is treated as the documentation directory:
 
 #.. csv-table::
 #   :header: "Input File", "Output File"
 
-#   ``C:\antiweb\ -r -o report.rst``,*working_dir\\report.rst\\file.rst*
-#   ``C:\antiweb\ -r -o report``,*working_dir\\report\\file.rst*
+#   ``C:\antiweb\ -r -o report.rst``,*C:\\antiweb\\report.rst\\file.rst*
+#   ``C:\antiweb\ -r -o report``,*C:\\antiweb\\report\\file.rst*
 #   ``C:\antiweb\ -r -o C:\antiweb\report.rst``,*C:\\antiweb\\report.rst\\file.rst*
-
-#The output file name for the index file is the file name itself: *testing.rst*.  
-#The recursive option indicates that a relative path to the file should be used in the index file: *reportdir\\testing.rst*.
-#Path seperator characters are replaced by "_" which leads to the file name: *reportdir_testing.rst*.
-           
-#@code
-
-        else:           
-            if recursive:
-                #the output parameter is treated as a directory
-                #if it is not an absolute path it is combined with the current working dir
-                out_file = get_output_file_name(path, fname, output, output, None)
-                
-                #the output file name for the index file should contain a relative path
-                rel_path = os.path.relpath(fname, path)
-                out_file_name_index = os.path.splitext(rel_path)[0]
-                
-                #Path seperator characters are replaced by "_" in the index file
-                if _platform == "linux" or _platform == "linux2":
-                    out_file_name_index = out_file_name_index.replace("/","_")
-                if _platform == "win32":
-                    out_file_name_index = out_file_name_index.replace("\\","_")      
-             
-            else:
-                #retrieve the potential directory and file from the output parameter
-                path_tokens = os.path.split(output)
-                directory = path_tokens[0]
-                file = path_tokens[1]
-                
-                out_file = get_output_file_name(path, fname, output, directory, file)
-                out_file_name_index = os.path.split(out_file)[1]
-        
-        #create the documentation directory. if it can't be created the program exits
-        create_doc_directory(out_file)
-  
-#@edoc
-
-#The prepared file path gets pushed to ''process file''. If the process is successful, ''could_process'' is set to ''True''.
-#@code
-
-        could_process = process_file(fname, out_file, token, warnings)
-
-#@edoc
-
-#If the user added the -i flag, the file gets added to Sphinx' index.rst file. Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives is the space for automatic added files, you can manually add files below the :py:class:`end(generated)` directive.
+#   ``C:\antiweb\ -r -o \..\report.rst``,*C:\\report.rst\\file.rst*
 
 #@code
+    else:           
+        if recursive:
+            #The output parameter is treated as a directory.
+            #If it is a relative path it is combined with the current working directory.
+            directory = output
+            out_file = create_out_file_name(working_dir,directory,input_file)
+#@edoc    
 
-        if index:
-            if could_process:
-                if output and recursive:
-                    replace_in_generated(start_of_block, end_of_block, out_file_name_index, path, output, index_rst, content, startline)
-                else:
-                    replace_in_generated(start_of_block, end_of_block, out_file_name_index, path, None, index_rst, content, startline)
-#@edoc
-#@(write)
+#When the output option is used without the recursive option the output file name is computed in the following way: 
 
-#@cstart(get_output_file_name)
+#.. csv-table::
+#   :header: "Input File", "Output File"
 
-def get_output_file_name(working_dir, input_file_name, output, directory, file):
-#@start(get_output_file_name doc)
-    """
-.. py:method:: get_output_file_name(working_dir, input_file_name, output, directory, file)
-    
-   Computes the absolute path to the output file based on the output commandline option.
-           
-   :param working_dir: Current working directory.
-   :param input_file_name: The name of the file which should be processed.
-   :param output: The given -output parameter.
-   :param directory: The dedicated report directory.
-   :param file: The file part from the -output parameter.
-   :return: The absolute path of the output file.
-    """
-#@include(get_output_file_name) 
-#@(get_output_file_name doc)
-    out_file = ""
+#   ``C:\antiweb\testing.cs -o report.rst``,*C:\\antiweb\\report.rst*
+#   ``C:\antiweb\testing.cs -o report``,*C:\\antiweb\\report\\testing.rst*
+#   ``C:\antiweb\testing.cs -o \..\report``,*C:\\report\\testing.rst*
+#   ``C:\antiweb\testing.cs -o report\report.rst``,*C:\\antiweb\\report\\report.rst*
+#   ``C:\antiweb\testing.cs -o report\report.rst\``,*C:\\antiweb\\report\\report.rst\\testing.rst*
+#   ``C:\antiweb\testing.cs -o C:\report\report.rst``,*C:\\report\\report.rst*
 
-    if not directory:
-        if file:
-            #check if the file has an extension. 
-            #true: the output parameter is treated as the outputfile name
-            #otherwise it is treated as the documentation directory
-            file_name, file_extension = os.path.splitext(file)
+#@code       
+        else:
+            #Get the file extension from output parameter
+            file_extension = os.path.splitext(output)[1]
+            
             if file_extension:
-                out_file = os.path.join(working_dir, directory, file_name + ".rst")
+                #If there is a file extension the last part of the output parameter is treated as the output file name.
+                path_tokens = os.path.split(output)
+                directory = path_tokens[0] 
+                file_name = path_tokens[1]
+                
+                #If directory contains an absolute path the working directory will be ignored,
+                #otherwise all three parameters will be joined
+                out_file = os.path.join(working_dir, directory, file_name)
+                out_file = os.path.abspath(out_file)
             else:
-                #the output parameter refers to a directory. the directory is combined with
-                #the input file name and optionally with the working_dir.
-                out_file = create_output_file_name(working_dir, input_file_name,  file_name)
-    else:
-        #we got a directory from the -output parameter. if the output parameter only contains a directory 
-        #the input file name is combined with the directory. otherwise the output parameter contains an entire
-        #path,  then the output file name equals the output parameter.
-        out_file = output
-        
-        if not file:
-            #we only have a directory, the directory should be combined with the input file name
-            out_file = create_output_file_name(working_dir,  input_file_name,  directory)
+                #If there is no file extension the whole output parameter is treated as the report directory.
+                directory = output
+                out_file = create_out_file_name(working_dir, directory, input_file)
     
-    return os.path.abspath(out_file)
+    #Create the documentation directory. If it can't be created the program exits.
+    create_doc_directory(out_file)
+#@edoc
 
-#@(get_output_file_name)
+#Now the input file is processed and the corresponding documentation file is created.
+#If processing is successful, ''could_process'' is set to ''True''.
 
-#@cstart(create_output_file_name)
+#@code
 
-def create_output_file_name(working_dir, input_file_name, directory):
-#@start(create_output_file_name doc)
+    could_process = process_file(input_file, out_file, options.token, options.warnings)
+    
+#@edoc
+
+#If the file was processed successfully and the index option is used, the file name which should be inserted
+#in the generated index file block has to be computed first. Afterwards the file name is inserted in the 
+#index file (see :py:meth:`insert_filename_in_index_file`).
+
+#@code
+    if options.index and could_process:
+        out_file_name_index = create_out_file_name_index(out_file, working_dir, recursive)
+        insert_filename_in_index_file(out_file_name_index, index_file, start_block, end_block)
+#@edoc
+#@(write_body)
+
+#@cstart(create_out_file_name)
+
+def create_out_file_name(working_dir, directory, input_file):
+#@start(create_out_file_name doc)
     """
-.. py:method:: create_output_file_name(working_dir, input_file_name, directory)
+.. py:method:: create_out_file_name(working_dir, directory, input_file)
    
-  Computes the path to the output file name. The ".rst" suffix is added to the input file name.
-  Then the paths of the working_dir and the directory are combined with the input file name.
+  Computes the absolute path for the output file name. The input file name suffix is replaced by 
+  ".rst". If the input file name ends with ".rst" the string "_docs" is added before the suffix.
+  If directory contains a relative path then paths of the working_dir and the directory 
+  are combined with the input file name. Otherwise, the directory is combined with the 
+  input file name.
              
-  :param working_dir: Current working directory.
-  :param input_file_name: The name of the file which should be processed.
-  :param directory: The dedicated report directory.
+  :param working_dir: Absolute path of the current working directory.
+  :param directory: The documentation directory (absolute or relative)
+  :param input_file: The absolute path to the file which should be processed.
   :return: The path of the output file.
     """
-#@include(create_output_file_name) 
-#@(create_output_file_name doc)    
-    input_rst = os.path.splitext(input_file_name)[0] + ".rst"
-    input_name = os.path.split(input_rst)[1]
-    out_file = os.path.join(working_dir, directory,  input_name)
+    
+#.. csv-table::
+#   :header: "Working_Dir", "Directory", "Input_File_Name", "Output_File_Name"
+
+#   *C:\\antiweb\\*,doc, *C:\\antiweb\\testing.py* , *C:\\antiweb\\doc\\testing.rst*
+#   *C:\\antiweb\\* , , *C:\\antiweb\\testing.py* , *C:\\antiweb\\testing.rst*
+#   *C:\\antiweb\\* ,*C:\\doc\\* , *testing.py*, *C:\\doc\\testing.rst*
+#   *C:\\antiweb\\*,doc, *C:\\antiweb\\testing.rst* , *C:\\antiweb\\doc\\testing_docs.rst*
+
+#@include(create_out_file_name) 
+#@(create_out_file_name doc) 
+
+    docs = "_docs"
+    rst_suffix = ".rst"
+    out_file_path = os.path.splitext(input_file)[0]
+    
+    if input_file.endswith(rst_suffix):
+        out_file_path =  out_file_path + docs
+        
+    out_file_path =  out_file_path + rst_suffix
+
+    out_file_name = os.path.split(out_file_path)[1]
+    
+    #If directory contains an absolute path, the working directory is ignored.
+    out_file = os.path.join(working_dir, directory, out_file_name)
+    out_file = os.path.abspath(out_file)
     return out_file
-#@(create_output_file_name)
+    
+#@(create_out_file_name)
+
+#@cstart(create_out_file_name_index)
+
+def create_out_file_name_index(out_file, working_dir, recursive):
+#@start(create_out_file_name_index doc)
+    """
+.. py:method:: create_out_file_name_index(out_file, working_dir, recursive)
+   
+  Creates the file name which should be inserted in the generated index file block.
+  
+  :param out_file: Absolute path of the output file.
+  :param index_file: Absolute path of the index file.
+  :param recursive: Boolean which indicates whether the recursive commandline options is used.
+  :return: The file name which should be inserted in the generated index file block.
+    """
+    
+#If the user added the -i flag, an index file (documentation base file) is created which contains all processed files.
+#Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives the names of the processed files are added.
+#The file names which are inserted into the index file are computed in the following way: 
+
+#When the recursive option is used the file name in the index file is a relative path without extension. 
+#Otherwise the index file will only contain the filename without extension. 
+#Path seperator characters are replaced by "_".
+
+#| Non-recursive example with current processed file: *C:\\antiweb\\report.rst\\file.rst*:
+#| :py:class:`start(generated)`
+#| :py:class:`file`
+#| :py:class:`end(generated)`
+#|
+#| Recursive example with current processed file: *C:\\antiweb\\report.rst\\file.rst*:
+#| :py:class:`start(generated)`
+#| :py:class:`report.rst_file`
+#| :py:class:`end(generated)`
+#|
+
+#@include(create_out_file_name_index)        
+#@(create_out_file_name_index doc)     
+
+    #1) Obtain only the file name
+    out_file_name_index = os.path.split(out_file)[1]
+    #2) Remove the extension
+    out_file_name_index = os.path.splitext(out_file_name_index)[0]
+    if recursive:
+        out_file_name_index = os.path.relpath(out_file_name_index, working_dir)
+        out_file_name_index = replace_path_seperator(out_file_name_index)
+        
+    return out_file_name_index
+    
+#@(create_out_file_name_index)
+
+
+#@cstart(insert_filename_in_index_file)
+
+def insert_filename_in_index_file(file_name, index_file, start_block, end_block):
+#@start(insert_filename_in_index_file doc)
+    """
+.. py:method:: insert_filename_in_index_file(file_name, index_file, start_block, end_block)
+   
+  Inserts the given file name into the generated block in the index file.
+  
+  :param file_name: The file name which should be inserted in the index file.
+  :param index_file: Absolute path of the index file.
+  :param start_block: String which contains the generated index block start definition.
+  :param end_block: String which contains the generated index block end definition.
+    """
+
+#If the user added the -i flag, an index file (documentation base file) is created which contains all processed files.
+#Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives the names of the processed files are added.
+#Read  :py:meth:`create_out_file_name_index` for more information about how the to be inserted file name is computed.
+#Files can be manually added after the :py:class:`end(generated)` directive.
+
+#@include(insert_filename_in_index_file)        
+#@(insert_filename_in_index_file doc) 
+    
+    #At first the position has to be found where the new file should be inserted.
+    content, endline = search_for_generated_block(index_file, start_block, end_block)
+    
+    #If the index file does not contain the generated block, it is appended.
+    if not content:
+        write_static(index_file, start_block, end_block, True)
+        content, endline = search_for_generated_block(index_file, start_block, end_block)
+
+    if endline:
+        #The new file name is inserted into the index file contents.
+        content.insert(endline, "   " + file_name + "\n")
+
+    try: 
+        #The adapted index file contents are written out to the index file.
+        with open(index_file, "w") as index_out:
+            for item in content:
+                index_out.write(item)
+    except IOError:
+        logger.error("\nError: Could not write to index file: %s",  index_file)
+        sys.exit(1)
+
+#@(insert_filename_in_index_file)
 
 #@cstart(create_doc_directory)
 
@@ -2978,7 +3035,7 @@ def create_doc_directory(out_file):
     """
 .. py:method:: create_doc_directory(out_file)
     
-   Creates the documentation directory if it not yet exists.
+   Creates the documentation directory if it does not yet exist.
    If an error occurs the program exits.
            
    :param out_file: The path to the output file.
@@ -2989,17 +3046,53 @@ def create_doc_directory(out_file):
         out_file_directory = os.path.split(out_file)[0]       
         if not os.path.exists(out_file_directory):
             os.makedirs(out_file_directory)
-    except WebError:
+    except IOError:
         logger.error("\nError: Documentation Directory: %s could not be created",  out_file_directory)
         sys.exit(1)
 #@(create_doc_directory)
 
 
-def write_static(input_type, index_rst, start_of_block, end_of_block):
-    index_static = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n   " + start_of_block +"\n   " + end_of_block
+#@cstart(replace_path_seperator)
+
+def replace_path_seperator(file):
+#@start(replace_path_seperator doc)
+    """
+.. py:method:: replace_path_seperator(file)
     
-    with open(os.path.join(input_type, index_rst), "w") as index_out:
-        index_out.write(index_static)
+   Replaces OS specific path seperator characters by '_'.
+           
+   :param file: The path to a file.
+    """
+#@include(replace_path_seperator) 
+#@(replace_path_seperator doc)      
+#Path seperator characters are replaced by "_" in the index file
+    if _platform == "linux" or _platform == "linux2":
+        file = file.replace("/","_")
+    if _platform == "win32":
+        file = file.replace("\\","_")      
+    return file
+#@(replace_path_seperator)
+
+def write_static(index_file, start_of_block, end_of_block, append_only_block=False):
+    index_generated = "   " + start_of_block +"\n   " + end_of_block
+    write_option = "w"
+    
+    index_content = index_generated
+    
+    if append_only_block:
+        write_option = "a"
+    else:
+        index_content = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n" + index_content
+    
+    try:
+        os.makedirs(os.path.dirname(index_file), exist_ok=True)
+        
+        with open(index_file, write_option) as index_out:
+            index_out.write(index_content)
+    except IOError:
+        logger.error("\nError: Index File: %s could not be created.",  index_file)
+        sys.exit(1)
+
         
 def parsing():
     
@@ -3049,72 +3142,64 @@ def main():
     if options.warnings is None:
         options.warnings = True
 
-    
     if not args:
         parser.print_help()
         sys.exit(0)
 
     index_rst = "index.rst"
-    start_of_block = ".. start(generated)"
-    end_of_block = ".. end(generated)"
+    start_block = ".. start(generated)"
+    end_block = ".. end(generated)"
 #@edoc
 
-#The program will check if a -r flag was given and if so, save the current directory and change it to the given one
+#The program will check if a -r flag was given and if so, save the current directory and change it to the given one.
 
 #@code
 
     previous_dir = os.getcwd()
     
-    #convert to absolute path, this is needed if a relative path was given
+    #Convert to absolute path. This is needed if a relative path was given.
     absolute_path = os.path.abspath(args[0])
     
     if options.recursive:
         directory = absolute_path
         
-        #check if the given path refers to an existing directory
-        #the program aborts if the directory does not exist or if the path refers to a file
-        #a file is not allowed here because the -r option requires a directory
+        #Check if the given path refers to an existing directory.
+        #The program aborts if the directory does not exist or if the path refers to a file.
+        #A file is not allowed here because the -r option requires a directory.
         if not os.path.isdir(directory):
             logger.error("directory not found: %s", directory)
             sys.exit(1)
     
         os.chdir(directory)
-        if options.output:
-            os.makedirs(os.path.join(directory, options.output), exist_ok=True)
+                
         if options.index:
+            #Create the absolute path of the index file.
             if options.output:
-                directory = os.path.join(directory, options.output)
-                if not os.path.isfile(os.path.join(directory, index_rst)):
-                    write_static(directory, index_rst, start_of_block, end_of_block)
-
-                content, startline = search_for_generate(options.output, index_rst, start_of_block, end_of_block)
-
+                index_rst = os.path.join(directory, options.output, index_rst)
             else:
-                if not os.path.isfile(os.path.join(directory, index_rst)):
-                    write_static(directory, index_rst, start_of_block, end_of_block)
-
-                content, startline = search_for_generate(os.getcwd(), index_rst, start_of_block, end_of_block)
+                index_rst = os.path.join(directory, index_rst)
+                
+            #Create index file if it does not already exist. 
+            if not os.path.isfile(index_rst):
+                write_static(index_rst, start_block, end_block)
+                    
 #@edoc
 
-#The program walks through the given directory and all subdirectories and retrieves all files.
+#The program walks through the given directory and all subdirectories. The absolute file names 
+#are retrieved. Only files with the allowed extensions are processed.
 
 #@code
 
-        for root, dirs, files in os.walk(args[0], topdown=False):
+        #Only files with the following extensions will be processed
+        ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
+
+        for root, dirs, files in os.walk(directory, topdown=False):
             for filename in files:
                 fname = os.path.join(root, filename)
-
-#@edoc
-
-#Only files with the following extensions will be processed
-
-#@code
-                ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
+        
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                    if options.index:
-                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
-                    else:
-                        write(os.getcwd(), fname, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
+                    write(directory, fname, options, index_rst, start_block, end_block)
+
 #@edoc
 
 #This else will take place when the -r flag is not given.
@@ -3124,41 +3209,44 @@ def main():
     else:
         absolute_file_path = absolute_path
         
-        #check if the given path refers to an existing file
-        #the program aborts if the file does not exist or if the path refers to an directory
-        #a directory is not allowed here because a directory can only be used with the -r option
+        #Check if the given path refers to an existing file. 
+        #The program aborts if the file does not exist or if the path refers to a directory.
+        #A directory is not allowed here because a directory can only be used with the -r option.
         if not os.path.isfile(absolute_file_path):
             logger.error("file not found: %s", absolute_file_path)
             sys.exit(1)
         
-        path = os.path.split(absolute_file_path)
+        directory = os.path.split(absolute_file_path)[0]
 
-        if path[0]:
-            os.chdir(path[0])
+        if directory:
+            os.chdir(directory)
 
         if options.index:
-            if not os.path.isfile(os.path.join(os.getcwd(), index_rst)):
-                write_static(os.getcwd(), index_rst, start_of_block, end_of_block)
-            content, startline = search_for_generate(None, index_rst, start_of_block, end_of_block)
-            write(os.getcwd(), absolute_file_path, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, content, start_of_block, end_of_block, startline)
-        else:
-            write(os.getcwd(), absolute_file_path, options.output, options.token, options.warnings, options.index, index_rst, options.recursive, None, start_of_block, end_of_block, None)
+            #Create the absolute path of the index file.
+            index_rst = os.path.join(os.getcwd(), index_rst)
+            
+            if not os.path.isfile(index_rst):
+                write_static(index_rst, start_block, end_block)
+                
+        write(os.getcwd(), absolute_file_path, options, index_rst, start_block, end_block)
     
     os.chdir(previous_dir)
     
     return True
 #@edoc
-#@include(write)
-#@include(get_output_file_name doc)
-#@include(create_output_file_name doc)
+
+#@include(write_documentation)
+#@include(create_out_file_name doc)
+#@include(create_out_file_name_index doc)
+#@include(insert_filename_in_index_file doc)
 #@include(create_doc_directory doc)
+#@include(replace_path_seperator doc)
 #@include(process_file)
-#@include(search_for_generated)
-#@include(replace_in_generated)
+#@include(search_for_generated_block)
 #@(additional_options)
+
 if __name__ == "__main__":
     main()
-
 
 
 #@(file layout)
