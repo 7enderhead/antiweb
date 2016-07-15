@@ -2612,25 +2612,8 @@ File Layout
     
     <<replace_path_seperator>>
     
-    def write_static(index_file, start_of_block, end_of_block, append_only_block=False):
-        index_generated = "   " + start_of_block +"\n   " + end_of_block
-        write_option = "w"
-        
-        index_content = index_generated
-        
-        if append_only_block:
-            write_option = "a"
-        else:
-            index_content = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n" + index_content
-        
-        try:
-            os.makedirs(os.path.dirname(index_file), exist_ok=True)
-            
-            with open(index_file, write_option) as index_out:
-                index_out.write(index_content)
-        except IOError:
-            logger.error("\nError: Index File: %s could not be created.",  index_file)
-            sys.exit(1)
+    
+    <<write_static>>
     
             
     def parsing():
@@ -2920,7 +2903,7 @@ The following function is called for the creation of the documentation files.
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
    :param options: Commandline options.
-   :param index_file: Name of the index file.
+   :param index_file: Absolute path of the index file.
    :param start_block: String which contains the generated index block start definition.
    :param end_block: String which contains the generated index block end definition.
 
@@ -2944,6 +2927,7 @@ When there is no output option given the output file name is created in the foll
         
         if not output:
             out_file = create_out_file_name(working_dir, "", input_file)
+    
 
 If there is an output given, we have to distinguish between the recursive and non-recursive option.
 When the recursive option is used in combination with the output option, the output parameter is treated as the documentation directory:
@@ -3195,6 +3179,41 @@ Files can be manually added after the :py:class:`end(generated)` directive.
             file = file.replace("\\","_")      
         return file
 
+.. py:method:: write_static(index_file, start_of_block, end_of_block, append_only_block=False)
+    
+   Writes the static contents to the index file. If append_only_block=True only the generated index file
+   block is appended in the index file.
+           
+   :param index_file: Absolute path of the index file.
+   :param start_block: String which contains the generated index block start definition.
+   :param end_block: String which contains the generated index block end definition.
+   :param append_only_block: Boolean which indicates if only the generated block should be appended.
+
+::
+
+    
+    def write_static(index_file, start_block, end_block, append_only_block=False):
+    
+        index_generated = "   " + start_block +"\n   " + end_block
+        write_option = "w"
+        
+        index_content = index_generated
+        
+        if append_only_block:
+            write_option = "a"
+        else:
+            index_content = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n" + index_content
+        
+        try:
+            os.makedirs(os.path.dirname(index_file), exist_ok=True)
+            
+            with open(index_file, write_option) as index_out:
+                index_out.write(index_content)
+        except IOError:
+            logger.error("\nError: Index File: %s could not be created.",  index_file)
+            sys.exit(1)
+            
+
 process_file
 ============
 
@@ -3207,7 +3226,7 @@ If no output name was declared, the input name will be given
     def process_file(in_file, out_file, token, warnings):
     
 
-The output text will be written in the output file. If there is an output text, the function returns could_write as True
+The output text will be written in the output file. If there is an output text, the function returns could_write as True.
 
 
 ::

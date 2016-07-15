@@ -3771,24 +3771,7 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 43
 44
 45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">imports</span><span class="o">&gt;&gt;</span>
+46</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">imports</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">management</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">directives</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">readers</span><span class="o">&gt;&gt;</span>
@@ -3812,25 +3795,8 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 
 <span class="o">&lt;&lt;</span><span class="n">replace_path_seperator</span><span class="o">&gt;&gt;</span>
 
-<span class="k">def</span> <span class="nf">write_static</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">start_of_block</span><span class="p">,</span> <span class="n">end_of_block</span><span class="p">,</span> <span class="n">append_only_block</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="n">index_generated</span> <span class="o">=</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">start_of_block</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   &quot;</span> <span class="o">+</span> <span class="n">end_of_block</span>
-    <span class="n">write_option</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
 
-    <span class="n">index_content</span> <span class="o">=</span> <span class="n">index_generated</span>
-
-    <span class="k">if</span> <span class="n">append_only_block</span><span class="p">:</span>
-        <span class="n">write_option</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">index_content</span> <span class="o">=</span> <span class="s2">&quot;Documentation</span><span class="se">\n</span><span class="s2">=======================</span><span class="se">\n</span><span class="s2">Contents:</span><span class="se">\n\n</span><span class="s2">.. toctree::</span><span class="se">\n</span><span class="s2">   :maxdepth: 2</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">index_content</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">index_file</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">write_option</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_out</span><span class="p">:</span>
-            <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index_content</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Error: Index File: </span><span class="si">%s</span><span class="s2"> could not be created.&quot;</span><span class="p">,</span>  <span class="n">index_file</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;&lt;</span><span class="n">write_static</span><span class="o">&gt;&gt;</span>
 
 
 <span class="k">def</span> <span class="nf">parsing</span><span class="p">():</span>
@@ -4228,7 +4194,7 @@ The following function is called for the creation of the documentation files.</p
 <li><strong>working_dir</strong> &#8211; Current working directory.</li>
 <li><strong>input_file</strong> &#8211; Contains the absolute path of the currently processed file.</li>
 <li><strong>options</strong> &#8211; Commandline options.</li>
-<li><strong>index_file</strong> &#8211; Name of the index file.</li>
+<li><strong>index_file</strong> &#8211; Absolute path of the index file.</li>
 <li><strong>start_block</strong> &#8211; String which contains the generated index block start definition.</li>
 <li><strong>end_block</strong> &#8211; String which contains the generated index block end definition.</li>
 </ul>
@@ -4694,6 +4660,68 @@ If an error occurs the program exits.</p>
     <span class="k">return</span> <span class="n">file</span>
 </pre></div>
 </td></tr></table></div>
+<dl class="method">
+<dt id="write_static">
+<code class="descname">write_static</code><span class="sig-paren">(</span><em>index_file</em>, <em>start_of_block</em>, <em>end_of_block</em>, <em>append_only_block=False</em><span class="sig-paren">)</span><a class="headerlink" href="#write_static" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the static contents to the index file. If append_only_block=True only the generated index file
+block is appended in the index file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index_file</strong> &#8211; Absolute path of the index file.</li>
+<li><strong>start_block</strong> &#8211; String which contains the generated index block start definition.</li>
+<li><strong>end_block</strong> &#8211; String which contains the generated index block end definition.</li>
+<li><strong>append_only_block</strong> &#8211; Boolean which indicates if only the generated block should be appended.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write_static</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">,</span> <span class="n">append_only_block</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+    <span class="n">index_generated</span> <span class="o">=</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">start_block</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   &quot;</span> <span class="o">+</span> <span class="n">end_block</span>
+    <span class="n">write_option</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
+
+    <span class="n">index_content</span> <span class="o">=</span> <span class="n">index_generated</span>
+
+    <span class="k">if</span> <span class="n">append_only_block</span><span class="p">:</span>
+        <span class="n">write_option</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">index_content</span> <span class="o">=</span> <span class="s2">&quot;Documentation</span><span class="se">\n</span><span class="s2">=======================</span><span class="se">\n</span><span class="s2">Contents:</span><span class="se">\n\n</span><span class="s2">.. toctree::</span><span class="se">\n</span><span class="s2">   :maxdepth: 2</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">index_content</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">index_file</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">write_option</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_out</span><span class="p">:</span>
+            <span class="n">index_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index_content</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Error: Index File: </span><span class="si">%s</span><span class="s2"> could not be created.&quot;</span><span class="p">,</span>  <span class="n">index_file</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
 </div>
 <div class="section" id="process-file">
 <h3>process_file<a class="headerlink" href="#process-file" title="Permalink to this headline">¶</a></h3>
@@ -4701,7 +4729,7 @@ If an error occurs the program exits.</p>
 <div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">):</span>
 </pre></div>
 </div>
-<p>The output text will be written in the output file. If there is an output text, the function returns could_write as True</p>
+<p>The output text will be written in the output file. If there is an output text, the function returns could_write as True.</p>
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3

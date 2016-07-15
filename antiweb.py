@@ -2705,7 +2705,7 @@ def process_file(in_file, out_file, token, warnings):
 
 #@edoc
 
-#The output text will be written in the output file. If there is an output text, the function returns could_write as True
+#The output text will be written in the output file. If there is an output text, the function returns could_write as True.
 
 #@code
     could_write = False
@@ -2780,7 +2780,7 @@ def write(working_dir, input_file, options, index_file, start_block, end_block):
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
    :param options: Commandline options.
-   :param index_file: Name of the index file.
+   :param index_file: Absolute path of the index file.
    :param start_block: String which contains the generated index block start definition.
    :param end_block: String which contains the generated index block end definition.
     """
@@ -2806,6 +2806,7 @@ def write(working_dir, input_file, options, index_file, start_block, end_block):
     
     if not output:
         out_file = create_out_file_name(working_dir, "", input_file)
+
 #@edoc
 
 #If there is an output given, we have to distinguish between the recursive and non-recursive option.
@@ -3073,8 +3074,26 @@ def replace_path_seperator(file):
     return file
 #@(replace_path_seperator)
 
-def write_static(index_file, start_of_block, end_of_block, append_only_block=False):
-    index_generated = "   " + start_of_block +"\n   " + end_of_block
+
+#@cstart(write_static)
+
+def write_static(index_file, start_block, end_block, append_only_block=False):
+#@start(write_static doc)
+    """
+.. py:method:: write_static(index_file, start_of_block, end_of_block, append_only_block=False)
+    
+   Writes the static contents to the index file. If append_only_block=True only the generated index file
+   block is appended in the index file.
+           
+   :param index_file: Absolute path of the index file.
+   :param start_block: String which contains the generated index block start definition.
+   :param end_block: String which contains the generated index block end definition.
+   :param append_only_block: Boolean which indicates if only the generated block should be appended.
+    """
+#@include(write_static) 
+#@(write_static doc)      
+
+    index_generated = "   " + start_block +"\n   " + end_block
     write_option = "w"
     
     index_content = index_generated
@@ -3092,6 +3111,8 @@ def write_static(index_file, start_of_block, end_of_block, append_only_block=Fal
     except IOError:
         logger.error("\nError: Index File: %s could not be created.",  index_file)
         sys.exit(1)
+        
+#@(write_static)
 
         
 def parsing():
@@ -3241,6 +3262,7 @@ def main():
 #@include(insert_filename_in_index_file doc)
 #@include(create_doc_directory doc)
 #@include(replace_path_seperator doc)
+#@include(write_static doc)
 #@include(process_file)
 #@include(search_for_generated_block)
 #@(additional_options)
