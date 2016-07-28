@@ -1,7 +1,7 @@
 .. default-domain:: python
 
 .. highlight:: python3
-   :linenothreshold: 6
+   :linenothreshold: 4
 
 
 
@@ -2615,6 +2615,7 @@ File Layout
     
     <<write_static>>
     
+    <<create_index_file>>
             
     def parsing():
         
@@ -2764,11 +2765,12 @@ Multi-File Processing and Sphinx Support
 
 There are two new flags in antiweb:
 
-* The ''-r'' flag:
-    * antiweb will search for all compatible files to process them
-
 * The ''-i'' flag:
-    * Sphinx' index.rst will be edited to contain all processed files (empty files will be ignored)
+    * antiweb writes all processed files in sphinx' index.rst file (empty files are ignored)
+
+* The ''-r'' flag:
+    * antiweb processes all comptible files in the given directory and its subdirectories
+
 
 
 ::
@@ -2802,7 +2804,7 @@ There are two new flags in antiweb:
         start_block = ".. start(generated)"
         end_block = ".. end(generated)"
 
-The program will check if a -r flag was given and if so, save the current directory and change it to the given one.
+The program checks if a -r flag was given and if so, save the current directory and change it to the given one.
 
 
 ::
@@ -2826,15 +2828,7 @@ The program will check if a -r flag was given and if so, save the current direct
             os.chdir(directory)
                     
             if options.index:
-                #Create the absolute path of the index file.
-                if options.output:
-                    index_rst = os.path.join(directory, options.output, index_rst)
-                else:
-                    index_rst = os.path.join(directory, index_rst)
-                    
-                #Create index file if it does not already exist. 
-                if not os.path.isfile(index_rst):
-                    write_static(index_rst, start_block, end_block)
+                index_rst = create_index_file(directory, options.output, index_rst, start_block, end_block)
                         
 
 The program walks through the given directory and all subdirectories. The absolute file names 
@@ -2875,13 +2869,10 @@ This else will take place when the -r flag is not given.
     
             if directory:
                 os.chdir(directory)
-    
+               
             if options.index:
-                #Create the absolute path of the index file.
-                index_rst = os.path.join(os.getcwd(), index_rst)
-                
-                if not os.path.isfile(index_rst):
-                    write_static(index_rst, start_block, end_block)
+                #check if output contains a directory or a file name
+                index_rst = create_index_file(os.getcwd(), "", index_rst, start_block, end_block)    
                     
             write(os.getcwd(), absolute_file_path, options, index_rst, start_block, end_block)
         
@@ -2998,7 +2989,7 @@ If processing is successful, ''could_process'' is set to ''True''.
         
 
 If the file was processed successfully and the index option is used, the file name which should be inserted
-in the generated index file block has to be computed first. Afterwards the file name is inserted in the 
+in the generated index file block has to be computed first. Afterwards the file name is inserted into the 
 index file (see :py:meth:`insert_filename_in_index_file`).
 
 
@@ -3014,9 +3005,9 @@ index file (see :py:meth:`insert_filename_in_index_file`).
 
 .. py:method:: create_out_file_name(working_dir, directory, input_file)
    
-  Computes the absolute path for the output file name. The input file name suffix is replaced by 
+  Computes the absolute path of the output file name. The input file name suffix is replaced by 
   ".rst". If the input file name ends with ".rst" the string "_docs" is added before the suffix.
-  If directory contains a relative path then paths of the working_dir and the directory 
+  If directory contains a relative path, then the paths of the working_dir and the directory 
   are combined with the input file name. Otherwise, the directory is combined with the 
   input file name.
              
@@ -3058,7 +3049,7 @@ index file (see :py:meth:`insert_filename_in_index_file`).
 
 .. py:method:: create_out_file_name_index(out_file, working_dir, recursive)
    
-  Creates the file name which should be inserted in the generated index file block.
+  Creates the file name which should be inserted into the generated index file block.
   
   :param out_file: Absolute path of the output file.
   :param index_file: Absolute path of the index file.
@@ -3066,7 +3057,7 @@ index file (see :py:meth:`insert_filename_in_index_file`).
   :return: The file name which should be inserted in the generated index file block.
     
 If the user added the -i flag, an index file (documentation base file) is created which contains all processed files.
-Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives the names of the processed files are added.
+The names of the processed files are added between the :py:class:`start(generated)` and :py:class:`end(generated)` directives.
 The file names which are inserted into the index file are computed in the following way: 
 
 When the recursive option is used the file name in the index file is a relative path without extension. 
@@ -3105,14 +3096,14 @@ Path seperator characters are replaced by "_".
    
   Inserts the given file name into the generated block in the index file.
   
-  :param file_name: The file name which should be inserted in the index file.
+  :param file_name: The file name which should be inserted into the index file.
   :param index_file: Absolute path of the index file.
   :param start_block: String which contains the generated index block start definition.
   :param end_block: String which contains the generated index block end definition.
 
 If the user added the -i flag, an index file (documentation base file) is created which contains all processed files.
 Between the :py:class:`start(generated)` and :py:class:`end(generated)` directives the names of the processed files are added.
-Read  :py:meth:`create_out_file_name_index` for more information about how the to be inserted file name is computed.
+Read  :py:meth:`create_out_file_name_index` for more information about how the inserted file name is computed.
 Files can be manually added after the :py:class:`end(generated)` directive.
 
 
@@ -3126,7 +3117,7 @@ Files can be manually added after the :py:class:`end(generated)` directive.
         
         #If the index file does not contain the generated block, it is appended.
         if not content:
-            write_static(index_file, start_block, end_block, True)
+            write_static(index_file, start_block, end_block)
             content, endline = search_for_generated_block(index_file, start_block, end_block)
     
         if endline:
@@ -3146,7 +3137,7 @@ Files can be manually added after the :py:class:`end(generated)` directive.
 .. py:method:: create_doc_directory(out_file)
     
    Creates the documentation directory if it does not yet exist.
-   If an error occurs the program exits.
+   If an error occurs, the program exits.
            
    :param out_file: The path to the output file.
 
@@ -3162,47 +3153,39 @@ Files can be manually added after the :py:class:`end(generated)` directive.
             logger.error("\nError: Documentation Directory: %s could not be created",  out_file_directory)
             sys.exit(1)
 
-.. py:method:: replace_path_seperator(file)
+.. py:method:: replace_path_seperator(file_path)
     
    Replaces OS specific path seperator characters by '_'.
            
-   :param file: The path to a file.
+   :param file_path: The path to a file.
 
 ::
 
     
-    def replace_path_seperator(file):
+    def replace_path_seperator(file_path):
     #Path seperator characters are replaced by "_" in the index file
         if _platform == "linux" or _platform == "linux2":
-            file = file.replace("/","_")
+            file_path = file_path.replace("/","_")
         if _platform == "win32":
-            file = file.replace("\\","_")      
-        return file
+            file_path = file_path.replace("\\","_")      
+        return file_path
 
-.. py:method:: write_static(index_file, start_of_block, end_of_block, append_only_block=False)
+.. py:method:: write_static(index_file, start_of_block, end_of_block)
     
-   Writes the static contents to the index file. If append_only_block=True only the generated index file
-   block is appended in the index file.
+   Writes the static contents to the index file.
            
    :param index_file: Absolute path of the index file.
    :param start_block: String which contains the generated index block start definition.
    :param end_block: String which contains the generated index block end definition.
-   :param append_only_block: Boolean which indicates if only the generated block should be appended.
 
 ::
 
     
-    def write_static(index_file, start_block, end_block, append_only_block=False):
+    def write_static(index_file, start_block, end_block):
     
         index_generated = "   " + start_block +"\n   " + end_block
         write_option = "w"
-        
-        index_content = index_generated
-        
-        if append_only_block:
-            write_option = "a"
-        else:
-            index_content = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n" + index_content
+        index_content = "Documentation\n=======================\nContents:\n\n.. toctree::\n   :maxdepth: 2\n\n" + index_generated
         
         try:
             os.makedirs(os.path.dirname(index_file), exist_ok=True)
@@ -3213,6 +3196,29 @@ Files can be manually added after the :py:class:`end(generated)` directive.
             logger.error("\nError: Index File: %s could not be created.",  index_file)
             sys.exit(1)
             
+
+.. py:method:: create_index_file(working_dir, directory, file_name, start_block, end_block)
+    
+   Creates the index file and writes the standard index file contents into the file.
+   
+   :param working_dir: Current working directory. 
+   :param directory: Output directory (may contain a directory path or a directory name)           
+   :param file_name: Filename of the index file.
+   :param start_block: String which contains the generated index block start definition.
+   :param end_block: String which contains the generated index block end definition.
+   :return: The absolute path of the index file.
+
+::
+
+    def create_index_file(working_dir, directory, file_name, start_block, end_block):
+        
+        index_file = os.path.join(working_dir, directory, file_name)
+        index_file_absolute = os.path.abspath(index_file)
+        
+        #index file is overwritten if it already exists
+        write_static(index_file_absolute, start_block, end_block)
+        
+        return index_file
 
 process_file
 ============
@@ -3253,7 +3259,7 @@ search_for_generated_block
 ============================
 
 The index file is searched for the generated block. The contents in the generated block are deleted.
-The whole content and the endline of the generated block are returned.
+Afterwards the whole file content and the endline of the generated block are returned.
 
 
 ::
