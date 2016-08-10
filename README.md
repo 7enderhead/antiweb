@@ -39,3 +39,19 @@ License: GPL
 			25.08.2015:
 				antiweb now also reads comments from rst files
 				Introduced version 0.3.2
+                
+                
+            02.03.2015
+                Enhanced C# support. Now xml comment tags are stripped.
+
+            02.03.2015 - 08.08.2016
+                Many different improvements and bugfixes
+	
+            08.08.2016
+                Rework of --output path and file name handling
+        
+                Improved antiweb documentation
+    
+            09.08.2016
+                Outsourced installation and getting started (it is no longer available inside the antiweb documentation)
+                Improved the installation manual
