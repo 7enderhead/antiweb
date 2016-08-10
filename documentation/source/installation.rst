@@ -34,7 +34,7 @@ Install antiweb
    
    ::
    
-       pip install git+https://github.com/Yarmek/antiweb.git@work
+       pip install git+https://github.com/7enderhead/antiweb.git@work
    
    
    :py:class:`IMPORTANT` If you get a connection error the reason is most likely your proxy. You then have to use a tool like `cntlm`_ and add a proxy flag when running pip, example:
@@ -42,7 +42,7 @@ Install antiweb
    
    ::
    
-       pip install git+https://github.com/Yarmek/antiweb.git@work --proxy http://localhost:8123
+       pip install git+https://github.com/7enderhead/antiweb.git@work --proxy http://localhost:8123
    
 
 Install Graphviz (Optional)

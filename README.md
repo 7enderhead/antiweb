@@ -8,8 +8,8 @@ Home-page: http://packages.python.org/antiweb/
 
 Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
 
-Author-email: mreithinger@web.de & yarmek@icloud.com
+Author-email: mreithinger@web.de
 
 License: GPL
 
-[For a changelog please take a look at changelog.html] (documentation/build/html/changelog.html)
+[For a changelog please take a look here] (documentation/source/changelog.rst)
