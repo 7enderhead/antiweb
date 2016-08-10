@@ -1,6 +1,6 @@
 .. default-domain:: python
 
-.. highlight::
+.. highlight:: python
    :linenothreshold: 6
 
 
@@ -21,7 +21,7 @@ Getting Started
 
      --version                       show programs version number and exit
      -h, --help                      show this help message and exit
-     -o OUTPUT, --output=OUTPUT      The output file name 
+     -o OUTPUT, --output=OUTPUT      The output file/folder name 
      -t TOKEN, --token=TOKEN         defines a token, usable by @if directives
      -w, --warnings                  suppresses warnings
      -r, --recursive                 Process every file in the given directory
@@ -218,13 +218,4 @@ Indentation matters
 ===================
    
    In sphinx and antiweb, the indentation matters. To effectively nest blocks, create sub headlines and more you have to keep the indentation in mind. To nest a block or headline you have to indent it farther than its parent. In addition, your documentation looks much cleaner when structured like this.
-   
-   
-   
-   
-   
-   
-
-
-* :py:class:`This is the end of the basic introduction. For more information on antiweb simply read on.`
 

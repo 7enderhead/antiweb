@@ -51,3 +51,8 @@ Changelog
          Outsourced installation and getting started (it is no longer available inside the antiweb documentation)
          
          Improved the installation manual
+         
+    * 10.08.2016
+         Added new section in documentation: Process overview
+         
+         Introducing a new version 0.3.3
