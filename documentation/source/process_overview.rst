@@ -35,7 +35,7 @@ Processing the files
       antiweb.py /path/to/project -r -i
       
    This snippet will recursively process files in /path/to/project and put them into the directory you are currently working in. The ``-i`` is 
-   very important because it will add the files to an index.rst file that is used by Sphinx   To put them in a seperate folder, use:
+   very important because it will add the files to an index.rst file that is used by Sphinx. To put them in a seperate folder, use:
    
    ::
    

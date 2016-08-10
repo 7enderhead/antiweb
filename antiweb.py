@@ -5,8 +5,8 @@ Name: antiweb
 Version: 0.3.2
 Summary: antiweb literate programming tool
 Home-page: http://packages.python.org/antiweb/
-Author: Michael Reithinger & Philipp Rathmanner
-Author-email: mreithinger@web.de & yarmek@icloud.com
+Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
+Author-email: mreithinger@web.de
 License: GPL
 """
 
@@ -3238,7 +3238,7 @@ def main():
         write(os.getcwd(), absolute_file_path, options, index_rst, start_block, end_block)
     
     os.chdir(previous_dir)
-    print("Documents generated")
+    print("Documents generatedd")
     return True
 #@edoc
 

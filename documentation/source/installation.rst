@@ -9,7 +9,7 @@
 Installation
 ############
 
-The most important parts of the system are Python 3, antiweb and Sphinx (will be automatically installed with antiweb). Because of incompatibility with Python 2 you can't create 
+The most important parts of the system are Python 3, antiweb and Sphinx. (it will be automatically installed with antiweb). Because of incompatibility with Python 2 you can't create 
 documentations of Python 2 programs.
 
 
