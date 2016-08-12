@@ -3238,7 +3238,6 @@ def main():
         write(os.getcwd(), absolute_file_path, options, index_rst, start_block, end_block)
     
     os.chdir(previous_dir)
-    print("Documents generatedd")
     return True
 #@edoc
 
