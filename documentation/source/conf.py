@@ -65,8 +65,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'antiweb'
-copyright = '2016, Philipp Rathmanner'
-author = 'Philipp Rathmanner'
+copyright = '2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner'
+author = 'Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
