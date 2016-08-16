@@ -2,11 +2,11 @@
 
 """
 Name: antiweb
-Version: 0.3.2
+Version: 0.3.3
 Summary: antiweb literate programming tool
 Home-page: http://packages.python.org/antiweb/
 Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
-Author-email: mreithinger@web.de
+Author-email: antiweb@freelists.org
 License: GPL
 """
 
@@ -3147,12 +3147,19 @@ There are two new flags in antiweb:
                       action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
 
     options, args = parser.parse_args()
+    
+    
+    if not args:
+        args = os.getcwd()
+        argsExist = False
+    else:
+        argsExist = True
 
-    return (options, args, parser)
+    return (options, args, parser, argsExist)
 
 def main():
 
-    options, args, parser = parsing()
+    options, args, parser, argsExist = parsing()
 
     logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.INFO)
@@ -3176,8 +3183,10 @@ def main():
     previous_dir = os.getcwd()
     
     #Convert to absolute path. This is needed if a relative path was given.
-    absolute_path = os.path.abspath(args[0])
-    
+    if argsExist is True:
+        absolute_path = os.path.abspath(args[0])
+    else:
+        absolute_path = os.path.abspath(args)
     if options.recursive:
         directory = absolute_path
         

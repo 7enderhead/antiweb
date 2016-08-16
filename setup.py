@@ -17,7 +17,7 @@ setup(
     download_url='http://pypi.python.org/pypi/antiweb',
     license='GPL',
     author='Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner',
-    author_email='mreithinger@web.de & yarmek@icloud.com',
+    author_email='antiweb@freelists.org',
     description='antiweb literate programming tool',
     #long_description=read(os.path.join("doc_old", "source", "motivation.rst")),
     install_requires=['sphinx', 'babel', 'beautifulsoup4'],
