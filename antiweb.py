@@ -3145,7 +3145,7 @@ def parsing():
     
     #There is no argument given, so we assume the user wants to use the current directory.
     if not args:
-        args[0] = os.getcwd()
+        args.append(os.getcwd())
     # parsing() returns the selected options, arguments (the filepath/folderpath) and the parser
     return (options, args, parser)
 #@(parsing)
