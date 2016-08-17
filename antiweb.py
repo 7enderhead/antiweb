@@ -130,8 +130,9 @@ File Layout
 Multi-File Processing and Sphinx Support
 ****************************************
 
-@include(additional_options)
-
+antiweb supports Sphinx, which means that antiweb can provide you with an index.rst document that includes all processed files.
+To use that feature you simple have to use the -i option. Additionally you can process multiple files at once with the -r option added. 
+The needed parameter then can be empty to use the current directory or you provide the directory antiweb should use.
 
 ************************
 How to add new languages
@@ -146,7 +147,6 @@ a more advances reader is :py:class:`PythonReader`.
 #@include(get_comment_markers doc)
 
 
-@if(usage)
 #####
 Usage
 #####
@@ -3175,7 +3175,8 @@ def main():
 
     previous_dir = os.getcwd()
     
-    #Convert to absolute path. This is needed if a relative path was given.
+    #The user input (respectively the input antiweb sets when none is given) can be relative, 
+    #so we grab the absolute path to work with.
     absolute_path = os.path.abspath(args[0])
 
     if options.recursive:
