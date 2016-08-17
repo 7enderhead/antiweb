@@ -3109,10 +3109,19 @@ def create_index_file(working_dir, directory, file_name, start_block, end_block)
     write_static(index_file_absolute, start_block, end_block)
     
     return index_file
-#@(create_index_file)    
-        
+#@(create_index_file)   
+ 
+#@cstart(parsing)
 def parsing():
-    
+#@start(parsing doc)
+    """
+.. py:method:: def parsing()
+
+   All possible input options are being defined, as well as their help-message, type and variable the values are stored in.
+   If no arguments are given (the user did not provide a filepath), the current directory is set as the argument.
+    """
+#@include(parsing)
+#@(parsing doc)    
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
                           description="Tangles a source code file to a rst file.",
                           version="%prog " + __version__)
@@ -3125,20 +3134,6 @@ def parsing():
 
     parser.add_option("-w", "--warnings", dest="warnings",
                       action="store_false", help="suppresses warnings")
-    
-#@start(additional_options)
-    """
-There are two new flags in antiweb:
-
-* The ''-i'' flag:
-    * antiweb writes all processed files in sphinx' index.rst file (empty files are ignored)
-
-* The ''-r'' flag:
-    * antiweb processes all comptible files in the given directory and its subdirectories
-
-"""
-
-#@code
 
     parser.add_option("-r", "--recursive", dest="recursive",
                       action="store_true", help="Process every file in given directory")
@@ -3148,18 +3143,16 @@ There are two new flags in antiweb:
 
     options, args = parser.parse_args()
     
-    
+    #There is no argument given, so we assume the user wants to use the current directory.
     if not args:
-        args = os.getcwd()
-        argsExist = False
-    else:
-        argsExist = True
-
-    return (options, args, parser, argsExist)
-
+        args[0] = os.getcwd()
+    # parsing() returns the selected options, arguments (the filepath/folderpath) and the parser
+    return (options, args, parser)
+#@(parsing)
+    
 def main():
 
-    options, args, parser, argsExist = parsing()
+    options, args, parser = parsing()
 
     logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.INFO)
@@ -3183,10 +3176,8 @@ def main():
     previous_dir = os.getcwd()
     
     #Convert to absolute path. This is needed if a relative path was given.
-    if argsExist is True:
-        absolute_path = os.path.abspath(args[0])
-    else:
-        absolute_path = os.path.abspath(args)
+    absolute_path = os.path.abspath(args[0])
+
     if options.recursive:
         directory = absolute_path
         
@@ -3260,7 +3251,7 @@ def main():
 #@include(create_index_file doc)
 #@include(process_file)
 #@include(search_for_generated_block)
-#@(additional_options)
+#@include(parsing doc)
 
 if __name__ == "__main__":
     main()
