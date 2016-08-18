@@ -2403,16 +2403,19 @@ class Document(object):
         """
         .. py:method:: process(show_warnings)
 
-           Processes the document and generates the output.
-           :param bool show_warnings: If ``True`` warnings are emitted.
-           :return: A string representing the rst output.
+            Processes the document and generates the output.
+            :param bool show_warnings: If ``True`` warnings are emitted.
+            :return: A string representing the rst output.
         """
         self.collect_blocks()
-        #print("Blocks", fname,  self.blocks)
-        if "" not in self.blocks and not fname.endswith(".rst"):
-            self.add_error(0, "no @start() directive found (I need one)")
-            self.check_errors()
         
+        #check if there are any lines in the file and add the according error message
+        if not self.lines:
+            self.add_error(0, "empty file", fname)
+            self.check_errors()
+        elif "" not in self.blocks and not fname.endswith(".rst"):
+            self.add_error(0, "no @start() directive found (I need one)")
+            self.check_errors()       
 
         try:
             text = self.get_compiled_block("")
@@ -2496,15 +2499,23 @@ class Document(object):
     #@rinclude(read the source file)
     #@(Document.get_subdoc)
     #@cstart(Document.add_error)
-    def add_error(self, line, text):
+    def add_error(self, line_number, text, fname=""):
         """
         .. py:method:: add_error(line, text)
 
            Adds an error to the list.
-           :param integer line: The line number that causes the error.
+           :param integer line_number: The line number that causes the error.
            :param string text: An error text.
+           :param string fname: Optionally add the filename
+           
         """
-        self.errors.append((self.lines[line], text))
+        #determine if the file is empty
+        if line_number < len(self.lines):
+            line = self.lines[line_number]
+        else:
+            line = Line(fname, -1, "")
+            
+        self.errors.append((line, text))
 
 
     #@cstart(Document.check_errors)
