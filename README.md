@@ -8,7 +8,7 @@ Home-page: http://packages.python.org/antiweb/
 
 Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
 
-Author-email: mreithinger@web.de
+Author-email: antiweb@freelists.org
 
 License: GPL
 

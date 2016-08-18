@@ -2,11 +2,11 @@
 
 """
 Name: antiweb
-Version: 0.3.2
+Version: 0.3.3
 Summary: antiweb literate programming tool
 Home-page: http://packages.python.org/antiweb/
 Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
-Author-email: mreithinger@web.de
+Author-email: antiweb@freelists.org
 License: GPL
 """
 
@@ -130,8 +130,9 @@ File Layout
 Multi-File Processing and Sphinx Support
 ****************************************
 
-@include(additional_options)
-
+antiweb supports Sphinx, which means that antiweb can provide you with an index.rst document that includes all processed files.
+To use that feature you simple have to use the -i option. Additionally you can process multiple files at once with the -r option added. 
+The needed parameter then can be empty to use the current directory or you provide the directory antiweb should use.
 
 ************************
 How to add new languages
@@ -145,38 +146,13 @@ a more advances reader is :py:class:`PythonReader`.
 #@include(comments doc)
 #@include(get_comment_markers doc)
 
-
-@if(usage)
-#####
-Usage
-#####
-
-
-.. code-block:: none
-
-   #> python antiweb.py [options] SOURCEFILE
-
-Tangles a source code file to a rst file.
-
-**Options**
-
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -o OUTPUT, --output=OUTPUT
-                        The output file name
-  -t TOKEN, --token=TOKEN
-                        defines a token, usable by @if directives
-  -w, --warnings        suppresses warnings
-  -r, --recursive       Process every file in given directory
-  -i, --index           Automatically write file(s) to Sphinx' index.rst
-
 *******
 Example
 *******
 
 See the :ref:`antiweb` source as an advanced example.
 
-
+@if(usage)
 **********
 Directives
 **********
@@ -3109,10 +3085,19 @@ def create_index_file(working_dir, directory, file_name, start_block, end_block)
     write_static(index_file_absolute, start_block, end_block)
     
     return index_file
-#@(create_index_file)    
-        
+#@(create_index_file)   
+ 
+#@cstart(parsing)
 def parsing():
-    
+#@start(parsing doc)
+    """
+.. py:method:: def parsing()
+
+   All possible input options are being defined, as well as their help-message, type and variable the values are stored in.
+   If no arguments are given (the user did not provide a filepath), the current directory is set as the argument.
+    """
+#@include(parsing)
+#@(parsing doc)    
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
                           description="Tangles a source code file to a rst file.",
                           version="%prog " + __version__)
@@ -3125,20 +3110,6 @@ def parsing():
 
     parser.add_option("-w", "--warnings", dest="warnings",
                       action="store_false", help="suppresses warnings")
-    
-#@start(additional_options)
-    """
-There are two new flags in antiweb:
-
-* The ''-i'' flag:
-    * antiweb writes all processed files in sphinx' index.rst file (empty files are ignored)
-
-* The ''-r'' flag:
-    * antiweb processes all comptible files in the given directory and its subdirectories
-
-"""
-
-#@code
 
     parser.add_option("-r", "--recursive", dest="recursive",
                       action="store_true", help="Process every file in given directory")
@@ -3147,9 +3118,14 @@ There are two new flags in antiweb:
                       action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
 
     options, args = parser.parse_args()
-
+    
+    #There is no argument given, so we assume the user wants to use the current directory.
+    if not args:
+        args.append(os.getcwd())
+    # parsing() returns the selected options, arguments (the filepath/folderpath) and the parser
     return (options, args, parser)
-
+#@(parsing)
+    
 def main():
 
     options, args, parser = parsing()
@@ -3175,9 +3151,10 @@ def main():
 
     previous_dir = os.getcwd()
     
-    #Convert to absolute path. This is needed if a relative path was given.
+    #The user input (respectively the input antiweb sets when none is given) can be relative, 
+    #so we grab the absolute path to work with.
     absolute_path = os.path.abspath(args[0])
-    
+
     if options.recursive:
         directory = absolute_path
         
@@ -3251,7 +3228,7 @@ def main():
 #@include(create_index_file doc)
 #@include(process_file)
 #@include(search_for_generated_block)
-#@(additional_options)
+#@include(parsing doc)
 
 if __name__ == "__main__":
     main()

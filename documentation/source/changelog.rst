@@ -56,3 +56,7 @@ Changelog
          Added new section in documentation: Process overview
          
          Introducing a new version 0.3.3
+
+    * 12.08.2016
+         Added support for Travis CI (continous integration)
+         Updated readme.md so all authors are listed
