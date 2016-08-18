@@ -201,9 +201,9 @@ the following function:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>fname</strong> (<em>string</em>) &#8211; The path to the source file.</li>
-<li><strong>tokens</strong> (<em>list</em>) &#8211; A list of string tokens, used for &#64;if directives.</li>
-<li><strong>show_warnings</strong> (<em>bool</em>) &#8211; Warnings will be written
+<li><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The path to the source file.</li>
+<li><strong>tokens</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of string tokens, used for &#64;if directives.</li>
+<li><strong>show_warnings</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Warnings will be written
 via the logging module.</li>
 </ul>
 </td>
@@ -430,7 +430,7 @@ directives.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>list</em>) &#8211; a list of all document lines.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; a list of all document lines.</td>
 </tr>
 </tbody>
 </table>
@@ -627,7 +627,7 @@ the containing block.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block</strong> (<em>list</em>) &#8211; A list of lines beginning with start</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of lines beginning with start</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The line index of the found end.</td>
 </tr>
@@ -1492,8 +1492,8 @@ This method is call by <a class="reference internal" href="#Document" title="Doc
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fname</strong> (<em>string</em>) &#8211; The file name of the source code</li>
-<li><strong>text</strong> (<em>string</em>) &#8211; The source code</li>
+<li><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The file name of the source code</li>
+<li><strong>text</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The source code</li>
 </ul>
 </td>
 </tr>
@@ -1553,7 +1553,7 @@ the reader the chance to influence the final output.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>index</strong> (<em>integer</em>) &#8211; The index within the source code</li>
 <li><strong>token</strong> &#8211; A pygments token.</li>
-<li><strong>value</strong> (<em>string</em>) &#8211; The token value.</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The token value.</li>
 </ul>
 </td>
 </tr>
@@ -1593,7 +1593,7 @@ the reader the chance to influence the final output.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>index</strong> (<em>integer</em>) &#8211; The index within the source code</li>
 <li><strong>token</strong> &#8211; A pygments token.</li>
-<li><strong>value</strong> (<em>string</em>) &#8211; The token value.</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The token value.</li>
 </ul>
 </td>
 </tr>
@@ -1950,7 +1950,7 @@ line in the stripped_xml_lines a new Line object is created.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>stripped_xml_lines</strong> (<em>string[]</em>) &#8211; The comment lines were the XML tags have been stripped.</li>
-<li><strong>index</strong> (<em>int</em>) &#8211; The starting index for the new line object.</li>
+<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The starting index for the new line object.</li>
 <li><strong>initial_line</strong> (<a class="reference internal" href="#Line" title="Line"><em>Line</em></a>) &#8211; The first line of the xml comment block. Its indentation will be used for all new created lines.</li>
 </ul>
 </td>
@@ -2812,9 +2812,7 @@ split in lines.</p>
  9
 10
 11
-12
-13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -2826,8 +2824,6 @@ split in lines.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">reader</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">())]</span>
 </pre></div>
 </td></tr></table></div>
 </dd></dl>
@@ -3319,7 +3315,7 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>index</strong> (<em>integer</em>) &#8211; the line index.</li>
 <li><strong>type</strong> (<em>char</em>) &#8211; Either <code class="docutils literal"><span class="pre">'d'</span></code> or <code class="docutils literal"><span class="pre">'c'</span></code>.</li>
-<li><strong>directives</strong> (<em>list</em>) &#8211; A list of <code class="xref py py-class docutils literal"><span class="pre">DCirective</span></code> objects.</li>
+<li><strong>directives</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of <code class="xref py py-class docutils literal"><span class="pre">DCirective</span></code> objects.</li>
 </ul>
 </td>
 </tr>
@@ -4576,7 +4572,7 @@ The comment markers of C serves as the default comment markers if the lexer name
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lexer_name</strong> (<em>string</em>) &#8211; The name of the pygments lexer.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lexer_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The name of the pygments lexer.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The single and comment block markers defined by the language</td>
 </tr>

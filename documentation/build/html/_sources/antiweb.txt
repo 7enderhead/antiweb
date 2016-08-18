@@ -1813,8 +1813,6 @@ Document
               self.fname = fname
               self.reader = reader
               self.lines = self.reader.process(fname, text)
-              if not self.lines:
-                  self.lines = [Line(1, 0, ())]
               
           
       
