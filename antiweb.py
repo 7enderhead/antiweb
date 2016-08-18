@@ -146,37 +146,13 @@ a more advances reader is :py:class:`PythonReader`.
 #@include(comments doc)
 #@include(get_comment_markers doc)
 
-
-#####
-Usage
-#####
-
-
-.. code-block:: none
-
-   #> python antiweb.py [options] SOURCEFILE
-
-Tangles a source code file to a rst file.
-
-**Options**
-
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -o OUTPUT, --output=OUTPUT
-                        The output file name
-  -t TOKEN, --token=TOKEN
-                        defines a token, usable by @if directives
-  -w, --warnings        suppresses warnings
-  -r, --recursive       Process every file in given directory
-  -i, --index           Automatically write file(s) to Sphinx' index.rst
-
 *******
 Example
 *******
 
 See the :ref:`antiweb` source as an advanced example.
 
-
+@if(usage)
 **********
 Directives
 **********
@@ -2420,6 +2396,8 @@ class Document(object):
         self.fname = fname
         self.reader = reader
         self.lines = self.reader.process(fname, text)
+        if not self.lines:
+            self.lines = [Line(1, 0, ())]
         
 
     #@cstart(Document.process)

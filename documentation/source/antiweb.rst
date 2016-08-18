@@ -1813,6 +1813,8 @@ Document
               self.fname = fname
               self.reader = reader
               self.lines = self.reader.process(fname, text)
+              if not self.lines:
+                  self.lines = [Line(1, 0, ())]
               
           
       
@@ -2324,176 +2326,9 @@ File Layout
     <<write_static>>
     
     <<create_index_file>>
-            
-    def parsing():
+     
+    <<parsing>>
         
-        parser = OptionParser("usage: %prog [options] SOURCEFILE",
-                              description="Tangles a source code file to a rst file.",
-                              version="%prog " + __version__)
-    
-        parser.add_option("-o", "--output", dest="output", default="",
-                          type="string", help="The output filename")
-    
-        parser.add_option("-t", "--token", dest="token", action="append",
-                          type="string", help="defines a token, usable by @if directives")
-    
-        parser.add_option("-w", "--warnings", dest="warnings",
-                          action="store_false", help="suppresses warnings")
-        
-    
-    if __name__ == "__main__":
-        main()
-    
-    
-
-
-
-<<imports>>
-===========
-
-::
-
-    from optparse import OptionParser
-    import pygments.lexers as pm
-    from pygments.token import Token
-    import bisect
-    import re
-    import logging
-    import sys
-    import os.path
-    import operator
-    import os
-    from sys import platform as _platform
-    from bs4 import BeautifulSoup,  Tag,  NavigableString
-    
-
-
-
-<<management>>
-==============
-
-
-::
-
-    
-    __version__ = "0.3.2"
-    
-    logger = logging.getLogger('antiweb')
-    
-    class WebError(Exception):
-        def __init__(self, error_list):
-            self.error_list = error_list
-    
-
-
-
-<<directives>>
-==============
-
-
-::
-
-    
-    <<Directive>>
-    <<NameDirective>>
-    <<Start>>
-    <<RStart>>
-    <<CStart>>
-    <<End>>
-    <<Fi>>
-    <<If>>
-    <<Define>>
-    <<Enifed>>
-    <<Subst>>
-    <<Include>>
-    <<RInclude>>
-    <<Edoc>>
-    <<Code>>
-    <<Ignore>>
-    <<Indent>>
-    
-    directives = {
-        "start" : Start,
-        "rstart" : RStart,
-        "cstart" : CStart,
-        "edoc" : Edoc,
-        "end" : End,
-        "include" : Include,
-        "code" : Code,
-        "ignore" : Ignore,
-        "indent" : Indent,
-        "if" : If,
-        "fi" : Fi,
-        "define" : Define,
-        "enifed" : Enifed,
-        "subst" : Subst,
-        "rinclude" : RInclude,
-        }
-    
-
-
-.. _readers:
-
-
-<<readers>>
-===========
-
-
-::
-
-    
-    <<Reader>>
-    <<CReader>>
-    <<CSharpReader>>
-    <<ClojureReader>>
-    
-    <<GenericReader>>
-    <<rstReader>>
-    <<PythonReader>>
-
-
-
-<<document>>
-============
-
-
-::
-
-    
-    <<Document>>
-    <<generate>>
-    
-    <<get_comment_markers>>
-
-
-
-****************************************
-Multi-File Processing and Sphinx Support
-****************************************
-
-There are two new flags in antiweb:
-
-* The ''-i'' flag:
-    * antiweb writes all processed files in sphinx' index.rst file (empty files are ignored)
-
-* The ''-r'' flag:
-    * antiweb processes all comptible files in the given directory and its subdirectories
-
-
-
-::
-
-    
-        parser.add_option("-r", "--recursive", dest="recursive",
-                          action="store_true", help="Process every file in given directory")
-        
-        parser.add_option("-i", "--index", dest="index",
-                          action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
-    
-        options, args = parser.parse_args()
-    
-        return (options, args, parser)
-    
     def main():
     
         options, args, parser = parsing()
@@ -2520,9 +2355,10 @@ The program checks if a -r flag was given and if so, save the current directory 
     
         previous_dir = os.getcwd()
         
-        #Convert to absolute path. This is needed if a relative path was given.
+        #The user input (respectively the input antiweb sets when none is given) can be relative, 
+        #so we grab the absolute path to work with.
         absolute_path = os.path.abspath(args[0])
-        
+    
         if options.recursive:
             directory = absolute_path
             
@@ -2585,7 +2421,6 @@ This else will take place when the -r flag is not given.
             write(os.getcwd(), absolute_file_path, options, index_rst, start_block, end_block)
         
         os.chdir(previous_dir)
-        print("Documents generated")
         return True
 
 
@@ -2996,11 +2831,178 @@ Afterwards the whole file content and the endline of the generated block are ret
         return (content, endline)
 
 
+.. py:method:: def parsing()
+
+   All possible input options are being defined, as well as their help-message, type and variable the values are stored in.
+   If no arguments are given (the user did not provide a filepath), the current directory is set as the argument.
+
+::
+
+    def parsing():
+        parser = OptionParser("usage: %prog [options] SOURCEFILE",
+                              description="Tangles a source code file to a rst file.",
+                              version="%prog " + __version__)
+    
+        parser.add_option("-o", "--output", dest="output", default="",
+                          type="string", help="The output filename")
+    
+        parser.add_option("-t", "--token", dest="token", action="append",
+                          type="string", help="defines a token, usable by @if directives")
+    
+        parser.add_option("-w", "--warnings", dest="warnings",
+                          action="store_false", help="suppresses warnings")
+    
+        parser.add_option("-r", "--recursive", dest="recursive",
+                          action="store_true", help="Process every file in given directory")
+        
+        parser.add_option("-i", "--index", dest="index",
+                          action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
+    
+        options, args = parser.parse_args()
+        
+        #There is no argument given, so we assume the user wants to use the current directory.
+        if not args:
+            args.append(os.getcwd())
+        # parsing() returns the selected options, arguments (the filepath/folderpath) and the parser
+        return (options, args, parser)
+
+
+if __name__ == "__main__":
+    main()
 
 
 
 
 
+
+
+
+<<imports>>
+===========
+
+::
+
+    from optparse import OptionParser
+    import pygments.lexers as pm
+    from pygments.token import Token
+    import bisect
+    import re
+    import logging
+    import sys
+    import os.path
+    import operator
+    import os
+    from sys import platform as _platform
+    from bs4 import BeautifulSoup,  Tag,  NavigableString
+    
+
+
+
+<<management>>
+==============
+
+
+::
+
+    
+    __version__ = "0.3.2"
+    
+    logger = logging.getLogger('antiweb')
+    
+    class WebError(Exception):
+        def __init__(self, error_list):
+            self.error_list = error_list
+    
+
+
+
+<<directives>>
+==============
+
+
+::
+
+    
+    <<Directive>>
+    <<NameDirective>>
+    <<Start>>
+    <<RStart>>
+    <<CStart>>
+    <<End>>
+    <<Fi>>
+    <<If>>
+    <<Define>>
+    <<Enifed>>
+    <<Subst>>
+    <<Include>>
+    <<RInclude>>
+    <<Edoc>>
+    <<Code>>
+    <<Ignore>>
+    <<Indent>>
+    
+    directives = {
+        "start" : Start,
+        "rstart" : RStart,
+        "cstart" : CStart,
+        "edoc" : Edoc,
+        "end" : End,
+        "include" : Include,
+        "code" : Code,
+        "ignore" : Ignore,
+        "indent" : Indent,
+        "if" : If,
+        "fi" : Fi,
+        "define" : Define,
+        "enifed" : Enifed,
+        "subst" : Subst,
+        "rinclude" : RInclude,
+        }
+    
+
+
+.. _readers:
+
+
+<<readers>>
+===========
+
+
+::
+
+    
+    <<Reader>>
+    <<CReader>>
+    <<CSharpReader>>
+    <<ClojureReader>>
+    
+    <<GenericReader>>
+    <<rstReader>>
+    <<PythonReader>>
+
+
+
+<<document>>
+============
+
+
+::
+
+    
+    <<Document>>
+    <<generate>>
+    
+    <<get_comment_markers>>
+
+
+
+****************************************
+Multi-File Processing and Sphinx Support
+****************************************
+
+antiweb supports Sphinx, which means that antiweb can provide you with an index.rst document that includes all processed files.
+To use that feature you simple have to use the -i option. Additionally you can process multiple files at once with the -r option added. 
+The needed parameter then can be empty to use the current directory or you provide the directory antiweb should use.
 
 ************************
 How to add new languages
@@ -3052,4 +3054,9 @@ From the map above the comment markers are retrieved via the following method:
         
     
 
+*******
+Example
+*******
+
+See the :ref:`antiweb` source as an advanced example.
 

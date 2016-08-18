@@ -123,6 +123,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#file-layout">File Layout</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#writing-the-documentation-files">Writing the documentation files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process-file">process_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#search-for-generated-block">search_for_generated_block</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#imports">&lt;&lt;imports&gt;&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#management">&lt;&lt;management&gt;&gt;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">&lt;&lt;directives&gt;&gt;</a></li>
@@ -130,16 +133,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#id6">&lt;&lt;document&gt;&gt;</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#writing-the-documentation-files">Writing the documentation files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#process-file">process_file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#search-for-generated-block">search_for_generated_block</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#language-specific-comment-markers">Language specific comment markers</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
@@ -202,9 +201,9 @@ the following function:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The path to the source file.</li>
-<li><strong>tokens</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of string tokens, used for &#64;if directives.</li>
-<li><strong>show_warnings</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Warnings will be written
+<li><strong>fname</strong> (<em>string</em>) &#8211; The path to the source file.</li>
+<li><strong>tokens</strong> (<em>list</em>) &#8211; A list of string tokens, used for &#64;if directives.</li>
+<li><strong>show_warnings</strong> (<em>bool</em>) &#8211; Warnings will be written
 via the logging module.</li>
 </ul>
 </td>
@@ -431,7 +430,7 @@ directives.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; a list of all document lines.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>list</em>) &#8211; a list of all document lines.</td>
 </tr>
 </tbody>
 </table>
@@ -628,7 +627,7 @@ the containing block.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of lines beginning with start</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block</strong> (<em>list</em>) &#8211; A list of lines beginning with start</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The line index of the found end.</td>
 </tr>
@@ -1493,8 +1492,8 @@ This method is call by <a class="reference internal" href="#Document" title="Doc
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The file name of the source code</li>
-<li><strong>text</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The source code</li>
+<li><strong>fname</strong> (<em>string</em>) &#8211; The file name of the source code</li>
+<li><strong>text</strong> (<em>string</em>) &#8211; The source code</li>
 </ul>
 </td>
 </tr>
@@ -1554,7 +1553,7 @@ the reader the chance to influence the final output.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>index</strong> (<em>integer</em>) &#8211; The index within the source code</li>
 <li><strong>token</strong> &#8211; A pygments token.</li>
-<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The token value.</li>
+<li><strong>value</strong> (<em>string</em>) &#8211; The token value.</li>
 </ul>
 </td>
 </tr>
@@ -1594,7 +1593,7 @@ the reader the chance to influence the final output.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>index</strong> (<em>integer</em>) &#8211; The index within the source code</li>
 <li><strong>token</strong> &#8211; A pygments token.</li>
-<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The token value.</li>
+<li><strong>value</strong> (<em>string</em>) &#8211; The token value.</li>
 </ul>
 </td>
 </tr>
@@ -1951,7 +1950,7 @@ line in the stripped_xml_lines a new Line object is created.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>stripped_xml_lines</strong> (<em>string[]</em>) &#8211; The comment lines were the XML tags have been stripped.</li>
-<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The starting index for the new line object.</li>
+<li><strong>index</strong> (<em>int</em>) &#8211; The starting index for the new line object.</li>
 <li><strong>initial_line</strong> (<a class="reference internal" href="#Line" title="Line"><em>Line</em></a>) &#8211; The first line of the xml comment block. Its indentation will be used for all new created lines.</li>
 </ul>
 </td>
@@ -2813,7 +2812,9 @@ split in lines.</p>
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -2825,6 +2826,8 @@ split in lines.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">reader</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">())]</span>
 </pre></div>
 </td></tr></table></div>
 </dd></dl>
@@ -3316,7 +3319,7 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>index</strong> (<em>integer</em>) &#8211; the line index.</li>
 <li><strong>type</strong> (<em>char</em>) &#8211; Either <code class="docutils literal"><span class="pre">'d'</span></code> or <code class="docutils literal"><span class="pre">'c'</span></code>.</li>
-<li><strong>directives</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A list of <code class="xref py py-class docutils literal"><span class="pre">DCirective</span></code> objects.</li>
+<li><strong>directives</strong> (<em>list</em>) &#8211; A list of <code class="xref py py-class docutils literal"><span class="pre">DCirective</span></code> objects.</li>
 </ul>
 </td>
 </tr>
@@ -3489,7 +3492,8 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 44
 45
 46
-47</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">imports</span><span class="o">&gt;&gt;</span>
+47
+48</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">imports</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">management</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">directives</span><span class="o">&gt;&gt;</span>
 <span class="o">&lt;&lt;</span><span class="n">readers</span><span class="o">&gt;&gt;</span>
@@ -3518,235 +3522,7 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 
 <span class="o">&lt;&lt;</span><span class="n">create_index_file</span><span class="o">&gt;&gt;</span>
 
-<span class="k">def</span> <span class="nf">parsing</span><span class="p">():</span>
-
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="s2">&quot;usage: %prog [options] SOURCEFILE&quot;</span><span class="p">,</span>
-                          <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tangles a source code file to a rst file.&quot;</span><span class="p">,</span>
-                          <span class="n">version</span><span class="o">=</span><span class="s2">&quot;%prog &quot;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The output filename&quot;</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--token&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span>
-                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;defines a token, usable by @if directives&quot;</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--warnings&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;warnings&quot;</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;suppresses warnings&quot;</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</pre></div>
-</td></tr></table></div>
-<div class="section" id="imports">
-<h3>&lt;&lt;imports&gt;&gt;<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
-<span class="kn">import</span> <span class="nn">pygments.lexers</span> <span class="k">as</span> <span class="nn">pm</span>
-<span class="kn">from</span> <span class="nn">pygments.token</span> <span class="k">import</span> <span class="n">Token</span>
-<span class="kn">import</span> <span class="nn">bisect</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">import</span> <span class="nn">operator</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">platform</span> <span class="k">as</span> <span class="n">_platform</span>
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span><span class="p">,</span>  <span class="n">Tag</span><span class="p">,</span>  <span class="n">NavigableString</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="management">
-<h3>&lt;&lt;management&gt;&gt;<a class="headerlink" href="#management" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.3.2&quot;</span>
-
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;antiweb&#39;</span><span class="p">)</span>
-
-<span class="k">class</span> <span class="nc">WebError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_list</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">error_list</span> <span class="o">=</span> <span class="n">error_list</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="id3">
-<h3>&lt;&lt;directives&gt;&gt;<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">NameDirective</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Start</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">RStart</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">CStart</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">End</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Fi</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">If</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Define</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Enifed</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Subst</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Include</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">RInclude</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Edoc</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Code</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Ignore</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">Indent</span><span class="o">&gt;&gt;</span>
-
-<span class="n">directives</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;start&quot;</span> <span class="p">:</span> <span class="n">Start</span><span class="p">,</span>
-    <span class="s2">&quot;rstart&quot;</span> <span class="p">:</span> <span class="n">RStart</span><span class="p">,</span>
-    <span class="s2">&quot;cstart&quot;</span> <span class="p">:</span> <span class="n">CStart</span><span class="p">,</span>
-    <span class="s2">&quot;edoc&quot;</span> <span class="p">:</span> <span class="n">Edoc</span><span class="p">,</span>
-    <span class="s2">&quot;end&quot;</span> <span class="p">:</span> <span class="n">End</span><span class="p">,</span>
-    <span class="s2">&quot;include&quot;</span> <span class="p">:</span> <span class="n">Include</span><span class="p">,</span>
-    <span class="s2">&quot;code&quot;</span> <span class="p">:</span> <span class="n">Code</span><span class="p">,</span>
-    <span class="s2">&quot;ignore&quot;</span> <span class="p">:</span> <span class="n">Ignore</span><span class="p">,</span>
-    <span class="s2">&quot;indent&quot;</span> <span class="p">:</span> <span class="n">Indent</span><span class="p">,</span>
-    <span class="s2">&quot;if&quot;</span> <span class="p">:</span> <span class="n">If</span><span class="p">,</span>
-    <span class="s2">&quot;fi&quot;</span> <span class="p">:</span> <span class="n">Fi</span><span class="p">,</span>
-    <span class="s2">&quot;define&quot;</span> <span class="p">:</span> <span class="n">Define</span><span class="p">,</span>
-    <span class="s2">&quot;enifed&quot;</span> <span class="p">:</span> <span class="n">Enifed</span><span class="p">,</span>
-    <span class="s2">&quot;subst&quot;</span> <span class="p">:</span> <span class="n">Subst</span><span class="p">,</span>
-    <span class="s2">&quot;rinclude&quot;</span> <span class="p">:</span> <span class="n">RInclude</span><span class="p">,</span>
-    <span class="p">}</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="id4">
-<span id="id5"></span><h3>&lt;&lt;readers&gt;&gt;<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">CReader</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">ClojureReader</span><span class="o">&gt;&gt;</span>
-
-<span class="o">&lt;&lt;</span><span class="n">GenericReader</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">rstReader</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">PythonReader</span><span class="o">&gt;&gt;</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-<div class="section" id="id6">
-<h3>&lt;&lt;document&gt;&gt;<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">&gt;&gt;</span>
-<span class="o">&lt;&lt;</span><span class="n">generate</span><span class="o">&gt;&gt;</span>
-
-<span class="o">&lt;&lt;</span><span class="n">get_comment_markers</span><span class="o">&gt;&gt;</span>
-</pre></div>
-</td></tr></table></div>
-</div>
-</div>
-<div class="section" id="multi-file-processing-and-sphinx-support">
-<h2>Multi-File Processing and Sphinx Support<a class="headerlink" href="#multi-file-processing-and-sphinx-support" title="Permalink to this headline">¶</a></h2>
-<p>There are two new flags in antiweb:</p>
-<ul>
-<li><dl class="first docutils">
-<dt>The &#8216;&#8217;-i&#8217;&#8217; flag:</dt>
-<dd><ul class="first last simple">
-<li>antiweb writes all processed files in sphinx&#8217; index.rst file (empty files are ignored)</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>The &#8216;&#8217;-r&#8217;&#8217; flag:</dt>
-<dd><ul class="first last simple">
-<li>antiweb processes all comptible files in the given directory and its subdirectories</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Process every file in given directory&quot;</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--index&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Automatically write file(s) to Sphinx&#39; index.rst&quot;</span><span class="p">)</span>
-
-    <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">parser</span><span class="p">)</span>
+<span class="o">&lt;&lt;</span><span class="n">parsing</span><span class="o">&gt;&gt;</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 
@@ -3786,9 +3562,11 @@ and <a class="reference internal" href="#Line.directives" title="Line.directives
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">previous_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">previous_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
-<span class="c1">#Convert to absolute path. This is needed if a relative path was given.</span>
+<span class="c1">#The user input (respectively the input antiweb sets when none is given) can be relative,</span>
+<span class="c1">#so we grab the absolute path to work with.</span>
 <span class="n">absolute_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span><span class="p">:</span>
@@ -3851,8 +3629,7 @@ are retrieved. Only files with the allowed extensions are processed.</p>
 20
 21
 22
-23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">else</span><span class="p">:</span>
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">else</span><span class="p">:</span>
     <span class="n">absolute_file_path</span> <span class="o">=</span> <span class="n">absolute_path</span>
 
     <span class="c1">#Check if the given path refers to an existing file.</span>
@@ -3874,7 +3651,6 @@ are retrieved. Only files with the allowed extensions are processed.</p>
     <span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">absolute_file_path</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">index_rst</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">previous_dir</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Documents generated&quot;</span><span class="p">)</span>
 <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 </td></tr></table></div>
@@ -4538,7 +4314,231 @@ Afterwards the whole file content and the endline of the generated block are ret
     <span class="k">return</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">endline</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
+<dl class="method">
+<dt>
+<code class="descname">def parsing()</code></dt>
+<dd><p>All possible input options are being defined, as well as their help-message, type and variable the values are stored in.
+If no arguments are given (the user did not provide a filepath), the current directory is set as the argument.</p>
+</dd></dl>
+
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parsing</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="s2">&quot;usage: %prog [options] SOURCEFILE&quot;</span><span class="p">,</span>
+                          <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tangles a source code file to a rst file.&quot;</span><span class="p">,</span>
+                          <span class="n">version</span><span class="o">=</span><span class="s2">&quot;%prog &quot;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The output filename&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--token&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span>
+                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;defines a token, usable by @if directives&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--warnings&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;warnings&quot;</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;suppresses warnings&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Process every file in given directory&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--index&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Automatically write file(s) to Sphinx&#39; index.rst&quot;</span><span class="p">)</span>
+
+    <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1">#There is no argument given, so we assume the user wants to use the current directory.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+    <span class="c1"># parsing() returns the selected options, arguments (the filepath/folderpath) and the parser</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">parser</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>if __name__ == &#8220;__main__&#8221;:</dt>
+<dd>main()</dd>
+</dl>
 </div>
+<div class="section" id="imports">
+<h3>&lt;&lt;imports&gt;&gt;<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
+<span class="kn">import</span> <span class="nn">pygments.lexers</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">from</span> <span class="nn">pygments.token</span> <span class="k">import</span> <span class="n">Token</span>
+<span class="kn">import</span> <span class="nn">bisect</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">platform</span> <span class="k">as</span> <span class="n">_platform</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span><span class="p">,</span>  <span class="n">Tag</span><span class="p">,</span>  <span class="n">NavigableString</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="management">
+<h3>&lt;&lt;management&gt;&gt;<a class="headerlink" href="#management" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.3.2&quot;</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;antiweb&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">WebError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_list</span> <span class="o">=</span> <span class="n">error_list</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id3">
+<h3>&lt;&lt;directives&gt;&gt;<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">NameDirective</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Start</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">RStart</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">CStart</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">End</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Fi</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">If</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Define</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Enifed</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Subst</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Include</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">RInclude</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Edoc</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Code</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Ignore</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">Indent</span><span class="o">&gt;&gt;</span>
+
+<span class="n">directives</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;start&quot;</span> <span class="p">:</span> <span class="n">Start</span><span class="p">,</span>
+    <span class="s2">&quot;rstart&quot;</span> <span class="p">:</span> <span class="n">RStart</span><span class="p">,</span>
+    <span class="s2">&quot;cstart&quot;</span> <span class="p">:</span> <span class="n">CStart</span><span class="p">,</span>
+    <span class="s2">&quot;edoc&quot;</span> <span class="p">:</span> <span class="n">Edoc</span><span class="p">,</span>
+    <span class="s2">&quot;end&quot;</span> <span class="p">:</span> <span class="n">End</span><span class="p">,</span>
+    <span class="s2">&quot;include&quot;</span> <span class="p">:</span> <span class="n">Include</span><span class="p">,</span>
+    <span class="s2">&quot;code&quot;</span> <span class="p">:</span> <span class="n">Code</span><span class="p">,</span>
+    <span class="s2">&quot;ignore&quot;</span> <span class="p">:</span> <span class="n">Ignore</span><span class="p">,</span>
+    <span class="s2">&quot;indent&quot;</span> <span class="p">:</span> <span class="n">Indent</span><span class="p">,</span>
+    <span class="s2">&quot;if&quot;</span> <span class="p">:</span> <span class="n">If</span><span class="p">,</span>
+    <span class="s2">&quot;fi&quot;</span> <span class="p">:</span> <span class="n">Fi</span><span class="p">,</span>
+    <span class="s2">&quot;define&quot;</span> <span class="p">:</span> <span class="n">Define</span><span class="p">,</span>
+    <span class="s2">&quot;enifed&quot;</span> <span class="p">:</span> <span class="n">Enifed</span><span class="p">,</span>
+    <span class="s2">&quot;subst&quot;</span> <span class="p">:</span> <span class="n">Subst</span><span class="p">,</span>
+    <span class="s2">&quot;rinclude&quot;</span> <span class="p">:</span> <span class="n">RInclude</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id4">
+<span id="id5"></span><h3>&lt;&lt;readers&gt;&gt;<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">CReader</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">ClojureReader</span><span class="o">&gt;&gt;</span>
+
+<span class="o">&lt;&lt;</span><span class="n">GenericReader</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">rstReader</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">PythonReader</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id6">
+<h3>&lt;&lt;document&gt;&gt;<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">generate</span><span class="o">&gt;&gt;</span>
+
+<span class="o">&lt;&lt;</span><span class="n">get_comment_markers</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="multi-file-processing-and-sphinx-support">
+<h2>Multi-File Processing and Sphinx Support<a class="headerlink" href="#multi-file-processing-and-sphinx-support" title="Permalink to this headline">¶</a></h2>
+<p>antiweb supports Sphinx, which means that antiweb can provide you with an index.rst document that includes all processed files.
+To use that feature you simple have to use the -i option. Additionally you can process multiple files at once with the -r option added.
+The needed parameter then can be empty to use the current directory or you provide the directory antiweb should use.</p>
 </div>
 <div class="section" id="how-to-add-new-languages">
 <h2>How to add new languages<a class="headerlink" href="#how-to-add-new-languages" title="Permalink to this headline">¶</a></h2>
@@ -4576,7 +4576,7 @@ The comment markers of C serves as the default comment markers if the lexer name
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lexer_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The name of the pygments lexer.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lexer_name</strong> (<em>string</em>) &#8211; The name of the pygments lexer.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The single and comment block markers defined by the language</td>
 </tr>
@@ -4596,6 +4596,10 @@ The comment markers of C serves as the default comment markers if the lexer name
 </dd></dl>
 
 </div>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>See the <span class="xref std std-ref">antiweb</span> source as an advanced example.</p>
 </div>
 </div>
 
@@ -4618,7 +4622,7 @@ The comment markers of C serves as the default comment markers if the lexer name
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Philipp Rathmanner.
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
 
     </p>
   </div>
