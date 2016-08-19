@@ -242,7 +242,8 @@ class Test_Antiweb(unittest.TestCase):
             
         os.chdir(previ_dir)
     
-    #First goal: antiweb should not crash on this empty file; Second Goal: antiweb should not create any files
+    # First goal: antiweb should not crash on this empty file; 
+    # Second Goal: antiweb should not create any files
     def test_antiweb_empty_file(self):
         self.test_args = ['antiweb.py', self.temp_dir.get_path("empty.py")]
 

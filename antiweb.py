@@ -2409,7 +2409,7 @@ class Document(object):
         """
         self.collect_blocks()
         
-        #check if there are any lines in the file and add the according error message
+        # check if there are any lines in the file and add the according error message
         if not self.lines:
             self.add_error(0, "empty file", fname)
             self.check_errors()
@@ -2460,7 +2460,7 @@ class Document(object):
 
         #@cstart(insert macros function)
         def insert_macros(subdoc):
-            #if sub doc has no macros insert mine
+            # if sub doc has no macros insert mine
             if ("__macros__" not in subdoc.blocks
                 and "__macros__" in self.blocks):
                 file_ = subdoc.macros["__file__"] # preserve __file__
@@ -2506,13 +2506,15 @@ class Document(object):
            Adds an error to the list.
            :param integer line_number: The line number that causes the error.
            :param string text: An error text.
-           :param string fname: Optionally add the filename
+           :param string fname: name of currently processed file (needed if no data in self.lines)
            
         """
-        #determine if the file is empty
+        # determine if access to line_number is possible
         if line_number < len(self.lines):
             line = self.lines[line_number]
         else:
+            # without a line in self.lines, antiweb would crash on appending it to the errors (errorlist)
+            # antiweb adds a 'fake line' to preserve that issue
             line = Line(fname, -1, "")
             
         self.errors.append((line, text))
