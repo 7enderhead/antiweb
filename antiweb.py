@@ -2514,7 +2514,7 @@ class Document(object):
             line = self.lines[line_number]
         else:
             # without a line in self.lines, antiweb would crash on appending it to the errors (errorlist)
-            # we a 'fake line' to prevent that issue
+            # we add a 'fake line' to prevent that issue
             line = Line(fname, -1, "")
             
         self.errors.append((line, text))
