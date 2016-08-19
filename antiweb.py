@@ -246,7 +246,7 @@ import os
 from sys import platform as _platform
 from bs4 import BeautifulSoup,  Tag,  NavigableString
 
-from antiweb.directives import *
+from antiweb_lib.directives import *
 
 #@rstart(management)
 
