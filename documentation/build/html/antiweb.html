@@ -2853,13 +2853,19 @@ split in lines.</p>
 17
 18
 19
-20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">collect_blocks</span><span class="p">()</span>
-    <span class="c1">#print(&quot;Blocks&quot;, fname,  self.blocks)</span>
-    <span class="k">if</span> <span class="s2">&quot;&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.rst&quot;</span><span class="p">):</span>
+
+    <span class="c1">#check if there are any lines in the file and add the according error message</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;empty file&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="s2">&quot;&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.rst&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;no @start() directive found (I need one)&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">()</span>
-
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_compiled_block</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -2993,12 +2999,26 @@ containing document.
 <dt id="Document.add_error">
 <code class="descname">add_error</code><span class="sig-paren">(</span><em>line</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.add_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds an error to the list.
-:param integer line: The line number that causes the error.
-:param string text: An error text.</p>
-<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line</span><span class="p">],</span> <span class="n">text</span><span class="p">))</span>
+:param integer line_number: The line number that causes the error.
+:param string text: An error text.
+:param string fname: Optionally add the filename</p>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_number</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="c1">#determine if the file is empty</span>
+    <span class="k">if</span> <span class="n">line_number</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line_number</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">line</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </dd></dl>
 
 <dl class="method">

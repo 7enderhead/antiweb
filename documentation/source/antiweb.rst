@@ -1818,51 +1818,54 @@ Document
       
    .. py:method:: process(show_warnings)
    
-      Processes the document and generates the output.
-      :param bool show_warnings: If ``True`` warnings are emitted.
-      :return: A string representing the rst output.
-      
-      ::
-      
-          def process(self, show_warnings, fname):
-              self.collect_blocks()
-              #print("Blocks", fname,  self.blocks)
-              if "" not in self.blocks and not fname.endswith(".rst"):
-                  self.add_error(0, "no @start() directive found (I need one)")
-                  self.check_errors()
-              
-          
-              try:
-                  text = self.get_compiled_block("")
-              finally:
-                  self.check_errors()
-          
-              if show_warnings:
-                  <<show warnings>>
-              text = self.reader.filter_output(text)
-              return_text = None
-              if text:
-                   return_text = "\n".join(map(operator.attrgetter("text"), text))
-              return return_text
-      
-      .. _show warnings:
-      
-      **<<show warnings>>**
-      
-      
-      ::
-      
-          self.blocks_included.add("")           #may not cause a warning
-          self.blocks_included.add("__macros__") #may not cause a warning
-          unincluded = set(self.blocks.keys())-self.blocks_included
-          if unincluded:
-              logger.warning("The following block were not included:")
-              warnings = [ (self.blocks[b][0].index, b) for b in unincluded ]
-              warnings.sort(key=operator.itemgetter(0))
-              for l, w in warnings:
-                  logger.warning("  %s(line %i)", w, l)
-      
-      
+       Processes the document and generates the output.
+       :param bool show_warnings: If ``True`` warnings are emitted.
+       :return: A string representing the rst output.
+       
+       ::
+       
+           def process(self, show_warnings, fname):
+               self.collect_blocks()
+               
+               #check if there are any lines in the file and add the according error message
+               if not self.lines:
+                   self.add_error(0, "empty file", fname)
+                   self.check_errors()
+               elif "" not in self.blocks and not fname.endswith(".rst"):
+                   self.add_error(0, "no @start() directive found (I need one)")
+                   self.check_errors()       
+           
+               try:
+                   text = self.get_compiled_block("")
+               finally:
+                   self.check_errors()
+           
+               if show_warnings:
+                   <<show warnings>>
+               text = self.reader.filter_output(text)
+               return_text = None
+               if text:
+                    return_text = "\n".join(map(operator.attrgetter("text"), text))
+               return return_text
+       
+       .. _show warnings:
+       
+       **<<show warnings>>**
+       
+       
+       ::
+       
+           self.blocks_included.add("")           #may not cause a warning
+           self.blocks_included.add("__macros__") #may not cause a warning
+           unincluded = set(self.blocks.keys())-self.blocks_included
+           if unincluded:
+               logger.warning("The following block were not included:")
+               warnings = [ (self.blocks[b][0].index, b) for b in unincluded ]
+               warnings.sort(key=operator.itemgetter(0))
+               for l, w in warnings:
+                   logger.warning("  %s(line %i)", w, l)
+       
+       
    .. py:method:: get_subdoc(rpath)
    
       Tries to compile a document with the relative path rpath.
@@ -1944,13 +1947,21 @@ Document
    .. py:method:: add_error(line, text)
    
       Adds an error to the list.
-      :param integer line: The line number that causes the error.
+      :param integer line_number: The line number that causes the error.
       :param string text: An error text.
+      :param string fname: Optionally add the filename
+      
       
       ::
       
-          def add_error(self, line, text):
-              self.errors.append((self.lines[line], text))
+          def add_error(self, line_number, text, fname=""):
+              #determine if the file is empty
+              if line_number < len(self.lines):
+                  line = self.lines[line_number]
+              else:
+                  line = Line(fname, -1, "")
+                  
+              self.errors.append((line, text))
           
           
       

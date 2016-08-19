@@ -36,9 +36,12 @@ class Test_Antiweb(unittest.TestCase):
         self.temp_dir = TempDir()
         self.data_dir = DataDir("unittest")
         self.origin_path = self.data_dir.get_path("small_testfile.py")
+        self.empty_origin_path = self.data_dir.get_path("empty.py")
         self.destination_path = self.temp_dir.get_path("small_testfile.py")
+        self.empty_destination_path = self.temp_dir.get_path("empty.py")
 
         shutil.copyfile(self.origin_path, self.destination_path)
+        shutil.copyfile(self.empty_origin_path, self.empty_destination_path)
     #@edoc
 
     #The :py:class:`functional(self, directory, filename, compare_path, assert_input)` class tests if antiweb was fully executed and if the files were created in the correct a
@@ -217,7 +220,6 @@ class Test_Antiweb(unittest.TestCase):
         previ_dir = os.getcwd()
         os.chdir(self.temp_dir.get_relative_path())
         compare_path_small_testfile = self.data_dir.get_path("docs","small_testfile.rst")
-        compare_path_index = self.data_dir.get_path( self.doc_dir,"index.rst")
         self.test_args = ['antiweb.py', "-r"]
 
         with patch.object(sys, 'argv', self.test_args):
@@ -230,7 +232,6 @@ class Test_Antiweb(unittest.TestCase):
         previ_dir = os.getcwd()
         os.chdir(self.temp_dir.get_relative_path())
         compare_path_small_testfile = self.data_dir.get_path("docs","small_testfile.rst")
-        compare_path_index = self.data_dir.get_path( self.doc_dir,"index.rst")
         self.test_args = ['antiweb.py', "-o" , self.doc_dir, "-r"]
 
         with patch.object(sys, 'argv', self.test_args):
@@ -238,6 +239,15 @@ class Test_Antiweb(unittest.TestCase):
             self.file_not_exist(self.temp_dir.get_path(self.doc_dir,"index.rst")) 
             
         os.chdir(previ_dir)
+    
+    # First goal: do not crash on this empty file; 
+    # Second Goal: do not create any files
+    def test_antiweb_empty_file(self):
+        self.test_args = ['antiweb.py', self.temp_dir.get_path("empty.py")]
+
+        with patch.object(sys, 'argv', self.test_args):
+            self.file_not_exist(self.temp_dir.get_path("empty.rst"))
+            self.file_not_exist(self.temp_dir.get_path("index.rst"))
  
     def tearDown(self):
         self.temp_dir.remove_tempdir()
