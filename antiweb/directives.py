@@ -956,3 +956,24 @@ directives = {
     }
 
 #@(directives)
+"""
+@start(__macros__)
+@define(__codeprefix__)
+
+@ignore The code begins in file @subst(__file__) at line @subst(__line__-1):
+@enifed(__codeprefix__)
+@end(__macros__)
+
+@define(_rstart_, @rstart)
+@define(_cstart_, @cstart)
+@define(_end_, @)
+@define(_if_, @if)
+@define(_fi_, @fi)
+@define(_include_, @include)
+@define(_indent_, @indent)
+@define(_define_, @define)
+@define(_enifed_, @enifed)
+@define(_subst_, @subst)
+@define(_at_, @)
+@define(triple, ''')
+"""

@@ -122,6 +122,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
 </ul>
 
@@ -2053,7 +2054,7 @@ the compiled text block.</p>
 <dl class="attribute">
 <dt id="Line._directives">
 <code class="descname">_directives</code><a class="headerlink" href="#Line._directives" title="Permalink to this definition">¶</a></dt>
-<dd><p>A list of <code class="xref py py-class docutils literal"><span class="pre">Directive</span></code> objects, sorted
+<dd><p>A list of <a class="reference internal" href="directives.html#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects, sorted
 by their priority.</p>
 <div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">_directives</span> <span class="o">=</span> <span class="p">()</span>
 </pre></div>
@@ -2129,7 +2130,7 @@ by their priority.</p>
 <code class="descname">directives</code><a class="headerlink" href="#Line.directives" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>A sorted sequence of <code class="xref py py-class docutils literal"><span class="pre">Directive</span></code> objects.</p>
+<p>A sorted sequence of <a class="reference internal" href="directives.html#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects.</p>
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2154,7 +2155,7 @@ by their priority.</p>
 <dl class="attribute">
 <dt id="Line.directive">
 <code class="descname">directive</code><a class="headerlink" href="#Line.directive" title="Permalink to this definition">¶</a></dt>
-<dd><p>The first of the contained <code class="xref py py-class docutils literal"><span class="pre">Directive</span></code> objects.</p>
+<dd><p>The first of the contained <a class="reference internal" href="directives.html#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects.</p>
 <div class="highlight-python3"><div class="highlight"><pre><span></span><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">directive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
