@@ -229,7 +229,7 @@ from antiweb_lib.readers.CReader import CReader
 from antiweb_lib.readers.CSharpReader import CSharpReader
 from antiweb_lib.readers.ClojureReader import ClojureReader
 from antiweb_lib.readers.GenericReader import GenericReader
-from antiweb_lib.readers.rstReader import rstReader
+from antiweb_lib.readers.RstReader import RstReader
 from antiweb_lib.readers.PythonReader import PythonReader
 
 #@rstart(management)
@@ -254,7 +254,7 @@ readers = {
     "C#" : CSharpReader,
     "Python" : PythonReader,
     "Clojure" : ClojureReader,
-    "rst" : rstReader,
+    "rst" : RstReader,
 }
 
 #@(readers)

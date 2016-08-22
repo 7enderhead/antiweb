@@ -1,10 +1,25 @@
+#@start()
+##################
+#Travis-CI support
+##################
+
+#******************
+#The Travis-CI file
+#******************
+
+# This file tells our external website for continous integration, Travis-CI, how to peform the tests.
+#@code()
+# in which language the script was written
 language: python
-os: 
+# on which operating systems the tests should be performed
+os:
   - linux
+# which Python releases to use
 python:
   - "3.4"
   - "3.5"
-# command to install dependencies
+# command to install dependencies and the script itself
 install: "python setup.py install"
 # command to run tests
 script: python -m unittest discover
+#@edoc()

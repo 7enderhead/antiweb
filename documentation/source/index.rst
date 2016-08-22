@@ -16,3 +16,4 @@ Contents:
    changelog
    .. (generated)
    motivation
+   travis

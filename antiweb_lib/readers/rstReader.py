@@ -2,19 +2,19 @@ from pygments.token import Token
 
 from antiweb_lib.readers.Reader import Reader
 
-#@cstart(rstReader)
-class rstReader(Reader):
-    #@start(rstReader doc)
-    #rstReader
+#@cstart(RstReader)
+class RstReader(Reader):
+    #@start(RstReader doc)
+    #RstReader
     #=============
     """
-    .. py:class:: rstReader
+    .. py:class:: RstReader
 
        A reader for rst code. This class inherits :py:class:`Reader`.
     """
     #@indent 3
-    #@include(rstReader)
-    #@(rstReader doc)
+    #@include(RstReader)
+    #@(RstReader doc)
     def _accept_token(self, token):
         return token in Token.Comment
     
