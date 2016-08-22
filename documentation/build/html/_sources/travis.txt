@@ -6,7 +6,7 @@ Travis-CI support
 The Travis-CI file
 ******************
 
-This file tells our external website for continous integration, Travis-CI, how to peform the tests.
+This file tells our external website for continuous integration, Travis-CI, how to perform the tests.
 
 ::
 
