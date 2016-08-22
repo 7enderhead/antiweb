@@ -10,8 +10,10 @@ Contents:
    process_overview
    .. start(generated)
    antiweb
+   Reader
+   directives
    antisphinx
    changelog
-   directives
    .. (generated)
    motivation
+   travis

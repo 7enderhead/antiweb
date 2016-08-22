@@ -60,3 +60,12 @@ Changelog
     * 12.08.2016
          Added support for Travis CI (continous integration)
          Updated readme.md so all authors are listed
+       
+    * 18.08.2016
+         antiweb can now handle empty files
+         
+    * 19.08.2016
+         Created antiweb_lib package with directives module
+         
+    * 22.08.2016
+         Created readers sub-package and updated documentation

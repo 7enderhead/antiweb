@@ -36,4 +36,5 @@ setup(
     platforms='any',
     scripts=['antiweb.py'],
     py_modules=['antisphinx'],
+    packages=find_packages(), 
 )

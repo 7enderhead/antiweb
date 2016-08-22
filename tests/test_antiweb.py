@@ -3,7 +3,8 @@
 
 import unittest
 from unittest.mock import patch
-from antiweb import main, GenericReader
+from antiweb import main
+from antiweb_lib.readers.GenericReader import GenericReader
 import sys
 import os
 import shutil
