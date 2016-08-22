@@ -10,8 +10,9 @@ Contents:
    process_overview
    .. start(generated)
    antiweb
-   Reader
+   document
    directives
+   Reader
    antisphinx
    changelog
    .. (generated)

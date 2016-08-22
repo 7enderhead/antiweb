@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
-        <link rel="next" title="Directives" href="directives.html"/>
-        <link rel="prev" title="Antiweb documentation" href="antiweb.html"/> 
+        <link rel="next" title="antisphinx" href="antisphinx.html"/>
+        <link rel="prev" title="Directives" href="directives.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,7 +85,9 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="antiweb.html">Antiweb documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Readers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#reader">Reader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creader">CReader</a></li>
@@ -96,7 +98,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#rstreader">rstReader</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
@@ -155,7 +156,7 @@ source parsing.</p>
 <dt id="Reader">
 <em class="property">class </em><code class="descname">Reader</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the base class for all readers. The public functions
-exposed to <a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> are <a class="reference internal" href="#Reader.process" title="Reader.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>,
+exposed to <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> are <a class="reference internal" href="#Reader.process" title="Reader.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>,
 and <a class="reference internal" href="#Reader.filter_output" title="Reader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">filter_output()</span></code></a>.</p>
 <p>The main tasks for a reader is:</p>
 <blockquote>
@@ -218,7 +219,7 @@ and <a class="reference internal" href="#Reader.filter_output" title="Reader.fil
 <dt id="Reader.process">
 <code class="descname">process</code><span class="sig-paren">(</span><em>fname</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the source code and identifies the directives.
-This method is call by <a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.</p>
+This method is call by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -229,7 +230,7 @@ This method is call by <a class="reference internal" href="antiweb.html#Document
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of <a class="reference internal" href="antiweb.html#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of <a class="reference internal" href="document.html#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects.</p>
 </td>
 </tr>
 </tbody>
@@ -254,7 +255,7 @@ This method is call by <a class="reference internal" href="antiweb.html#Document
 <dl class="method">
 <dt id="Reader.filter_output">
 <code class="descname">filter_output</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.filter_output" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is call by <a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> and gives
+<dd><p>This method is call by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> and gives
 the reader the chance to influence the final output.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">lines</span>
@@ -562,7 +563,7 @@ line in the stripped_xml_lines a new Line object is created.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>stripped_xml_lines</strong> (<em>string[]</em>) &#8211; The comment lines were the XML tags have been stripped.</li>
 <li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The starting index for the new line object.</li>
-<li><strong>initial_line</strong> (<a class="reference internal" href="antiweb.html#Line" title="Line"><em>Line</em></a>) &#8211; The first line of the xml comment block. Its indentation will be used for all new created lines.</li>
+<li><strong>initial_line</strong> (<a class="reference internal" href="document.html#Line" title="Line"><em>Line</em></a>) &#8211; The first line of the xml comment block. Its indentation will be used for all new created lines.</li>
 </ul>
 </td>
 </tr>
@@ -1002,10 +1003,10 @@ This class inherits <a class="reference internal" href="#Reader" title="Reader">
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="directives.html" class="btn btn-neutral float-right" title="Directives" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="antisphinx.html" class="btn btn-neutral float-right" title="antisphinx" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="antiweb.html" class="btn btn-neutral" title="Antiweb documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="directives.html" class="btn btn-neutral" title="Directives" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
