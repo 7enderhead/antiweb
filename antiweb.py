@@ -325,9 +325,8 @@ def search_for_generated_block(index_rst, start_of_block, end_of_block):
                 index_file.seek(0, 0)
                 content = index_file.readlines()
                 #delete content of generated block
-                del content[startline+1:endline]
+                del content[endline]
                 #set endline = old_endline - deleted lines
-                endline = endline - (endline-(startline+1))
     return (content, endline)
 #@edoc
 
@@ -590,7 +589,7 @@ def insert_filename_in_index_file(file_name, index_file, start_block, end_block)
 
     if endline:
         #The new file name is inserted into the index file contents.
-        content.insert(endline, "   " + file_name + "\n")
+        content.insert(endline, "   " + file_name + "\n   .. end(generated)")
 
     try: 
         #The adapted index file contents are written out to the index file.
