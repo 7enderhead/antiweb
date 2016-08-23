@@ -17,9 +17,9 @@ License: GPL
 .. highlight:: python3
    :linenothreshold: 4
 
-######
+########
 antiweb
-######
+########
 
 If you just want to generate the documentation from a source file use 
 the following function:
@@ -88,7 +88,7 @@ How to add new languages
 New languages are added by writing a new Reader class
 and registering it in the readers dictionary (see readers).
 A simple Reader example is provides by :py:class:`CReader`
-a more advances reader is :py:class:`PythonReader`.
+a more advanced reader is :py:class:`PythonReader`.
 
 #@include(comments doc, antiweb_lib\document.py)
 #@include(get_comment_markers doc, antiweb_lib\document.py)
@@ -218,7 +218,7 @@ from sys import platform as _platform
 
 
 from antiweb_lib.readers.Reader import Reader
-from antiweb_lib.document import Document, logger, WebError, readers, get_comment_markers
+from antiweb_lib.document import Document, WebError, readers, get_comment_markers
 
 #@rstart(management)
 
@@ -229,7 +229,7 @@ from antiweb_lib.document import Document, logger, WebError, readers, get_commen
 
 __version__ = "0.3.3"
 
-
+logger = logging.getLogger('antiweb')
 
 #@(readers)
 
