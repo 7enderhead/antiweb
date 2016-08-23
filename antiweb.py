@@ -324,9 +324,8 @@ def search_for_generated_block(index_rst, start_of_block, end_of_block):
             if startline and endline:
                 index_file.seek(0, 0)
                 content = index_file.readlines()
-                #delete content of generated block
+                #delete the endline to make some space for the next filename
                 del content[endline]
-                #set endline = old_endline - deleted lines
     return (content, endline)
 #@edoc
 
@@ -588,7 +587,7 @@ def insert_filename_in_index_file(file_name, index_file, start_block, end_block)
         content, endline = search_for_generated_block(index_file, start_block, end_block)
 
     if endline:
-        #The new file name is inserted into the index file contents.
+        #The new file name is inserted into the index file contents and the block is closed by the .. end(generated) directive.
         content.insert(endline, "   " + file_name + "\n   .. end(generated)")
 
     try: 
