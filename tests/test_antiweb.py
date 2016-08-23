@@ -39,7 +39,6 @@ class Test_Antiweb(unittest.TestCase):
         self.origin_path = self.data_dir.get_path("small_testfile.py")
         self.empty_origin_path = self.data_dir.get_path("empty.py")
         self.destination_path = self.temp_dir.get_path("small_testfile.py")
-        self.destination_path2 = self.temp_dir.get_path("small_testfile2.py")
         self.empty_destination_path = self.temp_dir.get_path("empty.py")
 
         shutil.copyfile(self.origin_path, self.destination_path)
@@ -250,20 +249,6 @@ class Test_Antiweb(unittest.TestCase):
         with patch.object(sys, 'argv', self.test_args):
             self.file_not_exist(self.temp_dir.get_path("empty.rst"))
             self.file_not_exist(self.temp_dir.get_path("index.rst"))
-            
-    def test_antiweb_only_1_index(self):
-        previ_dir = os.getcwd()
-        os.chdir(self.temp_dir.get_relative_path())
-        shutil.copyfile(self.origin_path, self.destination_path2)
-        compare_path_small_testfile = self.data_dir.get_path("docs","small_testfile.rst")
-        compare_path_index = self.data_dir.get_path( self.doc_dir,"index_multiple.rst")
-        self.test_args = ['antiweb.py', '-i', "-o" , self.doc_dir, "-r"]
-
-        with patch.object(sys, 'argv', self.test_args):
-            self.functional(self.doc_dir, "small_testfile.rst", compare_path_small_testfile, main())
-            self.functional(self.doc_dir, "index.rst", compare_path_index, os.path.isfile(self.temp_dir.get_path( self.doc_dir,"index.rst"))) 
-            
-        os.chdir(previ_dir)
  
     def tearDown(self):
         self.temp_dir.remove_tempdir()

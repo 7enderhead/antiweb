@@ -97,7 +97,7 @@ a more advanced reader is :py:class:`PythonReader`.
 Example
 *******
 
-See the :ref:`antiweb` source as an advanced example.
+See the antiweb source as an advanced example.
 
 @if(usage)
 **********
@@ -324,8 +324,10 @@ def search_for_generated_block(index_rst, start_of_block, end_of_block):
             if startline and endline:
                 index_file.seek(0, 0)
                 content = index_file.readlines()
-                #delete the endline to make some space for the next filename
-                del content[endline]
+                #delete content of generated block
+                del content[startline+1:endline]
+                #set endline = old_endline - deleted lines
+                endline = endline - (endline-(startline+1))
     return (content, endline)
 #@edoc
 
@@ -587,8 +589,8 @@ def insert_filename_in_index_file(file_name, index_file, start_block, end_block)
         content, endline = search_for_generated_block(index_file, start_block, end_block)
 
     if endline:
-        #The new file name is inserted into the index file contents and the block is closed by the .. end(generated) directive.
-        content.insert(endline, "   " + file_name + "\n   .. end(generated)")
+        #The new file name is inserted into the index file contents.
+        content.insert(endline, "   " + file_name + "\n")
 
     try: 
         #The adapted index file contents are written out to the index file.

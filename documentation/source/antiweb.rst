@@ -758,5 +758,5 @@ From the map above the comment markers are retrieved via the following method:
 Example
 *******
 
-See the :ref:`antiweb` source as an advanced example.
+See the antiweb source as an advanced example.
 
