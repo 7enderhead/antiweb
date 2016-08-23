@@ -383,7 +383,7 @@ class Test_Antiweb_rst(unittest.TestCase):
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", "ein_rst_docs.rst", compare_path_small_testfile, main())
             self.file_not_exist(self.temp_dir.get_path("index.rst"))
-
+            
     def tearDown(self):
         self.temp_dir.remove_tempdir()
 

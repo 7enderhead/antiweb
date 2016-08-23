@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
-        <link rel="next" title="antisphinx" href="antisphinx.html"/>
-        <link rel="prev" title="Readers" href="Reader.html"/> 
+        <link rel="next" title="Readers" href="Reader.html"/>
+        <link rel="prev" title="Document" href="document.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,8 +85,8 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="antiweb.html">Antiweb documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Directives</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#directive">Directive</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#namedirective">NameDirective</a></li>
@@ -107,6 +107,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#indent">Indent</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
@@ -156,7 +157,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="directives">
-<h1>Directives<a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Directives<a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="directive">
 <h2>Directive<a class="headerlink" href="#directive" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -240,7 +241,7 @@ will be processed earlier.</p>
 <dl class="method">
 <dt id="Directive.collect_block">
 <code class="descname">collect_block</code><span class="sig-paren">(</span><em>document</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.collect_block" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called by <a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
+<dd><p>This method is called by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
 If the directive is defining a text block. It
 retrieves the text lines of the block from the document
 and return them.</p>
@@ -249,7 +250,7 @@ and return them.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>document</strong> (<a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
+<li><strong>document</strong> (<a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
 <li><strong>index</strong> (<em>integer</em>) &#8211; the line index of the directive.</li>
 </ul>
 </td>
@@ -270,14 +271,14 @@ is a tuple <code class="docutils literal"><span class="pre">(directive</span> <s
 <dl class="method">
 <dt id="Directive.process">
 <code class="descname">process</code><span class="sig-paren">(</span><em>document</em>, <em>block</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.process" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called by <a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
+<dd><p>This method is called by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
 The directive should do whatever it is supposed to do.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>document</strong> (<a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
+<li><strong>document</strong> (<a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
 <li><strong>block</strong> &#8211; The line block the directive is in.</li>
 <li><strong>index</strong> (<em>integer</em>) &#8211; the line index of the directive
 within the block.</li>
@@ -295,7 +296,7 @@ within the block.</li>
 <dl class="method">
 <dt id="Directive.match">
 <code class="descname">match</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.match" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called by <a class="reference internal" href="antiweb.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
+<dd><p>This method is called by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
 It gives the directive the chance to find and manipulate other
 directives.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -992,10 +993,10 @@ import operator</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="antisphinx.html" class="btn btn-neutral float-right" title="antisphinx" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Reader.html" class="btn btn-neutral float-right" title="Readers" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Reader.html" class="btn btn-neutral" title="Readers" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="document.html" class="btn btn-neutral" title="Document" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
