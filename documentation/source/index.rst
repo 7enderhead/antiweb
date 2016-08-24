@@ -13,6 +13,7 @@ Contents:
    document
    directives
    Reader
+   write
    write_index
    antisphinx
    changelog
