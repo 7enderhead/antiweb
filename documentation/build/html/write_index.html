@@ -197,14 +197,16 @@ Path seperator characters are replaced by &#8220;_&#8221;.</p>
 </div>
 <dl class="method">
 <dt id="insert_filename_in_index_file">
-<code class="descname">insert_filename_in_index_file</code><span class="sig-paren">(</span><em>file_name</em>, <em>index_file</em>, <em>start_block</em>, <em>end_block</em><span class="sig-paren">)</span><a class="headerlink" href="#insert_filename_in_index_file" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert_filename_in_index_file</code><span class="sig-paren">(</span><em>out_file</em>, <em>working_dir</em>, <em>recursive</em>, <em>index_file</em>, <em>start_block</em>, <em>end_block</em><span class="sig-paren">)</span><a class="headerlink" href="#insert_filename_in_index_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts the given file name into the generated block in the index file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file_name</strong> &#8211; The file name which should be inserted into the index file.</li>
+<li><strong>out_file</strong> &#8211; The path of the file which should be inserted into the index file.</li>
+<li><strong>working_dir</strong> &#8211; The directory in which the index file should be placed.</li>
+<li><strong>recursive</strong> &#8211; Determine if user utilized the -r (recursive) option.</li>
 <li><strong>index_file</strong> &#8211; Absolute path of the index file.</li>
 <li><strong>start_block</strong> &#8211; String which contains the generated index block start definition.</li>
 <li><strong>end_block</strong> &#8211; String which contains the generated index block end definition.</li>
@@ -219,7 +221,10 @@ Path seperator characters are replaced by &#8220;_&#8221;.</p>
 Between the <code class="xref py py-class docutils literal"><span class="pre">start(generated)</span></code> and <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directives the names of the processed files are added.
 Read  <a class="reference internal" href="#create_out_file_name_index" title="create_out_file_name_index"><code class="xref py py-meth docutils literal"><span class="pre">create_out_file_name_index()</span></code></a> for more information about how the inserted file name is computed.
 Files can be manually added after the <code class="xref py py-class docutils literal"><span class="pre">end(generated)</span></code> directive.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_filename_in_index_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_filename_in_index_file</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+
+    <span class="c1">#We need to know how the file will be called inside of the index.rst file</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">create_out_file_name_index</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="p">)</span>
 
     <span class="c1">#At first the position has to be found where the new file should be inserted.</span>
     <span class="n">content</span><span class="p">,</span> <span class="n">endline</span> <span class="o">=</span> <span class="n">_search_for_generated_block</span><span class="p">(</span><span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
