@@ -7,7 +7,7 @@ from antiweb_lib.readers.Reader import Reader
 
 from antiweb_lib.document import Document, WebError, readers, get_comment_markers
 
-from antiweb_lib.write_index import create_out_file_name_index,  insert_filename_in_index_file
+from antiweb_lib.write_index import insert_filename_in_index_file
 
 logger = logging.getLogger('antiweb')
 

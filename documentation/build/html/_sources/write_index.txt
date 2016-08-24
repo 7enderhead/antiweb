@@ -49,11 +49,13 @@ Path seperator characters are replaced by "_".
         return out_file_name_index
     
 
-.. py:method:: insert_filename_in_index_file(file_name, index_file, start_block, end_block)
+.. py:method:: insert_filename_in_index_file(out_file, working_dir, recursive, index_file, start_block, end_block)
 
   Inserts the given file name into the generated block in the index file.
 
-  :param file_name: The file name which should be inserted into the index file.
+  :param out_file: The path of the file which should be inserted into the index file.
+  :param working_dir: The directory in which the index file should be placed.
+  :param recursive: Determine if user utilized the -r (recursive) option.
   :param index_file: Absolute path of the index file.
   :param start_block: String which contains the generated index block start definition.
   :param end_block: String which contains the generated index block end definition.

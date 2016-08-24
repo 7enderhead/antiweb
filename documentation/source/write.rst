@@ -113,8 +113,7 @@ If processing is successful, ''could_process'' is set to ''True''.
         could_process = process_file(input_file, out_file, options.token, options.warnings)
     
 
-If the file was processed successfully and the index option is used, the file name which should be inserted
-in the generated index file block has to be computed first. Afterwards the file name is inserted into the
+If the file was processed successfully and the index option is used, the file name is inserted into the
 index file (see :py:meth:`insert_filename_in_index_file`).
 
 

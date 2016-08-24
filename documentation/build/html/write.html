@@ -297,8 +297,7 @@ If processing is successful, &#8216;&#8217;could_process&#8217;&#8217; is set to
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If the file was processed successfully and the index option is used, the file name which should be inserted
-in the generated index file block has to be computed first. Afterwards the file name is inserted into the
+<p>If the file was processed successfully and the index option is used, the file name is inserted into the
 index file (see <a class="reference internal" href="write_index.html#insert_filename_in_index_file" title="insert_filename_in_index_file"><code class="xref py py-meth docutils literal"><span class="pre">insert_filename_in_index_file()</span></code></a>).</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span> <span class="ow">and</span> <span class="n">could_process</span><span class="p">:</span>
     <span class="n">insert_filename_in_index_file</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
