@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
-        <link rel="next" title="Write Index" href="write_index.html"/>
+        <link rel="next" title="antisphinx" href="antisphinx.html"/>
         <link rel="prev" title="Readers" href="Reader.html"/> 
 
   
@@ -93,7 +93,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#writing-the-documentation-files">Writing the documentation files</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="write_index.html">Write Index</a></li>
 <li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
@@ -151,8 +150,8 @@
 The following function is called for the creation of the documentation files.</p>
 <dl class="method">
 <dt>
-<code class="descname">write</code><span class="sig-paren">(</span><em>working_dir</em>, <em>input_file</em>, <em>options</em>, <em>index_file</em>, <em>start_block</em>, <em>end_block</em><span class="sig-paren">)</span></dt>
-<dd><p>Creates the corresponding documention file and optionally adds the processed file to the index file.</p>
+<code class="descname">write</code><span class="sig-paren">(</span><em>working_dir</em>, <em>input_file</em>, <em>options</em><span class="sig-paren">)</span></dt>
+<dd><p>Creates the corresponding documention file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -161,9 +160,6 @@ The following function is called for the creation of the documentation files.</p
 <li><strong>working_dir</strong> &#8211; Current working directory.</li>
 <li><strong>input_file</strong> &#8211; Contains the absolute path of the currently processed file.</li>
 <li><strong>options</strong> &#8211; Commandline options.</li>
-<li><strong>index_file</strong> &#8211; Absolute path of the index file.</li>
-<li><strong>start_block</strong> &#8211; String which contains the generated index block start definition.</li>
-<li><strong>end_block</strong> &#8211; String which contains the generated index block end definition.</li>
 </ul>
 </td>
 </tr>
@@ -193,7 +189,7 @@ When there is no output option given the output file name is created in the foll
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span>
     <span class="n">recursive</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span>
@@ -295,12 +291,6 @@ When the recursive option is used in combination with the output option, the out
 <p>Now the input file is processed and the corresponding documentation file is created.
 If processing is successful, &#8216;&#8217;could_process&#8217;&#8217; is set to &#8216;&#8217;True&#8217;&#8216;.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If the file was processed successfully and the index option is used, the file name is inserted into the
-index file (see <a class="reference internal" href="write_index.html#insert_filename_in_index_file" title="insert_filename_in_index_file"><code class="xref py py-meth docutils literal"><span class="pre">insert_filename_in_index_file()</span></code></a>).</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">index</span> <span class="ow">and</span> <span class="n">could_process</span><span class="p">:</span>
-    <span class="n">insert_filename_in_index_file</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="n">working_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">index_file</span><span class="p">,</span> <span class="n">start_block</span><span class="p">,</span> <span class="n">end_block</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -477,9 +467,6 @@ If no arguments are given (the user did not provide a filepath), the current dir
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
                       <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Process every file in given directory&quot;</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--index&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Automatically write file(s) to Sphinx&#39; index.rst&quot;</span><span class="p">)</span>
-
     <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="c1">#There is no argument given, so we assume the user wants to use the current directory.</span>
@@ -499,7 +486,7 @@ If no arguments are given (the user did not provide a filepath), the current dir
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="write_index.html" class="btn btn-neutral float-right" title="Write Index" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="antisphinx.html" class="btn btn-neutral float-right" title="antisphinx" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Reader.html" class="btn btn-neutral" title="Readers" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

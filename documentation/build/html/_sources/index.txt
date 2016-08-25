@@ -8,15 +8,12 @@ Contents:
    installation
    getting_started
    process_overview
-   .. start(generated)
    antiweb
    document
    directives
    Reader
    write
-   write_index
    antisphinx
    changelog
-   .. (generated)
    motivation
    travis

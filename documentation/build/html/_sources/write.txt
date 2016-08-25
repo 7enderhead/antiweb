@@ -12,16 +12,13 @@ Writing the documentation files
 From the given file a .rst file will be created if it contains an antiweb :py:class:`start() directive`.
 The following function is called for the creation of the documentation files.
 
-.. py:method:: write(working_dir, input_file, options, index_file, start_block, end_block)
+.. py:method:: write(working_dir, input_file, options)
 
-   Creates the corresponding documention file and optionally adds the processed file to the index file.
+   Creates the corresponding documention file.
 
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
    :param options: Commandline options.
-   :param index_file: Absolute path of the index file.
-   :param start_block: String which contains the generated index block start definition.
-   :param end_block: String which contains the generated index block end definition.
 
 Before the input file is processed the name of the output file has to be computed.
 How the output file name is created depends on the different commandline options.
@@ -36,7 +33,7 @@ When there is no output option given the output file name is created in the foll
 
 ::
 
-    def write(working_dir, input_file, options, index_file, start_block, end_block):
+    def write(working_dir, input_file, options):
     
         output = options.output
         recursive = options.recursive
@@ -112,15 +109,6 @@ If processing is successful, ''could_process'' is set to ''True''.
     
         could_process = process_file(input_file, out_file, options.token, options.warnings)
     
-
-If the file was processed successfully and the index option is used, the file name is inserted into the
-index file (see :py:meth:`insert_filename_in_index_file`).
-
-
-::
-
-        if options.index and could_process:
-            insert_filename_in_index_file(out_file, working_dir, recursive, index_file, start_block, end_block)
 
 
 
@@ -243,12 +231,9 @@ index file (see :py:meth:`insert_filename_in_index_file`).
     
         parser.add_option("-r", "--recursive", dest="recursive",
                           action="store_true", help="Process every file in given directory")
-        
-        parser.add_option("-i", "--index", dest="index",
-                          action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
     
         options, args = parser.parse_args()
-        
+    
         #There is no argument given, so we assume the user wants to use the current directory.
         if not args:
             args.append(os.getcwd())

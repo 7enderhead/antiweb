@@ -7,8 +7,6 @@ from antiweb_lib.readers.Reader import Reader
 
 from antiweb_lib.document import Document, WebError, readers, get_comment_markers
 
-from antiweb_lib.write_index import insert_filename_in_index_file
-
 logger = logging.getLogger('antiweb')
 
 #@start()
@@ -175,19 +173,16 @@ def process_file(in_file, out_file, token, warnings):
 #@(write_documentation)
 
 #@start(write)
-def write(working_dir, input_file, options, index_file, start_block, end_block):
+def write(working_dir, input_file, options):
 #@start(write doc)
     """
-.. py:method:: write(working_dir, input_file, options, index_file, start_block, end_block)
+.. py:method:: write(working_dir, input_file, options)
 
-   Creates the corresponding documention file and optionally adds the processed file to the index file.
+   Creates the corresponding documention file.
 
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
    :param options: Commandline options.
-   :param index_file: Absolute path of the index file.
-   :param start_block: String which contains the generated index block start definition.
-   :param end_block: String which contains the generated index block end definition.
     """
 #@(write doc)
 
@@ -279,11 +274,4 @@ def write(working_dir, input_file, options, index_file, start_block, end_block):
 
 #@edoc
 
-#If the file was processed successfully and the index option is used, the file name is inserted into the
-#index file (see :py:meth:`insert_filename_in_index_file`).
-
-#@code
-    if options.index and could_process:
-        insert_filename_in_index_file(out_file, working_dir, recursive, index_file, start_block, end_block)
-#@edoc
 #@(write_body)

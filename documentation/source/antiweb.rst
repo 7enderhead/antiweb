@@ -7,7 +7,7 @@
 antiweb
 #######
 
-If you just want to generate the documentation from a source file use 
+If you just want to generate the documentation from a source file use
 the following function:
 
 ..  py:function:: generate(fname, tokens, warnings)
@@ -16,25 +16,25 @@ the following function:
 
     :param string fname: The path to the source file.
     :param list tokens: A list of string tokens, used for @if directives.
-    :param bool show_warnings: Warnings will be written 
+    :param bool show_warnings: Warnings will be written
                                via the logging module.
     
     ::
     
         def generate(fname, tokens, show_warnings=False):
-            try:    
+            try:
                 with open(fname, "r") as f:
                     text = f.read()
             except IOError:
                 logger.error("file not found: %s", fname)
                 sys.exit(1)
-            
+        
             lexer = pm.get_lexer_for_filename(fname)
             #get the language specific comment markers based on the pygments lexer name
             single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)
-            #initialise a new Reader based on the pygments lexer name 
+            #initialise a new Reader based on the pygments lexer name
             reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
-               
+        
             document = Document(text, reader, fname, tokens)
             return document.process(show_warnings, fname)
     
@@ -86,7 +86,7 @@ File Layout
     <<imports>>
     <<management>>
     <<parsing>>
-        
+    
     def main():
     
         options, args, parser = parsing()
@@ -101,9 +101,6 @@ File Layout
             parser.print_help()
             sys.exit(0)
     
-        index_rst = "index.rst"
-        start_block = ".. start(generated)"
-        end_block = ".. end(generated)"
 
 The program checks if a -r flag was given and if so, save the current directory and change it to the given one.
 
@@ -112,28 +109,25 @@ The program checks if a -r flag was given and if so, save the current directory 
 
     
         previous_dir = os.getcwd()
-        
-        #The user input (respectively the input antiweb sets when none is given) can be relative, 
+    
+        #The user input (respectively the input antiweb sets when none is given) can be relative,
         #so we grab the absolute path to work with.
         absolute_path = os.path.abspath(args[0])
     
         if options.recursive:
             directory = absolute_path
-            
+    
             #Check if the given path refers to an existing directory.
             #The program aborts if the directory does not exist or if the path refers to a file.
             #A file is not allowed here because the -r option requires a directory.
             if not os.path.isdir(directory):
                 logger.error("directory not found: %s", directory)
                 sys.exit(1)
-        
+    
             os.chdir(directory)
-                    
-            if options.index:
-                index_rst = create_index_file(directory, options.output, index_rst, start_block, end_block)
-                        
+    
 
-The program walks through the given directory and all subdirectories. The absolute file names 
+The program walks through the given directory and all subdirectories. The absolute file names
 are retrieved. Only files with the allowed extensions are processed.
 
 
@@ -146,9 +140,9 @@ are retrieved. Only files with the allowed extensions are processed.
             for root, dirs, files in os.walk(directory, topdown=False):
                 for filename in files:
                     fname = os.path.join(root, filename)
-            
+    
                     if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                        write(directory, fname, options, index_rst, start_block, end_block)
+                        write(directory, fname, options)
     
 
 This else will take place when the -r flag is not given.
@@ -159,25 +153,21 @@ This else will take place when the -r flag is not given.
     
         else:
             absolute_file_path = absolute_path
-            
-            #Check if the given path refers to an existing file. 
+    
+            #Check if the given path refers to an existing file.
             #The program aborts if the file does not exist or if the path refers to a directory.
             #A directory is not allowed here because a directory can only be used with the -r option.
             if not os.path.isfile(absolute_file_path):
                 logger.error("file not found: %s", absolute_file_path)
                 sys.exit(1)
-            
+    
             directory = os.path.split(absolute_file_path)[0]
     
             if directory:
                 os.chdir(directory)
-               
-            if options.index:
-                #check if output contains a directory or a file name
-                index_rst = create_index_file(os.getcwd(), "", index_rst, start_block, end_block)    
-                    
-            write(os.getcwd(), absolute_file_path, options, index_rst, start_block, end_block)
-        
+    
+            write(os.getcwd(), absolute_file_path, options)
+    
         os.chdir(previous_dir)
         return True
 
@@ -198,7 +188,6 @@ This else will take place when the -r flag is not given.
     import os.path
     import os
     
-    from antiweb_lib.write_index import create_index_file
     from antiweb_lib.write import write
 
 
@@ -213,7 +202,7 @@ This else will take place when the -r flag is not given.
     __version__ = "0.3.3"
     
     logger = logging.getLogger('antiweb')
-     
+    
 
 
 .. py:method:: def parsing()
@@ -239,12 +228,9 @@ This else will take place when the -r flag is not given.
     
         parser.add_option("-r", "--recursive", dest="recursive",
                           action="store_true", help="Process every file in given directory")
-        
-        parser.add_option("-i", "--index", dest="index",
-                          action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
     
         options, args = parser.parse_args()
-        
+    
         #There is no argument given, so we assume the user wants to use the current directory.
         if not args:
             args.append(os.getcwd())
@@ -256,9 +242,9 @@ This else will take place when the -r flag is not given.
 Multi-File Processing and Sphinx Support
 ****************************************
 
-antiweb supports Sphinx, which means that antiweb can provide you with an index.rst document that includes all processed files.
-To use that feature you simple have to use the -i option. Additionally you can process multiple files at once with the -r option added. 
-The needed parameter then can be empty to use the current directory or you provide the directory antiweb should use.
+antiweb supports Sphinx, which means that the output files antiweb creates for you can be processed by Sphinx without altering them.
+Additionally you can process multiple files at once with the -r option added.
+The needed directory parameter then can be empty to use the current directory, or you provide the directory antiweb should use.
 
 ************************
 How to add new languages
