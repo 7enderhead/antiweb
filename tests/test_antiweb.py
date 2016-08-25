@@ -53,7 +53,7 @@ class Test_Antiweb(unittest.TestCase):
         self.compare(directory, filename, compare_path)
     #@edoc
 
-    #In some cases the index.rst file should not be created, the :py:class:`file_not_exist(self, path)` class will verify that expectation
+    #In some cases a file should not be created, the :py:class:`file_not_exist(self, path)` class will verify that expectation
     #@code
     def file_not_exist(self, path):
 
@@ -71,7 +71,6 @@ class Test_Antiweb(unittest.TestCase):
 
     #@start(testcase)
     #This is one of eight tests that will be performed. ``compare_path_small_testfile`` is the path to the file to compare the output with.
-    #``compare_path_index`` is the counterpart for the created index.rst file
     #The arguments which would normally be set in the command prompt are set using ``patch.object` wich is imported from :py:class:`unittest.mock`
     #After the arguments are set :py:class:``self.functional`` is called to compare the expectation with the actual output.
 
@@ -252,7 +251,7 @@ class Test_Antiweb_rst(unittest.TestCase):
         self.compare(directory, filename, compare_path)
     #@edoc
 
-    #In some cases the index.rst file should not be created, the :py:class:`file_not_exist(self, path)` class will verify that expectation
+    #In some cases a file should not be created, the :py:class:`file_not_exist(self, path)` class will verify that expectation
     #@code
     def file_not_exist(self, path):
 
@@ -270,7 +269,6 @@ class Test_Antiweb_rst(unittest.TestCase):
 
     #@start(testcase)
     #This is one of eight tests that will be performed. ``compare_path_small_testfile`` is the path to the file to compare the output with.
-    #``compare_path_index`` is the counterpart for the created index.rst file
     #The arguments which would normally be set in the command prompt are set using ``patch.object` wich is imported from :py:class:`unittest.mock`
     #After the arguments are set :py:class:``self.functional`` is called to compare the expectation with the actual output.
 
