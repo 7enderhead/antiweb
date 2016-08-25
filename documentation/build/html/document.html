@@ -1,0 +1,833 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Document &mdash; antiweb 0.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
+        <link rel="next" title="Directives" href="directives.html"/>
+        <link rel="prev" title="antiweb" href="antiweb.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> antiweb
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Document</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line">Line</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="write.html">Write</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI support</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">antiweb</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Document</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/document.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="document">
+<h1>Document<a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Document<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Document">
+<em class="property">class </em><code class="descname">Document</code><span class="sig-paren">(</span><em>text</em>, <em>reader</em>, <em>fname</em>, <em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#Document" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the mediator communicating with all other classes
+to generate rst output.
+:param string text: the source code to parse.
+:param reader: An instance of <a class="reference internal" href="Reader.html#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.
+:param string fname: The file name of the source code.
+:param tokens: A sequence of tokens usable for the <code class="docutils literal"><span class="pre">&#64;if</span></code> directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Document</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1">#Attributes</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">errors</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">blocks</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">blocks_included</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">compiled_blocks</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">sub_documents</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">tokens</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">macros</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">fname</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">reader</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">lines</span><span class="o">&gt;&gt;</span>
+
+    <span class="c1">#Methods</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">__init__</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">process</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">get_subdoc</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">add_error</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">check_errors</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">collect_blocks</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">get_compiled_block</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Document</span><span class="o">.</span><span class="n">compile_block</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="Document.errors">
+<code class="descname">errors</code><a class="headerlink" href="#Document.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of errors found during generation.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.blocks">
+<code class="descname">blocks</code><a class="headerlink" href="#Document.blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of all found blocks: Name -&gt; List of Lines</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.blocks_included">
+<code class="descname">blocks_included</code><a class="headerlink" href="#Document.blocks_included" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set containing all block names that have been included by
+an &#64;include directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">blocks_included</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.compiled_blocks">
+<code class="descname">compiled_blocks</code><a class="headerlink" href="#Document.compiled_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set containing all block names that have been already
+compiled.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">compiled_blocks</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.sub_documents">
+<code class="descname">sub_documents</code><a class="headerlink" href="#Document.sub_documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cache dictionary of sub documents, referenced by
+<code class="docutils literal"><span class="pre">&#64;include</span></code> directives: Filename -&gt; Document</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sub_documents</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.tokens">
+<code class="descname">tokens</code><a class="headerlink" href="#Document.tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>A set of token names that can be used for the <code class="docutils literal"><span class="pre">&#64;if</span></code> directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.macros">
+<code class="descname">macros</code><a class="headerlink" href="#Document.macros" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary containing the macros that can be used
+by the <code class="docutils literal"><span class="pre">&#64;subst</span></code> directive: Macro name -&gt; substitution.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">macros</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.fname">
+<code class="descname">fname</code><a class="headerlink" href="#Document.fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>The file name of the document&#8217;s source.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.reader">
+<code class="descname">reader</code><a class="headerlink" href="#Document.reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>The instance of a <a class="reference internal" href="Reader.html#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a> object.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">reader</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Document.lines">
+<code class="descname">lines</code><a class="headerlink" href="#Document.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing the whole documents
+split in lines.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>text</em>, <em>reader</em>, <em>fname</em>, <em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">compiled_blocks</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sub_documents</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tokens</span> <span class="ow">or</span> <span class="p">[])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">macros</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;__file__&quot;</span> <span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s2">&quot;__codeprefix__&quot;</span> <span class="p">:</span> <span class="s2">&quot;&quot;</span> <span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">reader</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>show_warnings</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes the document and generates the output.
+:param bool show_warnings: If <code class="docutils literal"><span class="pre">True</span></code> warnings are emitted.
+:return: A string representing the rst output.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">collect_blocks</span><span class="p">()</span>
+
+    <span class="c1"># check if there are any lines in the file and add the according error message</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;empty file&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="s2">&quot;&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.rst&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;no @start() directive found (I need one)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_compiled_block</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">show_warnings</span><span class="p">:</span>
+        <span class="o">&lt;&lt;</span><span class="n">show</span> <span class="n">warnings</span><span class="o">&gt;&gt;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">filter_output</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">return_text</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+         <span class="n">return_text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">),</span> <span class="n">text</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">return_text</span>
+</pre></div>
+</div>
+<p id="show-warnings"><strong>&lt;&lt;show warnings&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>           <span class="c1">#may not cause a warning</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;__macros__&quot;</span><span class="p">)</span> <span class="c1">#may not cause a warning</span>
+<span class="n">unincluded</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_included</span>
+<span class="k">if</span> <span class="n">unincluded</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The following block were not included:&quot;</span><span class="p">)</span>
+    <span class="n">warnings</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">unincluded</span> <span class="p">]</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">warnings</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">(line </span><span class="si">%i</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.get_subdoc">
+<code class="descname">get_subdoc</code><span class="sig-paren">(</span><em>rpath</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.get_subdoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to compile a document with the relative path rpath.
+:param string rpath: The relative path to the root
+containing document.
+:return: A <a class="reference internal" href="#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> reference to the sub document.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_subdoc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rpath</span><span class="p">):</span>
+    <span class="o">&lt;&lt;</span><span class="k">return</span> <span class="kn">from</span> <span class="nn">cache</span> <span class="k">if</span> <span class="n">possible</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">insert</span> <span class="n">macros</span> <span class="n">function</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">read</span> <span class="n">the</span> <span class="n">source</span> <span class="n">file</span><span class="o">&gt;&gt;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">sub_documents</span><span class="p">[</span><span class="n">rpath</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc</span>
+    <span class="k">return</span> <span class="n">doc</span>
+</pre></div>
+</div>
+<p id="return-from-cache-if-possible"><strong>&lt;&lt;return from cache if possible&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_documents</span><span class="p">[</span><span class="n">rpath</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p id="insert-macros-function"><strong>&lt;&lt;insert macros function&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_macros</span><span class="p">(</span><span class="n">subdoc</span><span class="p">):</span>
+    <span class="c1"># if sub doc has no macros insert mine</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;__macros__&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subdoc</span><span class="o">.</span><span class="n">blocks</span>
+        <span class="ow">and</span> <span class="s2">&quot;__macros__&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">):</span>
+        <span class="n">file_</span> <span class="o">=</span> <span class="n">subdoc</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="s2">&quot;__file__&quot;</span><span class="p">]</span> <span class="c1"># preserve __file__</span>
+        <span class="n">subdoc</span><span class="o">.</span><span class="n">macros</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">macros</span><span class="p">)</span>
+        <span class="n">subdoc</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="s2">&quot;__file__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_</span>
+</pre></div>
+</div>
+<p id="read-the-source-file"><strong>&lt;&lt;read the source file&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">rpath</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1">#print &quot;try open&quot;, fpath</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Could not open: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fpath</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1">#parse the file</span>
+    <span class="n">lexer</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">get_lexer_for_filename</span><span class="p">(</span><span class="n">rpath</span><span class="p">)</span>
+    <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span> <span class="o">=</span> <span class="n">get_comment_markers</span><span class="p">(</span><span class="n">lexer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">readers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lexer</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Reader</span><span class="p">)(</span><span class="n">lexer</span><span class="p">,</span> <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
+
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">rpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+    <span class="n">doc</span><span class="o">.</span><span class="n">collect_blocks</span><span class="p">()</span>
+    <span class="n">insert_macros</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.add_error">
+<code class="descname">add_error</code><span class="sig-paren">(</span><em>line</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.add_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an error to the list.
+:param integer line_number: The line number that causes the error.
+:param string text: An error text.
+:param string fname: name of currently processed file (needed if no data in self.lines)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_number</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="c1"># determine if access to line_number is possible</span>
+    <span class="k">if</span> <span class="n">line_number</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">line_number</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># without a line in self.lines, antiweb would crash on appending it to the errors (errorlist)</span>
+        <span class="c1"># we add a &#39;fake line&#39; to prevent that issue</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">line</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.check_errors">
+<code class="descname">check_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Document.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises a <code class="docutils literal"><span class="pre">WebError</span></code> exception if error were found.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WebError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.collect_blocks">
+<code class="descname">collect_blocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Document.collect_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects all text blocks.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">collect_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="p">[</span> <span class="n">d</span><span class="o">.</span><span class="n">collect_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+               <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+               <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span> <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">blocks</span><span class="p">)))</span>
+
+    <span class="k">if</span> <span class="s2">&quot;__macros__&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_compiled_block</span><span class="p">(</span><span class="s2">&quot;__macros__&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.get_compiled_block">
+<code class="descname">get_compiled_block</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.get_compiled_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the compiled version of a text block.
+Compiled means: all directives where processed.
+:param string name: The name of the text block:
+:return: A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing
+the text block.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_compiled_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">compiled_blocks</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile_block</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Document.compile_block">
+<code class="descname">compile_block</code><span class="sig-paren">(</span><em>name</em>, <em>block</em><span class="sig-paren">)</span><a class="headerlink" href="#Document.compile_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compiles a text block.
+:param string name: The name of the block
+:param block: A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing
+the text block to compile.
+:return: A list of <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects representing
+the compiled text block.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compile_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="o">&lt;&lt;</span><span class="n">find_next_directive</span><span class="o">&gt;&gt;</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">directive_index</span> <span class="o">=</span> <span class="n">find_next_directive</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">directive_index</span><span class="p">:</span> <span class="k">break</span>
+        <span class="n">directive</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">directive_index</span>
+        <span class="n">directive</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">compiled_blocks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">block</span>
+</pre></div>
+</div>
+<p id="find-next-directive"><strong>&lt;&lt;find_next_directive&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_next_directive</span><span class="p">(</span><span class="n">block</span><span class="p">):</span>
+    <span class="c1"># returns the next available directive</span>
+    <span class="n">min_line</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">priority</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span> <span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">min_line</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">prio</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">directives</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">index</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="line">
+<h2>Line<a class="headerlink" href="#line" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Line">
+<em class="property">class </em><code class="descname">Line</code><span class="sig-paren">(</span><em>fname</em>, <em>index</em>, <em>text</em><span class="optional">[</span>, <em>directives</em><span class="optional">[</span>, <em>type</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Line" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a text line.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Line</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1">#Attributes</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">_directives</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">fname</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">index</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">text</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">type</span><span class="o">&gt;&gt;</span>
+
+    <span class="c1">#Methods</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">__init__</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">set</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">like</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">indented</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">change_indent</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">__len__</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">__repr__</span><span class="o">&gt;&gt;</span>
+
+    <span class="c1">#Properties</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">indent</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">sindent</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">directives</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Line</span><span class="o">.</span><span class="n">directive</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="Line._directives">
+<code class="descname">_directives</code><a class="headerlink" href="#Line._directives" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of <a class="reference internal" href="directives.html#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects, sorted
+by their priority.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">_directives</span> <span class="o">=</span> <span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Line.fname">
+<code class="descname">fname</code><a class="headerlink" href="#Line.fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string of the source&#8217;s file name the line belongs to.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Line.index">
+<code class="descname">index</code><a class="headerlink" href="#Line.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The integer line index of the directive within the current block.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Line.text">
+<code class="descname">text</code><a class="headerlink" href="#Line.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string containing the source line.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Line.type">
+<code class="descname">type</code><a class="headerlink" href="#Line.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A char representing the line type:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">d</span></code> stands for a document line</li>
+<li><code class="docutils literal"><span class="pre">c</span></code> stands for a code line</li>
+</ul>
+</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Line.indent">
+<code class="descname">indent</code><a class="headerlink" href="#Line.indent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>An integer representing the line&#8217;s indentation.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">())</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="Line.sindent">
+<code class="descname">sindent</code><a class="headerlink" href="#Line.sindent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A string representation of the line&#8217;s indentation.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">sindent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">indent</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="Line.directives">
+<code class="descname">directives</code><a class="headerlink" href="#Line.directives" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A sorted sequence of <a class="reference internal" href="directives.html#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">directives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_directives</span>
+
+
+<span class="nd">@directives</span><span class="o">.</span><span class="n">setter</span>
+<span class="k">def</span> <span class="nf">directives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_directives</span> <span class="o">=</span> <span class="n">value</span><span class="p">[:]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_directives</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_directives</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;priority&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="Line.directive">
+<code class="descname">directive</code><a class="headerlink" href="#Line.directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>The first of the contained <a class="reference internal" href="directives.html#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a> objects.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">directive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Line.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>index</em>, <em>text</em><span class="optional">[</span>, <em>directives</em><span class="optional">[</span>, <em>type</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Line.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">directives</span><span class="o">=</span><span class="p">(),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">directives</span> <span class="o">=</span> <span class="n">directives</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Line.set">
+<code class="descname">set</code><span class="sig-paren">(</span><span class="optional">[</span><em>index=None</em><span class="optional">[</span>, <em>type=None</em><span class="optional">[</span>, <em>directives=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Line.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the attributes <a class="reference internal" href="#Line.index" title="Line.index"><code class="xref py py-attr docutils literal"><span class="pre">index</span></code></a>, <a class="reference internal" href="#Line.type" title="Line.type"><code class="xref py py-attr docutils literal"><span class="pre">type</span></code></a>
+and <a class="reference internal" href="#Line.directives" title="Line.directives"><code class="xref py py-attr docutils literal"><span class="pre">directives</span></code></a> at once.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index</strong> (<em>integer</em>) &#8211; the line index.</li>
+<li><strong>type</strong> (<em>char</em>) &#8211; Either <code class="docutils literal"><span class="pre">'d'</span></code> or <code class="docutils literal"><span class="pre">'c'</span></code>.</li>
+<li><strong>directives</strong> (<em>list</em>) &#8211; A list of <code class="xref py py-class docutils literal"><span class="pre">DCirective</span></code> objects.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The <a class="reference internal" href="#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> object <code class="docutils literal"><span class="pre">self</span></code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">directives</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+
+    <span class="k">if</span> <span class="nb">type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+
+    <span class="k">if</span> <span class="n">directives</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directives</span> <span class="o">=</span> <span class="n">directives</span>
+
+    <span class="k">return</span> <span class="bp">self</span>
+
+
+
+<span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dline</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">dline</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">dline</span>
+
+    <span class="k">return</span> <span class="n">Line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">[:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Line.like">
+<code class="descname">like</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Line.like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clones the Line with a different text.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Line.indented">
+<code class="descname">indented</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Line.indented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the text, with the same indentation as <code class="docutils literal"><span class="pre">self</span></code>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">indented</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sindent</span> <span class="o">+</span> <span class="n">text</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Line.change_indent">
+<code class="descname">change_indent</code><span class="sig-paren">(</span><em>delta</em><span class="sig-paren">)</span><a class="headerlink" href="#Line.change_indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the lines indentation.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">change_indent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="o">-</span><span class="n">delta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">delta</span><span class="p">:]</span>
+
+    <span class="k">elif</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">*</span><span class="n">delta</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
+
+    <span class="k">return</span> <span class="bp">self</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Line.__len__">
+<code class="descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Line.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the length of the stripped <a class="reference internal" href="#Line.text" title="Line.text"><code class="xref py py-attr docutils literal"><span class="pre">text</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Line.__repr__">
+<code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Line.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a textual representation of the line.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;Line(</span><span class="si">%i</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="directives.html" class="btn btn-neutral float-right" title="Directives" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="antiweb.html" class="btn btn-neutral" title="antiweb" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

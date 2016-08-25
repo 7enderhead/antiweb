@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation &mdash; antiweb 0.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="antiweb 0.3.3 documentation" href="#"/>
+        <link rel="next" title="Installation" href="installation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> antiweb
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="write.html">Write</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI support</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">antiweb</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#overview-of-the-installation-steps">Overview of the installation steps:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-python">Install Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-antiweb">Install antiweb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-graphviz-optional">Install Graphviz (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#start">&#64;start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#rstart-text-block-name">&#64;rstart(text block name)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#cstart-text-block-name">&#64;cstart(text block name)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#text-block-name">&#64;[(text block name)]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#include-text-block-name-file">&#64;include(text block name [, file])</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#rinclude-text-block-name">&#64;RInclude(text block name)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#code">&#64;code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#edoc">&#64;edoc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#titles">Titles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#indent-spaces">&#64;indent spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#define-identifier-substitution">&#64;define(identifier[, substitution])</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#enifed-identifier">&#64;enifed(identifier)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#subst-identifier">&#64;subst(identifier)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#if-token-name">&#64;if(token name)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#fi-token-name">&#64;fi(token name)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#ignore">&#64;ignore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#indentation-matters">Indentation matters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="process_overview.html#creating-rst-files-through-antiweb">Creating rst files through antiweb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="process_overview.html#creating-the-documentation-with-sphinx">Creating the documentation with Sphinx</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="antiweb.html#objects">Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antiweb.html#file-layout">File Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antiweb.html#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antiweb.html#how-to-add-new-languages">How to add new languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antiweb.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="document.html#id1">Document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="document.html#line">Line</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#directive">Directive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#namedirective">NameDirective</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#start">Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#rstart">RStart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#cstart">CStart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#end">End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#include">Include</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#rinclude">RInclude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#code">Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#edoc">Edoc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#if">If</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#fi">Fi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#ignore">Ignore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#define">Define</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#enifed">Enifed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#subst">Subst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directives.html#indent">Indent</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Reader.html#reader">Reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reader.html#creader">CReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reader.html#csharpreader">CSharpReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reader.html#pythonreader">PythonReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reader.html#clojurereader">ClojureReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reader.html#genericreader">GenericReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reader.html#rstreader">rstReader</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="write.html">Write</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="write.html#writing-the-documentation-files">Writing the documentation files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="antisphinx.html#file-layout">File Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antisphinx.html#exports">&lt;&lt;exports&gt;&gt;</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="motivation.html#why-are-document-extractors-like-doxygen-not-sufficient">Why are document extractors like doxygen not sufficient?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motivation.html#features-of-antiweb">Features of antiweb</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="travis.html#the-travis-ci-file">The Travis-CI file</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

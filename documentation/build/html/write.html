@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Write &mdash; antiweb 0.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
+        <link rel="next" title="antisphinx" href="antisphinx.html"/>
+        <link rel="prev" title="Readers" href="Reader.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> antiweb
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Write</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#writing-the-documentation-files">Writing the documentation files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI support</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">antiweb</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Write</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/write.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="write">
+<h1>Write<a class="headerlink" href="#write" title="Permalink to this headline">¶</a></h1>
+<p>This module is the mediator for all writing-related classes and modules</p>
+<div class="section" id="writing-the-documentation-files">
+<h2>Writing the documentation files<a class="headerlink" href="#writing-the-documentation-files" title="Permalink to this headline">¶</a></h2>
+<p>From the given file a .rst file will be created if it contains an antiweb <code class="xref py py-class docutils literal"><span class="pre">start()</span> <span class="pre">directive</span></code>.
+The following function is called for the creation of the documentation files.</p>
+<dl class="method">
+<dt>
+<code class="descname">write</code><span class="sig-paren">(</span><em>working_dir</em>, <em>input_file</em>, <em>options</em><span class="sig-paren">)</span></dt>
+<dd><p>Creates the corresponding documention file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>working_dir</strong> &#8211; Current working directory.</li>
+<li><strong>input_file</strong> &#8211; Contains the absolute path of the currently processed file.</li>
+<li><strong>options</strong> &#8211; Commandline options.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Before the input file is processed the name of the output file has to be computed.
+How the output file name is created depends on the different commandline options.
+When there is no output option given the output file name is created in the following way:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Input File</th>
+<th class="head">Output File</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span></code></td>
+<td><em>C:\antiweb\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.rst</span></code></td>
+<td><em>C:\antiweb\testing_docs.rst</em></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span>
+    <span class="n">recursive</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">recursive</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">input_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If there is an output given, we have to distinguish between the recursive and non-recursive option.
+When the recursive option is used in combination with the output option, the output parameter is treated as the documentation directory:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Input File</th>
+<th class="head">Output File</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">report.rst</span></code></td>
+<td><em>C:\antiweb\report.rst\file.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">report</span></code></td>
+<td><em>C:\antiweb\report\file.rst</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">C:\antiweb\report.rst</span></code></td>
+<td><em>C:\antiweb\report.rst\file.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\</span> <span class="pre">-r</span> <span class="pre">-o</span> <span class="pre">\..\report.rst</span></code></td>
+<td><em>C:\report.rst\file.rst</em></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="c1">#The output parameter is treated as a directory.</span>
+        <span class="c1">#If it is a relative path it is combined with the current working directory.</span>
+        <span class="n">directory</span> <span class="o">=</span> <span class="n">output</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span><span class="n">directory</span><span class="p">,</span><span class="n">input_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the output option is used without the recursive option the output file name is computed in the following way:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Input File</th>
+<th class="head">Output File</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report.rst</span></code></td>
+<td><em>C:\antiweb\report.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report</span></code></td>
+<td><em>C:\antiweb\report\testing.rst</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">\..\report</span></code></td>
+<td><em>C:\report\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report\report.rst</span></code></td>
+<td><em>C:\antiweb\report\report.rst</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">report\report.rst\</span></code></td>
+<td><em>C:\antiweb\report\report.rst\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">C:\antiweb\testing.cs</span> <span class="pre">-o</span> <span class="pre">C:\report\report.rst</span></code></td>
+<td><em>C:\report\report.rst</em></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="k">else</span><span class="p">:</span>
+        <span class="c1">#Get the file extension from output parameter</span>
+        <span class="n">file_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">file_extension</span><span class="p">:</span>
+            <span class="c1">#If there is a file extension the last part of the output parameter is treated as the output file name.</span>
+            <span class="n">path_tokens</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="n">directory</span> <span class="o">=</span> <span class="n">path_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">path_tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1">#If directory contains an absolute path the working directory will be ignored,</span>
+            <span class="c1">#otherwise all three parameters will be joined</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">#If there is no file extension the whole output parameter is treated as the report directory.</span>
+            <span class="n">directory</span> <span class="o">=</span> <span class="n">output</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">input_file</span><span class="p">)</span>
+
+<span class="c1">#Create the documentation directory. If it can&#39;t be created the program exits.</span>
+<span class="n">create_doc_directory</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now the input file is processed and the corresponding documentation file is created.
+If processing is successful, &#8216;&#8217;could_process&#8217;&#8217; is set to &#8216;&#8217;True&#8217;&#8216;.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">could_process</span> <span class="o">=</span> <span class="n">process_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="create_out_file_name">
+<code class="descname">create_out_file_name</code><span class="sig-paren">(</span><em>working_dir</em>, <em>directory</em>, <em>input_file</em><span class="sig-paren">)</span><a class="headerlink" href="#create_out_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the absolute path of the output file name. The input file name suffix is replaced by
+&#8221;.rst&#8221;. If the input file name ends with &#8221;.rst&#8221; the string &#8220;_docs&#8221; is added before the suffix.
+If directory contains a relative path, then the paths of the working_dir and the directory
+are combined with the input file name. Otherwise, the directory is combined with the
+input file name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>working_dir</strong> &#8211; Absolute path of the current working directory.</li>
+<li><strong>directory</strong> &#8211; The documentation directory (absolute or relative)</li>
+<li><strong>input_file</strong> &#8211; The absolute path to the file which should be processed.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The path of the output file.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Working_Dir</th>
+<th class="head">Directory</th>
+<th class="head">Input_File_Name</th>
+<th class="head">Output_File_Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>C:\antiweb\</em></td>
+<td>doc</td>
+<td><em>C:\antiweb\testing.py</em></td>
+<td><em>C:\antiweb\doc\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><em>C:\antiweb\</em></td>
+<td>&nbsp;</td>
+<td><em>C:\antiweb\testing.py</em></td>
+<td><em>C:\antiweb\testing.rst</em></td>
+</tr>
+<tr class="row-even"><td><em>C:\antiweb\</em></td>
+<td><em>C:\doc\</em></td>
+<td><em>testing.py</em></td>
+<td><em>C:\doc\testing.rst</em></td>
+</tr>
+<tr class="row-odd"><td><em>C:\antiweb\</em></td>
+<td>doc</td>
+<td><em>C:\antiweb\testing.rst</em></td>
+<td><em>C:\antiweb\doc\testing_docs.rst</em></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_out_file_name</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">input_file</span><span class="p">):</span>
+
+    <span class="n">docs</span> <span class="o">=</span> <span class="s2">&quot;_docs&quot;</span>
+    <span class="n">rst_suffix</span> <span class="o">=</span> <span class="s2">&quot;.rst&quot;</span>
+    <span class="n">out_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">input_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">input_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">rst_suffix</span><span class="p">):</span>
+        <span class="n">out_file_path</span> <span class="o">=</span>  <span class="n">out_file_path</span> <span class="o">+</span> <span class="n">docs</span>
+
+    <span class="n">out_file_path</span> <span class="o">=</span>  <span class="n">out_file_path</span> <span class="o">+</span> <span class="n">rst_suffix</span>
+
+    <span class="n">out_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1">#If directory contains an absolute path, the working directory is ignored.</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">out_file_name</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_file</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="create_doc_directory">
+<code class="descname">create_doc_directory</code><span class="sig-paren">(</span><em>out_file</em><span class="sig-paren">)</span><a class="headerlink" href="#create_doc_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the documentation directory if it does not yet exist.
+If an error occurs, the program exits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>out_file</strong> &#8211; The path to the output file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_doc_directory</span><span class="p">(</span><span class="n">out_file</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">out_file_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_file_directory</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">out_file_directory</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Error: Documentation Directory: </span><span class="si">%s</span><span class="s2"> could not be created&quot;</span><span class="p">,</span>  <span class="n">out_file_directory</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="process_file">
+<code class="descname">process_file</code><span class="sig-paren">(</span><em>in_file</em>, <em>out_file</em>, <em>token</em>, <em>warnings</em><span class="sig-paren">)</span><a class="headerlink" href="#process_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>If no output name was declared, the input name will be given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_file</strong> &#8211; The path to the input file.</li>
+<li><strong>out_file</strong> &#8211; The path to the output file.</li>
+<li><strong>token</strong> &#8211; Passes on the tokens which the user set.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The boolean could_write indicates if the file could be written.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">):</span>
+<span class="c1">#The output text will be written in the output file. If there is an output text, the function returns could_write as True.</span>
+
+
+    <span class="n">could_write</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">text_output</span> <span class="o">=</span> <span class="n">generate</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">warnings</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">text_output</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text_output</span><span class="p">)</span>
+            <span class="n">could_write</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="n">WebError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Errors:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">error_list</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;  in line </span><span class="si">%i</span><span class="s2">(</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;      </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">could_write</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt>
+<code class="descname">def parsing()</code></dt>
+<dd><p>All possible input options are being defined, as well as their help-message, type and variable the values are stored in.
+If no arguments are given (the user did not provide a filepath), the current directory is set as the argument.</p>
+</dd></dl>
+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parsing</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="s2">&quot;usage: %prog [options] SOURCEFILE&quot;</span><span class="p">,</span>
+                          <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tangles a source code file to a rst file.&quot;</span><span class="p">,</span>
+                          <span class="n">version</span><span class="o">=</span><span class="s2">&quot;%prog &quot;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The output filename&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--token&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span>
+                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;defines a token, usable by @if directives&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--warnings&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;warnings&quot;</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;suppresses warnings&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Process every file in given directory&quot;</span><span class="p">)</span>
+
+    <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1">#There is no argument given, so we assume the user wants to use the current directory.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+    <span class="c1"># parsing() returns the selected options, arguments (the filepath/folderpath) and the parser</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">parser</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="antisphinx.html" class="btn btn-neutral float-right" title="antisphinx" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Reader.html" class="btn btn-neutral" title="Readers" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

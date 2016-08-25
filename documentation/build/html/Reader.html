@@ -1,0 +1,1069 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Readers &mdash; antiweb 0.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
+        <link rel="next" title="Write" href="write.html"/>
+        <link rel="prev" title="Directives" href="directives.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> antiweb
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Readers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reader">Reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creader">CReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#csharpreader">CSharpReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pythonreader">PythonReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clojurereader">ClojureReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#genericreader">GenericReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rstreader">rstReader</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="write.html">Write</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI support</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">antiweb</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Readers</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Reader.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="readers">
+<h1>Readers<a class="headerlink" href="#readers" title="Permalink to this headline">¶</a></h1>
+<p>Readers are responsible for the language dependent
+source parsing.</p>
+<div class="section" id="reader">
+<h2>Reader<a class="headerlink" href="#reader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Reader">
+<em class="property">class </em><code class="descname">Reader</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the base class for all readers. The public functions
+exposed to <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> are <a class="reference internal" href="#Reader.process" title="Reader.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>,
+and <a class="reference internal" href="#Reader.filter_output" title="Reader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">filter_output()</span></code></a>.</p>
+<p>The main tasks for a reader is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Recognize lines that can contain directives. (comment lines or doc strings).</li>
+<li>Modify the source for language specific optimizations.</li>
+<li>Filter the processed output.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lexer</strong> &#8211; A pygments lexer for the specified language</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">re_line_start</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span><span class="p">)</span> <span class="c1">#to find the line start indices</span>
+
+
+<span class="k">class</span> <span class="nc">Reader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1">#Public Methods</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">__init__</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">process</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">filter_output</span><span class="o">&gt;&gt;</span>
+
+    <span class="c1">#Protected Methods</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">_accept_token</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">_post_process</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">_handle_token</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">_cut_comment</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="Reader.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>lexer</em>, <em>single_comment_markers</em>, <em>block_comment_markers</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor initialises the language specific pygments lexer and comment markers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lexer</strong> (<em>Lexer</em>) &#8211; The language specific pygments lexer.</li>
+<li><strong>single_comment_markers</strong> (<em>string[]</em>) &#8211; The language specific single comment markers.</li>
+<li><strong>block_comment_markers</strong> (<em>string[]</em>) &#8211; The language specific block comment markers.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">single_comment_markers</span><span class="p">,</span> <span class="n">block_comment_markers</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span> <span class="o">=</span> <span class="n">lexer</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">single_comment_markers</span> <span class="o">=</span> <span class="n">single_comment_markers</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_markers</span> <span class="o">=</span> <span class="n">block_comment_markers</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Reader.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>fname</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the source code and identifies the directives.
+This method is call by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fname</strong> (<em>string</em>) &#8211; The file name of the source code</li>
+<li><strong>text</strong> (<em>string</em>) &#8211; The source code</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of <a class="reference internal" href="document.html#Line" title="Line"><code class="xref py py-class docutils literal"><span class="pre">Line</span></code></a> objects.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">starts</span> <span class="o">=</span> <span class="p">[</span> <span class="n">mo</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="k">for</span> <span class="n">mo</span> <span class="ow">in</span> <span class="n">re_line_start</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="p">]</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Line</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span> <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span>    <span class="c1"># A list of lines</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">starts</span> <span class="o">=</span> <span class="n">starts</span>  <span class="c1"># the start indices of the lines</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">get_tokens_unprocessed</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle_token</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_post_process</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Reader.filter_output">
+<code class="descname">filter_output</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader.filter_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is call by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a> and gives
+the reader the chance to influence the final output.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">lines</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Reader._handle_token">
+<code class="descname">_handle_token</code><span class="sig-paren">(</span><em>index</em>, <em>token</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader._handle_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find antiweb directives in valid pygments tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> (<em>integer</em>) &#8211; The index within the source code</li>
+<li><strong>token</strong> &#8211; A pygments token.</li>
+<li><strong>value</strong> (<em>string</em>) &#8211; The token value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_handle_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accept_token</span><span class="p">(</span><span class="n">token</span><span class="p">):</span> <span class="k">return</span>
+    <span class="n">cvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cut_comment</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cvalue</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">directives</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">for</span> <span class="n">mo</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">cvalue</span><span class="p">):</span>
+            <span class="n">li</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starts</span><span class="p">,</span> <span class="n">index</span><span class="o">+</span><span class="n">mo</span><span class="o">.</span><span class="n">start</span><span class="p">()</span><span class="o">+</span><span class="n">offset</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">li</span><span class="p">]</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">directives</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">directives</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span> <span class="n">v</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">mo</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Reader._cut_comment">
+<code class="descname">_cut_comment</code><span class="sig-paren">(</span><em>index</em>, <em>token</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader._cut_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cuts of the comment identifiers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index</strong> (<em>integer</em>) &#8211; The index within the source code</li>
+<li><strong>token</strong> &#8211; A pygments token.</li>
+<li><strong>value</strong> (<em>string</em>) &#8211; The token value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">value without comment identifiers.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Reader._post_process">
+<code class="descname">_post_process</code><span class="sig-paren">(</span><em>fname</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader._post_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does some post processing after the directives where found.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+
+    <span class="c1">#correct the line attribute of directives, in case there have</span>
+    <span class="c1">#been lines inserted or deleted by subclasses of Reader</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">i</span>
+
+    <span class="c1">#give the directives the chance to match</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Reader._accept_token">
+<code class="descname">_accept_token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader._accept_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the token type may contain a directive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>token</strong> &#8211; A pygments token</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if the token may contain a directive.
+<code class="docutils literal"><span class="pre">False</span></code> otherwise.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="creader">
+<h2>CReader<a class="headerlink" href="#creader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="CReader">
+<em class="property">class </em><code class="descname">CReader</code><a class="headerlink" href="#CReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reader for C/C++ code. This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
+        <span class="c1">#For C/C++ exists only one type of single and block comment markers.</span>
+        <span class="c1">#The markers are retrieved here in order to avoid iterating over the markers every time they are used.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_comment_marker</span> <span class="o">=</span> <span class="n">single_comment_markers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span> <span class="o">=</span> <span class="n">block_comment_markers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span> <span class="o">=</span> <span class="n">block_comment_markers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span>
+
+    <span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">single_comment_marker</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. py:method:: filter_output(lines)</span>
+
+<span class="sd">           See :py:meth:`Reader.filter_output`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
+                <span class="c1">#remove comment chars in document lines</span>
+                <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span> <span class="ow">or</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span><span class="p">:</span>
+                    <span class="c1">#remove /* and */ from documentation lines</span>
+                    <span class="c1">#see the l.text.lstrip()! if the lines ends with a white space</span>
+                    <span class="c1">#the quotes will be kept! This is feature, to force the quotes</span>
+                    <span class="c1">#in the output</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">single_comment_marker</span><span class="p">):</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+
+            <span class="k">yield</span> <span class="n">l</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="csharpreader">
+<h2>CSharpReader<a class="headerlink" href="#csharpreader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="CSharpReader">
+<em class="property">class </em><code class="descname">CSharpReader</code><a class="headerlink" href="#CSharpReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reader for C# code. This class inherits <a class="reference internal" href="#CReader" title="CReader"><code class="xref py py-class docutils literal"><span class="pre">CReader</span></code></a>.
+The CSharpReader is needed because C# specific output filtering is applied.
+Compared to C, C# uses XML comments starting with <em>///</em> which are reused
+for the final documentation. Here you can see an overview of the CSharpReader class
+and its methods.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CSharpReader</span><span class="p">(</span><span class="n">CReader</span><span class="p">):</span>
+
+    <span class="n">default_xml_block_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">):</span>
+        <span class="c1">#the call to the base class CReader is needed for initialising the comment markers</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CSharpReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
+
+    <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">strip_tags</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">get_attribute_text</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">get_stripped_xml_lines</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">create_new_lines</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">init_xml_block</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">filter_output</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="CSharpReader.strip_tags">
+<code class="descname">strip_tags</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.strip_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all C# XML tags. The tags are replaced by their attributes and contents.
+This method is called recursively. This is needed if the content of a tag also contains
+tags.</p>
+<p>Examples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">&lt;param</span> <span class="pre">name=&quot;arg1&quot;&gt;value&lt;/param&gt;</span></code> will be stripped to : <em>&#8220;arg1 value&#8221;</em></li>
+<li><code class="docutils literal"><span class="pre">&lt;para&gt;Start</span> <span class="pre">&lt;see</span> <span class="pre">cref=&quot;(String)&quot;/&gt;</span> <span class="pre">end&lt;/para&gt;</span></code> will be stripped to : <em>&#8220;Start (String) end&#8221;</em></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>Tag</em>) &#8211; The parsed xml tags.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the XML tags replaced by their attributes and contents.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">strip_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">tags</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span>  <span class="n">Tag</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tags</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute_text</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute_text</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+        <span class="c1">#if the content is a Navigablestring the content is simply concatenated</span>
+        <span class="c1">#otherwise the contents of the content are recursively checked for xml tags</span>
+        <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">NavigableString</span><span class="p">):</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">+=</span> <span class="n">content</span>
+
+        <span class="n">tag</span><span class="o">.</span><span class="n">replaceWith</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tags</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CSharpReader.get_attribute_text">
+<code class="descname">get_attribute_text</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.get_attribute_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the values of all XML tag attributes seperated by whitespace.</p>
+<p>Examples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">&lt;param</span> <span class="pre">name=&quot;arg1&quot;&gt;parameterValue&lt;/param&gt;</span></code> returns : <em>&#8220;arg1 &#8220;</em></li>
+<li><code class="docutils literal"><span class="pre">&lt;include</span> <span class="pre">file='file1'</span> <span class="pre">path='[&#64;name=&quot;test&quot;]/*'</span> <span class="pre">/&gt;</span></code> returns: <em>&#8220;file1 [&#64;name=&#8221;test&#8221;]/</em> &#8220;*</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tag</strong> (<em>Tag</em>) &#8211; A BeautifulSoup Tag.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the values of all attributes concatenated</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_attribute_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">tag</span><span class="p">):</span>
+    <span class="c1">#collect all values of xml tag attributes</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">attribute_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">attribute_text</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+    <span class="k">return</span> <span class="n">attribute_text</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CSharpReader.get_stripped_xml_lines">
+<code class="descname">get_stripped_xml_lines</code><span class="sig-paren">(</span><em>xml_lines_block</em><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.get_stripped_xml_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all XML comment tags from the lines in the xml_lines_block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xml_lines_block</strong> (<em>Line[]</em>) &#8211; A list containing all Line object which belong to an XML comment block.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of all stripped XML lines.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_stripped_xml_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">xml_lines_block</span><span class="p">):</span>
+    <span class="c1">#the xml_lines_block contains Line objects. As the xml parser expects a string</span>
+    <span class="c1">#the Line obects have to be converted to a string.</span>
+    <span class="n">xml_text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">),</span> <span class="n">xml_lines_block</span><span class="p">))</span>
+
+    <span class="c1">#the xml lines will be parsed and then all xml tags will be removed</span>
+    <span class="n">xml_tags</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">xml_text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">xml_tags</span><span class="p">)</span>
+    <span class="n">stripped_xml_lines</span> <span class="o">=</span> <span class="n">xml_tags</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">stripped_xml_lines</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CSharpReader.create_new_lines">
+<code class="descname">create_new_lines</code><span class="sig-paren">(</span><em>stripped_xml_lines</em>, <em>index</em>, <em>initial_line</em><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.create_new_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called after all XML comment tags are stripped. For each new
+line in the stripped_xml_lines a new Line object is created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>stripped_xml_lines</strong> (<em>string[]</em>) &#8211; The comment lines were the XML tags have been stripped.</li>
+<li><strong>index</strong> (<em>int</em>) &#8211; The starting index for the new line object.</li>
+<li><strong>initial_line</strong> (<a class="reference internal" href="document.html#Line" title="Line"><em>Line</em></a>) &#8211; The first line of the xml comment block. Its indentation will be used for all new created lines.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A generator containing the lines which have been created out of the stripped_xml_lines.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_new_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stripped_xml_lines</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">initial_line</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">stripped_xml_lines</span><span class="p">:</span>
+        <span class="n">new_line</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span><span class="n">initial_line</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span>  <span class="n">index</span><span class="p">,</span>  <span class="n">initial_line</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()))</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="n">new_line</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CSharpReader.init_xml_block">
+<code class="descname">init_xml_block</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.init_xml_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inits the variables which are needed for collecting an XML comment block.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">init_xml_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">xml_lines_block</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">xml_start_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_xml_block_index</span>
+    <span class="k">return</span> <span class="n">xml_lines_block</span><span class="p">,</span>  <span class="n">xml_start_index</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CSharpReader.filter_output">
+<code class="descname">filter_output</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.filter_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies C# specific filtering for the final output.
+XML comment tags are replaced by their attributes and contents.</p>
+<p>See <a class="reference internal" href="#Reader.filter_output" title="Reader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">Reader.filter_output()</span></code></a></p>
+<dl class="docutils">
+<dt>We have to handle four cases:</dt>
+<dd><ol class="first last arabic simple">
+<li>The current line is a code line: The line is added to result.</li>
+<li>The current line is a block comment: The line can be skipped.</li>
+<li>The current line is an XML comment: The line is added to the xml_lines_block.</li>
+<li>The current line is a single comment line: Add the line to result. If the current line is the first
+line after an xml comment block, the comment block is processed and its lines are added to result.</li>
+</ol>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>Line[]</em>) &#8211; All lines of a file. The directives have already been replaced.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A generator containing all lines for the final output.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="c1">#first the CReader filters the output</span>
+    <span class="c1">#afterwards the CSharpReader does some C# specific filtering</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">CSharpReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">filter_output</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+    <span class="c1">#the xml_lines_block collects xml comment lines</span>
+    <span class="c1">#if the end of an xml comment block is identified, the collected xml lines are processed</span>
+    <span class="n">xml_lines_block</span><span class="p">,</span> <span class="n">xml_start_index</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_xml_block</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
+            <span class="c1">#remove comment chars in document lines</span>
+            <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span> <span class="ow">or</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span><span class="p">:</span>
+                <span class="c1">#remove /* and */ from documentation lines. see the l.text.lstrip()!</span>
+                <span class="c1">#if the lines ends with a white space the quotes will be kept!</span>
+                <span class="c1">#This is feature, to force the quotes in the output</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span><span class="p">):</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+                <span class="k">if</span><span class="p">(</span><span class="n">xml_start_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_xml_block_index</span><span class="p">):</span>
+                    <span class="c1">#indicates that a new xml_block has started</span>
+                    <span class="n">xml_start_index</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span>
+
+                <span class="n">xml_lines_block</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">xml_start_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_xml_block_index</span><span class="p">:</span>
+                <span class="c1">#an xml comment block has ended, now the block is processed</span>
+                <span class="c1">#at first the xml tags are stripped, afterwards a new line object is created for each</span>
+                <span class="c1">#stripped line and added to the final result generator</span>
+                <span class="n">stripped_xml_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_xml_lines</span><span class="p">(</span><span class="n">xml_lines_block</span><span class="p">)</span>
+
+                <span class="n">new_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_new_lines</span><span class="p">(</span><span class="n">stripped_xml_lines</span><span class="p">,</span> <span class="n">xml_start_index</span><span class="p">,</span> <span class="n">xml_lines_block</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">new_lines</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">line</span>
+
+                <span class="c1">#reset the xml variables for the next block</span>
+                <span class="n">xml_lines_block</span><span class="p">,</span> <span class="n">xml_start_index</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_xml_block</span><span class="p">()</span>
+
+        <span class="k">yield</span> <span class="n">l</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pythonreader">
+<h2>PythonReader<a class="headerlink" href="#pythonreader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="PythonReader">
+<em class="property">class </em><code class="descname">PythonReader</code><a class="headerlink" href="#PythonReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reader for python code. This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.
+To reduce the number of sentinels, the python reader does some more
+sophisticated source parsing:</p>
+<p>A construction like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">cstart</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   Foo&#39;s documentation</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="n">code</span>
+</pre></div>
+</div>
+<p>is replaced by:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">cstart</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+   <span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">start</span><span class="p">(</span><span class="n">foo</span> <span class="n">doc</span><span class="p">)</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   Foo&#39;s documentation</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">include</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+   <span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)(</span><span class="n">foo</span> <span class="n">doc</span><span class="p">)</span>
+   <span class="n">code</span>
+</pre></div>
+</div>
+<p>The replacement will be done only:</p>
+<blockquote>
+<div><ul class="simple">
+<li>If the doc string begins with &#8220;&#8221;&#8220;</li>
+<li>If the block was started by a <code class="docutils literal"><span class="pre">&#64;rstart</span></code> or <code class="docutils literal"><span class="pre">&#64;cstart</span></code> directive</li>
+<li>If there is no antiweb directive in the doc string.</li>
+<li>Only a <code class="docutils literal"><span class="pre">&#64;cstart</span></code> will insert the &#64;include directive.</li>
+</ul>
+</div></blockquote>
+<p>Additionally the python reader removes all single line <code class="docutils literal"><span class="pre">&quot;&quot;&quot;</span></code> and <code class="docutils literal"><span class="pre">&#64;subst(triple)</span></code>
+from documentation lines. In the following lines:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">start</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Documentation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">&quot;&quot;&quot;</span></code> are automatically removed in the rst output. (see <a class="reference internal" href="#PythonReader.filter_output" title="PythonReader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">filter_output()</span></code></a>
+for details).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PythonReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PythonReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doc_lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="o">&lt;&lt;</span><span class="n">PythonReader</span><span class="o">.</span><span class="n">_post_process</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">PythonReader</span><span class="o">.</span><span class="n">_accept_token</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">PythonReader</span><span class="o">.</span><span class="n">_cut_comment</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">PythonReader</span><span class="o">.</span><span class="n">filter_output</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="PythonReader._post_process">
+<code class="descname">_post_process</code><span class="sig-paren">(</span><em>fname</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#PythonReader._post_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Reader._post_process" title="Reader._post_process"><code class="xref py py-meth docutils literal"><span class="pre">Reader._post_process()</span></code></a>.</p>
+<p>This implementation <em>decorates</em> doc strings
+with antiweb directives.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="c1">#from behind because we will probably insert some lines</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">doc_lines</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#handle each found doc string</span>
+    <span class="k">for</span> <span class="n">start_line</span><span class="p">,</span> <span class="n">end_line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_lines</span><span class="p">:</span>
+        <span class="n">indents</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="o">&lt;&lt;</span><span class="n">no</span> <span class="n">antiweb</span> <span class="n">directives</span> <span class="ow">in</span> <span class="n">doc</span> <span class="n">string</span><span class="o">&gt;&gt;</span>
+        <span class="o">&lt;&lt;</span><span class="n">find</span> <span class="n">the</span> <span class="n">last</span> <span class="n">directive</span> <span class="n">before</span> <span class="n">the</span> <span class="n">doc</span> <span class="n">string</span><span class="o">&gt;&gt;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last_directive</span><span class="p">,</span> <span class="n">RStart</span><span class="p">):</span>
+            <span class="o">&lt;&lt;</span><span class="n">decorate</span> <span class="n">beginning</span> <span class="ow">and</span> <span class="n">end</span><span class="o">&gt;&gt;</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last_directive</span><span class="p">,</span> <span class="n">CStart</span><span class="p">):</span>
+                <span class="o">&lt;&lt;</span><span class="n">insert</span> <span class="n">additional</span> <span class="n">include</span><span class="o">&gt;&gt;</span>
+
+    <span class="nb">super</span><span class="p">(</span><span class="n">PythonReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_post_process</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p id="no-antiweb-directives-in-doc-string"><strong>&lt;&lt;no antiweb directives in doc string&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#If antiweb directives are within the doc string,</span>
+<span class="c1">#the doc string will not be decorated!</span>
+<span class="n">directives_between_start_and_end_line</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">start_line</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">end_line</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">l</span><span class="p">:</span>
+        <span class="c1">#needed for &lt;&lt;insert additional include&gt;&gt;</span>
+        <span class="n">indents</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">indent</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
+        <span class="n">directives_between_start_and_end_line</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">break</span>
+
+<span class="k">if</span> <span class="n">directives_between_start_and_end_line</span><span class="p">:</span> <span class="k">continue</span>
+</pre></div>
+</div>
+<p id="find-the-last-directive-before-the-doc-string"><strong>&lt;&lt;find the last directive before the doc string&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">last_directive</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[:</span><span class="n">start_line</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
+        <span class="n">last_directive</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<p id="decorate-beginning-and-end"><strong>&lt;&lt;decorate beginning and end&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">start_line</span><span class="p">]</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">Start</span><span class="p">(</span><span class="n">start_line</span><span class="p">,</span> <span class="n">last_directive</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; doc&quot;</span><span class="p">)</span>
+<span class="n">l</span><span class="o">.</span><span class="n">directives</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">start</span><span class="p">]</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">end_line</span><span class="p">]</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">End</span><span class="p">(</span><span class="n">end_line</span><span class="p">,</span> <span class="n">last_directive</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; doc&quot;</span><span class="p">)</span>
+<span class="n">l</span><span class="o">.</span><span class="n">directives</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">end</span><span class="p">]</span>
+</pre></div>
+</div>
+<p id="insert-additional-include"><strong>&lt;&lt;insert additional include&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">include</span> <span class="o">=</span> <span class="n">Include</span><span class="p">(</span><span class="n">end_line</span><span class="p">,</span> <span class="n">last_directive</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">l</span><span class="o">.</span><span class="n">directives</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">include</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">end_line</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+
+<span class="c1">#the include directive should have the same</span>
+<span class="c1">#indentation as the .. py:function:: directive</span>
+<span class="c1">#inside the doc string. (It should be second</span>
+<span class="c1">#value of sorted indents)</span>
+<span class="n">indents</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">indents</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indents</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">change_indent</span><span class="p">(</span><span class="n">indents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">l</span><span class="o">.</span><span class="n">indent</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="PythonReader._accept_token">
+<code class="descname">_accept_token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="headerlink" href="#PythonReader._accept_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Reader._accept_token" title="Reader._accept_token"><code class="xref py py-meth docutils literal"><span class="pre">Reader._accept_token()</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span> <span class="ow">or</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Literal</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">Doc</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="PythonReader.filter_output">
+<code class="descname">filter_output</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#PythonReader.filter_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Reader.filter_output" title="Reader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">Reader.filter_output()</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
+            <span class="c1">#remove comment chars in document lines</span>
+            <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">stext</span> <span class="o">==</span> <span class="s1">&#39;&quot;&quot;&quot;&#39;</span> <span class="ow">or</span> <span class="n">stext</span> <span class="o">==</span> <span class="s2">&quot;&#39;&#39;&#39;&quot;</span><span class="p">:</span>
+                <span class="c1">#remove &quot;&quot;&quot; and &#39;&#39;&#39; from documentation lines</span>
+                <span class="c1">#see the l.text.lstrip()! if the lines ends with a white space</span>
+                <span class="c1">#the quotes will be kept! This is feature, to force the quotes</span>
+                <span class="c1">#in the output</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+                <span class="c1">#remove comments but not chapters</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="k">yield</span> <span class="n">l</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="PythonReader._cut_comment">
+<code class="descname">_cut_comment</code><span class="sig-paren">(</span><em>index</em>, <em>token</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#PythonReader._cut_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Reader._cut_comment" title="Reader._cut_comment"><code class="xref py py-meth docutils literal"><span class="pre">Reader._cut_comment()</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Literal</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">Doc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&quot;&quot;&quot;&#39;</span><span class="p">):</span>
+            <span class="c1">#save the start/end line of doc strings beginning with &quot;&quot;&quot;</span>
+            <span class="c1">#for further decoration processing in _post_process,</span>
+            <span class="n">start_line</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starts</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">end_line</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starts</span><span class="p">,</span> <span class="n">index</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()))</span> <span class="c1">#filter out empty strings</span>
+            <span class="k">if</span> <span class="n">lines</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">doc_lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start_line</span><span class="p">,</span> <span class="n">end_line</span><span class="p">))</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="clojurereader">
+<h2>ClojureReader<a class="headerlink" href="#clojurereader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ClojureReader">
+<em class="property">class </em><code class="descname">ClojureReader</code><a class="headerlink" href="#ClojureReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reader for Clojure code. This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClojureReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span>
+
+    <span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. py:method:: filter_output(lines)</span>
+
+<span class="sd">           See :py:meth:`Reader.filter_output`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
+                <span class="c1">#remove comment chars in document lines</span>
+                <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+                    <span class="c1">#remove comments but not chapters</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="k">yield</span> <span class="n">l</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="genericreader">
+<h2>GenericReader<a class="headerlink" href="#genericreader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="GenericReader">
+<em class="property">class </em><code class="descname">GenericReader</code><a class="headerlink" href="#GenericReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic reader for languages with single line and block comments .
+This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GenericReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">single_comment_markers</span><span class="p">,</span> <span class="n">block_comment_markers</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_comment_markers</span> <span class="o">=</span> <span class="n">single_comment_markers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_markers</span> <span class="o">=</span> <span class="n">block_comment_markers</span>
+
+    <span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span>
+
+    <span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/*&quot;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
+                <span class="c1">#remove comment chars in document lines</span>
+                <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">block_start</span><span class="p">,</span> <span class="n">block_end</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_markers</span><span class="p">:</span> <span class="c1">#comment layout: [(&quot;/*&quot;, &quot;*/&quot;),(&quot;#&quot;,&quot;@&quot;)]</span>
+                    <span class="k">if</span> <span class="n">stext</span> <span class="o">==</span> <span class="n">block_start</span> <span class="ow">or</span> <span class="n">stext</span> <span class="o">==</span> <span class="n">block_end</span><span class="p">:</span>
+                        <span class="c1">#remove &quot;&quot;&quot; and &#39;&#39;&#39; from documentation lines</span>
+                        <span class="c1">#see the l.text.lstrip()! if the lines ends with a white space</span>
+                        <span class="c1">#the quotes will be kept! This is feature, to force the quotes</span>
+                        <span class="c1">#in the output</span>
+                        <span class="k">continue</span>
+                    <span class="k">for</span> <span class="n">comment_start</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_comment_markers</span><span class="p">:</span> <span class="c1">#comment layout: [&quot;//&quot;,&quot;;&quot;]</span>
+                        <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">comment_start</span><span class="p">):</span>
+                            <span class="c1">#remove comments but not chapters</span>
+                            <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+
+            <span class="k">yield</span> <span class="n">l</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="rstreader">
+<h2>rstReader<a class="headerlink" href="#rstreader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="rstReader">
+<em class="property">class </em><code class="descname">rstReader</code><a class="headerlink" href="#rstReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reader for rst code. This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">rstReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span>
+
+    <span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;.. &quot;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. py:method:: filter_output(lines)</span>
+
+<span class="sd">           See :py:meth:`Reader.filter_output`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
+                <span class="c1">#remove comment chars in document lines</span>
+                <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">stext</span> <span class="o">==</span> <span class="s1">&#39;.. &#39;</span><span class="p">:</span>
+                    <span class="c1">#remove &quot;&quot;&quot; and &#39;&#39;&#39; from documentation lines</span>
+                    <span class="c1">#see the l.text.lstrip()! if the lines ends with a white space</span>
+                    <span class="c1">#the quotes will be kept! This is feature, to force the quotes</span>
+                    <span class="c1">#in the output</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;.. &quot;</span><span class="p">):</span>
+                    <span class="c1">#remove comments but not chapters</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+
+            <span class="k">yield</span> <span class="n">l</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="write.html" class="btn btn-neutral float-right" title="Write" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="directives.html" class="btn btn-neutral" title="Directives" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

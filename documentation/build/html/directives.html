@@ -1,0 +1,1059 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Directives &mdash; antiweb 0.3.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
+        <link rel="next" title="Readers" href="Reader.html"/>
+        <link rel="prev" title="Document" href="document.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> antiweb
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Directives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#directive">Directive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#namedirective">NameDirective</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#start">Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rstart">RStart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cstart">CStart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#end">End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#include">Include</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rinclude">RInclude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code">Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#edoc">Edoc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#if">If</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fi">Fi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ignore">Ignore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#define">Define</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enifed">Enifed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subst">Subst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#indent">Indent</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="write.html">Write</a></li>
+<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI support</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">antiweb</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Directives</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/directives.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="directives">
+<span id="id1"></span><h1>Directives<a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="directive">
+<h2>Directive<a class="headerlink" href="#directive" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Directive">
+<em class="property">class </em><code class="descname">Directive</code><span class="sig-paren">(</span><em>line</em><span class="optional">[</span>, <em>mo</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base class of all directives.
+Directives can be distinguished by the different tasks,
+they handle, these Task are generally:</p>
+<blockquote>
+<div><ul class="simple">
+<li>identifying a text block (<a class="reference internal" href="#Directive.collect_block" title="Directive.collect_block"><code class="xref py py-meth docutils literal"><span class="pre">collect_block()</span></code></a>)</li>
+<li>inserting text in the output (<a class="reference internal" href="#Directive.process" title="Directive.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>)</li>
+<li>modifying text in the output (<a class="reference internal" href="#Directive.process" title="Directive.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>)</li>
+<li>deleting text in the output (<a class="reference internal" href="#Directive.process" title="Directive.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a>)</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>line</strong> &#8211; the line number the directive was found</li>
+<li><strong>mo</strong> &#8211; a match object of an regular expression</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Directive</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1">#Attributes</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">expression</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">priority</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">line</span><span class="o">&gt;&gt;</span>
+
+    <span class="c1">#Methods</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">__init__</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">collect_block</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">process</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">match</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Directive</span><span class="o">.</span><span class="n">__repr__</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="Directive.expression">
+<code class="descname">expression</code><a class="headerlink" href="#Directive.expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>A regular expression defining the directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Directive.priority">
+<code class="descname">priority</code><a class="headerlink" href="#Directive.priority" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer process priority. Directives with a lower priority
+will be processed earlier.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">priority</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Directive.line">
+<code class="descname">line</code><a class="headerlink" href="#Directive.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>A integer defining the original line number of the directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Directive.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>line</em><span class="optional">[</span>, <em>mo</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Directive.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Directive.collect_block">
+<code class="descname">collect_block</code><span class="sig-paren">(</span><em>document</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.collect_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
+If the directive is defining a text block. It
+retrieves the text lines of the block from the document
+and return them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>document</strong> (<a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
+<li><strong>index</strong> (<em>integer</em>) &#8211; the line index of the directive.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">If the directive collects a block the return value
+is a tuple <code class="docutils literal"><span class="pre">(directive</span> <span class="pre">name,</span> <span class="pre">block</span> <span class="pre">of</span> <span class="pre">lines)</span></code>, or
+<code class="docutils literal"><span class="pre">None</span></code> otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">collect_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Directive.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>document</em>, <em>block</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
+The directive should do whatever it is supposed to do.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>document</strong> (<a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>) &#8211; the document calling the function.</li>
+<li><strong>block</strong> &#8211; The line block the directive is in.</li>
+<li><strong>index</strong> (<em>integer</em>) &#8211; the line index of the directive
+within the block.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Directive.match">
+<code class="descname">match</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#Directive.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by <a class="reference internal" href="document.html#Document" title="Document"><code class="xref py py-class docutils literal"><span class="pre">Document</span></code></a>.
+It gives the directive the chance to find and manipulate other
+directives.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>list</em>) &#8211; a list of all document lines.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Directive.__repr__">
+<code class="descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Directive.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a textual representation of the directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> at </span><span class="si">%i</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="namedirective">
+<h2>NameDirective<a class="headerlink" href="#namedirective" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="NameDirective">
+<em class="property">class </em><code class="descname">NameDirective</code><span class="sig-paren">(</span><em>line</em>, <em>mo</em><span class="sig-paren">)</span><a class="headerlink" href="#NameDirective" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base class for directives with a name argument.
+It inherits <a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>line</strong> &#8211; the line number the directive was found</li>
+<li><strong>mo</strong> &#8211; a match object of an regular expression or
+a string defining the name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="NameDirective.name">
+<code class="descname">name</code><a class="headerlink" href="#NameDirective.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string defining the argument of the directive.</p>
+</dd></dl>
+
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NameDirective</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">mo</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">) </span><span class="si">%i</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="start">
+<h2>Start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Start">
+<em class="property">class </em><code class="descname">Start</code><a class="headerlink" href="#Start" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a <code class="docutils literal"><span class="pre">&#64;start</span></code> directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;start</span></code> directive defines the beginning of
+a text block. It is called with an argument defining
+the name of the text block. There are two special text
+blocks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">()</span></code> The empty one defining the main text block</li>
+<li><code class="docutils literal"><span class="pre">(__macro__)</span></code> defining a text block for implementing macros.</li>
+</ul>
+</div></blockquote>
+<p>There are several possibilities to end a text block.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The end of the file</li>
+<li>A line with a smaller indentation as the <code class="docutils literal"><span class="pre">&#64;start</span></code> directive.</li>
+<li>Another start directive with same indentation.</li>
+<li>An unnamed end (<code class="docutils literal"><span class="pre">&#64;</span></code>) directive with the same indentation as
+the <code class="docutils literal"><span class="pre">&#64;start</span></code> directive.</li>
+<li>A named end directive closing this block or an outer block.</li>
+</ol>
+</div></blockquote>
+<p>Text blocks defined by <code class="docutils literal"><span class="pre">&#64;start</span></code> can be nested.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Start</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+    <span class="c1">#Attributes</span>
+    <span class="o">&lt;&lt;</span><span class="n">Start</span><span class="o">.</span><span class="n">has_named_end</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Start</span><span class="o">.</span><span class="n">inherited</span> <span class="n">attributes</span><span class="o">&gt;&gt;</span>
+
+    <span class="c1">#Methods</span>
+    <span class="o">&lt;&lt;</span><span class="n">Start</span><span class="o">.</span><span class="n">_find_matching_end</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Start</span><span class="o">.</span><span class="n">collect_block</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Start</span><span class="o">.</span><span class="n">process</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="Start.has_named_end">
+<code class="descname">has_named_end</code><a class="headerlink" href="#Start.has_named_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean value, signalizing if the directive is
+ended by a named end directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">has_named_end</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p id="start-inherited-attributes"><strong>&lt;&lt;Start.inherited attributes&gt;&gt;</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@start\((.*)\)&quot;</span><span class="p">)</span>
+<span class="n">priority</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="Start.collect_block">
+<code class="descname">collect_block</code><span class="sig-paren">(</span><em>document</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Start.collect_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Directive.collect_block" title="Directive.collect_block"><code class="xref py py-meth docutils literal"><span class="pre">Directive.collect_block()</span></code></a>.
+The returned lines are unindented to column 0.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">collect_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_matching_end</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="p">:])</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="n">end</span><span class="p">]</span>
+
+    <span class="n">reduce_block</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">block</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">reduce_block</span><span class="p">:</span>
+        <span class="n">document</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;Empty &#39;</span><span class="si">%s</span><span class="s2">&#39; block&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1">#unindent the block, empty lines may not count (filter(bool, block))</span>
+    <span class="n">indent_getter</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;indent&quot;</span><span class="p">)</span>
+    <span class="n">min_indent</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">indent_getter</span><span class="p">,</span> <span class="n">reduce_block</span><span class="p">)))</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="p">[</span> <span class="n">l</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">change_indent</span><span class="p">(</span><span class="o">-</span><span class="n">min_indent</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">block</span> <span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">block</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Start.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>document</em>, <em>block</em>, <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Start.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#Directive.process" title="Directive.process"><code class="xref py py-meth docutils literal"><span class="pre">Directive.process()</span></code></a>.
+Removes all lines of the text block from
+the containing block.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_matching_end</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:])</span>
+    <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="n">end</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Start._find_matching_end">
+<code class="descname">_find_matching_end</code><span class="sig-paren">(</span><em>block</em><span class="sig-paren">)</span><a class="headerlink" href="#Start._find_matching_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the matching end for the text block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block</strong> (<em>list</em>) &#8211; A list of lines beginning with start</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The line index of the found end.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_find_matching_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_named_end</span><span class="p">:</span>
+        <span class="c1"># ignore all other ending conditions and directly</span>
+        <span class="c1"># find the matching end directive</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">directive</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">End</span><span class="p">)</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">j</span>
+
+    <span class="n">start_indent</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">indent</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">lindent</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indent</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">directive</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">End</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lindent</span> <span class="o">==</span> <span class="n">start_indent</span><span class="p">:</span>
+                <span class="c1">#case 4: An unnamed @ directive with the same indentation</span>
+                <span class="c1">#        as the @start directive.</span>
+                <span class="k">return</span> <span class="n">j</span>
+
+            <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">start_line</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">:</span>
+                <span class="c1">#case 5: A named @ directive closing this block</span>
+                <span class="c1">#        or an outer block.</span>
+                <span class="k">return</span> <span class="n">j</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Start</span><span class="p">)</span> <span class="ow">and</span> <span class="n">lindent</span> <span class="o">==</span> <span class="n">start_indent</span><span class="p">:</span>
+            <span class="c1">#case 3: Another @start directive with same indentation.</span>
+            <span class="k">return</span> <span class="n">j</span>
+
+        <span class="k">if</span> <span class="n">lindent</span> <span class="o">&lt;</span> <span class="n">start_indent</span> <span class="ow">and</span> <span class="n">l</span><span class="p">:</span>
+            <span class="c1">#case 2: A line with a smaller indentation as the @start directive.</span>
+            <span class="c1">#        (an empty line doesn&#39;t count)</span>
+            <span class="k">return</span> <span class="n">j</span>
+
+    <span class="c1">#case 1: The end of the file</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rstart">
+<h2>RStart<a class="headerlink" href="#rstart" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="RStart">
+<em class="property">class </em><code class="descname">RStart</code><a class="headerlink" href="#RStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a <code class="docutils literal"><span class="pre">&#64;rstart</span></code> directive. It inherits
+<a class="reference internal" href="#Start" title="Start"><code class="xref py py-class docutils literal"><span class="pre">Start</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;rstart</span></code> directive works like the <code class="docutils literal"><span class="pre">&#64;start</span></code>
+directive. While <code class="docutils literal"><span class="pre">&#64;start</span></code> removes it&#8217;s block completely
+from the containing block. <code class="docutils literal"><span class="pre">&#64;rstart</span></code> replaces the lines
+with a <code class="docutils literal"><span class="pre">&lt;&lt;name&gt;&gt;</span></code> - Sentinel.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RStart</span><span class="p">(</span><span class="n">Start</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@rstart\((.*)\)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_matching_end</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:])</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="n">end</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">line</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;</span><span class="si">%s</span><span class="s2">&gt;&gt;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="cstart">
+<h2>CStart<a class="headerlink" href="#cstart" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="CStart">
+<em class="property">class </em><code class="descname">CStart</code><a class="headerlink" href="#CStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a <code class="docutils literal"><span class="pre">&#64;rstart</span></code> directive. It inherits
+<a class="reference internal" href="#RStart" title="RStart"><code class="xref py py-class docutils literal"><span class="pre">RStart</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;cstart(name)</span></code> directive is a replacement for</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@rstart</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="nd">@code</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CStart</span><span class="p">(</span><span class="n">RStart</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@cstart\((.*)\)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">collect_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">name_block</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">CStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">collect_block</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name_block</span><span class="p">:</span> <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">name</span><span class="p">,</span> <span class="n">block</span> <span class="o">=</span> <span class="n">name_block</span>
+
+        <span class="n">first</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">sd</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Code</span><span class="p">(</span><span class="n">first</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="p">]</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">first</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;@code&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">directives</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span>
+                                                <span class="n">index</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="n">block</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="end">
+<h2>End<a class="headerlink" href="#end" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="End">
+<em class="property">class </em><code class="descname">End</code><a class="headerlink" href="#End" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an end directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The end (<code class="docutils literal"><span class="pre">&#64;</span></code>) directive ends a text block.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">End</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@(\((.*)\))?\s*$&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">mo</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span>
+
+        <span class="c1">#find the matching start and inform it for the named end</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">lines</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Start</span><span class="p">)</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="n">d</span><span class="o">.</span><span class="n">has_named_end</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">start_line</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">line</span>
+                    <span class="k">return</span>
+
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="c1">#completely remove the directive from the containing block</span>
+        <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="include">
+<h2>Include<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Include">
+<em class="property">class </em><code class="descname">Include</code><a class="headerlink" href="#Include" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;include</span></code> directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;include</span></code> directive inserts the contents of the
+text block with the same name. The lines have the same
+indentation as the <code class="docutils literal"><span class="pre">&#64;include</span></code> directive.</p>
+<p>The directive can have a second <em>file</em> argument. If given
+the directive inserts the text block of the specified file.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Include</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@include\((.+)\)&quot;</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="c1">#check if the name contains 2 arguments</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="n">document</span><span class="o">.</span><span class="n">blocks_included</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="c1">#a file name is given, fetch block from that file</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">subdoc</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">get_subdoc</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">subdoc</span><span class="p">:</span>
+                <span class="n">include</span> <span class="o">=</span> <span class="n">subdoc</span><span class="o">.</span><span class="n">get_compiled_block</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">include</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">include</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">get_compiled_block</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">include</span><span class="p">:</span>
+            <span class="c1">#print &quot;error include&quot;, self.line, name</span>
+            <span class="n">document</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
+                               <span class="s2">&quot;Cannot find text block: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1">#replace the directive with its content</span>
+        <span class="n">indent</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">indent</span>
+        <span class="n">include</span> <span class="o">=</span> <span class="p">[</span> <span class="n">l</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">change_indent</span><span class="p">(</span><span class="n">indent</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">include</span> <span class="p">]</span>
+        <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">include</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="rinclude">
+<h2>RInclude<a class="headerlink" href="#rinclude" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="RInclude">
+<em class="property">class </em><code class="descname">RInclude</code><a class="headerlink" href="#RInclude" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;rinclude</span></code> directive. It inherits
+<a class="reference internal" href="#Include" title="Include"><code class="xref py py-class docutils literal"><span class="pre">Include</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;rinclude(text</span> <span class="pre">block</span> <span class="pre">name)</span></code> directive is a is a replacement for:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">_text</span> <span class="n">block</span> <span class="n">name</span><span class="p">:</span>
+
+<span class="o">**&lt;&lt;</span><span class="n">text</span> <span class="n">block</span> <span class="n">name</span><span class="o">&gt;&gt;**</span>
+
+<span class="nd">@include</span><span class="p">(</span><span class="n">text</span> <span class="n">block</span> <span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RInclude</span><span class="p">(</span><span class="n">Include</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@rinclude\((.+)\)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RInclude</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">l</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+                               <span class="n">l</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;.. _</span><span class="si">%s</span><span class="s2">:&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                               <span class="n">l</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+                               <span class="n">l</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;**&lt;&lt;</span><span class="si">%s</span><span class="s2">&gt;&gt;**&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                               <span class="n">l</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Code">
+<em class="property">class </em><code class="descname">Code</code><a class="headerlink" href="#Code" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;code</span></code> directive. It inherits
+<a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;code</span></code> directive starts a code block. All
+lines following <code class="docutils literal"><span class="pre">&#64;code</span></code> will be displayed as source code.</p>
+<dl class="docutils">
+<dt>A <code class="docutils literal"><span class="pre">&#64;code</span></code> directive ends,</dt>
+<dd><ul class="first last simple">
+<li>if the text block ends</li>
+<li>if an <code class="docutils literal"><span class="pre">&#64;edoc</span></code> occurs.</li>
+</ul>
+</dd>
+</dl>
+<p>The content of the special macro <code class="docutils literal"><span class="pre">__codeprefix__</span></code> is inserted
+before each code block. <code class="docutils literal"><span class="pre">__codeprefix__</span></code> is empty by default
+and can be defined by a <code class="docutils literal"><span class="pre">&#64;define</span></code> directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Code</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@code&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="c1">#change the indentation the code lines</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="p">)):</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">directive</span><span class="p">,</span> <span class="n">Edoc</span><span class="p">):</span>
+                <span class="k">break</span>
+
+            <span class="n">block</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">change_indent</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+
+        <span class="c1">#insert the rst prefix</span>
+        <span class="n">sd</span> <span class="o">=</span> <span class="p">[</span><span class="n">Subst</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;__codeprefix__&quot;</span><span class="p">)]</span>
+        <span class="n">new_block</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;@subst(__codeprefix__)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">directives</span><span class="o">=</span><span class="n">sd</span><span class="p">),</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">),</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="p">]</span>
+
+        <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_block</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="edoc">
+<h2>Edoc<a class="headerlink" href="#edoc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Edoc">
+<em class="property">class </em><code class="descname">Edoc</code><a class="headerlink" href="#Edoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;edoc</span></code> directive. It inherits
+<a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;edoc</span></code> directive ends a previously started <code class="docutils literal"><span class="pre">&#64;code</span></code> directive</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Edoc</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@edoc&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="if">
+<h2>If<a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="If">
+<em class="property">class </em><code class="descname">If</code><a class="headerlink" href="#If" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;if</span></code> directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;if</span></code> directive is used for conditional weaving.
+The content of an <code class="docutils literal"><span class="pre">&#64;if</span></code>, <code class="docutils literal"><span class="pre">&#64;fi</span></code> block is waved if the
+named token argument of <code class="docutils literal"><span class="pre">&#64;if</span></code>, is defined in the command line
+by the <code class="docutils literal"><span class="pre">--token</span></code> option.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">If</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@if\((.+)\)&quot;</span><span class="p">)</span>
+    <span class="n">priority</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="p">)):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">directive</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Fi</span><span class="p">)</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">document</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;No fi for if </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">document</span><span class="o">.</span><span class="n">tokens</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="fi">
+<h2>Fi<a class="headerlink" href="#fi" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Fi">
+<em class="property">class </em><code class="descname">Fi</code><a class="headerlink" href="#Fi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a <cite>&#64;fi</cite> directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;fi</span></code> ends an <code class="docutils literal"><span class="pre">&#64;if</span></code> directive</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Fi</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@fi\((.+)\)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="ignore">
+<h2>Ignore<a class="headerlink" href="#ignore" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Ignore">
+<em class="property">class </em><code class="descname">Ignore</code><a class="headerlink" href="#Ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;ignore</span></code> directive. It inherits
+<a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;ignore</span></code> directive ignores the line in the
+documentation output. It can be used for commentaries.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Ignore</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;@ignore&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="define">
+<h2>Define<a class="headerlink" href="#define" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Define">
+<em class="property">class </em><code class="descname">Define</code><a class="headerlink" href="#Define" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;define</span></code> directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;define</span></code> directive defines a macro, that can be used
+with a <code class="docutils literal"><span class="pre">&#64;subst</span></code> directive. If a <code class="docutils literal"><span class="pre">substitution</span></code>
+argument is given, the macro defines an inline substitution.
+Otherwise the <code class="docutils literal"><span class="pre">&#64;define</span></code> has to be ended by an <code class="docutils literal"><span class="pre">&#64;enifed</span></code>
+directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Define</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@define\((.+)\)&quot;</span><span class="p">)</span>
+    <span class="n">priority</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="c1">#more than one argument ==&gt; an inline substitution</span>
+            <span class="n">document</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="c1">#search for the matching @enifed</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="p">)):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">directive</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Enifed</span><span class="p">)</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">document</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;No enifed for define </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">document</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">l</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="enifed">
+<h2>Enifed<a class="headerlink" href="#enifed" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Enifed">
+<em class="property">class </em><code class="descname">Enifed</code><a class="headerlink" href="#Enifed" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;enifed</span></code> directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;enifed</span></code> directive ends a macro defined by the
+<code class="docutils literal"><span class="pre">&#64;define</span></code> directive.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Enifed</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@enifed\((.+)\)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">del</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="subst">
+<h2>Subst<a class="headerlink" href="#subst" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Subst">
+<em class="property">class </em><code class="descname">Subst</code><a class="headerlink" href="#Subst" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a <code class="docutils literal"><span class="pre">&#64;subst</span></code> directive. It inherits
+<a class="reference internal" href="#NameDirective" title="NameDirective"><code class="xref py py-class docutils literal"><span class="pre">NameDirective</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;subst</span></code> directive is replaced by the substitution,
+defined by a <code class="docutils literal"><span class="pre">&#64;define</span></code> directive. There are two predefined
+macros:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">__line__</span></code></dt>
+<dd>Define the current line within the source code. The
+<code class="docutils literal"><span class="pre">&#64;subst</span></code> can also handle operation with <code class="docutils literal"><span class="pre">__line__</span></code>
+like <code class="docutils literal"><span class="pre">__line__</span> <span class="pre">+</span> <span class="pre">2</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">__file__</span></code></dt>
+<dd>Defines the current source file name.</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Subst</span><span class="p">(</span><span class="n">NameDirective</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">r&quot;@subst\((.+?)\)&quot;</span><span class="p">)</span>
+    <span class="n">priority</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="c1">#find the substitution</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__line__&quot;</span><span class="p">):</span>
+            <span class="n">expression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;__line__&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">subst</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">document</span><span class="o">.</span><span class="n">macros</span><span class="p">:</span>
+            <span class="n">document</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;No macro </span><span class="si">%s</span><span class="s2"> found&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">subst</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">subst</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1">#inline substitution</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;@subst(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">subst</span><span class="p">)</span>
+            <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ln</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">index</span>
+            <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">l</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">+</span><span class="n">j</span><span class="p">)</span>\
+                                         <span class="o">.</span><span class="n">change_indent</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">indent</span><span class="p">)</span>\
+                                         <span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">ln</span><span class="o">+</span><span class="n">j</span><span class="p">)</span>
+                                     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subst</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="indent">
+<h2>Indent<a class="headerlink" href="#indent" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Indent">
+<em class="property">class </em><code class="descname">Indent</code><a class="headerlink" href="#Indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an <code class="docutils literal"><span class="pre">&#64;indent</span></code> directive. It inherits
+<a class="reference internal" href="#Directive" title="Directive"><code class="xref py py-class docutils literal"><span class="pre">Directive</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">&#64;indent</span></code> directive changes the indentation of the
+following lines. For example a  call <code class="docutils literal"><span class="pre">&#64;indent</span> <span class="pre">-4</span></code>
+dedents the following lines by 4 spaces.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Indent</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;@indent\s+([+-]?\d+)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Indent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">mo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mo</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span> <span class="n">l</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">change_indent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indent</span><span class="p">)</span>
+                  <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="p">]</span>
+        <span class="n">block</span><span class="p">[</span><span class="n">index</span><span class="p">:]</span> <span class="o">=</span> <span class="n">lines</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>import re
+import operator</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Reader.html" class="btn btn-neutral float-right" title="Readers" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="document.html" class="btn btn-neutral" title="Document" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
