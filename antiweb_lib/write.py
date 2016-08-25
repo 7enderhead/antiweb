@@ -178,7 +178,7 @@ def write(working_dir, input_file, options):
     """
 .. py:method:: write(working_dir, input_file, options)
 
-   Creates the corresponding documention file.
+   Creates the corresponding documentation file.
 
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.

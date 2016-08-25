@@ -78,9 +78,9 @@ File Layout
 Multi-File Processing and Sphinx Support
 ****************************************
 
-antiweb supports Sphinx, which means that the output files antiweb creates for you can be processed by Sphinx without altering them.
+antiweb creates .rst files which can be further processed by documentation systems like Sphinx.
 Additionally you can process multiple files at once with the -r option added.
-The needed directory parameter then can be empty to use the current directory, or you provide the directory antiweb should use.
+The optional directory parameter then can be empty to use the current directory, or you provide the directory antiweb should use.
 
 ************************
 How to add new languages
