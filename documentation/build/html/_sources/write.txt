@@ -14,7 +14,7 @@ The following function is called for the creation of the documentation files.
 
 .. py:method:: write(working_dir, input_file, options)
 
-   Creates the corresponding documention file.
+   Creates the corresponding documentation file.
 
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
@@ -39,7 +39,7 @@ When there is no output option given the output file name is created in the foll
         recursive = options.recursive
     
         if not output:
-            out_file = create_out_file_name(working_dir, "", input_file)
+            out_file = _create_out_file_name(working_dir, "", input_file)
     
 
 If there is an output given, we have to distinguish between the recursive and non-recursive option.
@@ -61,7 +61,7 @@ When the recursive option is used in combination with the output option, the out
                 #The output parameter is treated as a directory.
                 #If it is a relative path it is combined with the current working directory.
                 directory = output
-                out_file = create_out_file_name(working_dir,directory,input_file)
+                out_file = _create_out_file_name(working_dir,directory,input_file)
 
 When the output option is used without the recursive option the output file name is computed in the following way:
 
@@ -95,10 +95,10 @@ When the output option is used without the recursive option the output file name
                 else:
                     #If there is no file extension the whole output parameter is treated as the report directory.
                     directory = output
-                    out_file = create_out_file_name(working_dir, directory, input_file)
+                    out_file = _create_out_file_name(working_dir, directory, input_file)
     
         #Create the documentation directory. If it can't be created the program exits.
-        create_doc_directory(out_file)
+        _create_doc_directory(out_file)
 
 Now the input file is processed and the corresponding documentation file is created.
 If processing is successful, ''could_process'' is set to ''True''.
@@ -107,14 +107,14 @@ If processing is successful, ''could_process'' is set to ''True''.
 ::
 
     
-        could_process = process_file(input_file, out_file, options.token, options.warnings)
+        _process_file(input_file, out_file, options.token, options.warnings)
     
 
 
 
 
 
-.. py:method:: create_out_file_name(working_dir, directory, input_file)
+.. py:method:: _create_out_file_name(working_dir, directory, input_file)
 
   Computes the absolute path of the output file name. The input file name suffix is replaced by
   ".rst". If the input file name ends with ".rst" the string "_docs" is added before the suffix.
@@ -139,7 +139,7 @@ If processing is successful, ''could_process'' is set to ''True''.
 ::
 
     
-    def create_out_file_name(working_dir, directory, input_file):
+    def _create_out_file_name(working_dir, directory, input_file):
     
         docs = "_docs"
         rst_suffix = ".rst"
@@ -158,7 +158,7 @@ If processing is successful, ''could_process'' is set to ''True''.
         return out_file
     
 
-.. py:method:: create_doc_directory(out_file)
+.. py:method:: _create_doc_directory(out_file)
 
    Creates the documentation directory if it does not yet exist.
    If an error occurs, the program exits.
@@ -168,7 +168,7 @@ If processing is successful, ''could_process'' is set to ''True''.
 ::
 
     
-    def create_doc_directory(out_file):
+    def _create_doc_directory(out_file):
         try:
             out_file_directory = os.path.split(out_file)[0]
             if not os.path.exists(out_file_directory):
@@ -177,7 +177,7 @@ If processing is successful, ''could_process'' is set to ''True''.
             logger.error("\nError: Documentation Directory: %s could not be created",  out_file_directory)
             sys.exit(1)
 
-.. py:method:: process_file(in_file, out_file, token, warnings)
+.. py:method:: _process_file(in_file, out_file, token, warnings)
 
     If no output name was declared, the input name will be given.
 
@@ -185,58 +185,52 @@ If processing is successful, ''could_process'' is set to ''True''.
     :param out_file: The path to the output file.
     :param token: Passes on the tokens which the user set.
     :return: The boolean could_write indicates if the file could be written.
-
-::
-
-    def process_file(in_file, out_file, token, warnings):
-    #The output text will be written in the output file. If there is an output text, the function returns could_write as True.
     
+    ::
     
-        could_write = False
-        try:
-            text_output = generate(in_file, token, warnings)
+        def _process_file(in_file, out_file, token, warnings):
+        #@start_(process_file doc)
+        
+        ::
+        
+            def _process_file(in_file, out_file, token, warnings):
+            #@start_(process_file doc)
+            #@include(_process_file)
+            #The output text will be written in the output file. If there is an output text, the function returns could_write as True.
+            
+            
+                could_write = False
+                try:
+                    text_output = generate(in_file, token, warnings)
+            
+                    if text_output:
+                        with open(out_file, "w") as f:
+                            f.write(text_output)
+                        could_write = True
+                except WebError as e:
+                    logger.error("\nErrors:")
+                    for l, d in e.error_list:
+                        logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
+                        logger.error("      %s", l.text)
+            
+                return could_write
+        
+        #The output text will be written in the output file. If there is an output text, the function returns could_write as True.
+        
+        
+            could_write = False
+            try:
+                text_output = generate(in_file, token, warnings)
+        
+                if text_output:
+                    with open(out_file, "w") as f:
+                        f.write(text_output)
+                    could_write = True
+            except WebError as e:
+                logger.error("\nErrors:")
+                for l, d in e.error_list:
+                    logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
+                    logger.error("      %s", l.text)
+        
+            return could_write
     
-            if text_output:
-                with open(out_file, "w") as f:
-                    f.write(text_output)
-                could_write = True
-        except WebError as e:
-            logger.error("\nErrors:")
-            for l, d in e.error_list:
-                logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
-                logger.error("      %s", l.text)
-    
-        return could_write
-
-.. py:method:: def parsing()
-
-   All possible input options are being defined, as well as their help-message, type and variable the values are stored in.
-   If no arguments are given (the user did not provide a filepath), the current directory is set as the argument.
-
-::
-
-    def parsing():
-        parser = OptionParser("usage: %prog [options] SOURCEFILE",
-                              description="Tangles a source code file to a rst file.",
-                              version="%prog " + __version__)
-    
-        parser.add_option("-o", "--output", dest="output", default="",
-                          type="string", help="The output filename")
-    
-        parser.add_option("-t", "--token", dest="token", action="append",
-                          type="string", help="defines a token, usable by @if directives")
-    
-        parser.add_option("-w", "--warnings", dest="warnings",
-                          action="store_false", help="suppresses warnings")
-    
-        parser.add_option("-r", "--recursive", dest="recursive",
-                          action="store_true", help="Process every file in given directory")
-    
-        options, args = parser.parse_args()
-    
-        #There is no argument given, so we assume the user wants to use the current directory.
-        if not args:
-            args.append(os.getcwd())
-        # parsing() returns the selected options, arguments (the filepath/folderpath) and the parser
-        return (options, args, parser)
-
