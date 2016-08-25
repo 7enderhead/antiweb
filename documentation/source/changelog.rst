@@ -75,3 +75,6 @@ Changelog
 
     * 24.08.2016
          Created write module and updated documentation
+
+    * 24.08.2016
+         Completely eradicated the -i option and its documentation

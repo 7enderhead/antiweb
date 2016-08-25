@@ -21,7 +21,7 @@ License: GPL
 antiweb
 ########
 
-If you just want to generate the documentation from a source file use 
+If you just want to generate the documentation from a source file use
 the following function:
 
 @include(generate doc, antiweb_lib\write.py)
@@ -78,9 +78,9 @@ File Layout
 Multi-File Processing and Sphinx Support
 ****************************************
 
-antiweb supports Sphinx, which means that antiweb can provide you with an index.rst document that includes all processed files.
-To use that feature you simple have to use the -i option. Additionally you can process multiple files at once with the -r option added. 
-The needed parameter then can be empty to use the current directory or you provide the directory antiweb should use.
+antiweb creates .rst files which can be further processed by documentation systems like Sphinx.
+Additionally you can process multiple files at once with the -r option added.
+The optional directory parameter then can be empty to use the current directory, or you provide the directory antiweb should use.
 
 ************************
 How to add new languages
@@ -215,7 +215,6 @@ import sys
 import os.path
 import os
 
-from antiweb_lib.write_index import create_index_file
 from antiweb_lib.write import write
 #@rstart(management)
 
@@ -227,7 +226,7 @@ from antiweb_lib.write import write
 __version__ = "0.3.3"
 
 logger = logging.getLogger('antiweb')
- 
+
 #@cstart(parsing)
 def parsing():
 #@start(parsing doc)
@@ -238,7 +237,7 @@ def parsing():
    If no arguments are given (the user did not provide a filepath), the current directory is set as the argument.
     """
 #@include(parsing)
-#@(parsing doc)    
+#@(parsing doc)
     parser = OptionParser("usage: %prog [options] SOURCEFILE",
                           description="Tangles a source code file to a rst file.",
                           version="%prog " + __version__)
@@ -254,19 +253,16 @@ def parsing():
 
     parser.add_option("-r", "--recursive", dest="recursive",
                       action="store_true", help="Process every file in given directory")
-    
-    parser.add_option("-i", "--index", dest="index",
-                      action="store_true", help="Automatically write file(s) to Sphinx' index.rst")
 
     options, args = parser.parse_args()
-    
+
     #There is no argument given, so we assume the user wants to use the current directory.
     if not args:
         args.append(os.getcwd())
     # parsing() returns the selected options, arguments (the filepath/folderpath) and the parser
     return (options, args, parser)
 #@(parsing)
-    
+
 def main():
 
     options, args, parser = parsing()
@@ -281,9 +277,6 @@ def main():
         parser.print_help()
         sys.exit(0)
 
-    index_rst = "index.rst"
-    start_block = ".. start(generated)"
-    end_block = ".. end(generated)"
 #@edoc
 
 #The program checks if a -r flag was given and if so, save the current directory and change it to the given one.
@@ -291,29 +284,26 @@ def main():
 #@code
 
     previous_dir = os.getcwd()
-    
-    #The user input (respectively the input antiweb sets when none is given) can be relative, 
+
+    #The user input (respectively the input antiweb sets when none is given) can be relative,
     #so we grab the absolute path to work with.
     absolute_path = os.path.abspath(args[0])
 
     if options.recursive:
         directory = absolute_path
-        
+
         #Check if the given path refers to an existing directory.
         #The program aborts if the directory does not exist or if the path refers to a file.
         #A file is not allowed here because the -r option requires a directory.
         if not os.path.isdir(directory):
             logger.error("directory not found: %s", directory)
             sys.exit(1)
-    
+
         os.chdir(directory)
-                
-        if options.index:
-            index_rst = create_index_file(directory, options.output, index_rst, start_block, end_block)
-                    
+
 #@edoc
 
-#The program walks through the given directory and all subdirectories. The absolute file names 
+#The program walks through the given directory and all subdirectories. The absolute file names
 #are retrieved. Only files with the allowed extensions are processed.
 
 #@code
@@ -324,9 +314,9 @@ def main():
         for root, dirs, files in os.walk(directory, topdown=False):
             for filename in files:
                 fname = os.path.join(root, filename)
-        
+
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                    write(directory, fname, options, index_rst, start_block, end_block)
+                    write(directory, fname, options)
 
 #@edoc
 
@@ -336,25 +326,21 @@ def main():
 
     else:
         absolute_file_path = absolute_path
-        
-        #Check if the given path refers to an existing file. 
+
+        #Check if the given path refers to an existing file.
         #The program aborts if the file does not exist or if the path refers to a directory.
         #A directory is not allowed here because a directory can only be used with the -r option.
         if not os.path.isfile(absolute_file_path):
             logger.error("file not found: %s", absolute_file_path)
             sys.exit(1)
-        
+
         directory = os.path.split(absolute_file_path)[0]
 
         if directory:
             os.chdir(directory)
-           
-        if options.index:
-            #check if output contains a directory or a file name
-            index_rst = create_index_file(os.getcwd(), "", index_rst, start_block, end_block)    
-                
-        write(os.getcwd(), absolute_file_path, options, index_rst, start_block, end_block)
-    
+
+        write(os.getcwd(), absolute_file_path, options)
+
     os.chdir(previous_dir)
     return True
 #@edoc

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Process overview &mdash; antiweb 0.3.3 documentation</title>
+  <title>Process overview &mdash; antiweb  documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/>
+    <link rel="top" title="antiweb  documentation" href="index.html"/>
         <link rel="next" title="antiweb" href="antiweb.html"/>
         <link rel="prev" title="Getting Started" href="getting_started.html"/> 
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.3
+                0.3.3
               </div>
             
           
@@ -98,11 +98,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
-<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
 <li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="write.html">Write</a></li>
-<li class="toctree-l1"><a class="reference internal" href="write_index.html">Write Index</a></li>
 <li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
@@ -163,7 +162,7 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>Use antiweb to create rst files and add them to Sphinx&#8217; index.rst</td>
+<tr class="row-even"><td>Use antiweb to create rst files and add them manually to Sphinx&#8217; index.rst</td>
 </tr>
 <tr class="row-odd"><td>Execute sphinx-quickstart to create a project</td>
 </tr>
@@ -181,12 +180,12 @@
 <h3>Processing the files<a class="headerlink" href="#processing-the-files" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>You will most likely have a project consisting of more than one file. Fortunately that occasion is no problem for antiweb.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">antiweb</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">i</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">antiweb</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span> <span class="o">-</span><span class="n">r</span>
 </pre></div>
 </div>
-<p>This snippet will recursively process files in /path/to/project and put them into the directory you are currently working in. The <code class="docutils literal"><span class="pre">-i</span></code> is
-very important because it will add the files to an index.rst file that is used by Sphinx. To put them in a seperate folder, use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">antiweb</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">o</span> <span class="n">foldername</span>
+<p>This snippet will recursively process files in /path/to/project and put them into the directory you are currently working in.
+To put them in a seperate folder, use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">antiweb</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">o</span> <span class="n">foldername</span>
 </pre></div>
 </div>
 <p>A folder will be created in your working directory and the processed files will be stored in there.</p>
@@ -236,7 +235,7 @@ Given that your <code class="docutils literal"><span class="pre">.rst</span></co
 </div>
 <div class="section" id="final-step-create-the-documentation">
 <h3>Final step: Create the documentation<a class="headerlink" href="#final-step-create-the-documentation" title="Permalink to this headline">¶</a></h3>
-<p>Make sure all of your <code class="docutils literal"><span class="pre">.rst</span></code> files are stored inside the source folder and that they are registered inside the index.html (which is also located inside your source folder)</p>
+<p>Make sure all of your <code class="docutils literal"><span class="pre">.rst</span></code> files are stored inside the source folder and that they are registered inside the index.rst (which is also located inside your source folder)</p>
 <p>The only thing to do now is to execute:</p>
 <blockquote>
 <div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
@@ -302,7 +301,7 @@ If you would like Sphinx to process all files everytime you run Sphinx, you have
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.3.3',
+            VERSION:'',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

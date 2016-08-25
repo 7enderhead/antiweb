@@ -7,8 +7,6 @@ from antiweb_lib.readers.Reader import Reader
 
 from antiweb_lib.document import Document, WebError, readers, get_comment_markers
 
-from antiweb_lib.write_index import insert_filename_in_index_file
-
 logger = logging.getLogger('antiweb')
 
 #@start()
@@ -22,17 +20,16 @@ This module is the mediator for all writing-related classes and modules
 """
 
 #@include(write_documentation)
-#@include(create_out_file_name doc)
-#@include(create_doc_directory doc)
-#@include(process_file doc)
-#@include(parsing doc, ..\antiweb.py)
+#@include(_create_out_file_name doc)
+#@include(_create_doc_directory doc)
+#@include(_process_file doc)
 
-#@cstart(create_out_file_name)
+#@cstart(_create_out_file_name)
 
-def create_out_file_name(working_dir, directory, input_file):
-#@start(create_out_file_name doc)
+def _create_out_file_name(working_dir, directory, input_file):
+#@start(_create_out_file_name doc)
     """
-.. py:method:: create_out_file_name(working_dir, directory, input_file)
+.. py:method:: _create_out_file_name(working_dir, directory, input_file)
 
   Computes the absolute path of the output file name. The input file name suffix is replaced by
   ".rst". If the input file name ends with ".rst" the string "_docs" is added before the suffix.
@@ -54,8 +51,8 @@ def create_out_file_name(working_dir, directory, input_file):
 #   *C:\\antiweb\\* ,*C:\\doc\\* , *testing.py*, *C:\\doc\\testing.rst*
 #   *C:\\antiweb\\*,doc, *C:\\antiweb\\testing.rst* , *C:\\antiweb\\doc\\testing_docs.rst*
 
-#@include(create_out_file_name)
-#@(create_out_file_name doc)
+#@include(_create_out_file_name)
+#@(_create_out_file_name doc)
 
     docs = "_docs"
     rst_suffix = ".rst"
@@ -73,7 +70,7 @@ def create_out_file_name(working_dir, directory, input_file):
     out_file = os.path.abspath(out_file)
     return out_file
 
-#@(create_out_file_name)
+#@(_create_out_file_name)
 
 #@cstart(generate)
 def generate(fname, tokens, show_warnings=False):
@@ -104,20 +101,20 @@ def generate(fname, tokens, show_warnings=False):
     return document.process(show_warnings, fname)
 #@(generate)
 
-#@cstart(create_doc_directory)
+#@cstart(_create_doc_directory)
 
-def create_doc_directory(out_file):
-#@start(create_doc_directory doc)
+def _create_doc_directory(out_file):
+#@start(_create_doc_directory doc)
     """
-.. py:method:: create_doc_directory(out_file)
+.. py:method:: _create_doc_directory(out_file)
 
    Creates the documentation directory if it does not yet exist.
    If an error occurs, the program exits.
 
    :param out_file: The path to the output file.
     """
-#@include(create_doc_directory)
-#@(create_doc_directory doc)
+#@include(_create_doc_directory)
+#@(_create_doc_directory doc)
     try:
         out_file_directory = os.path.split(out_file)[0]
         if not os.path.exists(out_file_directory):
@@ -125,13 +122,13 @@ def create_doc_directory(out_file):
     except IOError:
         logger.error("\nError: Documentation Directory: %s could not be created",  out_file_directory)
         sys.exit(1)
-#@(create_doc_directory)
+#@(_create_doc_directory)
 
-#@cstart(process_file)
-def process_file(in_file, out_file, token, warnings):
-#@start(process_file doc)
+#@cstart(_process_file)
+def _process_file(in_file, out_file, token, warnings):
+#@start_(process_file doc)
     """
-.. py:method:: process_file(in_file, out_file, token, warnings)
+.. py:method:: _process_file(in_file, out_file, token, warnings)
 
     If no output name was declared, the input name will be given.
 
@@ -140,8 +137,8 @@ def process_file(in_file, out_file, token, warnings):
     :param token: Passes on the tokens which the user set.
     :return: The boolean could_write indicates if the file could be written.
     """
-#@include(process_file)
-#@(process_file doc)
+#@include(_process_file)
+#@(_process_file doc)
 #The output text will be written in the output file. If there is an output text, the function returns could_write as True.
 
 
@@ -160,7 +157,7 @@ def process_file(in_file, out_file, token, warnings):
             logger.error("      %s", l.text)
 
     return could_write
-#@(process_file)
+#@(_process_file)
 
 #@start(write_documentation)
 
@@ -175,19 +172,16 @@ def process_file(in_file, out_file, token, warnings):
 #@(write_documentation)
 
 #@start(write)
-def write(working_dir, input_file, options, index_file, start_block, end_block):
+def write(working_dir, input_file, options):
 #@start(write doc)
     """
-.. py:method:: write(working_dir, input_file, options, index_file, start_block, end_block)
+.. py:method:: write(working_dir, input_file, options)
 
-   Creates the corresponding documention file and optionally adds the processed file to the index file.
+   Creates the corresponding documentation file.
 
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
    :param options: Commandline options.
-   :param index_file: Absolute path of the index file.
-   :param start_block: String which contains the generated index block start definition.
-   :param end_block: String which contains the generated index block end definition.
     """
 #@(write doc)
 
@@ -210,7 +204,7 @@ def write(working_dir, input_file, options, index_file, start_block, end_block):
     recursive = options.recursive
 
     if not output:
-        out_file = create_out_file_name(working_dir, "", input_file)
+        out_file = _create_out_file_name(working_dir, "", input_file)
 
 #@edoc
 
@@ -231,7 +225,7 @@ def write(working_dir, input_file, options, index_file, start_block, end_block):
             #The output parameter is treated as a directory.
             #If it is a relative path it is combined with the current working directory.
             directory = output
-            out_file = create_out_file_name(working_dir,directory,input_file)
+            out_file = _create_out_file_name(working_dir,directory,input_file)
 #@edoc
 
 #When the output option is used without the recursive option the output file name is computed in the following way:
@@ -264,10 +258,10 @@ def write(working_dir, input_file, options, index_file, start_block, end_block):
             else:
                 #If there is no file extension the whole output parameter is treated as the report directory.
                 directory = output
-                out_file = create_out_file_name(working_dir, directory, input_file)
+                out_file = _create_out_file_name(working_dir, directory, input_file)
 
     #Create the documentation directory. If it can't be created the program exits.
-    create_doc_directory(out_file)
+    _create_doc_directory(out_file)
 #@edoc
 
 #Now the input file is processed and the corresponding documentation file is created.
@@ -275,15 +269,8 @@ def write(working_dir, input_file, options, index_file, start_block, end_block):
 
 #@code
 
-    could_process = process_file(input_file, out_file, options.token, options.warnings)
+    _process_file(input_file, out_file, options.token, options.warnings)
 
 #@edoc
 
-#If the file was processed successfully and the index option is used, the file name is inserted into the
-#index file (see :py:meth:`insert_filename_in_index_file`).
-
-#@code
-    if options.index and could_process:
-        insert_filename_in_index_file(out_file, working_dir, recursive, index_file, start_block, end_block)
-#@edoc
 #@(write_body)

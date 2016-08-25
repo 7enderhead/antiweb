@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; antiweb 0.3.3 documentation</title>
+  <title>Index &mdash; antiweb  documentation</title>
   
 
   
@@ -31,7 +31,7 @@
   
 
   
-    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html"/> 
+    <link rel="top" title="antiweb  documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.3
+                0.3.3
               </div>
             
           
@@ -85,11 +85,10 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a></li>
-<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
 <li class="toctree-l1"><a class="reference internal" href="directives.html">Directives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">Document</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Reader.html">Readers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="write.html">Write</a></li>
-<li class="toctree-l1"><a class="reference internal" href="write_index.html">Write Index</a></li>
 <li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html">Why another literate programming tool?</a></li>
@@ -206,6 +205,16 @@
 
       </dl></dd>
       
+  <dt><a href="write.html#_create_doc_directory">_create_doc_directory()</a>
+  </dt>
+
+      
+  <dt><a href="write.html#_create_out_file_name">_create_out_file_name()</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
   <dt><a href="Reader.html#PythonReader._cut_comment">_cut_comment() (PythonReader method)</a>
   </dt>
 
@@ -219,8 +228,6 @@
   <dt><a href="document.html#Line._directives">_directives (Line attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="directives.html#Start._find_matching_end">_find_matching_end() (Start method)</a>
   </dt>
@@ -240,15 +247,7 @@
 
       </dl></dd>
       
-  <dt><a href="write_index.html#_replace_path_seperator">_replace_path_seperator()</a>
-  </dt>
-
-      
-  <dt><a href="write_index.html#_search_for_generated_block">_search_for_generated_block()</a>
-  </dt>
-
-      
-  <dt><a href="write_index.html#_write_static">_write_static()</a>
+  <dt><a href="write.html#_process_file">_process_file()</a>
   </dt>
 
   </dl></td>
@@ -313,6 +312,8 @@
   <dt><a href="document.html#Document.collect_blocks">collect_blocks() (Document method)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="document.html#Document.compile_block">compile_block() (Document method)</a>
   </dt>
@@ -321,30 +322,12 @@
   <dt><a href="document.html#Document.compiled_blocks">compiled_blocks (Document attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="Reader.html#CReader">CReader (built-in class)</a>
   </dt>
 
       
-  <dt><a href="write.html#create_doc_directory">create_doc_directory()</a>
-  </dt>
-
-      
-  <dt><a href="write_index.html#create_index_file">create_index_file()</a>
-  </dt>
-
-      
   <dt><a href="Reader.html#CSharpReader.create_new_lines">create_new_lines() (CSharpReader method)</a>
-  </dt>
-
-      
-  <dt><a href="write.html#create_out_file_name">create_out_file_name()</a>
-  </dt>
-
-      
-  <dt><a href="write_index.html#create_out_file_name_index">create_out_file_name_index()</a>
   </dt>
 
       
@@ -515,12 +498,12 @@
   <dt><a href="directives.html#Indent">Indent (built-in class)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="document.html#Line.indent">indent (Line attribute)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="document.html#Line.indented">indented() (Line method)</a>
   </dt>
@@ -531,10 +514,6 @@
 
       
   <dt><a href="Reader.html#CSharpReader.init_xml_block">init_xml_block() (CSharpReader method)</a>
-  </dt>
-
-      
-  <dt><a href="write_index.html#insert_filename_in_index_file">insert_filename_in_index_file()</a>
   </dt>
 
   </dl></td>
@@ -623,10 +602,6 @@
       </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="write.html#process_file">process_file()</a>
-  </dt>
-
       
   <dt><a href="Reader.html#PythonReader">PythonReader (built-in class)</a>
   </dt>
@@ -757,7 +732,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.3.3',
+            VERSION:'',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
