@@ -78,3 +78,6 @@ Changelog
 
     * 24.08.2016
          Completely eradicated the -i option and its documentation
+
+    * 30.08.2016
+         Added a script to change the version number in all relevant files

@@ -17,3 +17,4 @@ Contents:
    changelog
    motivation
    travis
+   change-version
