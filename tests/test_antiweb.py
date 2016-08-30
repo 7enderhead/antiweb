@@ -109,13 +109,6 @@ class Test_Antiweb(unittest.TestCase):
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
 
-    def test_antiweb(self):
-        compare_path_small_testfile = self.data_dir.get_path("small_testfile.rst")
-        self.test_args = ['antiweb.py', self.temp_dir.get_path("small_testfile.py")]
-
-        with patch.object(sys, 'argv', self.test_args):
-            self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
-
     def test_antiweb_relative_path(self):
         compare_path_small_testfile = self.data_dir.get_path("small_testfile.rst")
         self.test_args = ['antiweb.py', self.temp_dir.get_relative_path("small_testfile.py")]
@@ -180,17 +173,6 @@ class Test_Antiweb(unittest.TestCase):
 
         with patch.object(sys, 'argv', self.test_args):
             self.functional(self.doc_dir, "small_testfile.rst", compare_path_small_testfile, main())
-
-        os.chdir(previ_dir)
-
-    def test_antiweb_r_no_argument(self):
-        previ_dir = os.getcwd()
-        os.chdir(self.temp_dir.get_relative_path())
-        compare_path_small_testfile = self.data_dir.get_path("docs","small_testfile.rst")
-        self.test_args = ['antiweb.py', "-r"]
-
-        with patch.object(sys, 'argv', self.test_args):
-            self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
 
         os.chdir(previ_dir)
 
@@ -327,13 +309,6 @@ class Test_Antiweb_rst(unittest.TestCase):
 
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", "ein_rst_docs.rst", compare_path_small_testfile, main())
-
-    def test_antiweb_rst_r_o(self):
-        compare_path_small_testfile = self.data_dir.get_path( "docs", "ein_rst.rst")
-        self.test_args = ['antiweb.py',"-o", self.doc_dir, "-r", self.temp_dir.get_path()]
-
-        with patch.object(sys, 'argv', self.test_args):
-            self.functional(self.doc_dir, "ein_rst_docs.rst", compare_path_small_testfile, main())
 
     def test_antiweb_rst_r(self):
         compare_path_small_testfile = self.data_dir.get_path( "docs", "ein_rst.rst")
