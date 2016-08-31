@@ -13,16 +13,16 @@ class PythonReader(Reader):
     .. py:class:: PythonReader
 
        A reader for python code. This class inherits :py:class:`Reader`.
-       To reduce the number of sentinels, the python reader does some more 
+       To reduce the number of sentinels, the python reader does some more
        sophisticated source parsing:
-       
+
        A construction like::
-         
+
              @subst(_at_)cstart(foo)
              def foo(arg1, arg2):
-                """ 
+                """
                 Foo's documentation
-                """ 
+                """
                 code
 
 
@@ -31,9 +31,9 @@ class PythonReader(Reader):
              @subst(_at_)cstart(foo)
              def foo(arg1, arg2):
                 @subst(_at_)start(foo doc)
-                """ 
+                """
                 Foo's documentation
-                """ 
+                """
                 @subst(_at_)include(foo)
                 @subst(_at_)(foo doc)
                 code
@@ -49,11 +49,11 @@ class PythonReader(Reader):
 
        Additionally the python reader removes all single line ``"""`` and ``@subst(triple)``
        from documentation lines. In the following lines::
-         
+
              @subst(_at_)start(foo)
-             """ 
+             """
              Documentation
-             """ 
+             """
 
        The ``"""`` are automatically removed in the rst output. (see :py:meth:`filter_output`
        for details).
@@ -70,7 +70,7 @@ class PythonReader(Reader):
     def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
         super(PythonReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
         self.doc_lines = []
-            
+
     #@cstart(PythonReader._post_process)
     def _post_process(self, fname, text):
         """
@@ -96,13 +96,13 @@ class PythonReader(Reader):
                 if l:
                     #needed for <<insert additional include>>
                     indents.add(l.indent)
-                    
+
                 if l.directives:
                     directives_between_start_and_end_line = True
                     break
 
             if directives_between_start_and_end_line: continue
-            
+
             #@cstart(find the last directive before the doc string)
             last_directive = None
             for l in reversed(self.lines[:start_line]):
@@ -121,7 +121,7 @@ class PythonReader(Reader):
                 end = End(end_line, last_directive.name + " doc")
                 l.directives = list(l.directives) + [end]
                 #@
-                
+
                 if isinstance(last_directive, CStart):
                     #@cstart(insert additional include)
                     l = l.like("")
@@ -129,9 +129,9 @@ class PythonReader(Reader):
                     l.directives = list(l.directives) + [include]
                     self.lines.insert(end_line, l)
 
-                    #the include directive should have the same 
-                    #indentation as the .. py:function:: directive 
-                    #inside the doc string. (It should be second 
+                    #the include directive should have the same
+                    #indentation as the .. py:function:: directive
+                    #inside the doc string. (It should be second
                     #value of sorted indents)
                     indents = list(sorted(indents))
                     if len(indents) > 1:
@@ -145,7 +145,7 @@ class PythonReader(Reader):
     #@rinclude(find the last directive before the doc string)
     #@rinclude(decorate beginning and end)
     #@rinclude(insert additional include)
-        
+
     #@cstart(PythonReader._accept_token)
     def _accept_token(self, token):
         """
@@ -172,7 +172,7 @@ class PythonReader(Reader):
                 lines = list(filter(bool, text[3:-3].splitlines())) #filter out empty strings
                 if lines:
                     self.doc_lines.append((start_line, end_line))
-                
+
             text = text[3:-3]
 
         return text
@@ -195,9 +195,9 @@ class PythonReader(Reader):
                     #the quotes will be kept! This is feature, to force the quotes
                     #in the output
                     continue
-                
-                if stext.startswith("#"):
+
+                if stext.startswith("#") and not stext.startswith("##"):
                     #remove comments but not chapters
                     l.text = l.indented(stext[1:])
-                            
+
             yield l

@@ -95,7 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#pythonreader">PythonReader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#clojurereader">ClojureReader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#genericreader">GenericReader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#rstreader">rstReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rstreader">RstReader</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="write.html">Write</a></li>
@@ -683,9 +683,7 @@ sophisticated source parsing:</p>
 <p>A construction like:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">cstart</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
-   <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">   Foo&#39;s documentation</span>
-<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="n">Foo</span><span class="s1">&#39;s documentation</span>
    <span class="n">code</span>
 </pre></div>
 </div>
@@ -693,9 +691,7 @@ sophisticated source parsing:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">cstart</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
    <span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">start</span><span class="p">(</span><span class="n">foo</span> <span class="n">doc</span><span class="p">)</span>
-   <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">   Foo&#39;s documentation</span>
-<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="n">Foo</span><span class="s1">&#39;s documentation</span>
    <span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">include</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
    <span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)(</span><span class="n">foo</span> <span class="n">doc</span><span class="p">)</span>
    <span class="n">code</span>
@@ -713,9 +709,7 @@ sophisticated source parsing:</p>
 <p>Additionally the python reader removes all single line <code class="docutils literal"><span class="pre">&quot;&quot;&quot;</span></code> and <code class="docutils literal"><span class="pre">&#64;subst(triple)</span></code>
 from documentation lines. In the following lines:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@subst</span><span class="p">(</span><span class="n">_at_</span><span class="p">)</span><span class="n">start</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Documentation</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">Documentation</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">&quot;&quot;&quot;</span></code> are automatically removed in the rst output. (see <a class="reference internal" href="#PythonReader.filter_output" title="PythonReader.filter_output"><code class="xref py py-meth docutils literal"><span class="pre">filter_output()</span></code></a>
@@ -835,7 +829,7 @@ with antiweb directives.</p>
                 <span class="c1">#in the output</span>
                 <span class="k">continue</span>
 
-            <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;##&quot;</span><span class="p">):</span>
                 <span class="c1">#remove comments but not chapters</span>
                 <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
@@ -954,12 +948,12 @@ This class inherits <a class="reference internal" href="#Reader" title="Reader">
 
 </div>
 <div class="section" id="rstreader">
-<h2>rstReader<a class="headerlink" href="#rstreader" title="Permalink to this headline">¶</a></h2>
+<h2>RstReader<a class="headerlink" href="#rstreader" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="rstReader">
-<em class="property">class </em><code class="descname">rstReader</code><a class="headerlink" href="#rstReader" title="Permalink to this definition">¶</a></dt>
+<dt id="RstReader">
+<em class="property">class </em><code class="descname">RstReader</code><a class="headerlink" href="#RstReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reader for rst code. This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">rstReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RstReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span>
 
