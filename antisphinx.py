@@ -53,7 +53,6 @@ from pygments.token import Token
 ***********
 <<exports>>
 ***********
-Das ist der Export Test Text
 '''
 #@indent 5
 #@code
