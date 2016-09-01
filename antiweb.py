@@ -91,7 +91,7 @@ and registering it in the readers dictionary (see readers).
 A simple Reader example is provides by :py:class:`CReader`
 a more advanced reader is :py:class:`PythonReader`.
 
-#@include(comments doc, antiweb_lib\document.py)
+#@include(comments doc, antiweb_lib\readers\config.py)
 #@include(get_comment_markers doc, antiweb_lib\document.py)
 
 *******

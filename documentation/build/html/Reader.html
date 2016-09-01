@@ -152,6 +152,7 @@
 <li><a class="reference internal" href="#clojurereader">ClojureReader</a></li>
 <li><a class="reference internal" href="#genericreader">GenericReader</a></li>
 <li><a class="reference internal" href="#rstreader">RstReader</a></li>
+<li><a class="reference internal" href="#the-reader-dictionary">The Reader Dictionary</a></li>
 </ul>
 </li>
 </ul>
@@ -1036,6 +1037,24 @@ This class inherits <a class="reference internal" href="#Reader" title="Reader">
 </div>
 </dd></dl>
 
+</div>
+<div class="section" id="the-reader-dictionary">
+<h2>The Reader Dictionary<a class="headerlink" href="#the-reader-dictionary" title="Permalink to this headline">¶</a></h2>
+<p>When writing a new reader, please register it in this dictionary with the according lexer name of the file. Please note that the Readername is the name of the class, not the file.</p>
+<p>Format:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;lexername&quot;</span> <span class="p">:</span> <span class="n">Readername</span><span class="p">,</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">readers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;C&quot;</span> <span class="p">:</span> <span class="n">CReader</span><span class="p">,</span>
+    <span class="s2">&quot;C++&quot;</span> <span class="p">:</span> <span class="n">CReader</span><span class="p">,</span>
+    <span class="s2">&quot;C#&quot;</span> <span class="p">:</span> <span class="n">CSharpReader</span><span class="p">,</span>
+    <span class="s2">&quot;Python&quot;</span> <span class="p">:</span> <span class="n">PythonReader</span><span class="p">,</span>
+    <span class="s2">&quot;Clojure&quot;</span> <span class="p">:</span> <span class="n">ClojureReader</span><span class="p">,</span>
+    <span class="s2">&quot;rst&quot;</span> <span class="p">:</span> <span class="n">RstReader</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 

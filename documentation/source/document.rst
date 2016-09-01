@@ -29,7 +29,7 @@ Document
            <<Document.fname>>
            <<Document.reader>>
            <<Document.lines>>
-           
+       
            #Methods
            <<Document.__init__>>
            <<Document.process>>
@@ -39,7 +39,7 @@ Document
            <<Document.collect_blocks>>
            <<Document.get_compiled_block>>
            <<Document.compile_block>>
-           
+       
    
    .. py:attribute:: errors
    
@@ -144,7 +144,7 @@ Document
               self.fname = fname
               self.reader = reader
               self.lines = self.reader.process(fname, text)
-              
+          
           
       
    .. py:method:: process(show_warnings)
@@ -157,14 +157,14 @@ Document
        
            def process(self, show_warnings, fname):
                self.collect_blocks()
-               
+           
                # check if there are any lines in the file and add the according error message
                if not self.lines:
                    self.add_error(0, "empty file", fname)
                    self.check_errors()
                elif "" not in self.blocks and not fname.endswith(".rst"):
                    self.add_error(0, "no @start() directive found (I need one)")
-                   self.check_errors()       
+                   self.check_errors()
            
                try:
                    text = self.get_compiled_block("")
@@ -210,7 +210,7 @@ Document
               <<return from cache if possible>>
               <<insert macros function>>
               <<read the source file>>
-                  
+          
               self.sub_documents[rpath] = doc
               return doc
           
@@ -267,7 +267,7 @@ Document
           else:
               #parse the file
               lexer = pm.get_lexer_for_filename(rpath)
-              single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)    
+              single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)
               reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
           
               doc = Document(text, reader, rpath, self.tokens)
@@ -281,7 +281,7 @@ Document
       :param integer line_number: The line number that causes the error.
       :param string text: An error text.
       :param string fname: name of currently processed file (needed if no data in self.lines)
-      
+   
       
       ::
       
@@ -293,7 +293,7 @@ Document
                   # without a line in self.lines, antiweb would crash on appending it to the errors (errorlist)
                   # we add a 'fake line' to prevent that issue
                   line = Line(fname, -1, "")
-                  
+          
               self.errors.append((line, text))
           
           
@@ -319,7 +319,7 @@ Document
               blocks = [ d.collect_block(self, i)
                          for i, l in enumerate(self.lines)
                          for d in l.directives ]
-             
+          
               self.blocks = dict(list(filter(bool, blocks)))
           
               if "__macros__" in self.blocks:
@@ -334,17 +334,17 @@ Document
       :param string name: The name of the text block:
       :return: A list of :py:class:`Line` objects representing
       the text block.
-      
+   
       
       ::
       
           def get_compiled_block(self, name):
               if name not in self.blocks:
                   return None
-              
+          
               if name in self.compiled_blocks:
                   return self.blocks[name]
-                  
+          
               return self.compile_block(name, self.blocks[name])
           
           

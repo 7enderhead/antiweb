@@ -20,6 +20,7 @@ source parsing.
 @include(ClojureReader doc, ClojureReader.py)
 @include(GenericReader doc, GenericReader.py)
 @include(RstReader doc, RstReader.py)
+@include(reader_dictionary doc, config.py)
 """
 #@rstart(readers)
 #.. _readers:
@@ -51,7 +52,7 @@ class Reader(object):
          * Recognize lines that can contain directives. (comment lines or doc strings).
          * Modify the source for language specific optimizations.
          * Filter the processed output.
-       
+
        :param lexer: A pygments lexer for the specified language
     """
     #@
@@ -70,9 +71,9 @@ class Reader(object):
     def __init__(self, lexer, single_comment_markers, block_comment_markers):
         """
         .. py:method:: __init__(lexer, single_comment_markers, block_comment_markers)
-            
-           The constructor initialises the language specific pygments lexer and comment markers. 
-           
+
+           The constructor initialises the language specific pygments lexer and comment markers.
+
            :param Lexer lexer: The language specific pygments lexer.
            :param string[] single_comment_markers: The language specific single comment markers.
            :param string[] block_comment_markers: The language specific block comment markers.
@@ -114,12 +115,12 @@ class Reader(object):
 
            This method is call by :py:class:`Document` and gives
            the reader the chance to influence the final output.
-        
+
         """
         return lines
-        
+
     #@
-    
+
     #Protected Methods
     #@cstart(Reader._accept_token)
     def _accept_token(self, token):
@@ -166,7 +167,7 @@ class Reader(object):
            :param token: A pygments token.
            :param string value: The token value.
 		"""
-		
+
         if not self._accept_token(token): return
         cvalue = self._cut_comment(index, token, value)
         offset = value.index(cvalue)
@@ -175,7 +176,7 @@ class Reader(object):
                 li = bisect.bisect(self.starts, index+mo.start()+offset)-1
                 line = self.lines[li]
                 line.directives = list(line.directives) + [ v(line.index, mo) ]
-         
+
 
     #@cstart(Reader._cut_comment)
     def _cut_comment(self, index, token, text):

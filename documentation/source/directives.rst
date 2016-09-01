@@ -1,25 +1,24 @@
-.. _Directives:
-
 **********
 Directives
 **********
 
 Directive
 =========
+
 .. py:class:: Directive(line[, mo])
 
-   The base class of all directives. 
+   The base class of all directives.
    Directives can be distinguished by the different tasks,
    they handle, these Task are generally:
 
      * identifying a text block (:py:meth:`collect_block`)
-     
+
      * inserting text in the output (:py:meth:`process`)
 
      * modifying text in the output (:py:meth:`process`)
 
      * deleting text in the output (:py:meth:`process`)
-          
+
    :param line: the line number the directive was found
    :param mo: a match object of an regular expression
    
@@ -72,7 +71,7 @@ Directive
       
           def __init__(self, line, mo=None):
               self.line = line
-              
+          
           
       
    .. py:method:: collect_block(document, index)
@@ -81,7 +80,7 @@ Directive
       If the directive is defining a text block. It
       retrieves the text lines of the block from the document
       and return them.
-      
+   
       :param document: the document calling the function.
       :type document: :py:class:`Document`
       :param integer index: the line index of the directive.
@@ -101,7 +100,7 @@ Directive
    
       This method is called by :py:class:`Document`.
       The directive should do whatever it is supposed to do.
-                      
+   
       :param document: the document calling the function.
       :type document: :py:class:`Document`
       :param block: The line block the directive is in.
@@ -146,10 +145,10 @@ NameDirective
 
    The base class for directives with a name argument.
    It inherits :py:class:`Directive`.
-   
+
    :param line: the line number the directive was found
    :param mo: a match object of an regular expression or
-              a string defining the name. 
+              a string defining the name.
 
    .. py:attribute:: name
 
@@ -170,7 +169,7 @@ NameDirective
                return "<%s(%s) %i>" % (self.__class__.__name__,
                                        self.name, self.line)
        
-           
+       
    
 Start
 =====
@@ -178,12 +177,12 @@ Start
 
    This class represents a ``@start`` directive. It inherits
    :py:class:`NameDirective`.
-   
+
    The ``@start`` directive defines the beginning of
    a text block. It is called with an argument defining
    the name of the text block. There are two special text
    blocks:
-   
+
       * ``()`` The empty one defining the main text block
       * ``(__macro__)`` defining a text block for implementing macros.
 
@@ -209,12 +208,12 @@ Start
            #Attributes
            <<Start.has_named_end>>
            <<Start.inherited attributes>>
-           
+       
            #Methods
            <<Start._find_matching_end>>
            <<Start.collect_block>>
            <<Start.process>>
-           
+       
    
    .. py:attribute:: has_named_end
    
@@ -246,7 +245,7 @@ Start
           def collect_block(self, document, index):
               end = self._find_matching_end(document.lines[index:])
               block = document.lines[index+1:index+end]
-              
+          
               reduce_block = list(filter(bool, block))
               if not reduce_block:
                   document.add_error(self.line, "Empty '%s' block" % self.name)
@@ -328,7 +327,7 @@ RStart
 
    This class represents a ``@rstart`` directive. It inherits
    :py:class:`Start`.
-   
+
    The ``@rstart`` directive works like the ``@start``
    directive. While ``@start`` removes it's block completely
    from the containing block. ``@rstart`` replaces the lines
@@ -343,7 +342,7 @@ RStart
                end = self._find_matching_end(block[index:])
                line = block[index]
                block[index:index+end] = [ line.like("<<%s>>" % self.name) ]
-               
+       
        
    
 CStart
@@ -352,7 +351,7 @@ CStart
 
    This class represents a ``@rstart`` directive. It inherits
    :py:class:`RStart`.
-   
+
    The ``@cstart(name)`` directive is a replacement for
 
    ::
@@ -374,9 +373,9 @@ CStart
        
                first = block[0]
                sd = [ Code(first.index) ]
-               block.insert(0, first.like("@code").set(directives=sd, 
+               block.insert(0, first.like("@code").set(directives=sd,
                                                        index=first.index-1))
-               
+       
                return name, block
        
    
@@ -386,7 +385,7 @@ End
 
    This class represents an end directive. It inherits
    :py:class:`NameDirective`.
-   
+
    The end (``@``) directive ends a text block.
    
    ::
@@ -397,13 +396,13 @@ End
            def __init__(self, line, mo):
                super(NameDirective, self).__init__(line, mo)
                self.start_line = self.line
-               
+       
                if isinstance(mo, str):
                    self.name = mo
                else:
                    self.name = mo.group(2)
        
-               
+       
            def match(self, lines):
                if self.name is None: return
        
@@ -428,8 +427,8 @@ Include
 
    This class represents an ``@include`` directive. It inherits
    :py:class:`NameDirective`.
-   
-   The ``@include`` directive inserts the contents of the 
+
+   The ``@include`` directive inserts the contents of the
    text block with the same name. The lines have the same
    indentation as the ``@include`` directive.
 
@@ -459,7 +458,7 @@ Include
                        include = None
                else:
                    include = document.get_compiled_block(name)
-                   
+       
                if not include:
                    #print "error include", self.line, name
                    document.add_error(self.line,
@@ -480,7 +479,7 @@ RInclude
 
    This class represents an ``@rinclude`` directive. It inherits
    :py:class:`Include`.
-   
+
    The ``@rinclude(text block name)`` directive is a is a replacement for::
 
       .. _text block name:
@@ -513,7 +512,7 @@ Code
 
    This class represents an ``@code`` directive. It inherits
    :py:class:`Directive`.
-   
+
    The ``@code`` directive starts a code block. All
    lines following ``@code`` will be displayed as source code.
 
@@ -524,7 +523,7 @@ Code
    The content of the special macro ``__codeprefix__`` is inserted
    before each code block. ``__codeprefix__`` is empty by default
    and can be defined by a ``@define`` directive.
-  
+
    
    ::
    
@@ -542,11 +541,11 @@ Code
                        break
        
                    block[j] = l.clone().change_indent(4).set(type='c')
-                   
+       
                #insert the rst prefix
                sd = [Subst(self.line, "__codeprefix__")]
                new_block = [
-                   line.like("@subst(__codeprefix__)").set(directives=sd), 
+                   line.like("@subst(__codeprefix__)").set(directives=sd),
                    line.like("::"),
                    line.like("")
                    ]
@@ -562,7 +561,7 @@ Edoc
 
    This class represents an ``@edoc`` directive. It inherits
    :py:class:`Directive`.
-   
+
    The ``@edoc`` directive ends a previously started ``@code`` directive
    
    ::
@@ -572,8 +571,8 @@ Edoc
        
            def process(self, document, block, index):
                del block[index]
-               
-               
+       
+       
    
 If
 ===
@@ -581,7 +580,7 @@ If
 
    This class represents an ``@if`` directive. It inherits
    :py:class:`NameDirective`.
-   
+
    The ``@if`` directive is used for conditional weaving.
    The content of an ``@if``, ``@fi`` block is waved if the
    named token argument of ``@if``, is defined in the command line
@@ -608,7 +607,7 @@ If
        
                else:
                    del block[index:j]
-           
+       
    
 Fi
 ===
@@ -616,7 +615,7 @@ Fi
 
    This class represents a `@fi` directive. It inherits
    :py:class:`NameDirective`.
-   
+
    The ``@fi`` ends an ``@if`` directive
    
    ::
@@ -635,10 +634,10 @@ Ignore
 
    This class represents an ``@ignore`` directive. It inherits
    :py:class:`Directive`.
-   
+
    The ``@ignore`` directive ignores the line in the
    documentation output. It can be used for commentaries.
-  
+
    
    ::
    
@@ -647,7 +646,7 @@ Ignore
        
            def process(self, document, block, index):
                del block[index]
-           
+       
    
 Define
 ======
@@ -655,7 +654,7 @@ Define
 
    This class represents an ``@define`` directive. It inherits
    :py:class:`NameDirective`.
-   
+
    The ``@define`` directive defines a macro, that can be used
    with a ``@subst`` directive. If a ``substitution``
    argument is given, the macro defines an inline substitution.
@@ -687,9 +686,9 @@ Define
                else:
                    document.add_error(self.line, "No enifed for define %s" % name)
                    return
-               
+       
                document.macros[name] = [ l.clone() for l in block[index+1:j] ]
-                   
+       
    
 Enifed
 ======
@@ -697,7 +696,7 @@ Enifed
 
    This class represents an ``@enifed`` directive. It inherits
    :py:class:`NameDirective`.
-   
+
    The ``@enifed`` directive ends a macro defined by the
    ``@define`` directive.
    
@@ -709,7 +708,7 @@ Enifed
        
            def process(self, document, block, index):
                del block[index]
-           
+       
    
 Subst
 =====
@@ -717,7 +716,7 @@ Subst
 
    This class represents a ``@subst`` directive. It inherits
    :py:class:`NameDirective`.
-   
+
    The ``@subst`` directive is replaced by the substitution,
    defined by a ``@define`` directive. There are two predefined
    macros:
@@ -747,7 +746,7 @@ Subst
                elif self.name not in document.macros:
                    document.add_error(self.line, "No macro %s found" % self.name)
                    return
-               
+       
                else:
                    subst = document.macros[self.name]
        
@@ -763,7 +762,7 @@ Subst
                                                 .set(index=ln+j)
                                             for j, l in enumerate(subst) ]
        
-               
+       
    
 Indent
 ======
@@ -771,7 +770,7 @@ Indent
 
    This class represents an ``@indent`` directive. It inherits
    :py:class:`Directive`.
-   
+
    The ``@indent`` directive changes the indentation of the
    following lines. For example a  call ``@indent -4``
    dedents the following lines by 4 spaces.
@@ -785,12 +784,12 @@ Indent
                super(Indent, self).__init__(line, mo)
                self.indent = int(mo.group(1))
        
-               
+       
            def process(self, document, block, index):
                lines = [ l.clone().change_indent(self.indent)
                          for l in block[index+1:] ]
                block[index:] = lines
-               
+       
        
    
 import re

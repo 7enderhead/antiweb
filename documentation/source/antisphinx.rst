@@ -14,8 +14,8 @@ Additionally it makes them linking to the referring source block.
 The primary technique is:
 
 1. Extend the basic pygments language lexer with a new *Heading* token.
-2. Filter the html output of pygment lexing process: Replacing the 
-   heading's ``<span>`` tag  by an ``<a>`` tag,  referencing the 
+2. Filter the html output of pygment lexing process: Replacing the
+   heading's ``<span>`` tag  by an ``<a>`` tag,  referencing the
    a block.
 
 ***********
@@ -25,7 +25,7 @@ File Layout
 
 ::
 
-    
+
     <<imports>>
     <<export>>
     <<Lexers>>
@@ -45,36 +45,36 @@ File Layout
 ***********
 <<exports>>
 ***********
-     
+
      ::
-     
+
          priority = 5
-     
+
 <<Lexers>>
 ==========
 
 ::
 
-    
+
     class CHeaderLexer(plexers.CLexer):
         tokens = plexers.CLexer.tokens.copy()
         tokens["whitespace"] = [ (r'(?m)^\s*<<.+>>\s*$', Token.Generic.Heading), ]\
                                + plexers.CLexer.tokens["whitespace"]
-        
+
     CHeaderLexer._tokens = CHeaderLexer.process_tokendef('', CHeaderLexer.tokens)
-    
-    
+
+
     class PythonHeaderLexer(plexers.PythonLexer):
         tokens = plexers.PythonLexer.tokens.copy()
         tokens["root"] = [ (r'^\s*<<.+>>\s*$', Token.Generic.Heading), ]\
                          + plexers.PythonLexer.tokens["root"]
-        
+
     PythonHeaderLexer._tokens = PythonHeaderLexer.process_tokendef('', PythonHeaderLexer.tokens)
-    
+
     #replace the sphinx lexers by the new Lexers
     shighlighting.lexers["c"] = CHeaderLexer()
     shighlighting.lexers["python"] = PythonHeaderLexer()
-    
+
 
 <<Filter Output>>
 =================
@@ -82,23 +82,23 @@ File Layout
 ::
 
     re_html_heading = re.compile('<span class="gh">(.*?)</span>')
-    
+
     def highlight(code, lexer, formatter, outfile=None):
         <<make anchor>>
-      
+
         output = pygments.highlight(code, lexer, formatter, outfile)
         output, noc = re_html_heading.subn(make_anchor, output)
         return output
-    
+
     #monkey path the original sphinx highlighting
     shighlighting.highlight = highlight
     shighlighting.parser = None
-    
-    
+
+
     def setup(app):
         #is needed for sphinx extension mechanism
         pass
-    
+
 
 .. _make anchor:
 
@@ -111,27 +111,24 @@ File Layout
         indented_name = mo.group(1)
         indent = len(indented_name)-len(indented_name.lstrip())
         name = indented_name.strip()
-    
+
         #mangle the textblock name to satisfy the sphinx anchor names.
         href = name.replace("&lt;", "").replace("&gt;", "")\
                .replace(" ", "-").replace(":", "-").replace("+", "-")
-    
+
         if "." in href:
             path = href.split(".")
             href = path[0] + "." + ".".join(path[1:]).lower()
         else:
             href = href.replace("_", "-").lower()
-    
+
         if href.startswith("-"):
             href = href[1:]
-    
+
         phref = None
         while phref != href:
             phref = href
             href = href.replace("--", "-")
-    
+
         return '<span class="gh">%s<a href="#%s">%s</a></span>' \
                % (indented_name[:indent], href, name)
-
-
-

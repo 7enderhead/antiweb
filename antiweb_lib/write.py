@@ -5,7 +5,9 @@ import pygments.lexers as pm
 
 from antiweb_lib.readers.Reader import Reader
 
-from antiweb_lib.document import Document, WebError, readers, get_comment_markers
+from antiweb_lib.document import Document, WebError, get_comment_markers
+
+from antiweb_lib.readers.config import readers
 
 logger = logging.getLogger('antiweb')
 
