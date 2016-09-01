@@ -876,7 +876,7 @@ with antiweb directives.</p>
                 <span class="c1">#in the output</span>
                 <span class="k">continue</span>
 
-            <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;##&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
                 <span class="c1">#remove comments but not chapters</span>
                 <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
