@@ -196,7 +196,7 @@ class PythonReader(Reader):
                     #in the output
                     continue
 
-                if stext.startswith("#") and not stext.startswith("##"):
+                if stext.startswith("#"):
                     #remove comments but not chapters
                     l.text = l.indented(stext[1:])
 

@@ -19,8 +19,8 @@ logger = logging.getLogger('antiweb')
 class WebError(Exception):
     def __init__(self, error_list):
         self.error_list = error_list
-        
-        
+
+
 #@start()
 """
 ********
@@ -80,21 +80,21 @@ class Document(object):
     errors = []
     """
     .. py:attribute:: errors
-    
+
        A list of errors found during generation.
     """
     #@cstart(Document.blocks)
     blocks = {}
     """
     .. py:attribute:: blocks
-    
+
        A dictionary of all found blocks: Name -> List of Lines
     """
     #@cstart(Document.blocks_included)
     blocks_included = set()
     """
     .. py:attribute:: blocks_included
-    
+
        A set containing all block names that have been included by
        an @include directive.
     """
@@ -102,7 +102,7 @@ class Document(object):
     compiled_blocks = set()
     """
     .. py:attribute:: compiled_blocks
-    
+
        A set containing all block names that have been already
        compiled.
     """
@@ -110,7 +110,7 @@ class Document(object):
     sub_documents = {}
     """
     .. py:attribute:: sub_documents
-    
+
        A cache dictionary of sub documents, referenced by
        ``@include`` directives: Filename -> Document
     """
@@ -118,14 +118,14 @@ class Document(object):
     tokens = set()
     """
     .. py:attribute:: tokens
-    
+
        A set of token names that can be used for the ``@if`` directive.
     """
     #@cstart(Document.macros)
     macros = {}
     """
     .. py:attribute:: macros
-    
+
        A dictionary containing the macros that can be used
        by the ``@subst`` directive: Macro name -> substitution.
     """
@@ -133,26 +133,26 @@ class Document(object):
     fname = ""
     """
     .. py:attribute:: fname
-    
+
        The file name of the document's source.
     """
     #@cstart(Document.reader)
     reader = None
     """
     .. py:attribute:: reader
-    
+
        The instance of a :py:class:`Reader` object.
     """
     #@cstart(Document.lines)
     lines = []
     """
     .. py:attribute:: lines
-    
+
        A list of :py:class:`Line` objects representing the whole documents
        split in lines.
     """
     #@
-    
+
     #Methods
     #@cstart(Document.__init__)
     def __init__(self, text, reader, fname, tokens):
@@ -172,7 +172,7 @@ class Document(object):
         self.fname = fname
         self.reader = reader
         self.lines = self.reader.process(fname, text)
-        
+
 
     #@cstart(Document.process)
     def process(self, show_warnings, fname):
@@ -184,14 +184,14 @@ class Document(object):
             :return: A string representing the rst output.
         """
         self.collect_blocks()
-        
+
         # check if there are any lines in the file and add the according error message
         if not self.lines:
             self.add_error(0, "empty file", fname)
             self.check_errors()
         elif "" not in self.blocks and not fname.endswith(".rst"):
             self.add_error(0, "no @start() directive found (I need one)")
-            self.check_errors()       
+            self.check_errors()
 
         try:
             text = self.get_compiled_block("")
@@ -258,14 +258,14 @@ class Document(object):
         else:
             #parse the file
             lexer = pm.get_lexer_for_filename(rpath)
-            single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)    
+            single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)
             reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
-    
+
             doc = Document(text, reader, rpath, self.tokens)
             doc.collect_blocks()
             insert_macros(doc)
         #@
-            
+
         self.sub_documents[rpath] = doc
         return doc
 
@@ -283,7 +283,7 @@ class Document(object):
            :param integer line_number: The line number that causes the error.
            :param string text: An error text.
            :param string fname: name of currently processed file (needed if no data in self.lines)
-           
+
         """
         # determine if access to line_number is possible
         if line_number < len(self.lines):
@@ -292,7 +292,7 @@ class Document(object):
             # without a line in self.lines, antiweb would crash on appending it to the errors (errorlist)
             # we add a 'fake line' to prevent that issue
             line = Line(fname, -1, "")
-            
+
         self.errors.append((line, text))
 
 
@@ -316,7 +316,7 @@ class Document(object):
         blocks = [ d.collect_block(self, i)
                    for i, l in enumerate(self.lines)
                    for d in l.directives ]
-       
+
         self.blocks = dict(list(filter(bool, blocks)))
 
         if "__macros__" in self.blocks:
@@ -333,14 +333,14 @@ class Document(object):
            :param string name: The name of the text block:
            :return: A list of :py:class:`Line` objects representing
            the text block.
-           
+
         """
         if name not in self.blocks:
             return None
-        
+
         if name in self.compiled_blocks:
             return self.blocks[name]
-            
+
         return self.compile_block(name, self.blocks[name])
 
 
@@ -380,13 +380,13 @@ class Document(object):
     #@edoc
     #@rinclude(find_next_directive)
     #@(Document.compile_block)
-    
+
 #@cstart(get_comment_markers)
 
 def get_comment_markers(lexer_name):
     #@start(get_comment_markers doc)
     #From the map above the comment markers are retrieved via the following method:
-    
+
     """
     ..  py:function:: get_comment_markers(lexer_name)
 
@@ -394,7 +394,7 @@ def get_comment_markers(lexer_name):
         The comment markers of C serves as the default comment markers if the lexer name cannot be found.
 
         :param string lexer_name: The name of the pygments lexer.
-        :return: The single and comment block markers defined by the language                           
+        :return: The single and comment block markers defined by the language
     """
     #@indent 4
     #@include(get_comment_markers)
@@ -402,8 +402,8 @@ def get_comment_markers(lexer_name):
     comment_markers = comments.get(lexer_name, comments["C"])
     single_comment_markers = comment_markers[0]
     block_comment_markers = comment_markers[1]
-    return single_comment_markers,  block_comment_markers  
-    
+    return single_comment_markers,  block_comment_markers
+
 #@start(comments doc)
 #Language specific comment markers
 #====================================
