@@ -18,7 +18,7 @@ Reader
      * Recognize lines that can contain directives. (comment lines or doc strings).
      * Modify the source for language specific optimizations.
      * Filter the processed output.
-   
+
    :param lexer: A pygments lexer for the specified language
    
    ::
@@ -32,7 +32,7 @@ Reader
            <<Reader.__init__>>
            <<Reader.process>>
            <<Reader.filter_output>>
-           
+       
            #Protected Methods
            <<Reader._accept_token>>
            <<Reader._post_process>>
@@ -40,9 +40,9 @@ Reader
            <<Reader._cut_comment>>
    
    .. py:method:: __init__(lexer, single_comment_markers, block_comment_markers)
-       
-      The constructor initialises the language specific pygments lexer and comment markers. 
-      
+   
+      The constructor initialises the language specific pygments lexer and comment markers.
+   
       :param Lexer lexer: The language specific pygments lexer.
       :param string[] single_comment_markers: The language specific single comment markers.
       :param string[] block_comment_markers: The language specific block comment markers.
@@ -92,7 +92,7 @@ Reader
       
           def filter_output(self, lines):
               return lines
-              
+          
       
    .. py:method:: _handle_token(index, token, value)
    
@@ -105,7 +105,7 @@ Reader
       ::
       
           def _handle_token(self, index, token, value):
-                      
+          
               if not self._accept_token(token): return
               cvalue = self._cut_comment(index, token, value)
               offset = value.index(cvalue)
@@ -114,7 +114,7 @@ Reader
                       li = bisect.bisect(self.starts, index+mo.start()+offset)-1
                       line = self.lines[li]
                       line.directives = list(line.directives) + [ v(line.index, mo) ]
-               
+          
           
       
    .. py:method:: _cut_comment(index, token, value)
@@ -768,3 +768,29 @@ RstReader
                                    
                    yield l
    
+The Reader Dictionary
+=====================
+When writing a new reader, please register it in this dictionary with the according lexer name of the file. Please note that the Readername is the name of the class, not the file.
+
+Format:
+
+
+::
+
+     "lexername" : Readername,
+
+
+::
+
+    
+    readers = {
+        "C" : CReader,
+        "C++" : CReader,
+        "C#" : CSharpReader,
+        "Python" : PythonReader,
+        "Clojure" : ClojureReader,
+        "rst" : RstReader,
+    }
+    
+
+

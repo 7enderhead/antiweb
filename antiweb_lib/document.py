@@ -3,6 +3,8 @@ import operator
 import logging
 import pygments.lexers as pm
 
+from antiweb_lib.readers.config import readers, comments
+
 from antiweb_lib.readers.Line import Line
 
 from antiweb_lib.readers.Reader import Reader
@@ -403,35 +405,3 @@ def get_comment_markers(lexer_name):
     single_comment_markers = comment_markers[0]
     block_comment_markers = comment_markers[1]
     return single_comment_markers,  block_comment_markers
-
-#@start(comments doc)
-#Language specific comment markers
-#====================================
-'''
-If a new language is added, its comment markers also have to be registered in the following map.
-The map contains the definition of all language specific comment markers.
-
-The comment markers of a language are defined in the format:
-``"language" : ([single_comment_tokens],[start_block_token, end_block_token])``
-
-Multiple single and block comment markers can be defined.
-'''
-
-#@code
-comments = {
-"C" : (["//"],(["/*","*/"])),
-"C++" : (["//"],(["/*","*/"])),
-"C#" : (["//"],(["/*","*/"])),
-"Python" : (["#"],(["'''","'''"],["\"\"\"","\"\"\""])),
-}
-#@
-
-# The keys are the lexer names of pygments
-readers = {
-    "C" : CReader,
-    "C++" : CReader,
-    "C#" : CSharpReader,
-    "Python" : PythonReader,
-    "Clojure" : ClojureReader,
-    "rst" : RstReader,
-}
