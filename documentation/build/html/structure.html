@@ -1,21 +1,20 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Package Structure &mdash; antiweb 0.3.3 documentation</title>
+    <title>Package Structure &mdash; antiweb 0.3.4 documentation</title>
     
-    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootswatch-3.3.6/flatly/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.3.3',
+        VERSION:     '0.3.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,167 +23,33 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html" />
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="antiweb 0.3.4 documentation" href="index.html" />
     <link rel="next" title="Directives" href="directives.html" />
-    <link rel="prev" title="antiweb" href="antiweb.html" />
-<meta charset='utf-8'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
-<meta name="apple-mobile-web-app-capable" content="yes">
-
+    <link rel="prev" title="antiweb" href="antiweb.html" /> 
   </head>
   <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="directives.html" title="Directives"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="antiweb.html" title="antiweb"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
 
-  <div id="navbar" class="navbar  navbar-inverse navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.html">
-          antiweb</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.3.3</b></span>
-      </div>
-
-        <div class="collapse navbar-collapse nav-collapse">
-          <ul class="nav navbar-nav">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
-            
-              <li class="dropdown globaltoc-container">
-  <a role="button"
-     id="dLabelGlobalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="index.html">Contents <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"
-      role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#overview-of-the-installation-steps">Overview of the installation steps:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-python">Install Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-antiweb">Install antiweb</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-graphviz-optional">Install Graphviz (Optional)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#start">&#64;start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#rstart-text-block-name">&#64;rstart(text block name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#cstart-text-block-name">&#64;cstart(text block name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#text-block-name">&#64;[(text block name)]</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#include-text-block-name-file">&#64;include(text block name [, file])</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#rinclude-text-block-name">&#64;RInclude(text block name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#code">&#64;code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#edoc">&#64;edoc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#titles">Titles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#indent-spaces">&#64;indent spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#define-identifier-substitution">&#64;define(identifier[, substitution])</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#enifed-identifier">&#64;enifed(identifier)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#subst-identifier">&#64;subst(identifier)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#if-token-name">&#64;if(token name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#fi-token-name">&#64;fi(token name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#ignore">&#64;ignore</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#indentation-matters">Indentation matters</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="process_overview.html#creating-rst-files-through-antiweb">Creating rst files through antiweb</a></li>
-<li class="toctree-l2"><a class="reference internal" href="process_overview.html#creating-the-documentation-with-sphinx">Creating the documentation with Sphinx</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#objects">Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#file-layout">File Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#how-to-add-new-languages">How to add new languages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Package Structure</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="directives.html">Directives</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Reader.html">Readers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="document.html">Document</a></li>
-<li class="toctree-l2"><a class="reference internal" href="write.html">Write</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="antisphinx.html#file-layout">File Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antisphinx.html#exports">&lt;&lt;exports&gt;&gt;</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="travis.html#the-travis-ci-file">The Travis-CI file</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="change-version.html">Change Version Number</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="change-version.html#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="change-version.html#examples">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="change-version.html#errors">Errors</a></li>
-</ul>
-</li>
-</ul>
-</ul>
-</li>
-              
-                <li class="dropdown">
-  <a role="button"
-     id="dLabelLocalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="#">On this Page <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"
-      role="menu"
-      aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Package Structure</a></li>
-</ul>
-</ul>
-</li>
-              
-            
-            
-              
-                
-  <li>
-    <a href="antiweb.html" title="Previous Chapter: antiweb"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; antiweb</span>
-    </a>
-  </li>
-  <li>
-    <a href="directives.html" title="Next Chapter: Directives"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Directives &raquo;</span>
-    </a>
-  </li>
-              
-            
-            
-            
-            
-          </ul>
-
-          
-            
-<form class="navbar-form navbar-right" action="search.html" method="get">
- <div class="form-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" />
- </div>
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-          
-        </div>
-    </div>
-  </div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 content">
-      
   <div class="section" id="package-structure">
 <h1>Package Structure<a class="headerlink" href="#package-structure" title="Permalink to this headline">¶</a></h1>
 <p>Contents:</p>
@@ -235,28 +100,56 @@
 </div>
 
 
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="antiweb.html"
+                        title="previous chapter">antiweb</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="directives.html"
+                        title="next chapter">Directives</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/structure.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
     </div>
-      
-  </div>
-</div>
-<footer class="footer">
-  <div class="container">
-    <p class="pull-right">
-      <a href="#">Back to top</a>
-      
-        <br/>
-        
-<div id="sourcelink">
-  <a href="_sources/structure.txt"
-     rel="nofollow">Source</a>
-</div>
-      
-    </p>
-    <p>
-        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="directives.html" title="Directives"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="antiweb.html" title="antiweb"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.
+    </div>
   </body>
 </html>

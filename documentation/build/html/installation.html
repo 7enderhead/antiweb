@@ -1,21 +1,20 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; antiweb 0.3.3 documentation</title>
+    <title>Installation &mdash; antiweb 0.3.4 documentation</title>
     
-    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootswatch-3.3.6/flatly/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.3.3',
+        VERSION:     '0.3.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,244 +23,151 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="antiweb 0.3.3 documentation" href="index.html" />
-    <link rel="next" title="Getting Started" href="getting_started.html" />
-    <link rel="prev" title="antiweb Documentation" href="index.html" />
-<meta charset='utf-8'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
-<meta name="apple-mobile-web-app-capable" content="yes">
-
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="antiweb 0.3.4 documentation" href="index.html" />
+    <link rel="next" title="Process Overview" href="process_overview.html" />
+    <link rel="prev" title="Why Another Literate Programming Tool?" href="why.html" /> 
   </head>
   <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="process_overview.html" title="Process Overview"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="why.html" title="Why Another Literate Programming Tool?"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
 
-  <div id="navbar" class="navbar  navbar-inverse navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.html">
-          antiweb</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.3.3</b></span>
-      </div>
-
-        <div class="collapse navbar-collapse nav-collapse">
-          <ul class="nav navbar-nav">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
-            
-              <li class="dropdown globaltoc-container">
-  <a role="button"
-     id="dLabelGlobalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="index.html">Contents <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"
-      role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview-of-the-installation-steps">Overview of the installation steps:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-python">Install Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-antiweb">Install antiweb</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-graphviz-optional">Install Graphviz (Optional)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#start">&#64;start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#rstart-text-block-name">&#64;rstart(text block name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#cstart-text-block-name">&#64;cstart(text block name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#text-block-name">&#64;[(text block name)]</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#include-text-block-name-file">&#64;include(text block name [, file])</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#rinclude-text-block-name">&#64;RInclude(text block name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#code">&#64;code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#edoc">&#64;edoc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#titles">Titles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#indent-spaces">&#64;indent spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#define-identifier-substitution">&#64;define(identifier[, substitution])</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#enifed-identifier">&#64;enifed(identifier)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#subst-identifier">&#64;subst(identifier)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#if-token-name">&#64;if(token name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#fi-token-name">&#64;fi(token name)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#ignore">&#64;ignore</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#indentation-matters">Indentation matters</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="process_overview.html">Process overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="process_overview.html#creating-rst-files-through-antiweb">Creating rst files through antiweb</a></li>
-<li class="toctree-l2"><a class="reference internal" href="process_overview.html#creating-the-documentation-with-sphinx">Creating the documentation with Sphinx</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="antiweb.html">antiweb</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#objects">Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#file-layout">File Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#how-to-add-new-languages">How to add new languages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antiweb.html#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="structure.html">Package Structure</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="directives.html">Directives</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Reader.html">Readers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="document.html">Document</a></li>
-<li class="toctree-l2"><a class="reference internal" href="write.html">Write</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="antisphinx.html">antisphinx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="antisphinx.html#file-layout">File Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="antisphinx.html#exports">&lt;&lt;exports&gt;&gt;</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="travis.html">Travis-CI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="travis.html#the-travis-ci-file">The Travis-CI file</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="change-version.html">Change Version Number</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="change-version.html#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="change-version.html#examples">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="change-version.html#errors">Errors</a></li>
-</ul>
-</li>
-</ul>
-</ul>
-</li>
-              
-                <li class="dropdown">
-  <a role="button"
-     id="dLabelLocalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="#">On this Page <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"
-      role="menu"
-      aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#overview-of-the-installation-steps">Overview of the installation steps:</a></li>
-<li><a class="reference internal" href="#install-python">Install Python</a></li>
-<li><a class="reference internal" href="#install-antiweb">Install antiweb</a></li>
-<li><a class="reference internal" href="#install-graphviz-optional">Install Graphviz (Optional)</a></li>
-</ul>
-</li>
-</ul>
-</ul>
-</li>
-              
-            
-            
-              
-                
-  <li>
-    <a href="index.html" title="Previous Chapter: antiweb Documentation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; antiweb Docum...</span>
-    </a>
-  </li>
-  <li>
-    <a href="getting_started.html" title="Next Chapter: Getting Started"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Getting Started &raquo;</span>
-    </a>
-  </li>
-              
-            
-            
-            
-            
-          </ul>
-
-          
-            
-<form class="navbar-form navbar-right" action="search.html" method="get">
- <div class="form-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" />
- </div>
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-          
-        </div>
-    </div>
-  </div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 content">
-      
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>The most important parts of the system are Python 3, antiweb and Sphinx. (It will be automatically installed with antiweb). Because of incompatibility with Python 2 you can&#8217;t create
-documentations of Python 2 programs.</p>
-<div class="section" id="overview-of-the-installation-steps">
-<h2>Overview of the installation steps:<a class="headerlink" href="#overview-of-the-installation-steps" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li>Python</li>
-<li>antiweb</li>
-<li>Graphviz (Optional)</li>
-</ul>
-</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">antiweb cannot create documentation for Python 2.x programs</p>
 </div>
-<div class="section" id="install-python">
-<h2>Install Python<a class="headerlink" href="#install-python" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Install Python 3.x, you can use this <a class="reference external" href="https://www.python.org/downloads/">link</a> to do so</p>
-<p>You should make sure that Python AND the Scripts folder inside Python are added to your PATH environment-variable so you can access them from everywhere</p>
-</div></blockquote>
-</div>
-<div class="section" id="install-antiweb">
-<h2>Install antiweb<a class="headerlink" href="#install-antiweb" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li>After installing Python, run below command in cmd to install antiweb</li>
-</ul>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">7</span><span class="n">enderhead</span><span class="o">/</span><span class="n">antiweb</span><span class="o">.</span><span class="n">git</span><span class="nd">@work</span>
-</pre></div>
-</div>
-<p><code class="xref py py-class docutils literal"><span class="pre">IMPORTANT</span></code> If you get a connection error the reason is most likely your proxy. You then have to use a tool like <a class="reference external" href="http://cntlm.sourceforge.net/">cntlm</a> and add a proxy flag when running pip, example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">7</span><span class="n">enderhead</span><span class="o">/</span><span class="n">antiweb</span><span class="o">.</span><span class="n">git</span><span class="nd">@work</span> <span class="o">--</span><span class="n">proxy</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8123</span>
-</pre></div>
-</div>
-</div></blockquote>
-</div>
-<div class="section" id="install-graphviz-optional">
-<h2>Install Graphviz (Optional)<a class="headerlink" href="#install-graphviz-optional" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Graphviz can be used to generate graphs and images out of source code</p>
+<div class="section" id="overview-of-installation-steps">
+<h2>Overview of Installation Steps<a class="headerlink" href="#overview-of-installation-steps" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Download the Graphviz msi installer from <a class="reference external" href="http://www.graphviz.org/Download_windows.php">here</a> and install it</li>
-<li>Add the bin folder inside the Graphviz directory to your PATH variable</li>
+<li><em>Python</em> 3.x</li>
+<li><em>antiweb</em></li>
+<li>(optional) <em>graphviz</em> for graphics</li>
 </ul>
-</div></blockquote>
+</div>
+<div class="section" id="python-installation">
+<h2>Python Installation<a class="headerlink" href="#python-installation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>install <a class="reference external" href="https://www.python.org/downloads/">Python 3.x</a></li>
+<li>add python and the python <em>scripts</em> folder to your path</li>
+</ul>
+</div>
+<div class="section" id="antiweb-installation">
+<h2>antiweb Installation<a class="headerlink" href="#antiweb-installation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>install antiweb</li>
+<li>choose<ul>
+<li>latest official package from PyPI:<ul>
+<li><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">antiweb</span></code></li>
+</ul>
+</li>
+<li>latest stable development branch:<ul>
+<li><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+https://github.com/7enderhead/antiweb.git&#64;master</span></code></li>
+</ul>
+</li>
+<li>latest cutting-edge unstable development branch:<ul>
+<li><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+https://github.com/7enderhead/antiweb.git&#64;work</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>antiweb also installs <a class="reference external" href="http://www.sphinx-doc.org/">Sphinx</a> as a dependency</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">use a program like <a class="reference external" href="http://cntlm.sourceforge.net">cntlm</a> when you are in a corporate environment with centralized proxy infrastructure: <cite>pip install [...] &#8211;proxy http://localhost:8123</cite> or set your http_proxy environment variable</p>
+</div>
+</div>
+<div class="section" id="graphviz-installation">
+<h2>Graphviz Installation<a class="headerlink" href="#graphviz-installation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>install <a class="reference external" href="http://www.graphviz.org">graphviz</a></li>
+<li>add the graphviz bin folder to your path</li>
+</ul>
 </div>
 </div>
 
 
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#overview-of-installation-steps">Overview of Installation Steps</a></li>
+<li><a class="reference internal" href="#python-installation">Python Installation</a></li>
+<li><a class="reference internal" href="#antiweb-installation">antiweb Installation</a></li>
+<li><a class="reference internal" href="#graphviz-installation">Graphviz Installation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="why.html"
+                        title="previous chapter">Why Another Literate Programming Tool?</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="process_overview.html"
+                        title="next chapter">Process Overview</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/installation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
     </div>
-      
-  </div>
-</div>
-<footer class="footer">
-  <div class="container">
-    <p class="pull-right">
-      <a href="#">Back to top</a>
-      
-        <br/>
-        
-<div id="sourcelink">
-  <a href="_sources/installation.txt"
-     rel="nofollow">Source</a>
-</div>
-      
-    </p>
-    <p>
-        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="process_overview.html" title="Process Overview"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="why.html" title="Why Another Literate Programming Tool?"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.
+    </div>
   </body>
 </html>
