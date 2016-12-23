@@ -73,7 +73,7 @@ class FileChangeHandler(FileSystemEventHandler):
             #the file has been moved so it is now located in event.dest_path
             changed_file = event.dest_path
 
-        if changed_file.endswith(self._handled_extensions):
+        if changed_file.endswith(self._handled_extensions) and not event.is_directory:
             self.print_event(event)
 
             try:
