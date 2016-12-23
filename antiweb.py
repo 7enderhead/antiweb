@@ -82,6 +82,20 @@ antiweb creates .rst files which can be further processed by documentation syste
 Additionally you can process multiple files at once with the -r option added.
 The optional directory parameter then can be empty to use the current directory, or you provide the directory antiweb should use.
 
+
+.. _label-daemon-mode:
+
+***********
+Daemon Mode
+***********
+
+If -r is used together with the *daemon* option -d antiweb does not exit after creation of the documentation files.
+Instead antiweb starts a daemon which monitors file changes of the previously processed source directory
+and automatically creates the documentation files with the updated content.
+
+Read the documentation of the corresponding event file handler (:ref:`FileChangeHandler <label-filechangehandler>`).
+
+
 ************************
 How to add new languages
 ************************
@@ -216,6 +230,10 @@ import os.path
 import os
 
 from antiweb_lib.write import write
+
+from watchdog.observers import Observer
+from antiweb_lib.filechangehandler import FileChangeHandler
+
 #@rstart(management)
 
 #<<management>>
@@ -243,7 +261,7 @@ def parsing():
                           version="%prog " + __version__)
 
     parser.add_option("-o", "--output", dest="output", default="",
-                      type="string", help="The output filename")
+                      type="string", help="the output filename")
 
     parser.add_option("-t", "--token", dest="token", action="append",
                       type="string", help="defines a token, usable by @if directives")
@@ -252,7 +270,12 @@ def parsing():
                       action="store_false", help="suppresses warnings")
 
     parser.add_option("-r", "--recursive", dest="recursive",
-                      action="store_true", help="Process every file in given directory")
+                      action="store_true", help="process every file in given directory")
+                      
+    parser.add_option("-d", "--daemon", dest="daemon",
+                      action="store_true", help="starting a daemon which listens for source file changes and "
+                                                "automatically updates the resulting documentation files - "
+                                                "can only be used together with -r option")
 
     options, args = parser.parse_args()
 
@@ -310,13 +333,43 @@ def main():
 
         #Only files with the following extensions will be processed
         ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
-
+                
         for root, dirs, files in os.walk(directory, topdown=False):
             for filename in files:
                 fname = os.path.join(root, filename)
 
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
                     write(directory, fname, options)
+
+#@edoc
+
+#If the daemon option is used antiweb starts a daemon to monitor the source directory for file changes
+#(see :ref:`Daemon Mode <label-daemon-mode>`).
+
+#@code
+
+        if options.daemon:
+
+            #starting our filechange observer
+            observer = Observer()
+
+            try:
+                #observed directory => input directory
+                #recursive option is true in order to monitor all subdirectories
+                observer.schedule(FileChangeHandler(directory, ext_tuple, options), path=directory, recursive=True)
+
+                print("\n------- starting daemon mode (exit with enther or ctrl+c) -------\n")
+
+                observer.start()
+                #waiting for enter
+                input()
+                observer.stop()
+            except KeyboardInterrupt:
+                #KeyboardInterrupt => ctrl+c
+                observer.stop()
+
+            print("\n------- exiting daemon mode -------")
+
 
 #@edoc
 

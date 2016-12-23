@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>antiweb &mdash; antiweb 0.3.4 documentation</title>
+    <title>antiweb &#8212; antiweb 0.3.4 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,6 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="antiweb 0.3.4 documentation" href="index.html" />
     <link rel="next" title="Package Structure" href="structure.html" />
     <link rel="prev" title="Getting Started" href="getting_started.html" /> 
@@ -41,7 +43,7 @@
         <li class="right" >
           <a href="getting_started.html" title="Getting Started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -228,6 +230,51 @@ are retrieved. Only files with the allowed extensions are processed.</p>
             <span class="n">write</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
+<p>If the daemon option is used antiweb starts a daemon to monitor the source directory for file changes
+(see <a class="reference internal" href="#label-daemon-mode"><span class="std std-ref">Daemon Mode</span></a>).</p>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">daemon</span><span class="p">:</span>
+
+    <span class="c1">#starting our filechange observer</span>
+    <span class="n">observer</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1">#observed directory =&gt; input directory</span>
+        <span class="c1">#recursive option is true in order to monitor all subdirectories</span>
+        <span class="n">observer</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="n">FileChangeHandler</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ext_tuple</span><span class="p">,</span> <span class="n">options</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------- starting daemon mode (exit with enther or ctrl+c) -------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">observer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="c1">#waiting for enter</span>
+        <span class="nb">input</span><span class="p">()</span>
+        <span class="n">observer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1">#KeyboardInterrupt =&gt; ctrl+c</span>
+        <span class="n">observer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------- exiting daemon mode -------&quot;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
 <p>This else will take place when the -r flag is not given.</p>
 <div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -270,25 +317,31 @@ are retrieved. Only files with the allowed extensions are processed.</p>
 </td></tr></table></div>
 <div class="section" id="imports">
 <h3>&lt;&lt;imports&gt;&gt;<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">antiweb_lib.write</span> <span class="k">import</span> <span class="n">write</span>
+
+<span class="kn">from</span> <span class="nn">watchdog.observers</span> <span class="k">import</span> <span class="n">Observer</span>
+<span class="kn">from</span> <span class="nn">antiweb_lib.filechangehandler</span> <span class="k">import</span> <span class="n">FileChangeHandler</span>
 </pre></div>
 </td></tr></table></div>
 </div>
 <div class="section" id="management">
 <h3>&lt;&lt;management&gt;&gt;<a class="headerlink" href="#management" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.3.3&quot;</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.3.4&quot;</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;antiweb&#39;</span><span class="p">)</span>
 </pre></div>
@@ -323,13 +376,18 @@ If no arguments are given (the user did not provide a filepath), the current dir
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parsing</span><span class="p">():</span>
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parsing</span><span class="p">():</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="s2">&quot;usage: %prog [options] SOURCEFILE&quot;</span><span class="p">,</span>
                           <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tangles a source code file to a rst file.&quot;</span><span class="p">,</span>
                           <span class="n">version</span><span class="o">=</span><span class="s2">&quot;%prog &quot;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The output filename&quot;</span><span class="p">)</span>
+                      <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the output filename&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--token&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span>
                       <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;defines a token, usable by @if directives&quot;</span><span class="p">)</span>
@@ -338,7 +396,12 @@ If no arguments are given (the user did not provide a filepath), the current dir
                       <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;suppresses warnings&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--recursive&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
-                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Process every file in given directory&quot;</span><span class="p">)</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;process every file in given directory&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--daemon&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;daemon&quot;</span><span class="p">,</span>
+                      <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;starting a daemon which listens for source file changes and &quot;</span>
+                                                <span class="s2">&quot;automatically updates the resulting documentation files - &quot;</span>
+                                                <span class="s2">&quot;can only be used together with -r option&quot;</span><span class="p">)</span>
 
     <span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
@@ -356,6 +419,13 @@ If no arguments are given (the user did not provide a filepath), the current dir
 <p>antiweb creates .rst files which can be further processed by documentation systems like Sphinx.
 Additionally you can process multiple files at once with the -r option added.
 The optional directory parameter then can be empty to use the current directory, or you provide the directory antiweb should use.</p>
+</div>
+<div class="section" id="daemon-mode">
+<span id="label-daemon-mode"></span><h2>Daemon Mode<a class="headerlink" href="#daemon-mode" title="Permalink to this headline">¶</a></h2>
+<p>If -r is used together with the <em>daemon</em> option -d antiweb does not exit after creation of the documentation files.
+Instead antiweb starts a daemon which monitors file changes of the previously processed source directory
+and automatically creates the documentation files with the updated content.</p>
+<p>Read the documentation of the corresponding event file handler (<a class="reference internal" href="filechangehandler.html#label-filechangehandler"><span class="std std-ref">FileChangeHandler</span></a>).</p>
 </div>
 <div class="section" id="how-to-add-new-languages">
 <h2>How to add new languages<a class="headerlink" href="#how-to-add-new-languages" title="Permalink to this headline">¶</a></h2>
@@ -436,6 +506,7 @@ The comment markers of C serves as the default comment markers if the lexer name
 </ul>
 </li>
 <li><a class="reference internal" href="#multi-file-processing-and-sphinx-support">Multi-File Processing and Sphinx Support</a></li>
+<li><a class="reference internal" href="#daemon-mode">Daemon Mode</a></li>
 <li><a class="reference internal" href="#how-to-add-new-languages">How to add new languages</a><ul>
 <li><a class="reference internal" href="#language-specific-comment-markers">Language specific comment markers</a></li>
 </ul>
@@ -484,12 +555,12 @@ The comment markers of C serves as the default comment markers if the lexer name
         <li class="right" >
           <a href="getting_started.html" title="Getting Started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.
+        &#169; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

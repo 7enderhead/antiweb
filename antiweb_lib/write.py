@@ -151,6 +151,7 @@ def _process_file(in_file, out_file, token, warnings):
         if text_output:
             with open(out_file, "w") as f:
                 f.write(text_output)
+                print("\ncreated documentation file: ", out_file)
             could_write = True
     except WebError as e:
         logger.error("\nErrors:")

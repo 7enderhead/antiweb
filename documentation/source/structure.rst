@@ -11,3 +11,4 @@ Contents:
    Reader
    document
    write
+   filechangehandler
