@@ -262,7 +262,7 @@ are retrieved. Only files with the allowed extensions are processed.</p>
         <span class="c1">#recursive option is true in order to monitor all subdirectories</span>
         <span class="n">observer</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="n">FileChangeHandler</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ext_tuple</span><span class="p">,</span> <span class="n">options</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------- starting daemon mode (exit with enther or ctrl+c) -------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------- starting daemon mode (exit with enter or ctrl+c) -------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">observer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="c1">#waiting for enter</span>

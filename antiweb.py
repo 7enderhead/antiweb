@@ -358,7 +358,7 @@ def main():
                 #recursive option is true in order to monitor all subdirectories
                 observer.schedule(FileChangeHandler(directory, ext_tuple, options), path=directory, recursive=True)
 
-                print("\n------- starting daemon mode (exit with enther or ctrl+c) -------\n")
+                print("\n------- starting daemon mode (exit with enter or ctrl+c) -------\n")
 
                 observer.start()
                 #waiting for enter
