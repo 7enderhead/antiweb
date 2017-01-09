@@ -424,7 +424,8 @@ The optional directory parameter then can be empty to use the current directory,
 <span id="label-daemon-mode"></span><h2>Daemon Mode<a class="headerlink" href="#daemon-mode" title="Permalink to this headline">¶</a></h2>
 <p>If -r is used together with the <em>daemon</em> option -d antiweb does not exit after creation of the documentation files.
 Instead antiweb starts a daemon which monitors file changes of the previously processed source directory
-and automatically creates the documentation files with the updated content.</p>
+and automatically creates the documentation files with the updated content.
+Antiweb uses the python library <em>Watchdog</em> to monitor the source directory.</p>
 <p>Read the documentation of the corresponding event file handler (<a class="reference internal" href="filechangehandler.html#label-filechangehandler"><span class="std std-ref">FileChangeHandler</span></a>).</p>
 </div>
 <div class="section" id="how-to-add-new-languages">

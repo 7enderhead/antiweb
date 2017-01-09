@@ -19,6 +19,8 @@ FileChangeHandler
     contains monitored files and the subdirectory is renamed
 -   event 'delete' is not handled as for a deleted file no documentation file can be created
 -   note that when a file is modified/created watchdog may get multiple events
+-   note that when the monitored source directory and the output directory are the same events are triggered for
+    the created documentation files - this causes antiweb to process the documentation files
 
 #@include(file_events)
 

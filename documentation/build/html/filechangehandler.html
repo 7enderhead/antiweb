@@ -125,6 +125,8 @@ For each file event the corresponding documentation file is automatically update
 contains monitored files and the subdirectory is renamed</li>
 <li>event &#8216;delete&#8217; is not handled as for a deleted file no documentation file can be created</li>
 <li>note that when a file is modified/created watchdog may get multiple events</li>
+<li>note that when the monitored source directory and the output directory are the same events are triggered for
+the created documentation files - this causes antiweb to process the documentation files</li>
 </ul>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_modified</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">process_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>

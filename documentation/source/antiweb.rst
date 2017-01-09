@@ -297,6 +297,8 @@ Daemon Mode
 If -r is used together with the *daemon* option -d antiweb does not exit after creation of the documentation files.
 Instead antiweb starts a daemon which monitors file changes of the previously processed source directory
 and automatically creates the documentation files with the updated content.
+Antiweb uses the python library *Watchdog* to monitor the source directory.
+
 
 Read the documentation of the corresponding event file handler (:ref:`FileChangeHandler <label-filechangehandler>`).
 
