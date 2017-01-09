@@ -20,7 +20,7 @@ setup(
     author_email='antiweb@freelists.org',
     description='antiweb literate programming tool',
     #long_description=read(os.path.join("doc_old", "source", "motivation.rst")),
-    install_requires=['sphinx', 'babel', 'beautifulsoup4'],
+    install_requires=['sphinx', 'babel', 'beautifulsoup4', 'watchdog'],
     zip_safe=True,
     classifiers=[
         'Development Status :: 4 - Beta',
