@@ -10,6 +10,9 @@ import os
 import shutil
 from tests.testutil import TempDir
 from tests.testutil import DataDir
+import time
+from multiprocessing import Process
+
 
 sys.path.append("..")
 
@@ -206,8 +209,44 @@ class Test_Antiweb(unittest.TestCase):
         with patch.object(sys, 'argv', self.test_args):
             self.file_not_exist(self.temp_dir.get_path("empty.rst"))
 
+    def test_antiweb_r_o_d(self):
+
+        self.test_args = ['antiweb.py', "-o", self.doc_dir, "-r", self.temp_dir.get_path(), "-d"]
+
+        with patch.object(sys, 'argv', self.test_args):
+
+            #fd needed to set the stdin of the child process to the same stdin as the parent process
+            fd = sys.stdin.fileno()
+            p = Process(target=antiweb_process, args=(fd,))
+            p.start()
+            time.sleep(3)
+
+            with open(self.destination_path, 'w') as input_file:
+                input_file.write('#@start()\n')
+                input_file.write('#@include(new_block)\n')
+                input_file.write('#@start(new_block)\n')
+                input_file.write('new_text\n')
+                input_file.write('#@(new_block)\n')
+
+            time.sleep(3)
+            p.terminate()
+            p.join(3)
+
+            with open(self.temp_dir.get_path(self.doc_dir, "small_testfile.rst")) as output:
+                antiweb_output = output.readlines()
+
+            self.assertEqual(antiweb_output, ["new_text"])
+
+
     def tearDown(self):
         self.temp_dir.remove_tempdir()
+
+
+def antiweb_process(fd):
+    #we need to duplicate the file descriptor and reset the stdin for a childprocess
+    #now the the parent and child process read from the same stdin
+    sys.stdin = os.fdopen(os.dup(fd))
+    main()
 
 class Test_Antiweb_rst(unittest.TestCase):
 

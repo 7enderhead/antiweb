@@ -25,6 +25,9 @@ Getting Started
      -t TOKEN, --token=TOKEN         defines a token, usable by @if directives
      -w, --warnings                  suppresses warnings
      -r, --recursive                 Process every file in the given directory
+     -d, --daemon                    starting a daemon which listens for source file changes and
+                                     automatically updates the resulting documentation files, 
+                                     can only be used together with -r option
 
    IMPORTANT: When combining certain flags, their behaviour may change.
    When combining the ``-o`` with the ``-r`` flag, ``-o`` defines the output folder, not the output file.

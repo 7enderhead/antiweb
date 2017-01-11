@@ -1,3 +1,6 @@
+import re
+import operator
+
 #@start()
 """
 **********
@@ -22,8 +25,6 @@ Directives
 @include(Subst doc)
 @include(Indent doc)
 """
-import re
-import operator
 
 #@cstart(Directive)
 class Directive(object):

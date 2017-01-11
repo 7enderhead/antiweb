@@ -81,3 +81,7 @@ Changelog
 
     * 30.08.2016
          Added a script to change the version number in all relevant files
+
+    * 09.01.2017
+         Added the -d flag: Starting a daemon which monitors the source directory and automatically updates the content of the documentation files
+		 
