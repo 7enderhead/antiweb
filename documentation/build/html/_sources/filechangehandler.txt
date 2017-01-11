@@ -6,7 +6,7 @@ FileChangeHandler
 
 .. py:class:: FileChangeHandler(directory, extensions, options)
 
-   This handler is responsible for handling changed file events on antiweb's daemon mode.
+   This handler is responsible for handling changed file events in antiweb's daemon mode.
 
    :param string directory: absolute path to the monitored source directory
    :param tuple<string> extensions: contains all handled file extensions ("*.cs", "*.py", etc)
@@ -42,7 +42,7 @@ FileChangeHandler
             changed_file = event.src_path
     
             if event.event_type == "moved":
-                #moved event has to be handled different:
+                #moved event has to be handled differently:
                 #the file has been moved so it is now located in event.dest_path
                 changed_file = event.dest_path
     

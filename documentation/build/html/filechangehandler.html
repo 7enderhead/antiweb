@@ -59,7 +59,7 @@
 <dl class="class">
 <dt id="FileChangeHandler">
 <em class="property">class </em><code class="descname">FileChangeHandler</code><span class="sig-paren">(</span><em>directory</em>, <em>extensions</em>, <em>options</em><span class="sig-paren">)</span><a class="headerlink" href="#FileChangeHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>This handler is responsible for handling changed file events on antiweb&#8217;s daemon mode.</p>
+<dd><p>This handler is responsible for handling changed file events in antiweb&#8217;s daemon mode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -104,7 +104,7 @@ For each file event the corresponding documentation file is automatically update
     <span class="n">changed_file</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">src_path</span>
 
     <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;moved&quot;</span><span class="p">:</span>
-        <span class="c1">#moved event has to be handled different:</span>
+        <span class="c1">#moved event has to be handled differently:</span>
         <span class="c1">#the file has been moved so it is now located in event.dest_path</span>
         <span class="n">changed_file</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">dest_path</span>
 

@@ -205,7 +205,7 @@ CReader
        
                   See :py:meth:`Reader.filter_output`.
                """
-               print(lines)
+       
                for l in lines:
                    if l.type == "d":
                        #remove comment chars in document lines
