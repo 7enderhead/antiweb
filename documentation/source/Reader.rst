@@ -242,7 +242,7 @@ CSharpReader
        
            default_xml_block_index = -1
        
-           def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
+           def __init__(self, lexer, single_comment_markers, block_comment_markers):
                #the call to the base class CReader is needed for initialising the comment markers
                super(CSharpReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
        
@@ -256,37 +256,31 @@ CSharpReader
    .. py:method:: strip_tags(tags)
    
       Removes all C# XML tags. The tags are replaced by their attributes and contents.
-      This method is called recursively. This is needed if the content of a tag also contains
-      tags.
+      This method is called recursively. This is needed for nested tags.
    
       Examples:
    
        * ``<param name="arg1">value</param>`` will be stripped to : *"arg1 value"*
        * ``<para>Start <see cref="(String)"/> end</para>`` will be stripped to : *"Start (String) end"*
    
-      :param Tag tags: The parsed xml tags.
-      :return: the XML tags replaced by their attributes and contents.
+      :param Tag tags: the parsed xml tags
+      :return: a string containing the stripped version of the tags
       
       ::
       
-          def strip_tags(self,  tags):
+          def strip_tags(self, tags):
           
-              if isinstance(tags,  Tag) and not tags.contents:
-                  return self.get_attribute_text(tags)
+              text = ""
           
-              for tag in tags.find_all(True):
-                  text = self.get_attribute_text(tag)
+              if isinstance(tags, Tag):
+                  text = self.get_attribute_text(tags)
           
-                  #if the content is a Navigablestring the content is simply concatenated
-                  #otherwise the contents of the content are recursively checked for xml tags
-                  for content in tag.contents:
+                  for content in tags.contents:
                       if not isinstance(content, NavigableString):
                           content = self.strip_tags(content)
                       text += content
           
-                  tag.replaceWith(text)
-          
-              return tags
+              return text
       
       
    .. py:method:: get_attribute_text(tag)
@@ -296,14 +290,14 @@ CSharpReader
       Examples:
    
        * ``<param name="arg1">parameterValue</param>`` returns : *"arg1 "*
-       * ``<include file='file1' path='[@name="test"]/*' />`` returns: *"file1 [@name="test"]/* "*
+       * ``<include file='file1' path='[@name="test"]' />`` returns: *"file1 [@name="test"] "*
    
-      :param Tag tag: A BeautifulSoup Tag.
+      :param Tag tag: a BeautifulSoup Tag
       :return: the values of all attributes concatenated
       
       ::
       
-          def get_attribute_text(self,  tag):
+          def get_attribute_text(self, tag):
               #collect all values of xml tag attributes
               attributes = tag.attrs
               attribute_text = ""
@@ -321,33 +315,39 @@ CSharpReader
       
       ::
       
-          def get_stripped_xml_lines(self,  xml_lines_block):
+          def get_stripped_xml_lines(self, xml_lines_block):
               #the xml_lines_block contains Line objects. As the xml parser expects a string
               #the Line obects have to be converted to a string.
               xml_text = "\n".join(map(operator.attrgetter("text"), xml_lines_block))
           
               #the xml lines will be parsed and then all xml tags will be removed
               xml_tags = BeautifulSoup(xml_text, "html.parser")
-              self.strip_tags(xml_tags)
-              stripped_xml_lines = xml_tags.text.splitlines()
-              return stripped_xml_lines
+          
+              stripped_xml_lines = self.strip_tags(xml_tags)
+          
+              return stripped_xml_lines.splitlines()
       
       
    .. py:method:: create_new_lines(stripped_xml_lines, index, initial_line)
    
-      This method is called after all XML comment tags are stripped. For each new
+      This method is called after all XML comment tags of a comment block are stripped. For each new
       line in the stripped_xml_lines a new Line object is created.
+   
+      Note that leading spaces and tabs are stripped, which means that lines
+      do not have any indentation. Use a C# comment block if indentations should be kept.
    
       :param string[] stripped_xml_lines: The comment lines were the XML tags have been stripped.
       :param int index: The starting index for the new line object.
-      :param Line initial_line: The first line of the xml comment block. Its indentation will be used for all new created lines.
+      :param string fname: The file name of the currently processed file.
       :return: A generator containing the lines which have been created out of the stripped_xml_lines.
       
       ::
       
-          def create_new_lines(self, stripped_xml_lines, index, initial_line):
+          def create_new_lines(self, stripped_xml_lines, index, fname):
+          
               for line in stripped_xml_lines:
-                  new_line = Line(initial_line.fname,  index,  initial_line.indented(line.lstrip()))
+                  #only removing spaces and tabs --> newlines should be kept
+                  new_line = Line(fname, index, line.lstrip(' \t'))
                   index += 1
                   yield new_line
       
@@ -361,7 +361,7 @@ CSharpReader
           def init_xml_block(self):
               xml_lines_block = []
               xml_start_index = self.default_xml_block_index
-              return xml_lines_block,  xml_start_index
+              return xml_lines_block, xml_start_index
       
       
    .. py:method:: filter_output(lines)
@@ -394,19 +394,19 @@ CSharpReader
           
               for l in lines:
                   if l.type == "d":
-                      #remove comment chars in document lines
-                      stext = l.text.lstrip()
           
-                      if stext == self.block_comment_marker_start or stext == self.block_comment_marker_end:
+                      text = l.text.lstrip()
+          
+                      if text == self.block_comment_marker_start or text == self.block_comment_marker_end:
                           #remove /* and */ from documentation lines. see the l.text.lstrip()!
                           #if the lines ends with a white space the quotes will be kept!
                           #This is feature, to force the quotes in the output
                           continue
           
-                      if stext.startswith("/") and not stext.startswith(self.block_comment_marker_start):
-                          l.text = l.indented(stext[1:])
+                      if text.startswith("/") and not text.startswith(self.block_comment_marker_start):
+                          l.text = l.indented(text[1:])
           
-                          if(xml_start_index == self.default_xml_block_index):
+                          if xml_start_index == self.default_xml_block_index:
                               #indicates that a new xml_block has started
                               xml_start_index = l.index
           
@@ -418,7 +418,7 @@ CSharpReader
                           #stripped line and added to the final result generator
                           stripped_xml_lines = self.get_stripped_xml_lines(xml_lines_block)
           
-                          new_lines = self.create_new_lines(stripped_xml_lines, xml_start_index, xml_lines_block[0])
+                          new_lines = self.create_new_lines(stripped_xml_lines, xml_start_index, l.fname)
                           for line in new_lines:
                               yield line
           
