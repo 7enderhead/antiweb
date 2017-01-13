@@ -115,7 +115,7 @@ class CSharpReader(CReader):
     #@cstart(CSharpReader.create_new_lines)
     def create_new_lines(self, stripped_xml_lines, index, fname):
         """
-        .. py:method:: create_new_lines(stripped_xml_lines, index, initial_line)
+        .. py:method:: create_new_lines(stripped_xml_lines, index, fname)
 
            This method is called after all XML comment tags of a comment block are stripped. For each new
            line in the stripped_xml_lines a new Line object is created.

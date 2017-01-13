@@ -314,6 +314,11 @@ def main():
     #so we grab the absolute path to work with.
     absolute_path = os.path.abspath(args[0])
 
+    if options.output and not os.path.isabs(options.output):
+        #a relative output path should be joined with the current working directory
+        output_path = os.path.join(previous_dir, options.output)
+        options.output = os.path.abspath(output_path)
+
     if options.recursive:
         directory = absolute_path
 
