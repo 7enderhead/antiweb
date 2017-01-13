@@ -342,7 +342,7 @@ and its methods.</p>
 
     <span class="n">default_xml_block_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">single_comment_markers</span><span class="p">,</span> <span class="n">block_comment_markers</span><span class="p">):</span>
         <span class="c1">#the call to the base class CReader is needed for initialising the comment markers</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CSharpReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
 
@@ -358,8 +358,7 @@ and its methods.</p>
 <dt id="CSharpReader.strip_tags">
 <code class="descname">strip_tags</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.strip_tags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes all C# XML tags. The tags are replaced by their attributes and contents.
-This method is called recursively. This is needed if the content of a tag also contains
-tags.</p>
+This method is called recursively. This is needed for nested tags.</p>
 <p>Examples:</p>
 <blockquote>
 <div><ul class="simple">
@@ -371,30 +370,25 @@ tags.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>Tag</em>) &#8211; The parsed xml tags.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>Tag</em>) &#8211; the parsed xml tags</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the XML tags replaced by their attributes and contents.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string containing the stripped version of the tags</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">strip_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">tags</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">strip_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
 
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span>  <span class="n">Tag</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tags</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute_text</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute_text</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">Tag</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute_text</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
 
-        <span class="c1">#if the content is a Navigablestring the content is simply concatenated</span>
-        <span class="c1">#otherwise the contents of the content are recursively checked for xml tags</span>
-        <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">tags</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">NavigableString</span><span class="p">):</span>
                 <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
             <span class="n">text</span> <span class="o">+=</span> <span class="n">content</span>
 
-        <span class="n">tag</span><span class="o">.</span><span class="n">replaceWith</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">tags</span>
+    <span class="k">return</span> <span class="n">text</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -407,20 +401,20 @@ tags.</p>
 <blockquote>
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">&lt;param</span> <span class="pre">name=&quot;arg1&quot;&gt;parameterValue&lt;/param&gt;</span></code> returns : <em>&#8220;arg1 &#8220;</em></li>
-<li><code class="docutils literal"><span class="pre">&lt;include</span> <span class="pre">file='file1'</span> <span class="pre">path='[&#64;name=&quot;test&quot;]/*'</span> <span class="pre">/&gt;</span></code> returns: <em>&#8220;file1 [&#64;name=&#8221;test&#8221;]/</em> &#8220;*</li>
+<li><code class="docutils literal"><span class="pre">&lt;include</span> <span class="pre">file='file1'</span> <span class="pre">path='[&#64;name=&quot;test&quot;]'</span> <span class="pre">/&gt;</span></code> returns: <em>&#8220;file1 [&#64;name=&#8221;test&#8221;] &#8220;</em></li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tag</strong> (<em>Tag</em>) &#8211; A BeautifulSoup Tag.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tag</strong> (<em>Tag</em>) &#8211; a BeautifulSoup Tag</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the values of all attributes concatenated</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_attribute_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">tag</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_attribute_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
     <span class="c1">#collect all values of xml tag attributes</span>
     <span class="n">attributes</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span>
     <span class="n">attribute_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -445,16 +439,17 @@ tags.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_stripped_xml_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">xml_lines_block</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_stripped_xml_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml_lines_block</span><span class="p">):</span>
     <span class="c1">#the xml_lines_block contains Line objects. As the xml parser expects a string</span>
     <span class="c1">#the Line obects have to be converted to a string.</span>
     <span class="n">xml_text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">),</span> <span class="n">xml_lines_block</span><span class="p">))</span>
 
     <span class="c1">#the xml lines will be parsed and then all xml tags will be removed</span>
     <span class="n">xml_tags</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">xml_text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">xml_tags</span><span class="p">)</span>
-    <span class="n">stripped_xml_lines</span> <span class="o">=</span> <span class="n">xml_tags</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">stripped_xml_lines</span>
+
+    <span class="n">stripped_xml_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">xml_tags</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stripped_xml_lines</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -462,8 +457,10 @@ tags.</p>
 <dl class="method">
 <dt id="CSharpReader.create_new_lines">
 <code class="descname">create_new_lines</code><span class="sig-paren">(</span><em>stripped_xml_lines</em>, <em>index</em>, <em>initial_line</em><span class="sig-paren">)</span><a class="headerlink" href="#CSharpReader.create_new_lines" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called after all XML comment tags are stripped. For each new
+<dd><p>This method is called after all XML comment tags of a comment block are stripped. For each new
 line in the stripped_xml_lines a new Line object is created.</p>
+<p>Note that leading spaces and tabs are stripped, which means that lines
+do not have any indentation. Use a C# comment block if indentations should be kept.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -471,7 +468,7 @@ line in the stripped_xml_lines a new Line object is created.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>stripped_xml_lines</strong> (<em>string[]</em>) &#8211; The comment lines were the XML tags have been stripped.</li>
 <li><strong>index</strong> (<em>int</em>) &#8211; The starting index for the new line object.</li>
-<li><strong>initial_line</strong> (<a class="reference internal" href="document.html#Line" title="Line"><em>Line</em></a>) &#8211; The first line of the xml comment block. Its indentation will be used for all new created lines.</li>
+<li><strong>fname</strong> (<em>string</em>) &#8211; The file name of the currently processed file.</li>
 </ul>
 </td>
 </tr>
@@ -480,9 +477,11 @@ line in the stripped_xml_lines a new Line object is created.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_new_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stripped_xml_lines</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">initial_line</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_new_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stripped_xml_lines</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">stripped_xml_lines</span><span class="p">:</span>
-        <span class="n">new_line</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span><span class="n">initial_line</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span>  <span class="n">index</span><span class="p">,</span>  <span class="n">initial_line</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()))</span>
+        <span class="c1">#only removing spaces and tabs --&gt; newlines should be kept</span>
+        <span class="n">new_line</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">))</span>
         <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">yield</span> <span class="n">new_line</span>
 </pre></div>
@@ -496,7 +495,7 @@ line in the stripped_xml_lines a new Line object is created.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">init_xml_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">xml_lines_block</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">xml_start_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_xml_block_index</span>
-    <span class="k">return</span> <span class="n">xml_lines_block</span><span class="p">,</span>  <span class="n">xml_start_index</span>
+    <span class="k">return</span> <span class="n">xml_lines_block</span><span class="p">,</span> <span class="n">xml_start_index</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -539,19 +538,19 @@ line after an xml comment block, the comment block is processed and its lines ar
 
     <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
-            <span class="c1">#remove comment chars in document lines</span>
-            <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
 
-            <span class="k">if</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span> <span class="ow">or</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span> <span class="ow">or</span> <span class="n">text</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span><span class="p">:</span>
                 <span class="c1">#remove /* and */ from documentation lines. see the l.text.lstrip()!</span>
                 <span class="c1">#if the lines ends with a white space the quotes will be kept!</span>
                 <span class="c1">#This is feature, to force the quotes in the output</span>
                 <span class="k">continue</span>
 
-            <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span><span class="p">):</span>
-                <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">stext</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span><span class="p">):</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">indented</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
-                <span class="k">if</span><span class="p">(</span><span class="n">xml_start_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_xml_block_index</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">xml_start_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_xml_block_index</span><span class="p">:</span>
                     <span class="c1">#indicates that a new xml_block has started</span>
                     <span class="n">xml_start_index</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span>
 
@@ -563,7 +562,7 @@ line after an xml comment block, the comment block is processed and its lines ar
                 <span class="c1">#stripped line and added to the final result generator</span>
                 <span class="n">stripped_xml_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_xml_lines</span><span class="p">(</span><span class="n">xml_lines_block</span><span class="p">)</span>
 
-                <span class="n">new_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_new_lines</span><span class="p">(</span><span class="n">stripped_xml_lines</span><span class="p">,</span> <span class="n">xml_start_index</span><span class="p">,</span> <span class="n">xml_lines_block</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">new_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_new_lines</span><span class="p">(</span><span class="n">stripped_xml_lines</span><span class="p">,</span> <span class="n">xml_start_index</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">new_lines</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">line</span>
 

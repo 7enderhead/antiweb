@@ -2,22 +2,40 @@
 
 this code file was created for testing the CSharpReader
 
-parameter s parameterValue
-returnvalue
-Here's how you could make a second paragraph in a description. System.Console.WriteLine(System.String)  for information about output statements.
-TestClass.Main 
+The DocumentationSample type
+demonstrates code comments.
 
-testcomment
+
+The DocumentationSample type
+provides no real functionality;
+however, it does provide examples of
+using the most common, built in
+C# code comment xml tags.
+
+DocumentationSample types are not
+safe for access by concurrent threads.
+
+Causes something happen.
+someValue A String 
+type representing some value.
+ArgumentNullException 
+if someValue  is null.
+
+ArgumentException 
+if someValue  is empty.
+
+someValue  as passed in.
+
+
+        testcomment
+
+
+Blub
+
 
 a new start block
 the following xml comment block should be indented
 
-    
-    the complete comment block will be indented like the indentation of the first line in the block
-    
-    fileName the outputFileName
-    on success: true, false otherwise
-    See FileStream  for information about filestreams.
 
 
 ::

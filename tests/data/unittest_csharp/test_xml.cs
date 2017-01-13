@@ -3,27 +3,51 @@
 ///<summary>
 ///		this code file was created for testing the CSharpReader
 ///</summary>
-///<param name="parameter s">parameterValue</param>
-///<returns>returnvalue</returns>
-/// <para>Here's how you could make a second paragraph in a description. <see cref="System.Console.WriteLine(System.String)"/> for information about output statements.</para>
-/// <seealso cref="TestClass.Main"/>
+
+///<summary>The <c>DocumentationSample</c> type
+///demonstrates code comments.</summary>
+///<remarks>
+///    <para>
+///        The <c>DocumentationSample</c> type
+///        provides no real functionality;
+///        however, it does provide examples of
+///        using the most common, built in
+///        <c>C#</c> code comment xml tags.
+///    </para>
+///    <para><c>DocumentationSample</c> types are not
+///          safe for access by concurrent threads.</para>
+///</remarks>
+
+/// <summary>Causes something happen.</summary>
+/// <param name="someValue">A <see cref="String"/>
+///  type representing some value.</param>
+/// <exception cref="ArgumentNullException">
+///     if <paramref name="someValue"/> is <c>null</c>.
+/// </exception>
+/// <exception cref="ArgumentException">
+///     if <paramref name="someValue"/> is <c>empty</c>.
+/// </exception>
+/// <returns><paramref name="someValue"/> as passed in.
+/// </returns>
 
 /*
-testcomment
+        testcomment
 */
 
+//@include(intro)
 //@include(test_area)
+
+/// @start(intro)
+/// <summary>
+/// <para>Blub</para>
+/// </summary>
+///
+/// @(intro)
 
 //@start(test_area)
 ///a new start block
 //the following xml comment block should be indented
 
-    ///<summary>
-///the complete comment block will be indented like the indentation of the first line in the block
-///</summary>
-///<param name="fileName">the outputFileName</param>
-///<returns>on success: true, false otherwise</returns>
-///<para>See <see cref="FileStream"/> for information about filestreams.</para>
 
 //@code
 using System;
