@@ -18,7 +18,7 @@ class Directory:
     def get_path(self, *args):
         return os.path.join(self.dir, *args)
     
-    def get_relative_path(self,  *args):
+    def get_relative_path(self, *args):
         return os.path.relpath(self.get_path(*args))
 
 class DataDir(Directory):

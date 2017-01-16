@@ -16,7 +16,6 @@ os:
   - linux
 # which Python releases to use
 python:
-  - "3.4"
   - "3.5"
 # command to install dependencies and the script itself
 install: "python setup.py install"

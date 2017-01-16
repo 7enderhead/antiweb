@@ -35,23 +35,24 @@ When there is no output option given the output file name is created in the foll
 
     def write(working_dir, input_file, options):
     
+        #options.output is either an absolute path or None
         output = options.output
         recursive = options.recursive
     
         if not output:
-            out_file = _create_out_file_name(working_dir, "", input_file)
+            out_file = _create_out_file_name(working_dir, input_file)
     
 
 If there is an output given, we have to distinguish between the recursive and non-recursive option.
 When the recursive option is used in combination with the output option, the output parameter is treated as the documentation directory:
 
 .. csv-table::
-   :header: "Input File", "Output File"
+   :header: "Commandline", "Current Directory", "Output File"
 
-   ``C:\antiweb\ -r -o report.rst``,*C:\\antiweb\\report.rst\\file.rst*
-   ``C:\antiweb\ -r -o report``,*C:\\antiweb\\report\\file.rst*
-   ``C:\antiweb\ -r -o C:\antiweb\report.rst``,*C:\\antiweb\\report.rst\\file.rst*
-   ``C:\antiweb\ -r -o \..\report.rst``,*C:\\report.rst\\file.rst*
+   ``C:\antiweb\ -r -o report.rst``, *C:\\dir*, *C:\\dir\\report.rst\\file.rst*
+   ``C:\antiweb\ -r -o report``, *C:\\dir*, *C:\\dir\\report\\file.rst*
+   ``C:\antiweb\ -r -o C:\report``, *C:\\dir*, *C:\\report\\file.rst*
+   ``C:\antiweb\ -r -o \..\report.rst``, *C:\\dir*, *C:\\report.rst\\file.rst*
 
 
 ::
@@ -59,21 +60,20 @@ When the recursive option is used in combination with the output option, the out
         else:
             if recursive:
                 #The output parameter is treated as a directory.
-                #If it is a relative path it is combined with the current working directory.
                 directory = output
-                out_file = _create_out_file_name(working_dir,directory,input_file)
+                out_file = _create_out_file_name(directory,input_file)
 
 When the output option is used without the recursive option the output file name is computed in the following way:
 
 .. csv-table::
-   :header: "Input File", "Output File"
+   :header: "Commandline", "Current Directory", "Output File"
 
-   ``C:\antiweb\testing.cs -o report.rst``,*C:\\antiweb\\report.rst*
-   ``C:\antiweb\testing.cs -o report``,*C:\\antiweb\\report\\testing.rst*
-   ``C:\antiweb\testing.cs -o \..\report``,*C:\\report\\testing.rst*
-   ``C:\antiweb\testing.cs -o report\report.rst``,*C:\\antiweb\\report\\report.rst*
-   ``C:\antiweb\testing.cs -o report\report.rst\``,*C:\\antiweb\\report\\report.rst\\testing.rst*
-   ``C:\antiweb\testing.cs -o C:\report\report.rst``,*C:\\report\\report.rst*
+   ``C:\antiweb\testing.cs -o report.rst``, *C:\\dir*, *C:\\dir\\report.rst*
+   ``C:\antiweb\testing.cs -o report``, *C:\\dir*, *C:\\dir\\report\\testing.rst*
+   ``C:\antiweb\testing.cs -o \..\report``, *C:\\dir*, *C:\\dir\\report\\testing.rst*
+   ``C:\antiweb\testing.cs -o report\report.rst``, *C:\\dir*, *C:\\dir\\report\\report.rst*
+   ``C:\antiweb\testing.cs -o C:\report\report.rst``, *C:\\dir*, *C:\\report\\report.rst*
+
 
 
 ::
@@ -88,14 +88,12 @@ When the output option is used without the recursive option the output file name
                     directory = path_tokens[0]
                     file_name = path_tokens[1]
     
-                    #If directory contains an absolute path the working directory will be ignored,
-                    #otherwise all three parameters will be joined
-                    out_file = os.path.join(working_dir, directory, file_name)
+                    out_file = os.path.join(directory, file_name)
                     out_file = os.path.abspath(out_file)
                 else:
                     #If there is no file extension the whole output parameter is treated as the report directory.
                     directory = output
-                    out_file = _create_out_file_name(working_dir, directory, input_file)
+                    out_file = _create_out_file_name(directory, input_file)
     
         #Create the documentation directory. If it can't be created the program exits.
         _create_doc_directory(out_file)
@@ -114,32 +112,29 @@ If processing is successful, ''could_process'' is set to ''True''.
 
 
 
-.. py:method:: _create_out_file_name(working_dir, directory, input_file)
+.. py:method:: _create_out_file_name(working_dir, input_file)
 
   Computes the absolute path of the output file name. The input file name suffix is replaced by
   ".rst". If the input file name ends with ".rst" the string "_docs" is added before the suffix.
-  If directory contains a relative path, then the paths of the working_dir and the directory
-  are combined with the input file name. Otherwise, the directory is combined with the
-  input file name.
+  The output file name consists of the combination of the directory and the input file name.
 
-  :param working_dir: Absolute path of the current working directory.
-  :param directory: The documentation directory (absolute or relative)
+  :param directory: The absolute path of the documentation directory.
   :param input_file: The absolute path to the file which should be processed.
-  :return: The path of the output file.
+  :return: The absolute path of the output file.
 
 .. csv-table::
-   :header: "Working_Dir", "Directory", "Input_File_Name", "Output_File_Name"
+   :header: "Directory", "Input_File_Name", "Output_File_Name"
 
-   *C:\\antiweb\\*,doc, *C:\\antiweb\\testing.py* , *C:\\antiweb\\doc\\testing.rst*
-   *C:\\antiweb\\* , , *C:\\antiweb\\testing.py* , *C:\\antiweb\\testing.rst*
-   *C:\\antiweb\\* ,*C:\\doc\\* , *testing.py*, *C:\\doc\\testing.rst*
-   *C:\\antiweb\\*,doc, *C:\\antiweb\\testing.rst* , *C:\\antiweb\\doc\\testing_docs.rst*
+   *C:\\antiweb\\doc*, *C:\\antiweb\\testing.py* , *C:\\antiweb\\doc\\testing.rst*
+   *C:\\antiweb\\*, *C:\\antiweb\\testing.py* , *C:\\antiweb\\testing.rst*
+   *C:\\antiweb\\doc*, *C:\\antiweb\\testing.rst* , *C:\\antiweb\\doc\\testing_docs.rst*
+   *C:\\antiweb\\doc*, *testing.py* , *C:\\antiweb\\doc\\testing.rst*
 
 
 ::
 
     
-    def _create_out_file_name(working_dir, directory, input_file):
+    def _create_out_file_name(directory, input_file):
     
         docs = "_docs"
         rst_suffix = ".rst"
@@ -153,7 +148,7 @@ If processing is successful, ''could_process'' is set to ''True''.
         out_file_name = os.path.split(out_file_path)[1]
     
         #If directory contains an absolute path, the working directory is ignored.
-        out_file = os.path.join(working_dir, directory, out_file_name)
+        out_file = os.path.join(directory, out_file_name)
         out_file = os.path.abspath(out_file)
         return out_file
     
@@ -185,52 +180,27 @@ If processing is successful, ''could_process'' is set to ''True''.
     :param out_file: The path to the output file.
     :param token: Passes on the tokens which the user set.
     :return: The boolean could_write indicates if the file could be written.
+
+::
+
+    def _process_file(in_file, out_file, token, warnings):
     
-    ::
+    #The output text will be written in the output file. If there is an output text, the function returns could_write as True.
     
-        def _process_file(in_file, out_file, token, warnings):
-        #@start_(process_file doc)
-        
-        ::
-        
-            def _process_file(in_file, out_file, token, warnings):
-            #@start_(process_file doc)
-            #@include(_process_file)
-            #The output text will be written in the output file. If there is an output text, the function returns could_write as True.
-            
-            
-                could_write = False
-                try:
-                    text_output = generate(in_file, token, warnings)
-            
-                    if text_output:
-                        with open(out_file, "w") as f:
-                            f.write(text_output)
-                        could_write = True
-                except WebError as e:
-                    logger.error("\nErrors:")
-                    for l, d in e.error_list:
-                        logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
-                        logger.error("      %s", l.text)
-            
-                return could_write
-        
-        #The output text will be written in the output file. If there is an output text, the function returns could_write as True.
-        
-        
-            could_write = False
-            try:
-                text_output = generate(in_file, token, warnings)
-        
-                if text_output:
-                    with open(out_file, "w") as f:
-                        f.write(text_output)
-                    could_write = True
-            except WebError as e:
-                logger.error("\nErrors:")
-                for l, d in e.error_list:
-                    logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
-                    logger.error("      %s", l.text)
-        
-            return could_write
+        could_write = False
+        try:
+            text_output = generate(in_file, token, warnings)
     
+            if text_output:
+                with open(out_file, "w") as f:
+                    f.write(text_output)
+                    print("\ncreated documentation file: ", out_file)
+                could_write = True
+        except WebError as e:
+            logger.error("\nErrors:")
+            for l, d in e.error_list:
+                logger.error("  in line %i(%s): %s", l.index+1, l.fname, d)
+                logger.error("      %s", l.text)
+    
+        return could_write
+
