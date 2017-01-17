@@ -25,6 +25,8 @@ This module is the mediator for all writing-related classes and modules
 #@include(_create_out_file_name doc)
 #@include(_create_doc_directory doc)
 #@include(_process_file doc)
+#@include(write_file doc)
+#@include(create_write_string doc)
 
 #@cstart(_create_out_file_name)
 
@@ -94,7 +96,7 @@ def generate(fname, tokens, show_warnings=False):
     #get the language specific comment markers based on the pygments lexer name
     single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)
     #initialise a new Reader based on the pygments lexer name
-    reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
+    reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers, block_comment_markers)
 
     document = Document(text, reader, fname, tokens)
     return document.process(show_warnings, fname)
@@ -119,7 +121,7 @@ def _create_doc_directory(out_file):
         if not os.path.exists(out_file_directory):
             os.makedirs(out_file_directory)
     except IOError:
-        logger.error("\nError: Documentation Directory: %s could not be created",  out_file_directory)
+        logger.error("\nError: Documentation Directory: %s could not be created", out_file_directory)
         sys.exit(1)
 #@(_create_doc_directory)
 
@@ -144,11 +146,9 @@ def _process_file(in_file, out_file, token, warnings):
     could_write = False
     try:
         text_output = generate(in_file, token, warnings)
-
         if text_output:
             with open(out_file, "w") as f:
                 f.write(text_output)
-                print("\ncreated documentation file: ", out_file)
             could_write = True
     except WebError as e:
         logger.error("\nErrors:")
@@ -182,6 +182,8 @@ def write(working_dir, input_file, options):
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
    :param options: Commandline options.
+   :return: a tuple of type <boolean, string>: the first value indicates if the documentation file could be generated and
+            the second paramater contains the absolute path of the output file
     """
 #@(write doc)
 
@@ -263,12 +265,59 @@ def write(working_dir, input_file, options):
 #@edoc
 
 #Now the input file is processed and the corresponding documentation file is created.
-#If processing is successful, ''could_process'' is set to ''True''.
+#If processing is successful, ''could_write'' is set to ''True''.
 
 #@code
+    could_write = _process_file(input_file, out_file, options.token, options.warnings)
 
-    _process_file(input_file, out_file, options.token, options.warnings)
+    return could_write, out_file
 
 #@edoc
 
 #@(write_body)
+
+#@cstart(write_file)
+def write_file(working_dir, input_file, options):
+#@start(write_file doc)
+    """
+.. py:method:: write_file(working_dir, input_file, options)
+
+    Creates the corresponding documentation file and prints a message whether the documentation file could be generated.
+
+    :param working_dir: Current working directory.
+    :param input_file: Contains the absolute path of the currently processed file.
+    :param options: Commandline options.
+    """
+#@include(write_file)
+#@(write_file doc)
+
+    could_write, created_file = write(working_dir, input_file, options)
+    out_string = create_write_string(could_write, input_file, created_file)
+    print("\n"+out_string)
+
+#@(write_file)
+
+#@cstart(create_write_string)
+def create_write_string(could_write, input_file, created_file):
+#@start(create_write_string doc)
+    """
+.. py:method:: create_write_string(could_write, input_file, created_file)
+
+    Creates a string based on the value of could_write.
+
+    :param could_write: A boolean which indicates whether the documentation file could be generated.
+    :param input_file: Contains the absolute path of the currently processed file.
+    :param created_file: Contains the absolute path of the created documentation file.
+    :return: A created string based on the value of could_write.
+    """
+#@include(create_write_string)
+#@(create_write_string doc)
+
+    if could_write:
+        out_string = "Generated " + created_file + " from: " + input_file
+    else:
+        out_string = "Could not generate file: " + created_file
+
+    return out_string
+
+#@(create_write_string)

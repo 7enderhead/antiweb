@@ -33,7 +33,7 @@ the following function:
             #get the language specific comment markers based on the pygments lexer name
             single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)
             #initialise a new Reader based on the pygments lexer name
-            reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
+            reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers, block_comment_markers)
         
             document = Document(text, reader, fname, tokens)
             return document.process(show_warnings, fname)
@@ -147,7 +147,7 @@ are retrieved. Only files with the allowed extensions are processed.
                     fname = os.path.join(root, filename)
     
                     if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                        write(directory, fname, options)
+                        write_file(directory, fname, options)
     
 
 If the daemon option is used antiweb starts a daemon to monitor the source directory for file changes
@@ -202,7 +202,7 @@ This else will take place when the -r flag is not given.
             if directory:
                 os.chdir(directory)
     
-            write(os.getcwd(), absolute_file_path, options)
+            write_file(os.getcwd(), absolute_file_path, options)
     
         os.chdir(previous_dir)
         return True
@@ -225,7 +225,7 @@ This else will take place when the -r flag is not given.
     import os.path
     import os
     
-    from antiweb_lib.write import write
+    from antiweb_lib.write import write_file
     
     from watchdog.observers import Observer
     from antiweb_lib.filechangehandler import FileChangeHandler

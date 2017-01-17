@@ -231,7 +231,7 @@ import sys
 import os.path
 import os
 
-from antiweb_lib.write import write
+from antiweb_lib.write import write_file
 
 from watchdog.observers import Observer
 from antiweb_lib.filechangehandler import FileChangeHandler
@@ -346,7 +346,7 @@ def main():
                 fname = os.path.join(root, filename)
 
                 if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                    write(directory, fname, options)
+                    write_file(directory, fname, options)
 
 #@edoc
 
@@ -399,7 +399,7 @@ def main():
         if directory:
             os.chdir(directory)
 
-        write(os.getcwd(), absolute_file_path, options)
+        write_file(os.getcwd(), absolute_file_path, options)
 
     os.chdir(previous_dir)
     return True
