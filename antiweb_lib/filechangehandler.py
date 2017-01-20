@@ -81,14 +81,9 @@ class FileChangeHandler(FileSystemEventHandler):
 
         if changed_file.endswith(self._handled_extensions) and not event.is_directory and \
                 not event.event_type =="deleted":
-            try:
-                could_write, created_file = write(self._directory, changed_file, self._options)
-                event_string = create_write_string(could_write, changed_file, created_file)
 
-            except SystemExit:
-                #sys.exit is called when an input file cannot be opened/found
-                #hence we catch the exception to let the daemon continue working
-                event_string = "Catched SysExit: File: " + created_file + " could not be generated"
+            created_file = write(self._directory, changed_file, self._options, False)
+            event_string = create_write_string(changed_file, created_file)
         else:
             #ignored event
             event_string = "Ignored change: " + changed_file + " [" + event.event_type + "]"

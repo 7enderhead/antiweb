@@ -18,6 +18,7 @@ the following function:
     :param list tokens: A list of string tokens, used for @if directives.
     :param bool show_warnings: Warnings will be written
                                via the logging module.
+    :return: The generated documentation content as a string - None if an error occurred
     
     ::
     
@@ -25,9 +26,9 @@ the following function:
             try:
                 with open(fname, "r") as f:
                     text = f.read()
-            except IOError:
-                logger.error("file not found: %s", fname)
-                sys.exit(1)
+            except IOError as e:
+                logger.error("I/O error : " + e.strerror)
+                return None
         
             lexer = pm.get_lexer_for_filename(fname)
             #get the language specific comment markers based on the pygments lexer name
@@ -147,7 +148,7 @@ are retrieved. Only files with the allowed extensions are processed.
                     fname = os.path.join(root, filename)
     
                     if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                        write_file(directory, fname, options)
+                        write(directory, fname, options)
     
 
 If the daemon option is used antiweb starts a daemon to monitor the source directory for file changes
@@ -202,7 +203,7 @@ This else will take place when the -r flag is not given.
             if directory:
                 os.chdir(directory)
     
-            write_file(os.getcwd(), absolute_file_path, options)
+            write(os.getcwd(), absolute_file_path, options)
     
         os.chdir(previous_dir)
         return True
@@ -225,7 +226,7 @@ This else will take place when the -r flag is not given.
     import os.path
     import os
     
-    from antiweb_lib.write import write_file
+    from antiweb_lib.write import write
     
     from watchdog.observers import Observer
     from antiweb_lib.filechangehandler import FileChangeHandler

@@ -73,11 +73,11 @@ The following function is called for the creation of the documentation files.</p
 <li><strong>working_dir</strong> &#8211; Current working directory.</li>
 <li><strong>input_file</strong> &#8211; Contains the absolute path of the currently processed file.</li>
 <li><strong>options</strong> &#8211; Commandline options.</li>
+<li><strong>print_message</strong> &#8211; Indicates whether a log message should be printed for the processed input file.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a tuple of type &lt;boolean, string&gt;: the first value indicates if the documentation file could be generated and
-the second paramater contains the absolute path of the output file</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the absolute path of the generated output file or None if an error occurred</p>
 </td>
 </tr>
 </tbody>
@@ -106,7 +106,7 @@ When there is no output option given the output file name is created in the foll
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">print_message</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 
     <span class="c1">#options.output is either an absolute path or None</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">output</span>
@@ -217,7 +217,17 @@ When the recursive option is used in combination with the output option, the out
 If processing is successful, &#8216;&#8217;could_write&#8217;&#8217; is set to &#8216;&#8217;True&#8217;&#8216;.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">could_write</span> <span class="o">=</span> <span class="n">_process_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">warnings</span><span class="p">)</span>
 
-<span class="k">return</span> <span class="n">could_write</span><span class="p">,</span> <span class="n">out_file</span>
+<span class="n">generated_file</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">if</span> <span class="n">could_write</span><span class="p">:</span>
+    <span class="c1">#processing was successful</span>
+    <span class="n">generated_file</span> <span class="o">=</span> <span class="n">out_file</span>
+
+<span class="k">if</span> <span class="n">print_message</span><span class="p">:</span>
+    <span class="n">log_message</span> <span class="o">=</span> <span class="n">create_write_string</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">generated_file</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">log_message</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">generated_file</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -361,59 +371,32 @@ If an error occurs, the program exits.</p>
 </pre></div>
 </div>
 <dl class="method">
-<dt id="write_file">
-<code class="descname">write_file</code><span class="sig-paren">(</span><em>working_dir</em>, <em>input_file</em>, <em>options</em><span class="sig-paren">)</span><a class="headerlink" href="#write_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the corresponding documentation file and prints a message whether the documentation file could be generated.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>working_dir</strong> &#8211; Current working directory.</li>
-<li><strong>input_file</strong> &#8211; Contains the absolute path of the currently processed file.</li>
-<li><strong>options</strong> &#8211; Commandline options.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
-
-    <span class="n">could_write</span><span class="p">,</span> <span class="n">created_file</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">working_dir</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-    <span class="n">out_string</span> <span class="o">=</span> <span class="n">create_write_string</span><span class="p">(</span><span class="n">could_write</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">created_file</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">out_string</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="method">
 <dt id="create_write_string">
 <code class="descname">create_write_string</code><span class="sig-paren">(</span><em>could_write</em>, <em>input_file</em>, <em>created_file</em><span class="sig-paren">)</span><a class="headerlink" href="#create_write_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a string based on the value of could_write.</p>
+<dd><p>Creates a string message based on the value of the created_file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>could_write</strong> &#8211; A boolean which indicates whether the documentation file could be generated.</li>
 <li><strong>input_file</strong> &#8211; Contains the absolute path of the currently processed file.</li>
 <li><strong>created_file</strong> &#8211; Contains the absolute path of the created documentation file.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A created string based on the value of could_write.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A created string based on the value of created_file.</p>
 </td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_write_string</span><span class="p">(</span><span class="n">could_write</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">created_file</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_write_string</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">created_file</span><span class="p">):</span>
 
-    <span class="k">if</span> <span class="n">could_write</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">created_file</span><span class="p">:</span>
         <span class="n">out_string</span> <span class="o">=</span> <span class="s2">&quot;Generated &quot;</span> <span class="o">+</span> <span class="n">created_file</span> <span class="o">+</span> <span class="s2">&quot; from: &quot;</span> <span class="o">+</span> <span class="n">input_file</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">out_string</span> <span class="o">=</span> <span class="s2">&quot;Could not generate file: &quot;</span> <span class="o">+</span> <span class="n">created_file</span>
+        <span class="n">out_string</span> <span class="o">=</span> <span class="s2">&quot;Could not generate documentation file for: &quot;</span> <span class="o">+</span> <span class="n">input_file</span>
 
     <span class="k">return</span> <span class="n">out_string</span>
 </pre></div>
