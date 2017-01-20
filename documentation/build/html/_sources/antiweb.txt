@@ -18,6 +18,7 @@ the following function:
     :param list tokens: A list of string tokens, used for @if directives.
     :param bool show_warnings: Warnings will be written
                                via the logging module.
+    :return: The generated documentation content as a string - None if an error occurred
     
     ::
     
@@ -25,15 +26,15 @@ the following function:
             try:
                 with open(fname, "r") as f:
                     text = f.read()
-            except IOError:
-                logger.error("file not found: %s", fname)
-                sys.exit(1)
+            except IOError as e:
+                logger.error("I/O error : " + e.strerror)
+                return None
         
             lexer = pm.get_lexer_for_filename(fname)
             #get the language specific comment markers based on the pygments lexer name
             single_comment_markers,  block_comment_markers = get_comment_markers(lexer.name)
             #initialise a new Reader based on the pygments lexer name
-            reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers,  block_comment_markers)
+            reader = readers.get(lexer.name, Reader)(lexer, single_comment_markers, block_comment_markers)
         
             document = Document(text, reader, fname, tokens)
             return document.process(show_warnings, fname)

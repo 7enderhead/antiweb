@@ -22,22 +22,28 @@ FileChangeHandler
             #antiweb commandline options
             self._options = options
             self._handled_extensions = extensions
+            self._event_counter = 0
     
 
 
 
 .. py:method:: process_event(self, event)
 
-   Handles the file events: 'modified' | 'created' | 'moved'.
-   For each file event the corresponding documentation file is automatically updated with the new content.
+   Handles the file events: 'modified' | 'created' | 'moved' | 'deleted'.
 
-   :param event: The file event that should be handled. Possible event types: 'modified' | 'created' | 'moved'
+   The events trigger an update of the corresponding documentation file.
+   Ignored events are: deleted files, changed directories, files without a handled extension.
+
+   :param event: The file event that should be handled. Possible event types: 'modified' | 'created' | 'moved' | 'deleted'
 
 
 ::
 
     
         def process_event(self, event):
+    
+            self._event_counter += 1
+            time_stamp = "[" + time.strftime('%H:%M:%S') + " " + str(self._event_counter).zfill(5) + "] "
     
             changed_file = event.src_path
     
@@ -46,22 +52,22 @@ FileChangeHandler
                 #the file has been moved so it is now located in event.dest_path
                 changed_file = event.dest_path
     
-            if changed_file.endswith(self._handled_extensions) and not event.is_directory:
-                self.print_event(event)
+            if changed_file.endswith(self._handled_extensions) and not event.is_directory and \
+                    not event.event_type =="deleted":
     
-                try:
-                    write(self._directory, changed_file , self._options)
-                except SystemExit:
-                    #sys.exit is called when an input file cannot be opened/found
-                    #hence we catch the exception to let the daemon continue working
-                    print("could not process file: ", changed_file)
+                created_file = write(self._directory, changed_file, self._options, False)
+                event_string = create_write_string(changed_file, created_file)
+            else:
+                #ignored event
+                event_string = "Ignored change: " + changed_file + " [" + event.event_type + "]"
+    
+            print(time_stamp + event_string)
     
 
 
--   events 'created', 'modified' and 'moved' are handled by the process_event method
+-   events 'created', 'modified', 'moved' and 'deleted' are handled by the process_event method
 -   event 'moved' is triggered when a subdirectory of the monitored source directory
     contains monitored files and the subdirectory is renamed
--   event 'delete' is not handled as for a deleted file no documentation file can be created
 -   note that when a file is modified/created watchdog may get multiple events
 -   note that when the monitored source directory and the output directory are the same events are triggered for
     the created documentation files - this causes antiweb to process the documentation files
@@ -83,17 +89,7 @@ FileChangeHandler
         self.process_event(event)
     
     def on_deleted(self, event):
-        #no file processing should be performed for deleted files
-        self.print_event(event)
+        self.process_event(event)
     
-
-
-This method prints the absolute path of the file and type of event that is currently processed.
-
-::
-
-    def print_event(self, event):
-        print("\n---------------------------------")
-        print(event.src_path, event.event_type)
 
 

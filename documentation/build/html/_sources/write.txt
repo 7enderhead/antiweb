@@ -19,6 +19,8 @@ The following function is called for the creation of the documentation files.
    :param working_dir: Current working directory.
    :param input_file: Contains the absolute path of the currently processed file.
    :param options: Commandline options.
+   :param print_message: Indicates whether a log message should be printed for the processed input file.
+   :return: the absolute path of the generated output file or None if an error occurred
 
 Before the input file is processed the name of the output file has to be computed.
 How the output file name is created depends on the different commandline options.
@@ -33,7 +35,7 @@ When there is no output option given the output file name is created in the foll
 
 ::
 
-    def write(working_dir, input_file, options):
+    def write(working_dir, input_file, options, print_message=True):
     
         #options.output is either an absolute path or None
         output = options.output
@@ -99,13 +101,24 @@ When the output option is used without the recursive option the output file name
         _create_doc_directory(out_file)
 
 Now the input file is processed and the corresponding documentation file is created.
-If processing is successful, ''could_process'' is set to ''True''.
+If processing is successful, ''could_write'' is set to ''True''.
 
 
 ::
 
+        could_write = _process_file(input_file, out_file, options.token, options.warnings)
     
-        _process_file(input_file, out_file, options.token, options.warnings)
+        generated_file = None
+    
+        if could_write:
+            #processing was successful
+            generated_file = out_file
+    
+        if print_message:
+            log_message = create_write_string(input_file, generated_file)
+            print("\n"+log_message)
+    
+        return generated_file
     
 
 
@@ -169,7 +182,7 @@ If processing is successful, ''could_process'' is set to ''True''.
             if not os.path.exists(out_file_directory):
                 os.makedirs(out_file_directory)
         except IOError:
-            logger.error("\nError: Documentation Directory: %s could not be created",  out_file_directory)
+            logger.error("\nError: Documentation Directory: %s could not be created", out_file_directory)
             sys.exit(1)
 
 .. py:method:: _process_file(in_file, out_file, token, warnings)
@@ -190,11 +203,9 @@ If processing is successful, ''could_process'' is set to ''True''.
         could_write = False
         try:
             text_output = generate(in_file, token, warnings)
-    
             if text_output:
                 with open(out_file, "w") as f:
                     f.write(text_output)
-                    print("\ncreated documentation file: ", out_file)
                 could_write = True
         except WebError as e:
             logger.error("\nErrors:")
@@ -203,4 +214,24 @@ If processing is successful, ''could_process'' is set to ''True''.
                 logger.error("      %s", l.text)
     
         return could_write
+
+.. py:method:: create_write_string(could_write, input_file, created_file)
+
+    Creates a string message based on the value of the created_file.
+
+    :param input_file: Contains the absolute path of the currently processed file.
+    :param created_file: Contains the absolute path of the created documentation file.
+    :return: A created string based on the value of created_file.
+
+::
+
+    def create_write_string(input_file, created_file):
+    
+        if created_file:
+            out_string = "Generated " + created_file + " from: " + input_file
+        else:
+            out_string = "Could not generate documentation file for: " + input_file
+    
+        return out_string
+    
 
