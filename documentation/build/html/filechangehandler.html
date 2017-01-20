@@ -68,6 +68,7 @@
 <li><strong>directory</strong> (<em>string</em>) &#8211; absolute path to the monitored source directory</li>
 <li><strong>extensions</strong> (<em>tuple&lt;string&gt;</em>) &#8211; contains all handled file extensions (&#8220;<em>.cs&#8221;, &#8220;</em>.py&#8221;, etc)</li>
 <li><strong>options</strong> &#8211; antiweb commandline options</li>
+<li><strong>created_files</strong> &#8211; a set which contains the absolute paths of all previously created documentation files</li>
 </ul>
 </td>
 </tr>
@@ -77,12 +78,14 @@
 
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FileChangeHandler</span><span class="p">(</span><span class="n">FileSystemEventHandler</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">extensions</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">extensions</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">created_files</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_directory</span> <span class="o">=</span> <span class="n">directory</span>
         <span class="c1">#antiweb commandline options</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">=</span> <span class="n">options</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_handled_extensions</span> <span class="o">=</span> <span class="n">extensions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_event_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_created_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_created_files</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">created_files</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -90,7 +93,8 @@
 <code class="descname">process_event</code><span class="sig-paren">(</span><em>self</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#process_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles the file events: &#8216;modified&#8217; | &#8216;created&#8217; | &#8216;moved&#8217; | &#8216;deleted&#8217;.</p>
 <p>The events trigger an update of the corresponding documentation file.
-Ignored events are: deleted files, changed directories, files without a handled extension.</p>
+Ignored events are: deleted files, changed directories, files without a handled extension and changes of
+antiweb&#8217;s created documentation files.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -113,13 +117,19 @@ Ignored events are: deleted files, changed directories, files without a handled 
         <span class="c1">#the file has been moved so it is now located in event.dest_path</span>
         <span class="n">changed_file</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">dest_path</span>
 
-    <span class="k">if</span> <span class="n">changed_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handled_extensions</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">is_directory</span> <span class="ow">and</span> \
-            <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">event_type</span> <span class="o">==</span><span class="s2">&quot;deleted&quot;</span><span class="p">:</span>
+    <span class="n">ignore_change</span> <span class="o">=</span> <span class="n">changed_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_created_files</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">changed_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handled_extensions</span><span class="p">)</span> <span class="ow">or</span> \
+              <span class="n">event</span><span class="o">.</span><span class="n">is_directory</span> <span class="ow">or</span> <span class="n">event</span><span class="o">.</span><span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;deleted&quot;</span>
 
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ignore_change</span><span class="p">:</span>
+        <span class="c1">#process change</span>
         <span class="n">created_file</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_directory</span><span class="p">,</span> <span class="n">changed_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">created_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_created_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">created_file</span><span class="p">)</span>
+
         <span class="n">event_string</span> <span class="o">=</span> <span class="n">create_write_string</span><span class="p">(</span><span class="n">changed_file</span><span class="p">,</span> <span class="n">created_file</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1">#ignored event</span>
+        <span class="c1">#ignore change</span>
         <span class="n">event_string</span> <span class="o">=</span> <span class="s2">&quot;Ignored change: &quot;</span> <span class="o">+</span> <span class="n">changed_file</span> <span class="o">+</span> <span class="s2">&quot; [&quot;</span> <span class="o">+</span> <span class="n">event</span><span class="o">.</span><span class="n">event_type</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="n">time_stamp</span> <span class="o">+</span> <span class="n">event_string</span><span class="p">)</span>
@@ -130,8 +140,6 @@ Ignored events are: deleted files, changed directories, files without a handled 
 <li>event &#8216;moved&#8217; is triggered when a subdirectory of the monitored source directory
 contains monitored files and the subdirectory is renamed</li>
 <li>note that when a file is modified/created watchdog may get multiple events</li>
-<li>note that when the monitored source directory and the output directory are the same events are triggered for
-the created documentation files - this causes antiweb to process the documentation files</li>
 </ul>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_modified</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">process_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
