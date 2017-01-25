@@ -241,7 +241,7 @@ class Test_Antiweb(unittest.TestCase):
                 input_file.write('new_text\n')
                 input_file.write('#@(new_block)\n')
 
-            time.sleep(3)
+            time.sleep(5)
             p.terminate()
             p.join(3)
 
@@ -256,7 +256,7 @@ class Test_Antiweb(unittest.TestCase):
             for line in lines:
                 print(line)
 
-            #the last_line should always contain information about the ignored change of the create file
+            #the last_line should always contain information about the ignored change of the created file
             last_line = lines[-1]
 
             expected_info = "Ignored change: " + created_file + " [modified]\n"
