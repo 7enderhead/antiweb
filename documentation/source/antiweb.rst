@@ -142,13 +142,20 @@ are retrieved. Only files with the allowed extensions are processed.
     
             #Only files with the following extensions will be processed
             ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
+    
+            #used to store all created files: needed for daemon mode if source and output directory are the same
+            #or directory is a subdirectory of the source directory
+            created_files = set()
                     
             for root, dirs, files in os.walk(directory, topdown=False):
                 for filename in files:
                     fname = os.path.join(root, filename)
     
                     if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                        write(directory, fname, options)
+                        out_file = write(directory, fname, options)
+    
+                        if out_file:
+                            created_files.add(out_file)
     
 
 If the daemon option is used antiweb starts a daemon to monitor the source directory for file changes
@@ -166,7 +173,7 @@ If the daemon option is used antiweb starts a daemon to monitor the source direc
                 try:
                     #observed directory => input directory
                     #recursive option is true in order to monitor all subdirectories
-                    observer.schedule(FileChangeHandler(directory, ext_tuple, options), path=directory, recursive=True)
+                    observer.schedule(FileChangeHandler(directory, ext_tuple, options, created_files), path=directory, recursive=True)
     
                     print("\n------- starting daemon mode (exit with enter or ctrl+c) -------\n")
     

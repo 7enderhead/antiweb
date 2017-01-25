@@ -21,6 +21,15 @@ class Directory:
     def get_relative_path(self, *args):
         return os.path.relpath(self.get_path(*args))
 
+    def copy_file(self, origin, destination):
+        destination_dir = os.path.split(destination)[0]
+
+        if not os.path.exists(destination_dir):
+            os.makedirs(destination_dir)
+
+        shutil.copyfile(origin, destination)
+
+
 class DataDir(Directory):
     def __init__(self, *args):
         self.data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", *args)

@@ -14,7 +14,9 @@ import time
 from multiprocessing import Process
 
 
+
 sys.path.append("..")
+
 
 #@(imports)
 
@@ -37,15 +39,17 @@ class Test_Antiweb(unittest.TestCase):
     #@code
     def setUp(self):
         self.doc_dir = "docs"
+        self.source_dir = "sources"
         self.temp_dir = TempDir()
         self.data_dir = DataDir("unittest")
         self.origin_path = self.data_dir.get_path("small_testfile.py")
         self.empty_origin_path = self.data_dir.get_path("empty.py")
-        self.destination_path = self.temp_dir.get_path("small_testfile.py")
-        self.empty_destination_path = self.temp_dir.get_path("empty.py")
 
-        shutil.copyfile(self.origin_path, self.destination_path)
-        shutil.copyfile(self.empty_origin_path, self.empty_destination_path)
+        self.destination_path = self.temp_dir.get_path(self.source_dir, "small_testfile.py")
+        self.empty_destination_path = self.temp_dir.get_path(self.source_dir, "empty.py")
+
+        self.temp_dir.copy_file(self.origin_path, self.destination_path)
+        self.temp_dir.copy_file(self.empty_origin_path, self.empty_destination_path)
     #@edoc
 
     #The :py:class:`functional(self, directory, filename, compare_path, assert_input)` class tests if antiweb was fully executed and if the files were created in the correct a
@@ -82,7 +86,7 @@ class Test_Antiweb(unittest.TestCase):
     def test_antiweb_o(self):
         compare_path_small_testfile = self.data_dir.get_path("small_testfile.rst")
         self.test_args = ['antiweb.py', "-o", self.temp_dir.get_path(self.doc_dir),
-                          self.temp_dir.get_path("small_testfile.py")]
+                          self.destination_path]
 
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", os.path.join(self.doc_dir, "small_testfile.rst"), compare_path_small_testfile, main())
@@ -92,8 +96,8 @@ class Test_Antiweb(unittest.TestCase):
 
         relative_path = self.temp_dir.get_relative_path(self.doc_dir)
 
-        self.test_args = ['antiweb.py', "-o",relative_path ,
-                            self.temp_dir.get_path("small_testfile.py")]
+        self.test_args = ['antiweb.py', "-o",relative_path,
+                            self.destination_path]
 
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", os.path.join(self.doc_dir, "small_testfile.rst"), compare_path_small_testfile,
@@ -106,24 +110,24 @@ class Test_Antiweb(unittest.TestCase):
         output_file_name = "small_testfile.rst"
 
         compare_path_small_testfile = self.data_dir.get_path(output_file_name)
-        self.test_args = ['antiweb.py', "-o", self.temp_dir.get_path(output_file_name), self.temp_dir.get_path("small_testfile.py")]
+        self.test_args = ['antiweb.py', "-o", self.temp_dir.get_path(output_file_name), self.destination_path]
 
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", output_file_name, compare_path_small_testfile, main())
 
     def test_antiweb(self):
         compare_path_small_testfile = self.data_dir.get_path("small_testfile.rst")
-        self.test_args = ['antiweb.py', self.temp_dir.get_path("small_testfile.py")]
+        self.test_args = ['antiweb.py', self.destination_path]
 
         with patch.object(sys, 'argv', self.test_args):
-            self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
+            self.functional(self.source_dir, "small_testfile.rst", compare_path_small_testfile, main())
 
     def test_antiweb_relative_path(self):
         compare_path_small_testfile = self.data_dir.get_path("small_testfile.rst")
-        self.test_args = ['antiweb.py', self.temp_dir.get_relative_path("small_testfile.py")]
+        self.test_args = ['antiweb.py', self.temp_dir.get_relative_path(self.destination_path)]
 
         with patch.object(sys, 'argv', self.test_args):
-            self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
+            self.functional(self.source_dir, "small_testfile.rst", compare_path_small_testfile, main())
 
     def test_antiweb_r_o(self):
         compare_path_small_testfile = self.data_dir.get_path("docs","small_testfile.rst")
@@ -218,13 +222,17 @@ class Test_Antiweb(unittest.TestCase):
 
     def test_antiweb_r_o_d(self):
 
-        self.test_args = ['antiweb.py', "-o", self.temp_dir.get_path(self.doc_dir), "-r", self.temp_dir.get_path(), "-d"]
+        self.test_args = ['antiweb.py', "-o", self.temp_dir.get_path(self.source_dir), "-r",
+                          self.temp_dir.get_path(self.source_dir), "-d"]
 
         with patch.object(sys, 'argv', self.test_args):
 
             #fd needed to set the stdin of the child process to the same stdin as the parent process
             fd = sys.stdin.fileno()
-            p = Process(target=antiweb_process, args=(fd,))
+            log_file = self.temp_dir.get_path("logfile.out")
+
+            p = Process(target=antiweb_process, args=(fd, log_file))
+
             p.start()
             time.sleep(3)
 
@@ -239,9 +247,23 @@ class Test_Antiweb(unittest.TestCase):
             p.terminate()
             p.join(3)
 
-            with open(self.temp_dir.get_path(self.doc_dir, "small_testfile.rst")) as output:
+            created_file = self.temp_dir.get_path(self.source_dir, "small_testfile.rst")
+
+            with open(created_file) as output:
                 antiweb_output = output.readlines()
 
+            with open(log_file) as logger:
+                lines = logger.readlines()
+
+            for line in lines:
+                print(line)
+
+            #the last_line should always contain information about the ignored change of the created file
+            last_line = lines[-1]
+
+            expected_info = "Ignored change: " + created_file + " [modified]\n"
+
+            self.assertTrue(last_line.__contains__(expected_info))
             self.assertEqual(antiweb_output, ["new_text"])
 
 
@@ -249,11 +271,16 @@ class Test_Antiweb(unittest.TestCase):
         self.temp_dir.remove_tempdir()
 
 
-def antiweb_process(fd):
+def antiweb_process(fd, log_file):
     #we need to duplicate the file descriptor and reset the stdin for a childprocess
     #now the the parent and child process read from the same stdin
     sys.stdin = os.fdopen(os.dup(fd))
-    main()
+
+    #need to use a file here, as string streams are not serializable but have to be used by different processes
+    with open(log_file, "w") as logger:
+        sys.stdout = logger
+        main()
+
 
 class Test_Antiweb_rst(unittest.TestCase):
 

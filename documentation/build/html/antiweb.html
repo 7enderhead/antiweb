@@ -224,23 +224,37 @@ code. The source code is split in text blocks which consists of several
 </td></tr></table></div>
 <p>The program walks through the given directory and all subdirectories. The absolute file names
 are retrieved. Only files with the allowed extensions are processed.</p>
-<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#Only files with the following extensions will be processed</span>
+<div class="highlight-python3"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#Only files with the following extensions will be processed</span>
 <span class="n">ext_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;.cs&quot;</span><span class="p">,</span><span class="s2">&quot;.cpp&quot;</span><span class="p">,</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span><span class="s2">&quot;.cc&quot;</span><span class="p">,</span> <span class="s2">&quot;.rst&quot;</span><span class="p">)</span>
+
+<span class="c1">#used to store all created files: needed for daemon mode if source and output directory are the same</span>
+<span class="c1">#or directory is a subdirectory of the source directory</span>
+<span class="n">created_files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
         <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext_tuple</span><span class="p">):</span>
-            <span class="n">write</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">out_file</span><span class="p">:</span>
+                <span class="n">created_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <p>If the daemon option is used antiweb starts a daemon to monitor the source directory for file changes
@@ -273,7 +287,7 @@ are retrieved. Only files with the allowed extensions are processed.</p>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1">#observed directory =&gt; input directory</span>
         <span class="c1">#recursive option is true in order to monitor all subdirectories</span>
-        <span class="n">observer</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="n">FileChangeHandler</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ext_tuple</span><span class="p">,</span> <span class="n">options</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">observer</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="n">FileChangeHandler</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">ext_tuple</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">created_files</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------- starting daemon mode (exit with enter or ctrl+c) -------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
