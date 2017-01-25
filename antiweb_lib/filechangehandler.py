@@ -96,7 +96,8 @@ class FileChangeHandler(FileSystemEventHandler):
             #ignore change
             event_string = "Ignored change: " + changed_file + " [" + event.event_type + "]"
 
-        print(time_stamp + event_string)
+        #using autoflush to immediately print the output
+        print(time_stamp + event_string, flush=True)
 
 #@(process_event)
 

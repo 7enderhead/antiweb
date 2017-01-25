@@ -132,7 +132,8 @@ antiweb&#8217;s created documentation files.</p>
         <span class="c1">#ignore change</span>
         <span class="n">event_string</span> <span class="o">=</span> <span class="s2">&quot;Ignored change: &quot;</span> <span class="o">+</span> <span class="n">changed_file</span> <span class="o">+</span> <span class="s2">&quot; [&quot;</span> <span class="o">+</span> <span class="n">event</span><span class="o">.</span><span class="n">event_type</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">time_stamp</span> <span class="o">+</span> <span class="n">event_string</span><span class="p">)</span>
+    <span class="c1">#using autoflush to immediately print the output</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">time_stamp</span> <span class="o">+</span> <span class="n">event_string</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">

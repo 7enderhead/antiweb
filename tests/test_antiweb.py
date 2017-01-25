@@ -14,7 +14,9 @@ import time
 from multiprocessing import Process
 
 
+
 sys.path.append("..")
+
 
 #@(imports)
 
@@ -218,13 +220,17 @@ class Test_Antiweb(unittest.TestCase):
 
     def test_antiweb_r_o_d(self):
 
-        self.test_args = ['antiweb.py', "-o", self.temp_dir.get_path(self.doc_dir), "-r", self.temp_dir.get_path(), "-d"]
+        self.test_args = ['antiweb.py', "-o", self.temp_dir.get_path(self.doc_dir), "-r",
+                          self.temp_dir.get_path(), "-d"]
 
         with patch.object(sys, 'argv', self.test_args):
 
             #fd needed to set the stdin of the child process to the same stdin as the parent process
             fd = sys.stdin.fileno()
-            p = Process(target=antiweb_process, args=(fd,))
+            log_file = self.temp_dir.get_path("logfile.out")
+
+            p = Process(target=antiweb_process, args=(fd, log_file))
+
             p.start()
             time.sleep(3)
 
@@ -239,9 +245,23 @@ class Test_Antiweb(unittest.TestCase):
             p.terminate()
             p.join(3)
 
-            with open(self.temp_dir.get_path(self.doc_dir, "small_testfile.rst")) as output:
+            created_file = self.temp_dir.get_path(self.doc_dir, "small_testfile.rst")
+
+            with open(created_file) as output:
                 antiweb_output = output.readlines()
 
+            with open(log_file) as logger:
+                lines = logger.readlines()
+
+            for line in lines:
+                print(line)
+
+            #the last_line should always contain information about the ignored change of the create file
+            last_line = lines[-1]
+
+            expected_info = "Ignored change: " + created_file + " [modified]\n"
+
+            self.assertTrue(last_line.__contains__(expected_info))
             self.assertEqual(antiweb_output, ["new_text"])
 
 
@@ -249,11 +269,16 @@ class Test_Antiweb(unittest.TestCase):
         self.temp_dir.remove_tempdir()
 
 
-def antiweb_process(fd):
+def antiweb_process(fd, log_file):
     #we need to duplicate the file descriptor and reset the stdin for a childprocess
     #now the the parent and child process read from the same stdin
     sys.stdin = os.fdopen(os.dup(fd))
-    main()
+
+    #need to use a file here, as string streams are not serializable but have to be used by different processes
+    with open(log_file, "w") as logger:
+        sys.stdout = logger
+        main()
+
 
 class Test_Antiweb_rst(unittest.TestCase):
 
