@@ -8,7 +8,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-requires = ['Sphinx', 'babel', 'beautifulsoup4']
+requires = ['Sphinx', 'babel', 'beautifulsoup4', 'watchdog', 'Pygments>=2.2.0']
 
 setup(
     name='antiweb',
@@ -19,8 +19,8 @@ setup(
     author='Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner',
     author_email='antiweb@freelists.org',
     description='antiweb literate programming tool',
+    install_requires=requires,
     #long_description=read(os.path.join("doc_old", "source", "motivation.rst")),
-    install_requires=['sphinx', 'babel', 'beautifulsoup4', 'watchdog'],
     zip_safe=True,
     classifiers=[
         'Development Status :: 4 - Beta',

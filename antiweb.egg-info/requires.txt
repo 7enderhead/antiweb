@@ -2,3 +2,4 @@ sphinx
 babel
 beautifulsoup4
 watchdog
+Pygments>=2.2.0
