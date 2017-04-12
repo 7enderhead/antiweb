@@ -1,0 +1,71 @@
+<!-- 
+@start()
+Starting
+--------
+-->
+
+<!--
+#########
+XmlTest:
+#########
+
+- enumeration
+   - item 1
+-->
+
+<!-- comments without indentation -->
+<!-- @include(comments) -->
+
+<!--
+comments with indentation 
+  @include(comments)
+-->
+
+<!--
+Code included:
+==============
+@include(test_area)
+
+Comments without indentation:
+=============================
+Spot difference between the block definitions of comments2 and comments3.
+Comments2 uses a separate comment line for each specification, hence all white-spaces
+are stripped -> no indentation.
+ 
+  @include(comments2)
+  @include(comments3)
+	
+@
+-->
+
+
+<!-- @cstart(test_area) --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- code comment -->
+<note>
+<to>Tove</to>
+<from>Jani</from> 
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+</note>
+
+<!-- @(test_area) -->
+
+
+<!-- 
+
+@start(comments)
+		comment line 1
+		comment line 2
+@(comments)
+
+-->
+
+<!-- 			@start(comments2) 	-->
+<!-- 			comments2			-->
+<!-- 			@(comments2) 		-->
+
+<!-- 			@start(comments3) 	
+				comments3			
+				@(comments2) 		-->

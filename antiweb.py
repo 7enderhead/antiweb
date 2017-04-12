@@ -339,7 +339,7 @@ def main():
 #@code
 
         #Only files with the following extensions will be processed
-        ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
+        ext_tuple = (".cs",".cpp",".py",".cc", ".rst", ".xml")
 
         #used to store all created files: needed for daemon mode if source and output directory are the same
         #or directory is a subdirectory of the source directory

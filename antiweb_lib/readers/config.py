@@ -5,6 +5,7 @@ from antiweb_lib.readers.ClojureReader import ClojureReader
 from antiweb_lib.readers.GenericReader import GenericReader
 from antiweb_lib.readers.RstReader import RstReader
 from antiweb_lib.readers.PythonReader import PythonReader
+from antiweb_lib.readers.XmlReader import XmlReader
 
 #@start(reader_dictionary doc)
 #The Reader Dictionary
@@ -28,6 +29,7 @@ readers = {
     "Python" : PythonReader,
     "Clojure" : ClojureReader,
     "rst" : RstReader,
+    "XML" : XmlReader
 }
 
 #@edoc
@@ -51,5 +53,6 @@ comments = {
 "C++" : (["//"],(["/*","*/"])),
 "C#" : (["//"],(["/*","*/"])),
 "Python" : (["#"],(["'''","'''"],["\"\"\"","\"\"\""])),
+"XML" : ([], (["<!--","-->"]))
 }
 #@
