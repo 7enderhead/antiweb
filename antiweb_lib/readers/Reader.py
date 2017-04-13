@@ -18,8 +18,8 @@ source parsing.
 @include(CSharpReader doc, CSharpReader.py)
 @include(PythonReader doc, PythonReader.py)
 @include(ClojureReader doc, ClojureReader.py)
-@include(RstReader doc, RstReader.py)
 @include(GenericReader doc, GenericReader.py)
+@include(RstReader doc, RstReader.py)
 @include(XmlReader doc, XmlReader.py)
 @include(reader_dictionary doc, config.py)
 """

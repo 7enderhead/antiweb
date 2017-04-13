@@ -141,7 +141,7 @@ are retrieved. Only files with the allowed extensions are processed.
 
     
             #Only files with the following extensions will be processed
-            ext_tuple = (".cs",".cpp",".py",".cc", ".rst")
+            ext_tuple = (".cs",".cpp",".py",".cc", ".rst", ".xml")
     
             #used to store all created files: needed for daemon mode if source and output directory are the same
             #or directory is a subdirectory of the source directory
@@ -343,6 +343,7 @@ Multiple single and block comment markers can be defined.
     "C++" : (["//"],(["/*","*/"])),
     "C#" : (["//"],(["/*","*/"])),
     "Python" : (["#"],(["'''","'''"],["\"\"\"","\"\"\""])),
+    "XML" : ([], (["<!--","-->"]))
     }
 
 From the map above the comment markers are retrieved via the following method:

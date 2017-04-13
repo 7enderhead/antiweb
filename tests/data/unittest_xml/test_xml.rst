@@ -33,8 +33,8 @@ Code included:
     
 
 
-Comments without indentation:
-=============================
+Comments with different indentations:
+=====================================
 Spot difference between the block definitions of comments2 and comments3.
 Comments2 uses a separate comment line for each specification, hence all white-spaces
 are stripped -> no indentation.

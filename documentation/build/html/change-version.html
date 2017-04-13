@@ -96,7 +96,7 @@ save time by letting it search and replace the version number for us.</p>
 <li>The whole pattern is NOT case sensitive and takes place in a single line.</li>
 </ul>
 </div></blockquote>
-<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;(version.*)(\d+\.\d+\.\d+)&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(version.*)(\d+\.\d+\.\d+)&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The directories in which we do not want to search for occurences of the version number are defined.
@@ -156,7 +156,7 @@ is a matching line in a file.</p>
 <p>When substituting the old version number, we replace the whole match (e.g., __version__ = 0.3.3) and
 re-use the first group (e.g., __version__ = ) to combine it with the new version number.</p>
 <div class="highlight-python3"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">absolute_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
-    <span class="n">new_version</span> <span class="o">=</span> <span class="s1">r&#39;\g&lt;1&gt;&#39;</span> <span class="o">+</span> <span class="n">new_version_number</span>
+    <span class="n">new_version</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\g&lt;1&gt;&#39;</span> <span class="o">+</span> <span class="n">new_version_number</span>
     <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">new_version</span><span class="p">,</span> <span class="n">lines</span><span class="p">))</span>
 </pre></div>
 </div>

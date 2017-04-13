@@ -8,12 +8,41 @@ from antiweb_lib.readers.Reader import *
 class XmlReader(Reader):
     # @start(XmlReader doc)
 
-    # XmlReader
-    # =============
+    #XmlReader
+    #=============
     """
     .. py:class:: XmlReader
 
        A reader for XML. This class inherits :py:class:`Reader`.
+
+       Whitespaces and comment tokens are removed from text blocks that are defined on single comment lines.
+       If a text block should be indented, define it on multiple lines and indent the include statement.
+       Examples of how to define text blocks with and without indentation (without '_'):
+
+       .. code-block:: xml
+
+            <!--
+                @_include(comments2)
+                @_include(comments3)
+            -->
+
+            <!--    @_start(comments2)    -->
+            <!--    comments2             -->
+            <!--    @_(comments2)         -->
+
+            <!--    @_start(comments3)
+                    comments3
+                    _(comments3)          -->
+
+            will be resolved as:
+
+            comments2
+                comments3
+
+
+       Here you can see an overview of the XmlReader class and its methods.
+
+
     """
 
     # @indent 3
