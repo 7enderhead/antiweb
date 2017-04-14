@@ -240,7 +240,7 @@ are retrieved. Only files with the allowed extensions are processed.</p>
 14
 15
 16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">#Only files with the following extensions will be processed</span>
-<span class="n">ext_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;.cs&quot;</span><span class="p">,</span><span class="s2">&quot;.cpp&quot;</span><span class="p">,</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span><span class="s2">&quot;.cc&quot;</span><span class="p">,</span> <span class="s2">&quot;.rst&quot;</span><span class="p">)</span>
+<span class="n">ext_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;.cs&quot;</span><span class="p">,</span><span class="s2">&quot;.cpp&quot;</span><span class="p">,</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span><span class="s2">&quot;.cc&quot;</span><span class="p">,</span> <span class="s2">&quot;.rst&quot;</span><span class="p">,</span> <span class="s2">&quot;.xml&quot;</span><span class="p">)</span>
 
 <span class="c1">#used to store all created files: needed for daemon mode if source and output directory are the same</span>
 <span class="c1">#or directory is a subdirectory of the source directory</span>
@@ -473,11 +473,13 @@ The map contains the definition of all language specific comment markers.</p>
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">comments</span> <span class="o">=</span> <span class="p">{</span>
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">comments</span> <span class="o">=</span> <span class="p">{</span>
 <span class="s2">&quot;C&quot;</span> <span class="p">:</span> <span class="p">([</span><span class="s2">&quot;//&quot;</span><span class="p">],([</span><span class="s2">&quot;/*&quot;</span><span class="p">,</span><span class="s2">&quot;*/&quot;</span><span class="p">])),</span>
 <span class="s2">&quot;C++&quot;</span> <span class="p">:</span> <span class="p">([</span><span class="s2">&quot;//&quot;</span><span class="p">],([</span><span class="s2">&quot;/*&quot;</span><span class="p">,</span><span class="s2">&quot;*/&quot;</span><span class="p">])),</span>
 <span class="s2">&quot;C#&quot;</span> <span class="p">:</span> <span class="p">([</span><span class="s2">&quot;//&quot;</span><span class="p">],([</span><span class="s2">&quot;/*&quot;</span><span class="p">,</span><span class="s2">&quot;*/&quot;</span><span class="p">])),</span>
 <span class="s2">&quot;Python&quot;</span> <span class="p">:</span> <span class="p">([</span><span class="s2">&quot;#&quot;</span><span class="p">],([</span><span class="s2">&quot;&#39;&#39;&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;&#39;&#39;&#39;&quot;</span><span class="p">],[</span><span class="s2">&quot;</span><span class="se">\&quot;\&quot;\&quot;</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\&quot;\&quot;\&quot;</span><span class="s2">&quot;</span><span class="p">])),</span>
+<span class="s2">&quot;XML&quot;</span> <span class="p">:</span> <span class="p">([],</span> <span class="p">([</span><span class="s2">&quot;&lt;!--&quot;</span><span class="p">,</span><span class="s2">&quot;--&gt;&quot;</span><span class="p">]))</span>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table></div>

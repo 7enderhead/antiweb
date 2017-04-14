@@ -87,7 +87,7 @@ and <a class="reference internal" href="#Reader.filter_output" title="Reader.fil
 
 <span class="k">class</span> <span class="nc">Reader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c1">#Public Methods</span>
-    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">__init__</span><span class="o">&gt;&gt;</span>
+    <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="fm">__init__</span><span class="o">&gt;&gt;</span>
     <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">process</span><span class="o">&gt;&gt;</span>
     <span class="o">&lt;&lt;</span><span class="n">Reader</span><span class="o">.</span><span class="n">filter_output</span><span class="o">&gt;&gt;</span>
 
@@ -204,7 +204,7 @@ the reader the chance to influence the final output.</p>
 
 <dl class="method">
 <dt id="Reader._cut_comment">
-<code class="descname">_cut_comment</code><span class="sig-paren">(</span><em>index</em>, <em>token</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader._cut_comment" title="Permalink to this definition">¶</a></dt>
+<code class="descname">_cut_comment</code><span class="sig-paren">(</span><em>index</em>, <em>token</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#Reader._cut_comment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cuts of the comment identifiers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -213,7 +213,7 @@ the reader the chance to influence the final output.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>index</strong> (<em>integer</em>) &#8211; The index within the source code</li>
 <li><strong>token</strong> &#8211; A pygments token.</li>
-<li><strong>value</strong> (<em>string</em>) &#8211; The token value.</li>
+<li><strong>text</strong> (<em>string</em>) &#8211; The token value.</li>
 </ul>
 </td>
 </tr>
@@ -281,7 +281,7 @@ the reader the chance to influence the final output.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
         <span class="c1">#For C/C++ exists only one type of single and block comment markers.</span>
         <span class="c1">#The markers are retrieved here in order to avoid iterating over the markers every time they are used.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">single_comment_marker</span> <span class="o">=</span> <span class="n">single_comment_markers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -344,7 +344,7 @@ and its methods.</p>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">single_comment_markers</span><span class="p">,</span> <span class="n">block_comment_markers</span><span class="p">):</span>
         <span class="c1">#the call to the base class CReader is needed for initialising the comment markers</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CSharpReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CSharpReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
 
     <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">strip_tags</span><span class="o">&gt;&gt;</span>
     <span class="o">&lt;&lt;</span><span class="n">CSharpReader</span><span class="o">.</span><span class="n">get_attribute_text</span><span class="o">&gt;&gt;</span>
@@ -621,7 +621,7 @@ from documentation lines. In the following lines:</p>
 for details).</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PythonReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">PythonReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PythonReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span>  <span class="n">single_comment_markers</span><span class="p">,</span>  <span class="n">block_comment_markers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">doc_lines</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="o">&lt;&lt;</span><span class="n">PythonReader</span><span class="o">.</span><span class="n">_post_process</span><span class="o">&gt;&gt;</span>
@@ -895,6 +895,86 @@ This class inherits <a class="reference internal" href="#Reader" title="Reader">
 </dd></dl>
 
 </div>
+<div class="section" id="xmlreader">
+<h2>XmlReader<a class="headerlink" href="#xmlreader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="XmlReader">
+<em class="property">class </em><code class="descname">XmlReader</code><a class="headerlink" href="#XmlReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reader for XML. This class inherits <a class="reference internal" href="#Reader" title="Reader"><code class="xref py py-class docutils literal"><span class="pre">Reader</span></code></a>.</p>
+<p>Whitespaces and comment tokens are removed from text blocks that are defined on single comment lines.
+If a text block should be indented, define it on multiple lines and indent the include statement.
+Examples of how to define text blocks with and without indentation (without &#8216;_&#8217;):</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="c">&lt;!--</span>
+<span class="c">    @_include(comments2)</span>
+<span class="c">    @_include(comments3)</span>
+<span class="c">--&gt;</span>
+
+<span class="c">&lt;!--    @_start(comments2)    --&gt;</span>
+<span class="c">&lt;!--    comments2             --&gt;</span>
+<span class="c">&lt;!--    @_(comments2)         --&gt;</span>
+
+<span class="c">&lt;!--    @_start(comments3)</span>
+<span class="c">        comments3</span>
+<span class="c">        _(comments3)          --&gt;</span>
+
+will be resolved as:
+
+comments2
+    comments3
+</pre></div>
+</div>
+<p>Here you can see an overview of the XmlReader class and its methods.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">XmlReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">single_comment_markers</span><span class="p">,</span> <span class="n">block_comment_markers</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">XmlReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">lexer</span><span class="p">,</span> <span class="n">single_comment_markers</span><span class="p">,</span> <span class="n">block_comment_markers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span> <span class="o">=</span> <span class="n">block_comment_markers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span> <span class="o">=</span> <span class="n">block_comment_markers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_accept_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">Token</span><span class="o">.</span><span class="n">Comment</span>
+
+    <span class="k">def</span> <span class="nf">_cut_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_block_comment_start</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_block_comment_end</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">filter_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. py:method:: filter_output(lines)</span>
+
+<span class="sd">           See :py:meth:`Reader.filter_output`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span>
+                <span class="n">stext</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span> <span class="ow">or</span> <span class="n">stext</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1">#the block comment markers should be removed for cases like: &#39;&lt;!-- asdasdasd --&gt;&#39;</span>
+                <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span><span class="p">):</span>
+                    <span class="n">stext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_block_comment_start</span><span class="p">(</span><span class="n">stext</span><span class="p">)</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">stext</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">stext</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span><span class="p">):</span>
+                    <span class="n">stext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_block_comment_end</span><span class="p">(</span><span class="n">stext</span><span class="p">)</span>
+                    <span class="n">l</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">stext</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="k">yield</span> <span class="n">l</span>
+
+    <span class="k">def</span> <span class="nf">remove_block_comment_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_start</span><span class="p">):]</span>
+
+    <span class="k">def</span> <span class="nf">remove_block_comment_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">[:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_comment_marker_end</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="the-reader-dictionary">
 <h2>The Reader Dictionary<a class="headerlink" href="#the-reader-dictionary" title="Permalink to this headline">¶</a></h2>
 <p>When writing a new reader, please register it in this dictionary with the according lexer name of the file. Please note that the Readername is the name of the class, not the file.</p>
@@ -909,6 +989,7 @@ This class inherits <a class="reference internal" href="#Reader" title="Reader">
     <span class="s2">&quot;Python&quot;</span> <span class="p">:</span> <span class="n">PythonReader</span><span class="p">,</span>
     <span class="s2">&quot;Clojure&quot;</span> <span class="p">:</span> <span class="n">ClojureReader</span><span class="p">,</span>
     <span class="s2">&quot;rst&quot;</span> <span class="p">:</span> <span class="n">RstReader</span><span class="p">,</span>
+    <span class="s2">&quot;XML&quot;</span> <span class="p">:</span> <span class="n">XmlReader</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -931,6 +1012,7 @@ This class inherits <a class="reference internal" href="#Reader" title="Reader">
 <li><a class="reference internal" href="#clojurereader">ClojureReader</a></li>
 <li><a class="reference internal" href="#genericreader">GenericReader</a></li>
 <li><a class="reference internal" href="#rstreader">RstReader</a></li>
+<li><a class="reference internal" href="#xmlreader">XmlReader</a></li>
 <li><a class="reference internal" href="#the-reader-dictionary">The Reader Dictionary</a></li>
 </ul>
 </li>

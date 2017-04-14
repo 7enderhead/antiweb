@@ -13,8 +13,6 @@ from tests.testutil import DataDir
 import time
 from multiprocessing import Process
 
-
-
 sys.path.append("..")
 
 
@@ -198,17 +196,6 @@ class Test_Antiweb(unittest.TestCase):
 
         with patch.object(sys, 'argv', self.test_args):
             self.functional("", "small_testfile.rst", compare_path_small_testfile, main())
-
-        os.chdir(previ_dir)
-
-    def test_antiweb_r_o_no_argument(self):
-        previ_dir = os.getcwd()
-        os.chdir(self.temp_dir.get_relative_path())
-        compare_path_small_testfile = self.data_dir.get_path("docs","small_testfile.rst")
-        self.test_args = ['antiweb.py', "-o" , self.doc_dir, "-r"]
-
-        with patch.object(sys, 'argv', self.test_args):
-            self.functional(self.doc_dir, "small_testfile.rst", compare_path_small_testfile, main())
 
         os.chdir(previ_dir)
 
@@ -443,6 +430,35 @@ class Test_CSharp(unittest.TestCase):
 
     def tearDown(self):
         self.temp_dir.remove_tempdir()
+
+class Test_Antiweb_Xml(unittest.TestCase):
+
+    def setUp(self):
+        self.doc_dir = "docs"
+        self.temp_dir = TempDir()
+        self.data_dir = DataDir("unittest_xml")
+        self.origin_path = self.data_dir.get_path("test_xml.xml")
+        self.destination_path = self.temp_dir.get_path("test_xml.xml")
+
+        shutil.copyfile(self.origin_path, self.destination_path)
+
+    def compare(self, directory, filename, compare_path):
+        with open(self.temp_dir.get_path(directory, filename)) as output:
+            antiweb_output = output.readlines()
+        with open(compare_path) as compare:
+            antiweb_compare = compare.readlines()
+        self.assertEqual(antiweb_output, antiweb_compare)
+
+    def functional(self, directory, filename, compare_path, assert_input):
+        self.assertTrue(assert_input)
+        self.compare(directory, filename, compare_path)
+
+    def test_xml(self):
+        compare_path = self.data_dir.get_path("test_xml.rst")
+        self.test_args = ['antiweb.py', self.destination_path]
+
+        with patch.object(sys, 'argv', self.test_args):
+            self.functional("", "test_xml.rst", compare_path, main())
 
 class Test_GenericReader(unittest.TestCase):
 

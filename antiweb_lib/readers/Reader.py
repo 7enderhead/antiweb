@@ -20,6 +20,7 @@ source parsing.
 @include(ClojureReader doc, ClojureReader.py)
 @include(GenericReader doc, GenericReader.py)
 @include(RstReader doc, RstReader.py)
+@include(XmlReader doc, XmlReader.py)
 @include(reader_dictionary doc, config.py)
 """
 #@rstart(readers)
@@ -181,13 +182,13 @@ class Reader(object):
     #@cstart(Reader._cut_comment)
     def _cut_comment(self, index, token, text):
         """
-        .. py:method:: _cut_comment(index, token, value)
+        .. py:method:: _cut_comment(index, token, text)
 
            Cuts of the comment identifiers.
 
            :param integer index: The index within the source code
            :param token: A pygments token.
-           :param string value: The token value.
+           :param string text: The token value.
            :return: value without comment identifiers.
         """
         return text

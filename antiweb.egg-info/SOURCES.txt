@@ -18,6 +18,7 @@ antiweb_lib/readers/Line.py
 antiweb_lib/readers/PythonReader.py
 antiweb_lib/readers/Reader.py
 antiweb_lib/readers/RstReader.py
+antiweb_lib/readers/XmlReader.py
 antiweb_lib/readers/__init__.py
 tests/__init__.py
 tests/test.py

@@ -1,7 +1,6 @@
 from pygments.token import Token
 
 from antiweb_lib.readers.Reader import *
-from antiweb_lib.directives import *
 
 #@cstart(CReader)
 
