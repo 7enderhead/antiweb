@@ -1,2 +1,5 @@
 sphinx
-babel==1.3
+babel
+beautifulsoup4
+watchdog
+Pygments>=2.2.0

@@ -1,15 +1,15 @@
 Metadata-Version: 1.1
 Name: antiweb
-Version: 0.3.2
+Version: 0.3.4
 Summary: antiweb literate programming tool
 Home-page: http://packages.python.org/antiweb/
-Author: Michael Reithinger & Philipp Rathmanner
-Author-email: mreithinger@web.de & yarmek@icloud.com
+Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
+Author-email: antiweb@freelists.org
 License: GPL
 Download-URL: http://pypi.python.org/pypi/antiweb
 Description: UNKNOWN
 Platform: any
-Classifier: Development Status :: 5 - Production/Stable
+Classifier: Development Status :: 4 - Beta
 Classifier: Environment :: Console
 Classifier: Environment :: Web Environment
 Classifier: Intended Audience :: Developers

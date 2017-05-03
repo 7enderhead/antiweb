@@ -5,8 +5,8 @@ from tests.testutil import DataDir
 
 sys.path.append("..")
 
-import antiweb
-
+from antiweb_lib.document import WebError
+from antiweb_lib.write import generate
 
 class TestAntiWeb(unittest.TestCase):
     def check(self, fname, tokens=None):
@@ -14,8 +14,8 @@ class TestAntiWeb(unittest.TestCase):
         fname = data_dir.get_path(fname)
 
         try:
-            text = antiweb.generate(fname, tokens, True)
-        except antiweb.WebError as e:
+            text = generate(fname, tokens, True)
+        except WebError as e:
             return e.error_list, []
         
         output = os.path.splitext(fname)[0] + ".rst"

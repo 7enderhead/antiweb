@@ -1,41 +1,15 @@
 # antiweb
 
-Version: 0.3.2
+Version: 0.3.4
 
 Summary: antiweb literate programming tool
 
 Home-page: http://packages.python.org/antiweb/
 
-Author: Michael Reithinger & Philipp Rathmanner
+Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
 
-Author-email: mreithinger@web.de & yarmek@icloud.com
+Author-email: antiweb@freelists.org
 
 License: GPL
 
-# Changelog:
-
-			10.08.2015:
-				Added support for C#
-				Added installation instruction for use with sphinx
-			
-			11.08.2015:
-				"Installation" and "Getting Started" improvements
-				Added a Getting Started section for quick use
-			
-			12.08.2015:
-				Added the -r flag: Process every compatible file in given directory
-				Added the -i flag: All processed files will be included in Sphinx' index.rst
-			
-			13.08.2015:
-				Added all changes to the documentation
-				Copyright adaption
-				Introducing a new version 0.3
-			
-			18.08.2015:
-				Using the -o flag with -r now indicates the path where to save the documentation
-				Fixed some bugs
-				Improved behaviour
-
-			25.08.2015:
-				antiweb now also reads comments from rst files
-				Introduced version 0.3.2
+[For a changelog please take a look here] (documentation/source/changelog.rst)

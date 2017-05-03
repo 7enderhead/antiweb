@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Process Overview &#8212; antiweb 0.3.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="antiweb 0.3.4 documentation" href="index.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="process-overview">
+<h1>Process Overview<a class="headerlink" href="#process-overview" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>(once) setup sphinx documentation project with <code class="docutils literal"><span class="pre">sphinx-quickstart</span></code></li>
+<li>create static content in reStructured Text (rst) files</li>
+<li>let antiweb create dynamic content from source files into rst files</li>
+<li>run sphinx to create documentation from rst sources</li>
+</ol>
+<div class="section" id="bootstrap-with-sphinx-quickstart">
+<h2>Bootstrap With sphinx-quickstart<a class="headerlink" href="#bootstrap-with-sphinx-quickstart" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>navigate to</li>
+<li><code class="docutils literal"><span class="pre">sphinx-quickstart</span></code><ul>
+<li>usually ok to accept default values</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="optional-add-graphviz-support">
+<h3>Optional: Add Graphviz Support<a class="headerlink" href="#optional-add-graphviz-support" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">edit <code class="docutils literal"><span class="pre">conf.py</span></code> in sphinx project&#8217;s source folder</p>
+</li>
+<li><p class="first">add graphviz to the extensions list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx.ext.graphviz&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="create-dynamic-content-with-antiweb">
+<h2>Create Dynamic Content with Antiweb<a class="headerlink" href="#create-dynamic-content-with-antiweb" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>antiweb can process your <code class="xref py py-class docutils literal"><span class="pre">Python</span></code>, <code class="xref py py-class docutils literal"><span class="pre">C++</span></code>, <code class="xref py py-class docutils literal"><span class="pre">C</span></code>, <code class="xref py py-class docutils literal"><span class="pre">C#</span></code>, <code class="xref py py-class docutils literal"><span class="pre">Clojure</span></code> and <code class="xref py py-class docutils literal"><span class="pre">rst</span></code> files. If you would like to add other languages take a look at the <a class="reference external" href="antiweb.html#how-to-add-new-languages">antiweb documentation</a>.</div></blockquote>
+<div class="section" id="processing-the-files">
+<h3>Processing the files<a class="headerlink" href="#processing-the-files" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>You will most likely have a project consisting of more than one file. Fortunately that occasion is no problem for antiweb.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">antiweb</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span> <span class="o">-</span><span class="n">r</span>
+</pre></div>
+</div>
+<p>This snippet will recursively process files in /path/to/project and put them into the directory you are currently working in.
+To put them in a seperate folder, use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">antiweb</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">o</span> <span class="n">foldername</span>
+</pre></div>
+</div>
+<p>A folder will be created in your working directory and the processed files will be stored in there.</p>
+</div></blockquote>
+</div>
+<div class="section" id="final-step-create-the-documentation">
+<h3>Final step: Create the documentation<a class="headerlink" href="#final-step-create-the-documentation" title="Permalink to this headline">¶</a></h3>
+<p>Make sure all of your <code class="docutils literal"><span class="pre">.rst</span></code> files are stored inside the source folder and that they are registered inside the index.rst (which is also located inside your source folder)</p>
+<p>The only thing to do now is to execute:</p>
+<blockquote>
+<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Sphinx should now be processing your files and put the finished documentation inside the <code class="docutils literal"><span class="pre">build</span></code> folder. From now on, only changed documents will be processed by Sphinx.
+If you would like Sphinx to process all files everytime you run Sphinx, you have to edit the <code class="docutils literal"><span class="pre">make.bat</span></code> file and change:</p>
+<blockquote>
+<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">ALLSPHINXOPTS</span><span class="o">=</span> <span class="o">-</span><span class="n">d</span> <span class="o">%</span><span class="n">BUILDDIR</span><span class="o">%/</span><span class="n">doctrees</span> <span class="o">%</span><span class="n">SPHINXOPTS</span><span class="o">%</span> <span class="n">source</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>to</dt>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">ALLSPHINXOPTS</span><span class="o">=-</span><span class="n">E</span> <span class="o">-</span><span class="n">d</span> <span class="o">%</span><span class="n">BUILDDIR</span><span class="o">%/</span><span class="n">doctrees</span> <span class="o">%</span><span class="n">SPHINXOPTS</span><span class="o">%</span> <span class="n">source</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Process Overview</a><ul>
+<li><a class="reference internal" href="#bootstrap-with-sphinx-quickstart">Bootstrap With sphinx-quickstart</a><ul>
+<li><a class="reference internal" href="#optional-add-graphviz-support">Optional: Add Graphviz Support</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-dynamic-content-with-antiweb">Create Dynamic Content with Antiweb</a><ul>
+<li><a class="reference internal" href="#processing-the-files">Processing the files</a></li>
+<li><a class="reference internal" href="#final-step-create-the-documentation">Final step: Create the documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="getting_started.html"
+                        title="next chapter">Getting Started</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/process_overview.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">antiweb 0.3.4 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

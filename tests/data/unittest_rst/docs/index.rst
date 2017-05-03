@@ -6,5 +6,5 @@ Contents:
    :maxdepth: 2
 
    .. start(generated)
-   ein_rst
+   ein_rst_docs
    .. end(generated)
