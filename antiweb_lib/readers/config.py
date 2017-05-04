@@ -1,3 +1,10 @@
+__author__ = "Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, and Christian Eitner"
+__copyright__ = "Copyright 2017, antiweb team"
+__license__ = "GPL"
+__version__ = "0.9.1"
+__maintainer__ = "antiweb team"
+__email__ = "antiweb@freelists.org"
+
 from antiweb_lib.readers.Reader import Reader
 from antiweb_lib.readers.CReader import CReader
 from antiweb_lib.readers.CSharpReader import CSharpReader

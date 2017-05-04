@@ -1,6 +1,6 @@
 # antiweb
 
-Version: 0.9.0
+Version: 0.9.1
 
 Summary: antiweb literate programming tool
 

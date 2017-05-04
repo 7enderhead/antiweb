@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#
+
+__author__ = "Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, and Christian Eitner"
+__copyright__ = "Copyright 2017, antiweb team"
+__license__ = "GPL"
+__version__ = "0.9.1"
+__maintainer__ = "antiweb team"
+__email__ = "antiweb@freelists.org"
+
 # antiweb documentation build configuration file, created by
 # sphinx-quickstart on Mon Aug  8 13:23:15 2016.
 #
@@ -58,7 +65,7 @@ author = 'Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits
 # built documents.
 #
 # The short X.Y version.
-version = '0.9.0'
+version = '0.9.1'
 # The full version, including alpha/beta/rc tags.
 release = version
 
