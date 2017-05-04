@@ -2,7 +2,7 @@
 
 """
 Name: antiweb
-Version: 0.3.4
+Version: 0.9.0
 Summary: antiweb literate programming tool
 Home-page: http://packages.python.org/antiweb/
 Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
@@ -243,7 +243,7 @@ from antiweb_lib.filechangehandler import FileChangeHandler
 
 #@code
 
-__version__ = "0.3.4"
+__version__ = "0.9.0"
 
 logger = logging.getLogger('antiweb')
 

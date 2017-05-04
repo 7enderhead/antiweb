@@ -94,7 +94,7 @@ if "%1" == "livehtml" (
 	sphinx-autobuild -H 0.0.0.0 -p !port! -b html -i *.clean %ALLSPHINXOPTS% %BUILDDIR%/html
 	if errorlevel 1 exit /b 1
 	echo.
-	echo.Build finished. Access the pages at http://127.0.0.1:%port%.
+	echo.Build finished. Access the pages at http://127.0.0.1:!port!.
 	goto end
 )
 

@@ -12,7 +12,7 @@ requires = ['Sphinx', 'babel', 'beautifulsoup4', 'watchdog', 'Pygments>=2.2.0']
 
 setup(
     name='antiweb',
-    version='0.3.4',
+    version='0.9.0',
     url='http://packages.python.org/antiweb/',
     download_url='http://pypi.python.org/pypi/antiweb',
     license='GPL',
