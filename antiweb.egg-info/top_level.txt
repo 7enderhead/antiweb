@@ -1,3 +1,2 @@
 antisphinx
 antiweb_lib
-tests

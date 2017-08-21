@@ -10,6 +10,9 @@ antiweb.egg-info/top_level.txt
 antiweb.egg-info/zip-safe
 antiweb_lib/__init__.py
 antiweb_lib/directives.py
+antiweb_lib/document.py
+antiweb_lib/filechangehandler.py
+antiweb_lib/write.py
 antiweb_lib/readers/CReader.py
 antiweb_lib/readers/CSharpReader.py
 antiweb_lib/readers/ClojureReader.py
@@ -20,6 +23,7 @@ antiweb_lib/readers/Reader.py
 antiweb_lib/readers/RstReader.py
 antiweb_lib/readers/XmlReader.py
 antiweb_lib/readers/__init__.py
+antiweb_lib/readers/config.py
 tests/__init__.py
 tests/test.py
 tests/test_antiweb.py
