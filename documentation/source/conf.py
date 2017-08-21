@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#
+
+__author__ = "Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, and Christian Eitner"
+__copyright__ = "Copyright 2017, antiweb team"
+__license__ = "GPL"
+__version__ = "0.9.1"
+__maintainer__ = "antiweb team"
+__email__ = "antiweb@freelists.org"
+
 # antiweb documentation build configuration file, created by
 # sphinx-quickstart on Mon Aug  8 13:23:15 2016.
 #
@@ -50,15 +57,15 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'antiweb'
-copyright = '2016, Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner'
-author = 'Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner'
+copyright = '2017 Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner'
+author = 'Michael Reithinger (original author) Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner (from 2015)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '0.3.4'
+version = '0.9.1'
 # The full version, including alpha/beta/rc tags.
 release = version
 

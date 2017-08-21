@@ -1,15 +1,19 @@
 # antiweb
 
-Version: 0.3.4
+Version: 0.9.1
 
 Summary: antiweb literate programming tool
 
-Home-page: http://packages.python.org/antiweb/
+Documentation: http://antiweb.readthedocs.io
 
-Author: Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner
+Home-pages:
+  - https://pypi.python.org/pypi/antiweb (Python package)
+  - https://github.com/7enderhead/antiweb (GitHub repository)
+
+Authors:
+  - Michael Reithinger (original author)
+  - Philipp Rathmanner, Lukas Tanner, Philipp Grandits, Christian Eitner (since 2015)
 
 Author-email: antiweb@freelists.org
 
 License: GPL
-
-[For a changelog please take a look here] (documentation/source/changelog.rst)

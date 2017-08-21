@@ -1,3 +1,9 @@
+__author__ = "Michael Reithinger, Philipp Rathmanner, Lukas Tanner, Philipp Grandits, and Christian Eitner"
+__copyright__ = "Copyright 2017, antiweb team"
+__license__ = "GPL"
+__version__ = "0.9.1"
+__maintainer__ = "antiweb team"
+__email__ = "antiweb@freelists.org"
 
 from watchdog.events import FileSystemEventHandler
 from antiweb_lib.write import write
