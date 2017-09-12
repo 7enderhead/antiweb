@@ -22,11 +22,16 @@ class ClojureReader(Reader):
     #@indent 3
     #@include(ClojureReader)
     #@(ClojureReader doc)
+
+    def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
+        super(ClojureReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
+        self.single_comment_marker = single_comment_markers[0]
+
     def _accept_token(self, token):
         return token in Token.Comment
     
     def _cut_comment(self, index, token, text):
-        if text.startswith(";"):
+        if text.startswith(self.single_comment_marker):
             text = text[1:]
         return text
 		
@@ -41,7 +46,7 @@ class ClojureReader(Reader):
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
 		
-        if stext.startswith(";"):
+                if stext.startswith(self.single_comment_marker):
                     #remove comments but not chapters
                     l.text = l.indented(stext[1:])
 

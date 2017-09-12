@@ -463,7 +463,7 @@ class Test_Antiweb_Xml(unittest.TestCase):
 class Test_GenericReader(unittest.TestCase):
 
     def setUp(self):
-        self.reader = GenericReader(["//",";"],[("/*", "*/"),("#","@")])
+        self.reader = GenericReader(None, ["//",";"],[("/*", "*/"),("#","@")])
 
     def test_GenericReader_Creation(self):
         self.test_args = ['antiweb.py', "C:\\Users\\z003jkbt\\Documents\\waas\\testfile.py"]
