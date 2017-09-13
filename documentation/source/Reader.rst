@@ -751,7 +751,7 @@ RstReader
        class RstReader(Reader):
        
            def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
-               super(Reader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
+               super(RstReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
                self.single_comment_marker = single_comment_markers[0]
        
            def _accept_token(self, token):
@@ -896,7 +896,7 @@ Format:
         "C#" : CSharpReader,
         "Python" : PythonReader,
         "Clojure" : ClojureReader,
-        "rst" : RstReader,
+        "reStructuredText" : RstReader,
         "XML" : XmlReader
     }
     

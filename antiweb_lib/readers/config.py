@@ -36,7 +36,7 @@ readers = {
     "C#" : CSharpReader,
     "Python" : PythonReader,
     "Clojure" : ClojureReader,
-    "rst" : RstReader,
+    "reStructuredText" : RstReader,
     "XML" : XmlReader
 }
 
@@ -61,7 +61,7 @@ comments = {
 "C++" : (["//"],(["/*","*/"])),
 "C#" : (["//"],(["/*","*/"])),
 "Python" : (["#"],(["'''","'''"],["\"\"\"","\"\"\""])),
-"rst" : ([".. "],[]),
+"reStructuredText" : ([".. "],[]),
 "XML" : ([], (["<!--","-->"]))
 }
 #@
