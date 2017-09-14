@@ -77,6 +77,8 @@ class PythonReader(Reader):
     def __init__(self, lexer,  single_comment_markers,  block_comment_markers):
         super(PythonReader, self).__init__(lexer,  single_comment_markers,  block_comment_markers)
         self.doc_lines = []
+        self.single_comment_marker = single_comment_markers[0]
+        self.doc_string_marker = '"""'
 
     #@cstart(PythonReader._post_process)
     def _post_process(self, fname, text):
@@ -171,7 +173,7 @@ class PythonReader(Reader):
            See :py:meth:`Reader._cut_comment`.
         """
         if token in Token.Literal.String.Doc:
-            if text.startswith('"""'):
+            if text.startswith(self.doc_string_marker):
                 #save the start/end line of doc strings beginning with """
                 #for further decoration processing in _post_process,
                 start_line = bisect.bisect(self.starts, index)-1
@@ -196,14 +198,19 @@ class PythonReader(Reader):
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
 
-                if stext == '"""' or stext == "'''":
-                    #remove """ and ''' from documentation lines
-                    #see the l.text.lstrip()! if the lines ends with a white space
-                    #the quotes will be kept! This is feature, to force the quotes
-                    #in the output
+                is_block_comment = False
+
+                for block_start, block_end in self.block_comment_markers:
+                    is_block_comment = is_block_comment or stext == block_start or stext == block_end
+
+                if is_block_comment:
+                    # remove """ and ''' from documentation lines
+                    # see the l.text.lstrip()! if the lines ends with a white space
+                    # the quotes will be kept! This is feature, to force the quotes
+                    # in the output
                     continue
 
-                if stext.startswith("#"):
+                if stext.startswith(self.single_comment_marker):
                     #remove comments but not chapters
                     l.text = l.indented(stext[1:])
 

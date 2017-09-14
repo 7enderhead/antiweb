@@ -336,21 +336,35 @@ def main():
 #@code
 
         #Only files with the following extensions will be processed
-        ext_tuple = (".cs",".cpp",".py",".cc", ".rst", ".xml")
+        rst_extension = ".rst"
+        ext_tuple = (".cs",".cpp",".py",".cc", rst_extension, ".xml")
 
-        #used to store all created files: needed for daemon mode if source and output directory are the same
-        #or directory is a subdirectory of the source directory
-        created_files = set()
-                
+        handled_files = []
+
         for root, dirs, files in os.walk(directory, topdown=False):
             for filename in files:
                 fname = os.path.join(root, filename)
 
-                if os.path.isfile(fname) and fname.endswith(ext_tuple):
-                    out_file = write(directory, fname, options)
+                if not (os.path.isfile(fname) and fname.endswith(ext_tuple)):
+                    continue
 
-                    if out_file:
-                        created_files.add(out_file)
+                # rst files should be handled last as they might be a documentation file of a
+                # file that is not yet processed -> in this case the rst file will be ignored
+                if fname.endswith(rst_extension):
+                    handled_files.append(fname)
+                else:
+                    handled_files.insert(0, fname)
+
+        #used to store all created files: needed for daemon mode if source and output directory are the same
+        #or directory is a subdirectory of the source directory
+        created_files = set()
+
+        for file in handled_files:
+            if not file in created_files:
+                out_file = write(directory, file, options)
+
+                if out_file:
+                    created_files.add(out_file)
 
 #@edoc
 

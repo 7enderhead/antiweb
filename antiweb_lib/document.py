@@ -198,7 +198,7 @@ class Document(object):
         if not self.lines:
             self.add_error(0, "empty file", fname)
             self.check_errors()
-        elif "" not in self.blocks and not fname.endswith(".rst"):
+        elif "" not in self.blocks:
             self.add_error(0, "no @start() directive found (I need one)")
             self.check_errors()
 

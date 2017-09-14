@@ -17,25 +17,27 @@ class GenericReader(Reader):
     """
     .. py:class:: GenericReader
 
-       A generic reader for languages with single line and block comments . 
+       A generic reader for languages with single line and block comments.
        This class inherits :py:class:`Reader`.
     """
     #@indent 3
     #@include(GenericReader)
     #@(GenericReader doc)
-    def __init__(self, single_comment_markers, block_comment_markers):
-        self.single_comment_markers = single_comment_markers
-        self.block_comment_markers = block_comment_markers
+    def __init__(self, lexer, single_comment_markers, block_comment_markers):
+        super(GenericReader, self).__init__(lexer, single_comment_markers, block_comment_markers)
+        self.single_comment_marker = single_comment_markers[0]
+        self.block_comment_marker_start = block_comment_markers[0]
+        self.block_comment_marker_end = block_comment_markers[1]
 
     def _accept_token(self, token):
         return token in Token.Comment
     
     def _cut_comment(self, index, token, text):
-        if text.startswith("/*"):
-            text = text[2:-2]
+        if text.startswith(self.block_comment_marker_start):
+            text = text[len(self.block_comment_marker_start):-len(self.block_comment_marker_end)]
     
-        elif text.startswith("//"):
-            text = text[2:]
+        elif text.startswith(self.single_comment_marker):
+            text = text[len(self.single_comment_marker):]
 
         return text
 
@@ -45,16 +47,15 @@ class GenericReader(Reader):
             if l.type == "d":
                 #remove comment chars in document lines
                 stext = l.text.lstrip()
-                for block_start, block_end in self.block_comment_markers: #comment layout: [("/*", "*/"),("#","@")]
-                    if stext == block_start or stext == block_end:
-                        #remove """ and ''' from documentation lines
-                        #see the l.text.lstrip()! if the lines ends with a white space
-                        #the quotes will be kept! This is feature, to force the quotes
-                        #in the output
-                        continue
-                    for comment_start in self.single_comment_markers: #comment layout: ["//",";"]
-                        if stext.startswith(comment_start):
-                            #remove comments but not chapters
-                            l.text = l.indented(stext[2:])
+
+                if stext == self.block_comment_marker_start or stext == self.block_comment_marker_end:
+                    #remove the block comment characters from documentation lines
+                    #see the l.text.lstrip()! if the lines ends with a white space
+                    #the quotes will be kept! This is feature, to force the quotes
+                    #in the output
+                    continue
+
+                if stext.startswith(self.single_comment_marker):
+                    l.text = l.indented(stext[len(self.single_comment_marker):])
                             
             yield l

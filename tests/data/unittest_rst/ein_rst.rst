@@ -1,5 +1,5 @@
-//@start()
-//@include(block)
-//@start(block)
+.. @start()
+.. @include(block)
+.. @start(block)
 Das ist text
-//@(block)
+.. @(block)
