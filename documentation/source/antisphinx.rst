@@ -3,9 +3,9 @@
 .. highlight:: python
    :linenothreshold: 6
 
-#########
+##########
 antisphinx
-#########
+##########
 
 This sphinx extension modifies the syntax highlight mechanism to handle
 <<textblock>> abbreviations in source code.

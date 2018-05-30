@@ -1,0 +1,26 @@
+@startuml
+partition Developer {
+  (*) --> "start antiweb in daemon mode"
+  --> "start Sphinx in livehtml mode"
+  --> === daemons_running ===
+  --> "add/change documentation content in
+  comment sections of files
+  (e.g., Python, C#, XML, ...)" as C1
+  C1 --> C1
+}
+
+partition antiweb #TECHNOLOGY {
+  === daemons_running === --> "monitor source file changes" as M1
+  --> "scan changed input files for
+  antiweb directives"
+  --> "generate rst sources from
+  relevant input"
+  --> M1
+}
+
+partition Sphinx #LightSkyBlue {
+  === daemons_running === --> "monitor rst file changes" as M2
+  --> "generate output from rst sources"
+  --> M2
+}
+@enduml

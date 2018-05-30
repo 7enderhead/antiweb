@@ -1,0 +1,22 @@
+@startuml
+|Developer|
+start
+:add documentation content to
+comment sections in files
+(e.g., Python, C#, XML, ...);
+:invoke antiweb on changed files;
+|#TECHNOLOGY|antiweb|
+:scan input files for
+antiweb directives;
+:generate rst sources from
+relevant input;
+|Developer|
+:invoke Sphinx;
+|#LightSkyBlue|Sphinx|
+:generate output (HTML,
+LaTeX, ...) from
+rst sources;
+|Developer|
+:enjoy documentation;
+stop
+@enduml

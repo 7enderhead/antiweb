@@ -75,7 +75,28 @@ to
       set ALLSPHINXOPTS=-E -d %BUILDDIR%/doctrees %SPHINXOPTS% source
 
 
+.. image:: ./simple_process.png
 
+#######################
+Auto-Update Daemon Mode
+#######################
 
-   .. _antiweb documentation : antiweb.html#how-to-add-new-languages
-   .. _Graphviz : installation.html#install-graphviz-optional
+- alternatively, start 
+  
+  - antiweb in *daemon* mode (option ``-d``)
+  - Sphinx in *livehtml* mode (``make livehtml``)
+
+- then, changes to a source file are automatically first transformed by antiweb into an rst
+- Sphinx then automatically updates the documentation from the changed rst source
+
+.. image:: ./daemon_process.png
+
+**********
+doc_server
+**********
+
+- the *doc_server* system (see subdirectory ``doc_server``) provides a simple configurable setup to start several daemon documentation systems
+- edit ``doc_locations.txt`` and then invoke ``server_start.bat``
+
+.. _antiweb documentation : antiweb.html#how-to-add-new-languages
+.. _Graphviz : installation.html#install-graphviz-optional

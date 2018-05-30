@@ -1,0 +1,8 @@
+; Fields:
+; 1: base folder
+; 2: relative path in folder
+; 3: last part of path, also used as identifier
+; 4: something like 'Stable' or 'Development' or 'Preview for topic XYZ'
+; 5: port for live html documentation
+c:\src\doc path\to\my Feature Stable 8001
+c:\src\doc path\to\an OtherFeature Development 8002

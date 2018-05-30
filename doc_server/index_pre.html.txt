@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>Doc Server</title>
+<style>
+th {
+	text-align: left;
+}
+th, td {
+	padding: 15px;
+}
+</style>
+</head>
+
+<body>
+<h1>Documentation</h1>
+<table>
+<tr>
+<th>Name</th>
+<th>Status</th>
+<th>Port</th>
+<th>Source Location</th>
+</tr>
